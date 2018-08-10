@@ -1,0 +1,74 @@
+Function 汉字转数字(汉字)
+	//设置默认值为-1,如果转换失败返回-1
+	汉字转数字 = -1
+	Dim temp
+	Select Case UTF8.Len(汉字)
+		Case 1
+			temp = 十以内汉字转数字(汉字)
+		Case 2
+			temp = 两位汉字转数字(汉字)
+		Case Else
+	End Select
+	汉字转数字 = temp
+End Function
+
+Function 十以内汉字转数字(汉字)
+	//设置默认值为-1,如果转换失败返回-1
+	十以内汉字转数字 = -1
+    Dim 结果
+    结果 = UTF8.Len(汉字)
+    TracePrint 结果
+	If 结果 = 1 Then 
+		If 汉字 = "一" Then 
+        	十以内汉字转数字 = 1
+    	ElseIf 汉字 = "二" Then
+        	十以内汉字转数字 = 2
+    	ElseIf 汉字 = "三" Then
+        	十以内汉字转数字 = 3
+    	ElseIf 汉字 = "四" Then
+        	十以内汉字转数字 = 4
+    	ElseIf 汉字 = "五" Then
+        	十以内汉字转数字 = 5
+    	ElseIf 汉字 = "六" Then
+        	十以内汉字转数字 = 6
+    	ElseIf 汉字 = "七" Then
+        	十以内汉字转数字 = 7
+    	ElseIf 汉字 = "八" Then
+        	十以内汉字转数字 = 8
+    	ElseIf 汉字 = "九" Then
+        	十以内汉字转数字 = 9
+    	ElseIf 汉字 = "十" Then
+        	十以内汉字转数字 = 10
+        ElseIf 汉字 = "零" Then
+        	十以内汉字转数字 = 0
+    	End If
+    End If
+End Function
+
+Function 两位汉字转数字(汉字)
+	//设置默认值为-1,如果转换失败返回-1
+	两位汉字转数字 = -1
+	Dim 结果
+	结果 = UTF8.Len(汉字)
+	If 结果 = 2 Then 
+		Dim 十位, 个位, 十位数值, 个位数值
+    	
+    	十位 = UTF8.Left(汉字, 1)
+    	个位 = UTF8.Right(汉字, 1)
+		If 十位 = "十" Then 
+        	十位数值 = 十以内汉字转数字(十位)
+        	个位数值 = 十以内汉字转数字(个位)
+        	两位汉字转数字 = 十位数值 + 个位数值
+    	Else
+    		If 个位 = "十" Then 
+    			十位数值 = 十以内汉字转数字(十位)
+    			两位汉字转数字 = 十位数值 * 10
+    		Else 
+    			十位数值 = 十以内汉字转数字(十位)
+        		个位数值 = 十以内汉字转数字(个位)
+        		两位汉字转数字 = 十位数值 * 10 + 个位数值
+    		End If
+    	End If
+
+    End If
+End Function

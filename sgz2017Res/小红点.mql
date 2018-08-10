@@ -1,0 +1,183 @@
+//小红点枚举
+//1 = 邮件, 2 = 任务, 3 = 活动, 4 = 七日狂欢, 5 = 开服基金 , 6 = 月卡 , 7 = 皇榜任务, 8 = 签到, 9 = 副本, 10 = 军团, 11 = 背包, 12 = 武将, 13 = 沙场论剑, 14 = 兵事, 15 = 俸禄
+
+
+Function 小红点列表()
+    Dim 新邮件信息, 任务信息, 副本事件信息, 七日狂欢信息, 皇榜奖励信息 ,签到奖励信息, 新兵事信息, 俸禄信息, 军团信息, 新活动信息, 新背包信息, 新武将信息
+    新邮件信息 = 新邮件() : 任务信息 = 任务完成() : 副本事件信息 = 副本事件() : 七日狂欢信息 = 七日狂欢奖励() : 皇榜奖励信息 = 皇榜奖励() : 签到奖励信息 = 签到奖励() : 新兵事信息 = 新兵事()
+    俸禄信息 = 俸禄() : 军团信息 = 新军团() : 新活动信息 = 新活动() : 新背包信息 = 新背包() : 新武将信息 = 新武将()
+    小红点列表 = Array(新邮件信息, 任务信息, 新活动信息, 副本事件信息, 七日狂欢信息, 皇榜奖励信息 ,签到奖励信息, 新兵事信息, 俸禄信息, 军团信息, 新背包信息, 新武将信息)
+End Function
+
+Function 新武将()
+    Dim intX,intY,新武将信息
+    FindColor 3,464,116,602,"2626AD",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        新武将信息 = True
+        TracePrint "有新背包信息"
+    End If
+    新武将 = Array(12, 新武将信息, intX, intY)
+End Function
+
+Function 新背包()
+    Dim intX,intY,新背包信息
+    FindColor 4,737,116,868,"2626AD",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        新背包信息 = True
+        TracePrint "有新背包信息"
+    End If
+    新背包 = Array(11, 新背包信息, intX, intY)
+End Function
+
+Function 新兵事()
+    Dim intX,intY,新兵事信息
+    FindColor 215,8,326,111,"2626AD",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        新兵事信息 = True
+        TracePrint "有新兵事"
+    End If
+    新兵事 = Array(14, 新兵事信息, intX, intY)
+End Function
+
+Function 新邮件()
+    Dim intX,intY,新邮件信息
+    FindColor 86,0,170,120,"2626AD",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        新邮件信息 = True
+        TracePrint "有新邮件"
+    End If
+    新邮件 = Array(1, 新邮件信息, intX, intY)
+End Function
+
+Function 任务完成()
+    Dim intX,intY,任务信息
+    FindColor 220,1230,250,1260,"2626AD",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        任务信息 = True
+        TracePrint "有任务完成"
+    End If
+    任务完成 = Array(2, 任务信息, intX, intY)
+End Function
+
+Function 副本事件()
+    Dim intX,intY,副本事件信息
+    FindColor 320,1230,360,1260,"2626AD",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        副本事件信息 = True
+        TracePrint "有副本事件"
+    End If
+    副本事件 = Array(9, 副本事件信息, intX, intY)
+End Function
+
+Function 新活动()
+    Dim intX,intY,新活动信息
+    FindColor 430,1230,680,1260,"2626AD",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        新活动信息 = True
+        TracePrint "有新新活动"
+    End If
+    新活动 = Array(3, 新活动信息, intX, intY)
+End Function
+
+Function 七日狂欢奖励()
+    Dim intX1,intY1,intX2,intY2,七日狂欢信息
+    FindPic 400,560,670,1100,"Attachment:七日狂欢图标.png","000000",0,0.7,intX1,intY1
+    If intX1 > -1 And intY1 > -1 Then
+        FindColor intX1,intY1,intX1 + 100,intY1 + 100,"2626AD",0,0.99,intX2,intY2
+        If intX2 > -1 And intY2 > -1 Then
+            七日狂欢信息 = True
+            TracePrint "有七日狂欢"
+        End If
+    End If
+    七日狂欢奖励 = Array(4, 七日狂欢信息, intX1, intY1)
+End Function
+
+Function 皇榜奖励()
+    Dim intX1,intY1,intX2,intY2,皇榜奖励信息
+    FindPic 400, 560, 670, 1100, "Attachment:皇榜任务主城图标1.png", "000000", 0, 0.9, intX1, intY1
+    If intX1 > -1 And intY1 > -1 Then 
+        FindColor intX1, intY1, intX1 + 100, intY1 + 100, "2626AD", 0, 0.99, intX2, intY2
+        If intX2 > -1 And intY2 > -1 Then
+            TracePrint "有皇榜奖励"
+            皇榜奖励信息 = True
+        End If
+        
+    Else 
+        FindPic 400, 560, 670, 1100,"Attachment:皇榜任务主城图标2.png","000000",0,0.9,intX1, intY1
+        If intX1 > -1 And intY1 > -1 Then
+            FindColor intX1, intY1, intX1 + 100, intY1 + 100, "2626AD", 0, 0.99, intX2, intY2
+            If intX2 > -1 And intY2 > -1 Then
+                皇榜奖励信息 = True
+                TracePrint "有皇榜奖励"
+            End If
+        End If
+    End If
+    皇榜奖励 = Array(7, 皇榜奖励信息, intX1, intY1)
+End Function
+
+Function 签到奖励()
+    Dim intX1,intY1,intX2,intY2,签到奖励信息
+    FindPic 400,560,670,1100,"Attachment:签到图标.png","000000",0,0.7,intX1,intY1
+    If intX1 > -1 And intY1 > -1 Then
+        FindColor intX1,intY1,intX1 + 100,intY1 + 100,"2626AD",0,0.99,intX2,intY2
+        If intX2 > -1 And intY2 > -1 Then 
+            TracePrint "有签到奖励"
+            签到奖励信息 = True
+        End If
+    End If
+    签到奖励 = Array(8, 签到奖励信息, intX1, intY1)
+End Function
+
+Function 俸禄()
+    Dim intX,intY, 俸禄信息
+    FindColor 625,9,712,128,"2626AD",0,0.95,intX,intY
+    If intX > -1 And intY > -1 Then
+        俸禄信息 = True
+        TracePrint "有俸禄"
+    End If
+    俸禄 = Array(15, 俸禄信息, intX, intY)
+End Function
+
+Function 新军团()
+    Dim intX,intY,新军团信息
+    FindColor 3,870,117,1003,"2626AD",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        新军团信息 = True
+        TracePrint "有新军团事件"
+    End If
+    新军团 = Array(10, 新军团信息, intX, intY)
+End Function
+
+Function 木材免费祭祀()
+    Dim intX,intY
+
+    FindColor 407,288,450,329,"2929B7",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        木材免费祭祀 = True
+    End If
+	
+End Function
+
+Function 石头免费祭祀()
+    Dim intX,intY
+
+    FindColor 301,293,333,323,"2929B7",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        石头免费祭祀 = True
+    End If
+	
+End Function
+
+Function 矿石免费祭祀()
+    Dim intX,intY
+
+    FindColor 190,295,226,322,"2929B7",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        矿石免费祭祀 = True
+    End If
+	
+End Function
+
+Function 可以祭祀()
+	
+End Function
