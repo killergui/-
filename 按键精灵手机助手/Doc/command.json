@@ -1,0 +1,1741 @@
+
+{
+	"Abs" : 
+	{
+		"Description" : "格式：Abs(数值表达式)
+解释：返回数值的绝对值，绝对值是其无符号的数值大小。例如，Abs(-1) 和 Abs(1) 都返回 1。"
+	},
+	"Array" : 
+	{
+		"Description" : "格式：Array(表达式1, 表达式2, ... 表达式n)
+解释：返回由多个表达式组成的一维数组，各个表达式可以是整数类型、浮点类型或字符串类型
+举例：
+Dim i
+i=Array(1, 2, 3, \"字符串1\", \"字符串2\")"
+	},
+	"Asc" : 
+	{
+		"Description" : "格式：Asc(字符串表达式)
+解释：返回与字符串的第一个字母对应的字符ASCII码。"
+	},
+		"And" : 
+	{
+		"Description" : "格式：Asc(字符串表达式)
+解释：返回与字符串的第一个字母对应的字符ASCII码。"
+	},
+	"Atn" : 
+	{
+		"Description" : "格式：Atn(数值表达式)
+解释：返回数值的反正切值。
+即计算直角三角形两个边的比值 (number) 并返回对应角的弧度值。此比值是该角对边的长度与邻边长度之比。
+结果的范围是从 -pi/2 到 pi/2 弧度。
+将角度乘以 pi/180 即可转换为弧度，将弧度乘以 180/pi 即可转换为角度。"
+	},
+	"CBool" : 
+	{
+		"Description" : "格式：CBool(表达式)
+解释：试图把表达式转换为Bool类型并返回此Bool值。"
+	},
+	"CDbl" : 
+	{
+		"Description" : "格式：CDbl(表达式)
+解释：试图把表达式转换为浮点类型并返回此数值。"
+	},
+	"CInt" : 
+	{
+		"Description" : "格式：CInt(表达式)
+解释：试图把表达式转换为整数类型，并返回此数值经过四舍五入的结果。"
+	},
+	"CLng" : 
+	{
+		"Description" : "格式：CLng(表达式)
+解释：试图把表达式转换为整数类型，并返回此数值经过四舍五入的结果。"
+	},
+	"Clone" : 
+	{
+		"Description" : "格式：Clone(数组)
+解释：对数组进行值拷贝。"
+	},
+	"CSng" : 
+	{
+		"Description" : "格式：CSng(表达式)
+解释：试图把表达式转换为浮点类型并返回此数值。"
+	},
+	"CStr" : 
+	{
+		"Description" : "格式：CStr(表达式)
+解释：试图把表达式转换为字符串类型并返回此字符串。"
+	},
+	"Call" : 
+	{
+		"Description" : "格式：
+Call 函数或者过程名(参数1, 参数2, ...)
+解释：调用函数或者过程。"
+	},
+	"End" : 
+	{
+		"Description" : "格式：
+End {关键字配对}
+解释：
+End If       用于配对结束 If 条件判断。
+End Select   用于配对结束 Select Case 选择情况判断。
+End Sub      用于配对结束 Sub 子程序过程。
+End Function 用于配对结束 Function 函数过程。"
+	},
+	"Case" : 
+	{
+		"Description" : "Select Case 表达式
+Case 情况1
+…
+Case 情况2
+…
+Case Else
+…
+End Select
+解释：根据情况选择条件判断。"
+	},
+	"Chr" : 
+	{
+		"Description" : "格式：Chr(数值表达式)
+解释：返回与指定的ASCII字符代码相对应的字符。"
+	},
+	"CmpColor" : 
+	{
+		"Description" : "格式：CmpColor(横坐标, 纵坐标, 颜色值, 相似度)
+解释：对比屏幕上点(横坐标, 纵坐标)的颜色值是否等于指定的“颜色值”。
+其中“颜色值”是要对比的16进制RGB颜色，多个颜色用“|”号分隔，如果需要对比偏色则中间用“-”号分隔，比如\"FFFFFF|123456-000000|00FF00-101010\"
+返回值：返回匹配的颜色序号,从0开始索引.如果全部不相等则返回-1"
+	},
+	"CmpColorEx" : 
+	{
+		"Description" : "格式：CmpColorEx(对比颜色组, 相似度)
+解释: 比较多个指定坐标点的颜色是否均与当前屏幕点的颜色匹配，支持多色、偏色、相似度比较。
+对比颜色组：需要对比的点xy坐标和16进制颜色（最大支持32个颜色）,格式为(X坐标|Y坐标|16进制颜色),多个颜色用“|”号分隔,需要偏色用“-”号分隔,多个点信息用“,”号分隔，比如\"100|200|FFFFFF|123456-000000,300|500|FFFFFF\"
+相似度：识别点的颜色和需要对比的颜色相似度，取值范围0.1-1.0
+返回值：返回0代表匹配失败，返回1代表匹配成功"
+	},
+	"ColorDiff" : 
+	{
+		"Description" : "格式：ColorDiff(16进制颜色值1, 16进制颜色值2)
+解释：返回两个颜色的红、绿、蓝三个分量的差值之总和。"
+	},
+	"ColorToRGB" : 
+	{
+		"Description" : "格式：ColorToRGB 16进制颜色值, 变量R, 变量G, 变量B
+解释：把颜色分解为红、绿、蓝三个分量，分别保存在变量R，变量G，变量B中。
+16进制颜色值可以为字符串，格式为\"BBGGRR\"，也可以为数值（默认情况下为十进制，数值前加上&H则表示十六进制）。"
+	},
+	"Cos" : 
+	{
+		"Description" : "格式：Cos(数值表达式)
+解释：返回将某个角表示为弧度数值的余弦值。
+即取某个角并返回直角三角形两边的比值。此比值是直角三角形中该角的邻边长度与斜边长度之比。
+结果范围在 -1 到 1 之间。
+将角度乘以 pi/180 即可转换为弧度，将弧度乘以 180/pi 即可转换为角度。"
+	},	
+	"CatchTouchPoint" : 
+	{
+			"Description" : "格式：CatchTouchPoint(需要获取的点击次数)
+解释：获取屏幕上手指点击的坐标（命令为阻塞状态）。"
+	},
+	"Date" : 
+	{
+		"Description" : "格式：Date()
+解释：返回当前系统日期。格式为 年/月/日，如2013年10月1日表示为2013/10/01。"
+	},
+	"Delay" : 
+	{
+	  "ListHead" : true,
+		"Description" : "格式：Delay 数值表达式
+解释：脚本暂停执行一段时间。数值表达式指定了延时的“毫秒”数。
+1秒＝1000毫秒
+1分钟＝60000毫秒
+1小时＝3600000毫秒"
+	},
+	"Dim" : 
+	{
+		"Description" : "格式：
+Dim 变量1, 变量2 ...
+或者
+Dim 变量1=初始值, 变量2 = 初始值 ...
+解释：定义一个或多个变量。同时还可以为变量设置初始值。"
+	},
+	"Dir" :
+	{
+		"Description" : "文件系统操作相关命令"
+	},
+	"Dir.Copy" : 
+	{
+		"Description" : "格式：Dir.Copy(源路径, 目的路径)
+解释：复制文件或文件夹。成功返回True；失败返回False。
+路径：若不指定绝对路径则默认为安装目录下的文件或文件夹。"
+	},
+	"Dir.Create" : 
+	{
+		"Description" : "格式：Dir.Create(路径)
+解释：创建文件夹。成功返回True；失败返回False。
+路径：若不指定绝对路径则默认为安装目录下的文件夹。"
+	},
+	"Dir.Delete" : 
+	{
+		"Description" : "格式：Dir.Delete(路径)
+解释：删除文件或文件夹。成功返回True；失败返回False。
+路径：若不指定绝对路径则默认为安装目录下的文件或文件夹。
+注意：存在删除系统文件(夹)的风险，请谨慎操作，确保删除的内容是用户自定义文件"
+	},
+	"Dir.Exist" : 
+	{
+		"Description" : "格式：Dir.Exist(路径)
+解释：判断文件或文件夹是否存在。返回0表示不存在；1表示存在文件；2表示存在文件夹
+路径：若不指定绝对路径则默认为安装目录下文件或文件夹。"
+	},
+	"Dir.Move" : 
+	{
+		"Description" : "格式：Dir.Move(源路径, 目的路径)
+解释：文件或文件夹移动
+新(旧)路径：若不指定绝对路径则默认为安装目录下文件或文件夹。
+注意：存在移动系统文件(夹)的风险，请谨慎操作，确保操作的内容是用户自定义文件"
+	},
+	"Dir.Rename" : 
+	{
+		"Description" : "格式：Dir.Rename(旧路径, 新路径)
+解释：文件或文件夹重命名
+新(旧)路径：若不指定绝对路径则默认为安装目录下文件或文件夹。
+注意：存在重命名系统文件(夹)的风险，请谨慎操作，确保操作的内容是用户自定义文件"
+	},
+	"Do" : 
+	{
+		"Description" : "格式：
+Do
+…
+Loop While 表达式
+或者
+Do
+…
+Loop Until 表达式
+解释：条件循环"
+	},
+	"Do Until" : 
+	{
+		"Description" : "格式：
+Do Until 表达式
+…
+Loop
+解释：条件循环，直到表达式里的条件满足的时候才跳出循环"
+	},
+	"Do While" : 
+	{
+		"Description" : "格式：
+Do While 表达式
+…
+Loop
+解释：条件循环，直到表达式里的条件不满足的时候才跳出循环"
+	},
+	"Else" : 
+	{
+		"Description" : "格式：
+If 表达式 Then
+…
+ElseIf 表达式 Then
+…
+Else
+…
+End If
+解释：和If语句结合，进行条件判断。"
+	},
+	"ElseIf" : 
+	{
+		"Description" : "格式：
+If 表达式 Then
+…
+ElseIf 表达式 Then
+…
+ElseIf 表达式 Then
+…
+Else
+…
+End If
+解释：和If语句结合，进行条件判断。"
+	},
+	"End Function" : 
+	{
+		"Description" : "解释：用于配对结束 Function 函数过程。"
+	},
+	"End If" : 
+	{
+		"Description" : "解释：用于配对结束 If 条件判断。"
+	},
+	"End Select" : 
+	{
+		"Description" : "解释：用于配对结束 Select Case 选择情况判断。"
+	},
+	"End Sub" : 
+	{
+		"Description" : "解释：用于配对结束 Sub 子程序过程。"
+	},
+	"EndScript" : 
+	{
+		"Description" : "格式：EndScript
+解释：强制结束脚本的执行。"
+	},
+	"Exit Do" : 
+	{
+		"Description" : "解释：用于退出 Do 循环。"
+	},
+	"Exit For" : 
+	{
+		"Description" : "解释：用于退出 For 循环。"
+	},
+	"Exit Function" : 
+	{
+		"Description" : "解释：用于退出 Function 函数过程。"
+	},
+	"Exit Sub" : 
+	{
+		"Description" : "解释：用于退出 Sub 子程序过程。"
+	},
+	"Exit While" : 
+	{
+		"Description" : "解释：用于退出 While 循环。"
+	},
+	"Encode" :
+	{
+		"Description" : "字符串编码相关命令"
+	},
+	"Encode.Md5" : 
+	{
+		"Description" : "格式：Encode.Md5(字符串)
+    解释：计算字符串的Md5值。"
+	},
+	"Encode.JsonToTable" : 
+	{
+		"Description" : "格式：Encode.JsonToTable(Json字符串)
+    解释：将Json字符串转换成对应的键值表。"
+	},
+	"Encode.TableToJson" : 
+	{
+		"Description" : "格式：Encode.TableToJson(键值表)
+    解释：将键值表转换成对应的Json串。"
+	},
+	"Exp" : 
+	{
+		"Description" : "格式：Exp(数值表达式)
+解释：返回 e（自然对数的底）的幂次方。
+常数 e 的值约为 2.718282。"
+	},
+	"False" : 
+	{
+		"Description" : "解释：用于设置一个布尔型的值为假。"
+	},
+	"EnableFastCapture" : 
+	{
+		"Description" : "格式：EnableFastCapture True/False
+解释：快速截图模式开关，启动该模式能极高地提升载图的效率，目前该模式适配于Android4.2以下、Android4.4及以上的系统。
+输入值：True表示开启快速截图模式；False表示关闭快速截图模式。
+返回值：在该模式不适配的Android版本的系统中，该命令可能失效而返回False，表示开启快速截图模式失败；返回True则表示开启成功。
+如果开启成功，该模式能加速以下命令的效率：FindColor、FindPic、GetPixelColor、CmpColor及GetColorNum。
+注：在Android4.4及以上的系统中，该模式的截图结果与原屏幕可能存在微小的色差，因此在使用找图找色等命令时，请指定适当的色差，否则可能会导致查找失败"
+	},
+	"FindColor" : 
+	{
+		"Description" : "格式：FindColor 屏幕左上角x坐标, 屏幕左上角y坐标, 屏幕右下角x坐标, 屏幕右下角y坐标, 16进制颜色值, 查找方式, 相似度, 返回x坐标（变量名）, 返回y坐标（变量名）
+解释：在屏幕中指定的区域内，查找是否存在某个指定的颜色。如果找到，将找到的点的左边置于后两个参数（通常为变量）中；如果没有找到，则后两个参数均被置为-1。
+当屏幕左上角x坐标, 屏幕左上角y坐标, 屏幕右下角x坐标, 屏幕右下角y坐标均为0的时候，表示在整个屏幕中查找。
+颜色值即为要找的16进制颜色，支持偏色、多个颜色用“|”号分隔，比如\"FFFFFF-000000|123456-101010|00FF00\"。
+查找方式：[0]从左到右,从上到下查找；[1]从中心往四周查找；[2]从右到左,从下到上查找；[3]从左到右,从下到上查找；[4]从右到左,从上到下查找；
+               [5]从上到下,从左到右查找；[6]从上到下,从右到左查找；[7]从下到上,从左到右查找；[8]从下到上,从右到左查找。
+相似度为0到1之间的数值。此数值为1时，屏幕上的颜色必须与指定的颜色完全一致才算找到；否则，当存在少量偏差时也算找到。此数值越小，允许的颜色偏差范围越大。
+函数返回找到的颜色的序号,从0开始索引.如果没找到返回-1。"
+	},
+	"FindMultiColor" : 
+	{
+		"Description" : "格式：FindMultiColor 屏幕左上角x坐标, 屏幕左上角y坐标, 屏幕右下角x坐标, 屏幕右下角y坐标, 16进制起点颜色, 偏移点颜色组, 查找方式, 相似度, 返回x坐标（变量名）, 返回y坐标（变量名）
+解释：在屏幕中指定的区域内，查找在“16进制起点颜色”匹配的同时，“偏移点颜色组”是否也均匹配。如果找到，将找到的点的左边置于后两个参数（通常为变量）中；如果没有找到，则后两个参数均被置为-1。
+当屏幕左上角x坐标, 屏幕左上角y坐标, 屏幕右下角x坐标, 屏幕右下角y坐标均为0的时候，表示在整个屏幕中查找。
+16进制起点颜色：即为要找的16进制颜色（最大支持32个颜色），支持偏色、多个颜色用“|”号分隔，比如\"FFFFFF-000000|123456-101010|00FF00\"。
+偏移点颜色组：偏移点的坐标和颜色组（最大支持32个偏移点）,格式为(相对第一点位置偏移X坐标|相对第一点位置偏移Y坐标|16进制颜色),多个颜色用“|”号分隔,需要偏色用“-”号分隔,多个点信息用“,”号分隔，比如\"1|2|FFFFFF|123456-000000,3|4|FFFFFF\"
+查找方式：[0]从左到右,从上到下查找；[1]从中心往四周查找；[2]从右到左,从下到上查找；[3]从左到右,从下到上查找；[4]从右到左,从上到下查找；
+               [5]从上到下,从左到右查找；[6]从上到下,从右到左查找；[7]从下到上,从左到右查找；[8]从下到上,从右到左查找。
+相似度为0到1之间的数值。此数值为1时，屏幕上的颜色必须与指定的颜色完全一致才算找到；否则，当存在少量偏差时也算找到。此数值越小，允许的颜色偏差范围越大。"
+	},
+	"FindPic" : 
+	{
+		"Description" : "格式：FindPic 屏幕左上角x坐标, 屏幕左上角y坐标, 屏幕右下角x坐标, 屏幕右下角y坐标, 图片文件名, 偏色, 查找方式, 相似度, 返回x坐标（变量名）, 返回y坐标（变量名）
+解释：在屏幕中指定的区域内，查找是否存在某个图片文件所指定的图像，支持多图、偏色查找。如果找到，将找到的点的左边置于后两个参数（通常为变量）中；如果没有找到，则后两个参数均被置为-1。
+当屏幕左上角x坐标, 屏幕左上角y坐标, 屏幕右下角x坐标, 屏幕右下角y坐标均为0的时候，表示在整个屏幕中查找。
+图片文件名：支持多图查找，若图片为附件则格式如：\"Attachment:1.png|Attachment:2.png|Attachment:3.png|Attachment:4.png\"
+偏色：每个像素点的偏色范围，格式为“BBGGRR”，如\"010203\"
+查找方式：[0]从左到右,从上到下查找；[1]从中心往四周查找；[2]从右到左,从下到上查找；[3]从左到右,从下到上查找；[4]从右到左,从上到下查找；
+               [5]从上到下,从左到右查找；[6]从上到下,从右到左查找；[7]从下到上,从左到右查找；[8]从下到上,从右到左查找。
+相似度为0到1之间的数值。此数值为1时，屏幕上的颜色必须与指定的颜色完全一致才算找到；否则，当存在少量偏差时也算找到。此数值越小，允许的颜色偏差范围越大。
+支持的图片文件格式包括PNG、BMP、JPG等，推荐用PNG格式，PNG格式图片中所指定透明点表示该点不会参与匹配过程的计算，也就是该点与屏幕上的任何颜色都会匹配成功。
+图片文件名如果以 \"Attachment:\" 开始，表明后面的部分是附件中的文件。按键精灵会自动从附件中找到该文件并进行找图，不需要将附件释放到存储卡上。"
+	},
+	"FindStr" : 
+	{
+		"Description" : "格式：FindStr 屏幕左上角x坐标, 屏幕左上角y坐标, 屏幕右下角x坐标, 屏幕右下角y坐标, 待查找的字符串, 颜色格式串, 相似度, 返回x坐标（变量名）, 返回y坐标（变量名）
+解释：在屏幕中指定的区域内，根据指定的颜色格式查找指定的字符串所在的位置坐标，如果找到，将找到的坐标置于后两个参数（通常为变量）中；如果没有找到，则后两个参数均被置为-1。
+当屏幕左上角x坐标, 屏幕左上角y坐标, 屏幕右下角x坐标, 屏幕右下角y坐标均为0的时候，表示在整个屏幕中查找。
+待查找的字符串：支持多个字符串的组合。如：\"你好|我好\"
+颜色格式串：文字的颜色格式串，格式为“BBGGRR-偏色”，如\"aaff00-101010|bbff00-101010\"
+相似度：为0到1之间的数值。"
+	},
+	"Fix" : 
+	{
+		"Description" : "格式：Fix(数值表达式)
+解释：返回指定数值的整数部分。
+如果指定的数值为负数时，Fix会返回大于或等于该数值的第一个负整数。例如，Fix将 -8.4 转换为 -8。"
+	},
+	"For" : 
+	{
+		"Description" : "格式：
+For 循环次数
+或
+For 变量=起始数值 To 终止数值
+或
+For 变量=起始数值 To 终止数值 Step 步长数值
+或
+For Each 变量 In 数组
+...
+Next
+解释：循环语句。可以循环一定次数，也可以按照变量的起始数值到终止数值循环（如果不指定步长数值，默认步长为1），也可以循环取得数组中的所有值。"
+	},
+	"Function" : 
+	{
+		"Description" : "格式：
+Function 函数过程名(参数1, 参数2, ...)
+…
+End Function
+解释：定义一个函数过程，可以在脚本中调用这个函数。"
+	},
+	"GetColorNum" : 
+	{
+		"Description" : "格式：GetColorNum(屏幕左上角x坐标, 屏幕左上角y坐标, 屏幕右下角x坐标, 屏幕右下角y坐标, 查找颜色, 相似度)
+解释：获取指定区域的颜色数量，支持偏色、多色、相似度
+查找颜色：要找的16进制颜色，多个颜色用“|”号分隔，比如\"FFFFFF-000000|123456\"
+相似度：查找的相似度，取值范围0.1-1.0
+返回颜色匹配的点的数量"
+	},
+	"GetDeviceID" : 
+	{
+		"Description" : "格式：GetDeviceID()
+解释：返回设备的唯一编号。GSM手机返回IMEI号；CDMA手机返回MEID或ESN号"
+	},
+
+	"Device" :
+	{
+		"Description" : "设备信息获取的相关命令"
+	},	
+	"Device.GetIp" : 
+	{
+		"Description" : "格式：Device.GetIp()
+解释：返回设备的IP"
+	},
+	"Device.GetImsi" : 
+	{
+		"Description" : "格式：Device.GetImsi()
+解释：返回设备的Imsi号"
+	},
+	"Device.GetModel" : 
+	{
+		"Description" : "格式：Device.GetModel()
+解释：返回设备的型号"
+	},
+	"Device.GetIccid" : 
+	{
+		"Description" : "格式：Device.GetIccid()
+解释：返回设备的Iccid"
+	},
+	"Device.GetDPI" : 
+	{
+		"Description" : "格式：Device.GetDPI()
+解释：返回设备的DPI值"
+	},
+	"Device.Lock" : 
+	{
+		"Description" : "格式：Device.Lock()
+解释：锁定设备屏幕"
+	},
+	"Device.UnLock" : 
+	{
+		"Description" : "格式：Device.UnLock()
+解释：解锁设备屏幕"
+	},
+	"Device.IsLock" : 
+	{
+		"Description" : "格式：Device.IsLock()
+解释：判断设备锁定状态"
+	},
+	"Device.Reboot" : 
+	{
+		"Description" : "格式：Device.Reboot()
+解释：重新启动设备"
+	},
+	"Device.PowerOff" : 
+	{
+		"Description" : "格式：Device.PowerOff()
+解释：设备关机"
+	},
+	"Device.SetAutoLockTime" : 
+	{
+		"Description" : "格式：Device.SetAutoLockTime(设置时间)
+解释：设置锁屏时间(单位为秒，0是系统选项中的最小值) "
+	},
+	"Device.GetName" : 
+	{
+		"Description" : "格式：Device.GetName()
+解释：获取设备名称"
+	},
+	"Device.GetBacklightLevel" : 
+	{
+		"Description" : "格式：Device.GetBacklightLevel()
+解释：获取设备屏幕亮度值"
+	},
+	"Device.SetBacklightLevel" : 
+	{
+		"Description" : "格式：Device.SetBacklightLevel(屏幕亮度值)
+解释：设置设备屏幕亮度"
+	},
+	"Device.SetVolumeLevel" : 
+	{
+		"Description" : "格式：Device.SetVolumeLevel(音量值)
+解释：设置设备中所有音量"
+	},
+	"Image" :
+	{
+		"Description" : "图像相关处理命令"
+	},
+	"Image.FindMultiColor" : 
+	{
+		"Description" : "格式：Image.FindMultiColor(查找区域左上X坐标,查找区域左上Y坐标,查找区域右下X坐标,查找区域右下Y坐标,要对比的16进制颜色,偏移颜色,查找方向,相似度)
+解释：根据指定的多点颜色获取所有符合的坐标。"
+	},
+	"Image.GetScreenData" : 
+	{
+		"Description" : "格式：Image.GetScreenData(查找区域左上X坐标,查找区域左上Y坐标,查找区域右下X坐标,查找区域右下Y坐标)
+解释：获取指定屏幕范围内图像数据(范围设置过大可能会产生溢出，谨慎使用)。"
+	},
+	"Contacts" :
+	{
+		"Description" : "通讯录操作相关命令"
+	},
+	"Contacts.Add" : 
+	{
+		"Description" : "格式：Contacts.Add(姓,名,电话号码)
+解释：往通讯录中添加联系人。"
+	},
+	"Contacts.Delete" : 
+	{
+		"Description" : "格式：Contacts.Delete(电话号码)
+解释：删除通讯录中联系人。"
+	},
+	"Contacts.Clear" : 
+	{
+		"Description" : "格式：Contacts.Clear()
+解释：清空通讯录中所有联系人。"
+	},
+	"Dialog" :
+	{
+		"Description" : "对话窗提示相关命令"
+	},
+	"Dialog.MsgBox" : 
+	{
+		"Description" : "格式：Dialog.MsgBox(文字描述,样式)
+解释：弹出确认对话窗（阻塞脚本继续运行）。"
+	},
+	"Dialog.InputBox" : 
+	{
+		"Description" : "格式：Dialog.InputBox(文字描述)
+解释：弹出带输入框的对话窗（阻塞脚本继续运行）。"
+	},
+	"GetNetworkTime" : 
+	{
+		"Description" : "格式：GetNetworkTime()
+解释：返回网络时间"
+	},
+	"GetPixelColor" : 
+	{
+		"Description" : "格式：GetPixelColor(横坐标, 纵坐标, 返回类型)
+解释：返回屏幕上指定点的颜色。由两个数值型表达式指定该点的横坐标和纵坐标（以像素为单位）。
+返回类型参数为0时颜色值是16进制类型的BGR值，返回类型参数不为0时颜色值是数值型。返回类型默认为0，可不填写。"
+	},
+	"GetPixelRGB" : 
+	{
+		"Description" : "格式：GetPixelRGB(横坐标, 纵坐标, 变量R, 变量G, 变量B)
+解释：得到屏幕上指定点的颜色。由两个数值型表达式指定该点的横坐标和纵坐标（以像素为单位）。
+得到的颜色值转换为红、绿、蓝三种分量，并分别保存在变量R、变量G和变量B中。"
+	},
+	"GetRunningApp" : 
+	{
+		"Description" : "格式：GetRunningApp()
+解释：获取设备当前正在运行的应用程序的包名。所有包名合为一个字符串数组返回，数组中的每个元素代表一个应用程序的包名"
+	},
+	"GetScreenColorDep" : 
+	{
+		"Description" : "格式：GetScreenColorDep()
+解释：返回当前屏幕的颜色深度，即每个像素用多少个二进制位（Bit）表示，通常屏幕的颜色深度为16或24或32。"
+	},
+	"GetScreenRotation" : 
+	{
+		"Description" : "格式：GetScreenRotation()
+解释：返回当前屏幕的旋转方向。返回值为0的时候，表示屏幕没有旋转；返回值为1、2或3的时候，分别表示屏幕逆时针旋转90度、180度、270度。"
+	},
+	"GetScreenX" : 
+	{
+		"Description" : "格式：GetScreenX()
+解释：返回当前屏幕的横向分辨率，即以像素数表示的屏幕宽度。"
+	},
+	"GetScreenY" : 
+	{
+		"Description" : "格式：GetScreenY()
+解释：返回当前屏幕的纵向分辨率，即以像素数表示的屏幕高度。"
+	},
+	"GetSdcardDir" : 
+	{
+		"Description" : "格式：GetSdcardDir()
+解释：返回当前手机的sdcard目录。"
+	},
+	"GetTempDir" : 
+	{
+		"Description" : "格式：GetTempDir()
+解释：返回存储卡上按键精灵的临时文件目录，可以在此目录中进行文件操作。"
+	},
+	"GetKeepState" : 
+	{
+		"Description" : "格式：GetKeepState()
+解释：获取屏幕的缓存状态。返回true:表示上一次调用了keepCature还未释放；返回false:表示已经释放屏幕数据。"
+	},
+	"GetAppDataPath" : 
+	{
+		"Description" : "格式：GetAppDataPath(包名)
+解释：获取应用的数据存放路径"
+	},
+	"Hex" : 
+	{
+		"Description" : "格式：Hex(数值表达式)
+解释：返回表示十六进制数值的字符串。当指定的数值表达式包含小数位时，会先采用四舍五入的方式去掉小数位再转换。"
+	},
+	"If" : 
+	{
+		"Description" : "格式：
+If 表达式 Then
+…
+ElseIf 表达式 Then
+…
+Else
+…
+End If
+解释：判断表达式并执行语句－－通过判断表达式的取值，来执行后面的动作或控制。"
+	},
+	"InStr" : 
+	{
+		"Description" : "格式：InStr(起始位置, 字符串1, 字符串2, 忽略大小写)
+解释：返回字符串2在字符串1中第一次出现的位置，从字符串1的某个指定起始位置开始搜索。
+“起始位置”为数值表达式，用于设置每次搜索的开始位置，设为1表示从头开始搜索。
+“忽略大小写”是可选参数，默认不忽略大小写。如果需要忽略，请将此参数设为1或者True。"
+	},
+	"InStrRev" : 
+	{
+		"Description" : "格式：InStrRev(字符串1, 字符串2, 起始位置, 忽略大小写)
+解释：返回字符串2在字符串1中出现的从结尾计起的位置。从字符串1的某个指定起始位置开始逆向搜索。
+起始位置为数值表达式，用于设置每次搜索的开始位置，设为-1，表示从最后一个字符的位置开始搜索。
+“忽略大小写”是可选参数，默认不忽略大小写。如果需要忽略，请将此参数设为1或者True。"
+	},
+	"InputText" : 
+	{
+		"Description" : "格式：InputText 字符串表达式
+解释：在当前窗口中输入文字。
+举例：InputText \"你好，我是按键精灵\"。"
+	},
+	"Int" : 
+	{
+		"Description" : "格式：Int(数值表达式)
+解释：返回指定数值的整数部分。
+如果指定的数值为负数时，Int会返回小于或等于该数值的第一个负整数。例如，Fix将 -8.4 转换为 -9。"
+	},
+	"IsArray" : 
+	{
+		"Description" : "格式：IsArray(变量)
+解释：返回 Bool 值指明某变量是否为数组。如果变量是数组，IsArray 返回 True；否则，返回 False。"
+	},
+	"IsNull" : 
+	{
+		"Description" : "格式：IsNull(变量)
+解释：返回 Bool 值，指明某变量是否不包含任何有效数据 (Null)。未初始化的变量通常都不包含任何有效数据。"
+	},
+	"Null" : 
+	{
+		"Description" : "格式：Null
+解释：任何有效数据置为空，如：数组 = Null。"
+	},
+	"IsNumeric" : 
+	{
+		"Description" : "格式：IsNumeric(变量)
+解释：返回 Bool 值，指明某变量是否为数值类型。如果变量是数值类型，IsNumeric 返回 True；否则，返回 False。"
+	},
+	"Join" : 
+	{
+		"Description" : "格式：Join(字符串数组, 分隔符)
+解释：返回一个字符串，此字符串由包含在数组中的多个子字符串联接创建，各个子字符串之间采用分隔符隔开。
+分隔符是字符串类型，可以是空字符串 \"\""
+	},
+	"KeepCapture" : 
+	{
+		"Description" : "格式：KeepCapture
+解释：首先截取当前屏幕内容，然后把截取结果暂时保留下来。当后续执行GetPixelColor、FindColor、FindPic的时候，直接在此次截取的屏幕内容上取色或查找。
+如果要取消KeepCapture的截图，请使用ReleaseCapture。
+当没有调用KeepCapture，或者KeepCapture的截图被取消的时候，每次执行GetPixelColor、FindColor、FindPic的时候，都会自动截取当前屏幕内容。速度较慢，但总是能得到最新的屏幕内容。"
+	},
+	"KeepScreen" : 
+	{
+		"Description" : "格式：KeepScreen Bool类型表达式
+解释：当指定的Bool类型表达式为True的时候，保持屏幕常开状态；否则，关闭屏幕常开功能（屏幕会自动关闭）。"
+	},
+	"KeyDown" : 
+	{
+		"Description" : "格式：KeyDown 按键
+解释：“按下”键，模拟我们平时的“按下”操作
+我们在使用键盘的时候有两种操作，,一种是“按下”键，一种是“弹起”键，将这两个动作连续进行，就是一个完整的“按键”动作。
+指定的按键可以是字符串类型，表示某个键的名字，也可以是数值类型，表示某个键的编码。"
+	},
+	"KeyPress" : 
+	{
+		"Description" : "格式：KeyPress 按键
+解释：先“按下”再“弹起”键，模拟我们平时的按键操作。
+我们在使用键盘的时候有两种操作，,一种是“按下”键，一种是“弹起”键，将这两个动作连续进行，就是一个完整的“按键”动作。
+指定的按键可以是字符串类型，表示某个键的名字，也可以是数值类型，表示某个键的编码。
+举例：KeyPress \"Home\"  //模拟按下Home键"
+	},
+	"KeyUp" : 
+	{
+		"Description" : "格式：KeyUp 按键
+解释：“弹起”键，模拟我们平时的“弹起”操作
+我们在使用键盘的时候有两种操作，,一种是“按下”键，一种是“弹起”键，将这两个动作连续进行，就是一个完整的“按键”动作。
+指定的按键可以是字符串类型，表示某个键的名字，也可以是数值类型，表示某个键的编码。"
+	},
+	"KillApp" : 
+	{
+		"Description" : "格式：KillApp 包名
+解释：指定某个应用程序的包名，关闭这个应用程序
+包名是字符串类型的表达式，如微信的包名是 com.tencent.mm"
+	},
+	"LCase" : 
+	{
+		"Description" : "格式：LCase(字符串表达式)
+解释：返回字符串的小写形式。
+仅大写字母转换成小写字母；所有小写字母和非字母字符保持不变。"
+	},
+	"LTrim" : 
+	{
+		"Description" : "格式：LTrim(字符串表达式)
+解释：返回不带前导空格的字符串。"
+	},
+	"Left" : 
+	{
+		"Description" : "格式：Left(字符串, 长度)
+解释：返回指定数目的从字符串的左边算起的字符。
+指定的长度为数值表达式，指明要返回的字符数目。如果是 0，返回空字符串 \"\"；如果大于或等于字符串中的字符总数，则返回整个字符串。"
+	},
+	"Len" : 
+	{
+		"Description" : "格式：Len(字符串表达式)
+解释：返回字符串内字符的数目。"
+	},
+	"Ln" : 
+	{
+		"Description" : "格式：Ln(数值表达式)
+解释：返回数值的自然对数，即以常数 e 为底的对数。
+常数 e 的值约为 2.718282。"
+	},
+	"Loop" : 
+	{
+		"Description" : "格式：
+Do While 表达式
+…
+Loop
+或者
+Do Until 表达式
+…
+Loop
+解释：条件循环"
+	},
+	"Loop Until" : 
+	{
+		"Description" : "格式：
+Do
+…
+Loop Until 表达式
+解释：条件循环，直到表达式里的条件满足的时候才跳出循环"
+	},
+	"Loop While" : 
+	{
+		"Description" : "格式：
+Do
+…
+Loop While 表达式
+解释：条件循环，直到表达式里的条件不满足的时候才跳出循环"
+	},
+	"Mid" : 
+	{
+		"Description" : "格式：Mid(字符串, 起始位置, 长度)
+解释：从字符串中返回指定数目的字符。
+起始位置和长度都是数值类型的表达式，起始位置从1开始递增。"
+	},
+	"Mod" : 
+	{
+		"Description" : "格式：值1 Mod 值2
+解释：获取值1除以值2的余数。"
+	},
+	"Next" : 
+	{
+		"Description" : "格式：Next
+解释：和For一起构成循环语句。"
+	},
+	"Now" : 
+	{
+		"Description" : "格式：Now()
+解释：根据计算机系统设定的日期和时间，返回当前的日期和时间值组成的字符串。"
+	},
+	"Ocr" : 
+	{
+		"Description" : "格式：Ocr(屏幕左上角x坐标, 屏幕左上角y坐标, 屏幕右下角x坐标, 屏幕右下角y坐标, 颜色格式串, 相似度)
+解释：在屏幕中指定的区域内，根据指定的颜色格式查找所有的字符串，并返回所有识到到的字符串。
+当屏幕左上角x坐标, 屏幕左上角y坐标, 屏幕右下角x坐标, 屏幕右下角y坐标均为0的时候，表示在整个屏幕中查找。
+颜色格式串：文字的颜色格式串，格式为“BBGGRR-偏色”，如\"aaff00-101010|bbff00-101010\"
+相似度：为0到1之间的数值。"
+	},
+	"Oct" : 
+	{
+		"Description" : "格式：Oct(数值表达式)
+解释：返回表示八进制数值的字符串。当指定的数值表达式包含小数位时，会先采用四舍五入的方式去掉小数位再转换。"
+	},
+	"OnScriptExit" : 
+	{
+		"Description" : "格式：OnScriptExit()
+解释：脚本退出前，会先执行该函数中的内容。"
+	},
+	"PlaySound" : 
+	{
+		"Description" : "格式：PlaySound 文件名
+解释：播放指定的音频文件，其中文件名为字符串类型的表达式，指明了音频文件的存储位置。
+文件名如果以 \"Attachment:\" 开始，表明后面的部分是附件中的文件。按键精灵会自动从附件中找到该文件并播放，不需要将附件释放到存储卡上。"
+	},
+	"StopPlay" : 
+	{
+		"Description" : "格式：StopPlay()
+解释：停止音频文件的播放"
+	},
+	"PutAttachment" : 
+	{
+		"Description" : "格式：
+PutAttachment(路径, 要释放的文件)
+或
+PutAttachment(路径)
+解释：把当前脚本包含的附件释放到指定的目录下，返回值为成功释放出的文件个数。
+路径是字符串类型，表示把附件文件释放到某个特定的目录下。
+路径可以是绝对路径，也可以是相对于按键精灵的临时文件目录的相对路径。临时文件目录可以通过调用 GetTempDir() 获得。
+如果路径为Null或空字符串，会把附件释放到按键精灵的临时文件目录下。
+如果指定的路径不存在，按键精灵会试图创建路径。
+要释放的文件（可选参数）为字符串类型，可以指定只释放附件中的一个或几个文件，支持通配符 * 和 ? 。
+当不指定要释放的文件，或指定为Null或空字符串时，表示要释放本脚本附件中的所有文件。
+举例：PutAttachment \"\", \"*.png\"\t\t//把所有扩展名为png的文件释放到按键精灵的临时文件目录下。"
+	},
+	"RGB" : 
+	{
+		"Description" : "格式：RGB(数值R, 数值G, 数值B)
+解释：返回由红（由数值R表示）、绿（由数值G表示）、蓝（由数值B表示）三个分量组成的颜色值。
+数值R, 数值G, 数值B的范围是0到255之间的整数，返回的颜色值也是数值型。"
+	},
+	"RTrim" : 
+	{
+		"Description" : "格式：RTrim(字符串表达式)
+解释：返回不带后缀空格的字符串。"
+	},
+	"Randomize" : 
+	{
+		"Description" : "格式：
+Randomize
+或
+Randomize 随机数种子
+解释：初始化随机数生成器。"
+	},
+	"ReadConfig" : 
+	{
+		"Description" : "格式：
+ReadConfig(配置项名称)
+或
+ReadConfig(配置项名称, 默认值)
+或
+ReadConfig(配置项名称, 默认值, 是否读文件)
+解释：返回脚本的配置值（配置值可以用WriteConfig命令写入），如果没有取到，则返回默认值。
+配置项名称是字符串类型，支持层次结构，多个层次之间用 . 分隔，如 \"配置1.配置2\"。
+是否读文件为ture时表示从config文件中读取配置项名称的内容；默认为false，表示从内存中读取，多线程时，为了保证各线程间配置项名称的数据同步，该值需设置为true"
+	},
+	"ReadUIConfig" : 
+	{
+		"Description" : "格式：
+ReadUIConfig(界面元素名称)
+或
+ReadUIConfig(界面元素名称, 默认值)
+解释：返回脚本的界面配置值，如果没有取到，则返回默认值。
+界面元素名称是字符串类型，标明了在该脚本的界面中某个控件的名称。"
+	},
+	"ReleaseCapture" : 
+	{
+		"Description" : "格式：ReleaseCapture
+解释：通常和KeepCapture成对使用。作用是取消KeepCapture的截图。
+当调用ReleaseCapture后，每次执行GetPixelColor、FindColor、FindPic的时候，都会自动截取当前屏幕内容。速度较慢，但总是能得到最新的屏幕内容。"
+	},
+	"Replace" : 
+	{
+		"Description" : "格式：Replace(原字符串, 查找的子字符串, 替换的字符串, 忽略大小写)
+解释：返回字符串，其中所有出现的某子字符串被替换为另一个字符串。
+“忽略大小写”是可选参数，默认不忽略大小写。如果需要忽略，请将此参数设为1或者True。
+举例：
+i=\"我爱你按键精灵\"
+ShowMessage Replace(i, \"你\", \"\")
+运行可以看到“你”字被替换为空字符串，运行结果为\"我爱按键精灵\"。"
+	},
+	"ResetScreenScale" : 
+	{
+		"Description" : "格式：ResetScreenScale
+解释：取消屏幕比例缩放设置，一般与SetScreenScale配套使用。"
+	},
+	"Right" : 
+	{
+		"Description" : "格式：Right(字符串, 长度)
+解释：返回指定数目的从字符串的右边算起的字符。
+指定的长度为数值表达式，指明要返回的字符数目。如果是 0，返回空字符串 \"\"；如果大于或等于字符串中的字符总数，则返回整个字符串。"
+	},
+	"Rnd" : 
+	{
+		"Description" : "格式：Rnd()
+解释：返回一个小于 1 但大于或等于 0 的随机数。
+在调用 Rnd 之前，先使用 Randomize 语句初始化随机数生成器。
+要产生指定范围的随机整数，请使用以下公式：
+Int((upperbound - lowerbound + 1) * Rnd + lowerbound)
+这里，upperbound 是此范围的上界，而 lowerbound 是此范围内的下界。"
+	},
+	"Round" : 
+	{
+		"Description" : "格式：Round(数值表达式, 保留位数)
+解释：返回经过四舍五入的数值。
+参数“保留位数”：四舍五入时保留的小数位数。此参数为可选，默认值为0，即不保留小数位。"
+	},
+	"RunApp" : 
+	{
+		"Description" : "格式：
+RunApp 包名
+或
+RunApp 包名, 组件名
+解释：指定某个应用程序的包名，启动这个应用程序。
+包名是字符串类型的表达式，如微信的包名是 com.tencent.mm。
+也可以指定包中的某个组件名，直接启动应用程序中的某个组件。"
+	},
+	"Select Case" : 
+	{
+		"Description" : "格式：
+Select Case 表达式
+Case 情况1
+…
+Case 情况2
+…
+Case Else
+…
+End Select
+解释：根据情况选择条件判断。"
+	},
+	"SetAppSpeed" : 
+	{
+		"Description" : "格式：SetAppSpeed 包名, 加速倍数（可选）
+解释：调整指定应用的运行速度
+参数“包名”:被调整应用的包名；
+参数“加速倍数”:加速的倍数，支持小数点后2位，0表示正常速度，大于0表示加速，小于0表示减速，其为可选参数，默认为0"
+	},
+	"SetControlBarPos" : 
+	{
+		"Description" : "格式：SetControlBarPos 位置比例, 锁定状态（可选）
+解释：设置控制台（浮窗）在屏幕右侧的高度及其锁定状态
+参数“位置比例”：浮窗在右侧的高度比例，取值范围为0-1.0；
+参数“锁定状态”：为可选参数，当其为空或为0时表示不锁定，非0表示锁定"
+	},
+	"SetDict" : 
+	{
+		"Description" : "格式：SetDict(字库的序号, 字库文件名)
+(版本号大于3.0.1起，不建议使用) 
+解释：加载字库文件，并将其与字库的序号关联起来
+字库的序号：字库的序号,取值为0-9,目前最多支持10个字库;
+字库文件名：字库文件名"
+	},
+	"SetDictEx" : 
+	{
+		"Description" : "格式：SetDictEx(字库的序号, 字库文件名)
+解释：加载字库文件，并将其与字库的序号关联起来
+字库的序号：字库的序号,取值为0-9,目前最多支持10个字库;
+字库文件名：字库文件名
+注：相对SetDict来讲，该命令为扩展命令，只能用于加载扩展的新字库(版本号大于3.0.1的PC助手制作的字库均为新字库)"
+	},
+	"SetRowsNumber" : 
+	{
+		"Description" : "格式：SetRowsNumber(匹配的行数)
+解释：设置找字时算法匹配的行数，该命令针对新字库有效(版本号大于3.0.1的PC助手制作的字库均为新字库)，与SetDictEx配合使用，针对旧字库的找字，设置该值没有意义。
+注：一般来讲，匹配的行数越少，找字的速度越快，但准确率下降，有可能出现查找失败的情况，请合理使用"
+	},
+	"SetOffsetInterval" : 
+	{
+		"Description" : "格式：SetOffsetInterval(跳过的像素点)
+解释：设置在找字时，跳过设置的像素点数进行匹配，默认为0，即不跳过像素点，字库中每个字的所有像素点均需要逐一进行匹配。
+注：一般来讲，设置的值越大，找字的速度越快，但准确率下降，有可能出现查找失败的情况，请合理使用"
+	},
+	"SetScreenScale" : 
+	{
+		"Description" : "格式：SetScreenScale 屏幕宽度, 屏幕高度, 输出坐标缩放状态（可选）
+解释：设置当前脚本开发环境的屏幕分辩率，使脚本适配不同分辩率的设备，一般与ResetScreenScale配套使用。
+脚本在不同分辩率的设备上运行时会根据设备的分辩率生成缩放比例，该“缩放比例”会直接影响后面命令的输入坐标值，直至调用ResetScreenScale取消该设置。
+参数“输出坐标缩放状态”：为可选参数，当其为0时表示不对输出的坐标附加“缩放比例”属性；为空或非0时表示添加。
+注1：其中“输出的坐标”即为如FindColor命令的输出值intX与intY等。
+注2：影响输入坐标值的命令有：Tap、Touch、TouchDown、TouchMove、Swipe、GetPixelColor、FindColor、CmpColor、CmpColorEx、FindMultiColor、SmartOcr。"
+	},
+	"Sgn" : 
+	{
+		"Description" : "格式：Sgn(数值表达式)
+解释：返回表示数字符号的整数。
+如果指定的数值表达式大于0，返回值为1；如果指定的数值表达式小于0，返回值为-1；如果指定的数值表达式等于0，返回值为0；"
+	},
+	"Shake" : 
+	{
+		"Description" : "格式：Shake()
+解释：摇一摇手机。"
+	},
+	"ShowMessage" : 
+	{
+		"Description" : "格式：
+ShowMessage 提示信息
+解释：在屏幕上显示提示信息，此信息将会维持一定时间后自动消失。
+如果提示信息不是字符串类型，会自动转换为字符串类型进行显示。"
+	},
+	"Sin" : 
+	{
+		"Description" : "格式：Sin(数值表达式)
+解释：返回将某个角表示为弧度数值的正弦值。
+即取某个角并返回直角三角形两边的比值。此比值是直角三角形中该角的对边长度与斜边长度之比。
+结果范围在 -1 到 1 之间。
+将角度乘以 pi/180 即可转换为弧度，将弧度乘以 180/pi 即可转换为角度。"
+	},
+	"SnapShot" : 
+	{
+		"Description" : "格式：SnapShot(文件名, 区域左上角x坐标, 区域左上角y坐标, 区域右下角x坐标, 区域右下角y坐标)
+解释：截屏并保存为PNG格式的图片文件。支持区域截屏并保存，区域坐标为可选参数，当不输入时，表示截取全屏"
+	},
+	"Space" : 
+	{
+		"Description" : "格式：Space(数值表达式)
+解释：返回由指定数目的空格组成的字符串。"
+	},
+	"Split" : 
+	{
+		"Description" : "格式：Split(原字符串, 分隔符)
+解释：返回一个数组，数组中的每个元素都是子字符串。由这些子字符串和分隔符构成原字符串。
+分隔符也是字符串类型。"
+	},
+	"Sqr" : 
+	{
+		"Description" : "格式：Sqr(数值表达式)
+解释：返回数值的平方根。
+数值表达式的值必须大于或等于零。"
+	},
+	"StrCut" : 
+	{
+		"Description" : "格式：StrCut(字符串, 起始位置, 移除的长度n)
+解释：移除字符串中指定位置及指定长度的内容，并返回移除后的字符串, 起始位置从1开始递增。若字符串在包含中文字符，请使用UTF8.StrCut命令"
+	},
+	"StrComp" : 
+	{
+		"Description" : "格式：StrComp(字符串1, 字符串2, 忽略大小写)
+解释：返回两个字符串比较的结果。
+“忽略大小写”是可选参数，默认不忽略大小写。如果需要忽略，请将此参数设为1或者True。
+当字符串1小于字符串2时，返回-1；当字符串1等于字符串2时，返回0；当字符串1大于字符串2时，返回1。"
+	},
+	"StrnComp" : 
+	{
+		"Description" : "格式：StrnComp(字符串1, 字符串2, 对比长度n, 忽略大小写)
+解释：返回两个字符串前n个字符比较的结果，若字符串包含中文字符，请使用UTF8.StrnComp命令。
+“忽略大小写”是可选参数，默认不忽略大小写。如果需要忽略，请将此参数设为1或者True。
+当字符串1小于字符串2时，返回-1；当字符串1等于字符串2时，返回0；当字符串1大于字符串2时，返回1。"
+	},
+	"StrGetAt" : 
+	{
+		"Description" : "格式：StrGetAt(字符串, 字符位置)
+解释：返回字符串中指定位置的字符，字符位置从1开始递增。若字符串包含中文字符，请便用UTF8.StrGetAt命令"
+	},
+	"StrReverse" : 
+	{
+		"Description" : "格式：StrReverse(字符串)
+解释：返回字符串，此字符串与指定字符串顺序相反。"
+	},
+	"String" : 
+	{
+		"Description" : "格式：String(数量, 指定字符)
+解释：返回具有指定长度的、重复字符组成的字符串。
+指定字符可以是字符串类型表达式，如果其中包含不止一个字符，则仅使用其中第一个字符。
+指定字符也可以是数值类型表达式，表示字符的ASCII码。"
+	},
+	"Sub" : 
+	{
+		"Description" : "格式：
+Sub 过程名(参数1, 参数2, ...)
+…
+End Sub
+解释：定义一个过程，可以在脚本中调用这个过程。"
+	},
+	"Swipe" : 
+	{
+		"Description" : "格式：Swipe 点1的横坐标, 点1的纵坐标, 点2的横坐标, 点2的纵坐标, 滑动时间（可选）
+解释：模拟手指在屏幕上的划动操作。从点1滑动到点2。时间通过可选参数“滑动时间”设定"
+	},
+	"SendSimpleEmail" : 
+	{
+			"Description" : "格式：SendSimpleEmail(服务器,发件人邮箱账号,发件人邮箱密码,邮件主题,邮件文本内容,收件地址)
+解释：发送一个无附件的邮件。"
+	},
+	"Tan" : 
+	{
+		"Description" : "格式：Tan(数值表达式)
+解释：返回将某个角表示为弧度数值的正切值。
+即取某个角并返回直角三角形两边的比值。此比值是直角三角形中该角的对边长度与临边长度之比。
+将角度乘以 pi/180 即可转换为弧度，将弧度乘以 180/pi 即可转换为角度。"
+	},
+	"Tap" : 
+	{
+		"Description" : "格式：Tap 横坐标, 纵坐标
+解释：短暂点击屏幕上指定的位置"
+	},
+	"Then" : 
+	{
+		"Description" : "格式：If 表达式 Then
+解释：和If、ElseIf语句结合，进行条件判断。"
+	},
+	"TickCount" : 
+	{
+		"Description" : "格式：TickCount()
+解释：返回脚本从开始运行到目前为止的时间，以毫秒为单位。
+通常用两次调用的返回值相减，即可得到两次调用之间所经历的时间，以毫秒为单位。"
+	},
+	"Time" : 
+	{
+		"Description" : "格式：Time()
+解释：返回当前系统时间。
+返回值为数值类型，表示当前系统从1970年1月1日至今所经过的秒数。
+通常用两次调用的返回值相减，即可得到两次调用之间所经历的时间。"
+	},
+	"Touch" : 
+	{
+		"Description" : "格式：Touch 横坐标, 纵坐标, 持续时间
+解释：点击屏幕上的指定位置，并持续按住一段时间(单位：毫秒)再松开。"
+	},
+	"TouchDown" : 
+	{
+		"Description" : "格式：TouchDown 横坐标, 纵坐标, 触点ID
+解释：按下屏幕上指定位置的点（横坐标, 纵坐标），支持同时按下5个点，用“触点ID”标识不同的点。
+其中，“触点ID”为数值型，建议的取值范围为[-9999,9999]；另外，TouchDown命令与TouchUp命令需配套使用。"
+	},
+	"TouchMove" : 
+	{
+		"Description" : "格式：TouchMove 横坐标, 纵坐标, 触点ID 滑动时间（可选）
+解释：模拟滑动操作，将按下的点（触点ID标识）滑动至屏幕上指定的位置（横坐标, 纵坐标），滑动前需要先调用TouchDown命令。移动的时间通过可选参数“滑动时间”设定"
+	},
+	"TouchUp" : 
+	{
+		"Description" : "格式：TouchUp 触点ID
+解释：弹起TouchDown命令按下的点（触点ID标识），一般与TouchDown命令匹配使用。"
+	},
+	"TracePrint" : 
+	{
+		"Description" : "格式：TracePrint 表达式
+解释：将表达式转换为字符串类型后，发往按键精灵手机助手，并在按键精灵手机助手的调试栏显示出来。
+TracePrint支持一个或多个参数，最多可以到1024个。如果输入多个参数时，它会自动把所有参数串起来，中间用逗号分隔，这些参数支持字符串、数字、null或bool型。"
+	},
+	"Trim" : 
+	{
+		"Description" : "格式：Trim(字符串表达式)
+解释：返回不带前导空格和后缀空格的字符串。"
+	},
+	"True" : 
+	{
+		"Description" : "解释：用于设置一个布尔型的值为真。"
+	},
+	"UseDict" : 
+	{
+		"Description" : "格式：UseDict(字库的序号)
+解释：表示使用哪个字库文件进行识别(序号范围:0-9)
+字库的序号：字库的序号,取值为0-9,目前最多支持10个字库"
+	},
+	"UCase" : 
+	{
+		"Description" : "格式：UCase(字符串表达式)
+解释：返回字符串的大写形式。
+仅小写字母转换成大写字母；所有大写字母和非字母字符保持不变。"
+	},
+	"Until" : 
+	{
+		"Description" : "格式：
+Do Until 表达式
+…
+Loop
+或者
+Do
+…
+Loop Until 表达式
+解释：条件循环"
+	},
+	"Url" :
+	{
+		"Description" : "网络操作的相关命令"
+	},	
+	"Url.Get" : 
+	{
+		"Description" : "Url.Get(url地址, 超时时长)
+解释：以Get方式访问url地址，超时时长为可选参数，单位为秒，默认为30秒"
+	},
+	"Url.Post" : 
+	{
+		"Description" : "Url.Post(url地址, post数据, 超时时长)
+解释：以Post方式访问url地址，超时时长为可选参数，单位为秒，默认为30秒"
+	},
+	"UI" :
+	{
+		"Description" : "UI界面的相关命令"
+	},	
+	"UI.MATCH_PARENT" : 
+	{
+		"Description" : "UI.MATCH_PARENT
+解释：表示控件取最大宽度或高度"
+	},
+	"UI.WRAP_CONTENT" : 
+	{
+		"Description" : "UI.WRAP_CONTENT
+解释：表示控件自适应"
+	},
+	"UI.ALIGN_TOP" : 
+	{
+		"Description" : "UI.ALIGN_TOP
+解释：表示控件顶部对齐"
+	},
+	"UI.ALIGN_BOTTOM" : 
+	{
+		"Description" : "UI.ALIGN_BOTTOM
+解释：表示控件底部对齐"
+	},
+	"UI.ALIGN_CENTER_VERTICAL" : 
+	{
+		"Description" : "UI.ALIGN_CENTER_VERTICAL
+解释：表示控件垂直方向居中对齐"
+	},
+	"UI.AddTextView" : 
+	{
+		"Description" : "UI.AddTextView(父控件名, 控件名, 初始内容, 宽, 高)
+解释：创建文字框控件到父控件名指定的布局或容器中，控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.SetTextView" : 
+	{
+		"Description" : "UI.SetTextView(控件名, 初始内容, 宽, 高)
+解释：重设一个指定的文字框控件，控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.AddEditText" : 
+	{
+		"Description" : "UI.AddEditText(父控件名, 控件名, 初始内容, 宽, 高)
+解释：创建输入框控件到父控件名指定的布局或容器中，控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.SetEditText" : 
+	{
+		"Description" : "UI.SetTextView(控件名, 初始内容, 宽, 高)
+解释：重设一个指定的输入框控件，控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.AddButton" : 
+	{
+		"Description" : "UI.AddButton(父控件名, 控件名, 按钮文字, 宽, 高)
+解释：创建按钮控件到父控件名指定的布局或容器中，控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.SetButton" : 
+	{
+		"Description" : "UI.SetButton(控件名, 按钮文字, 宽, 高)
+解释：重设一个指定的按钮控件，控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.AddRadioGroup" : 
+	{
+		"Description" : "UI.AddRadioGroup(父控件名, 控件名, 选项列表, 默认选中项, 宽, 高)
+解释：创建单选框控件到父控件名指定的布局或容器中，控件显示的内容用参数选项列表表示，
+默认选中项为可选参数，默认为0
+控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.SetRadioGroup" : 
+	{
+		"Description" : "UI.SetRadioGroup(控件名, 选项列表, 默认选中项, 宽, 高)
+解释：重设一个指定的单选框控件，控件显示的内容用参数选项列表表示
+默认选中项为可选参数，默认为0
+控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.AddCheckBox" : 
+	{
+		"Description" : "UI.AddCheckBox(父控件名, 控件名, 文本, 是否选中, 宽, 高)
+解释：创建多选框控件到父控件名指定的布局或容器中.
+是否选中为可选参数，默认为false
+控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.SetCheckBox" : 
+	{
+		"Description" : "UI.SetCheckBox(控件名, 文本, 是否选中, 宽, 高)
+解释：重设一个指定的多选框控件"
+	},
+	"UI.AddImageView" : 
+	{
+		"Description" : "UI.AddImageView(父控件名, 控件名, 路径, 宽, 高)
+解释：创建图像控件到父控件名指定的布局或容器中.
+控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.SetImageView" : 
+	{
+		"Description" : "UI.SetImageView(控件名, 路径, 宽, 高)
+解释：重设一个指定的图像控件"
+	},
+	"UI.AddSpinner" : 
+	{
+		"Description" : "UI.AddSpinner(父控件名, 控件名, 下拉列表, 默认选中项, 宽, 高)
+解释：创建下拉框控件到父控件名指定的布局或容器中，控件显示的内容用table表示，
+默认选中项为可选参数，默认为0
+控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.SetSpinner" : 
+	{
+		"Description" : "UI.SetSpinner(控件名, 下拉列表, 默认选中项, 宽, 高)
+解释：重设一个指定的下拉框控件"
+	},
+	"UI.AddLine" : 
+	{
+		"Description" : "UI.AddLine(父控件名, 控件名, 宽, 高)
+解释：创建线控件到父控件名指定的布局或容器中.
+控件的宽和高为可选参数，默认值：宽为UI.MATCH_PARENT(-1)，高为2"
+	},
+	"UI.SetLine" : 
+	{
+		"Description" : "UI.SetLine(控件名, 宽, 高)
+解释：重设一个指定的线控件"
+	},
+	"UI.AddWebView" : 
+	{
+		"Description" : "UI.AddWebView(父控件名, 控件名, 网址, 宽, 高)
+解释：创建浏览器控件到父控件名指定的布局或容器中.
+控件的宽和高为可选参数，默认值：宽为UI.WRAP_CONTENT(-2)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.SetWebView" : 
+	{
+		"Description" : "UI.SetWebView(控件名, 网络地址, 宽, 高)
+解释：重设一个指定的浏览器控件"
+	},
+	"UI.AddTabHost" : 
+	{
+		"Description" : "UI.AddTabHost(父控件名, 控件名, 高)
+解释：创建标签控件容器。高为可选参数，默认为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.AddTab" : 
+	{
+		"Description" : "UI.AddTab(父控件名, 控件名, 标签内容)
+解释：在标签容器中创建标签页"
+	},
+	"UI.NewLayout" : 
+	{
+		"Description" : "UI.NewLayout(布局名, 布局样式, 宽, 高)
+解释：创建一新的布局.
+布局样式为可选参数，默认为1
+布局的宽和高为可选参数，默认值：宽为UI.MATCH_PARENT(-1)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.Show" : 
+	{
+		"Description" : "UI.Show(布局名)
+解释：显示布局"
+	},
+	"UI.Close" : 
+	{
+		"Description" : "UI.Close(布局名)
+解释：关闭布局"
+	},
+	"UI.NewRow" : 
+	{
+		"Description" : "UI.NewRow(父控件名, 控件名, 宽, 高)
+解释：新建一行，实现换行.
+行的宽和高为可选参数，默认值：宽为UI.MATCH_PARENT(-1)，高为UI.WRAP_CONTENT(-2)"
+	},
+	"UI.SetOnClick" : 
+	{
+		"Description" : "UI.SetOnClick(控件名, 事件处理函数)
+解释：设置控件的点击事件响应"
+	},
+	"UI.SetOnChange" : 
+	{
+		"Description" : "UI.SetOnChange(控件名, 事件处理函数)
+解释：设置控件的变更事件响应"
+	},
+	"UI.SetOnShow" : 
+	{
+		"Description" : "UI.SetOnShow(布局名, 事件处理函数)
+解释：设置布局的显示事件响应"
+	},
+	"UI.SetOnClose" : 
+	{
+		"Description" : "UI.SetOnClose(布局名, 事件处理函数)
+解释：设置布局的关闭事件响应"
+	},
+	"UI.GetText" : 
+	{
+		"Description" : "UI.GetText(控件名, 下标位置)
+解释：获取控件的文本内容，当为下拉框、单选框等控件时，获取该控件指定下标的文本内容
+index为可选参数默认为0"
+	},
+	"UI.SetText" : 
+	{
+		"Description" : "UI.SetText(控件名, 内容, 下标位置)
+解释：设置控件的文本内容，当为下拉框、单选框等控件时，设置该控件指定下标的文本内容
+index为可选参数默认为0"
+	},
+	"UI.GetValue" : 
+	{
+		"Description" : "UI.GetValue(控件名)
+解释：获取控件的值，该函数的返回为一table数据类型，key为控件的id，value为控件的值"
+	},
+	"UI.SetTitleText" : 
+	{
+		"Description" : "UI.SetTitleText(布局名, 内容)
+解释：设置布局的标题"
+	},
+	"UI.GetTitleText" : 
+	{
+		"Description" : "UI.GetTitleText(布局名)
+解释：获取布局的标题"
+	},
+	"UI.SetEditInputType" : 
+	{
+		"Description" : "UI.SetEditInputType(输入框控件名, 输入类型)
+解释：限制输入框的输入值的输入类型。"
+	},
+	"UI.SetTextSize" : 
+	{
+		"Description" : "UI.SetTextSize(控件名, 大小)
+解释：设置控件文字的大小"
+	},
+	"UI.SetEnabled" : 
+	{
+		"Description" : "UI.SetEnabled(控件名, 是否禁用)
+解释：设置控件的可用状态。False-禁用；True-可用"
+	},
+	"UI.GetEnabled" : 
+	{
+		"Description" : "UI.GetEnabled(控件名)
+解释：获取控件的可用状态。False-禁用；True-可用"
+	},
+	"UI.SetVisible" : 
+	{
+		"Description" : "UI.SetVisible(控件名, 可见状态)
+解释：设置控件的可见状态。1-可见；2-隐藏；3-隐藏并不占且用布局空间"
+	},
+	"UI.GetVisible" : 
+	{
+		"Description" : "UI.GetVisible(控件名)
+解释：获取控件的可见状态。1-可见；2-隐藏；3-隐藏并不占且用布局空间"
+	},
+	"UI.SetBackColor" : 
+	{
+		"Description" : "UI.SetBackColor(控件名, 颜色)
+解释：设置控件的背景颜色值，颜色以16进制字符串表示，如FFFFFF"
+	},
+	"UI.SetTextColor" : 
+	{
+		"Description" : "UI.SetTextColor(布局或控件名, 颜色, 下标)
+解释：设置布局或控件的文字颜色，颜色以16进制字符串表示，如FFFFFF
+当设置如单选框控件时，参数[下标]指定设置第几个"
+	},
+	"UI.GetTextColor" : 
+	{
+		"Description" : "UI.GetTextColor(布局或控件名, 下标)
+解释：获取布局或控件的文字颜色，颜色以16进制字符串表示，如FFFFFF
+当获取如单选框控件时，参数[下标]指定设置第几个"
+	},
+	"UI.SetTitleBackColor" : 
+	{
+		"Description" : "UI.SetTitleBackColor(布局或控件名, 颜色)
+解释：设置布局标题的背景颜色，颜色以16进制字符串表示，如FFFFFF"
+	},
+	"UI.SetFullScreen" : 
+	{
+		"Description" : "UI.SetFullScreen(控件名)
+解释：设置控件宽度满屏"
+	},
+	"UI.SetPadding" : 
+	{
+		"Description" : "UI.SetPadding(控件名, 屏幕左边距, 屏幕上边距, 屏幕右边距, 屏幕下边距)
+解释：设置控件边缘到控件内容的距离"
+	},
+	"UI.SaveProFile" : 
+	{
+		"Description" : "UI.SaveProFile(文件路径)
+解释：保存所有UI控件的配置信息到指定的文件
+文件路径为可选参数，默认为按键临时目录下的UiProFileTemp.txt文件"
+	},
+	"UI.LoadProFile" : 
+	{
+		"Description" : "UI.LoadProFile(文件路径)
+解释：加载配置信息到当前布局
+文件路径为可选参数，默认为按键临时目录下的UiProFileTemp.txt文件"
+	},
+	"UIP.SetAttribute" : 
+	{
+		"Description" : "UIP.SetAttribute(控件名, 属性列表)
+解释：设置静态UI控件的属性值。
+参数属性列表为table类型，控件的各属性及其值以key-value的形式表示，其中key的内容及其值的数据类型与定义静态UI控件格式一致"
+	},
+	"UIP.GetAttribute" : 
+	{
+		"Description" : "UIP.GetAttribute(控件名)
+解释：获取静态UI控件的属性值列表。返回的值为table数据类型，控件的各属性及其值以key-value的形式存储在返回的table数据中"
+	},
+	"Vibrate" : 
+	{
+		"Description" : "格式：Vibrate 数值表达式
+解释：在具有震动功能的设备上，维持震动一段时间。
+维持的时间由数值表达式指定，表示以毫秒数为单位的时间。"
+	},
+	"Wend" : 
+	{
+		"Description" : "格式：
+While 循环条件
+…
+Wend
+解释：和While一起构成循环语句。"
+	},
+	"While" : 
+	{
+		"Description" : "格式：
+While 循环条件
+…
+Wend
+解释：循环语句－－当循环条件成立的时候，反复执行循环体。"
+	},
+	"WriteConfig" : 
+	{
+		"Description" : "格式：
+WriteConfig 配置项名称, 写入的值
+或者
+WriteConfig 配置项名称, 写入的值, 是否立即写入文件
+解释：把脚本的配置写入配置文件（可以用ReadConfig命令读出）。
+写入配置文件的内容，当脚本结束执行后，或者按键精灵退出后，或者手机关机之后，仍然是保留在手机上的。
+每个脚本都有自己的配置文件，不同的脚本之间读写的是不同的配置文件。
+配置项名称是字符串类型，支持层次结构，多个层次之间用 . 分隔，如 \"配置1.配置2\"。
+写入的值可以是字符串类型、数值类型、Bool类型的表达式或数组。
+为了提高性能，在默认情况下，写入的值并不会立即写到文件中。如果您需要立即写入文件，请将第三个参数设为true。"
+	},
+	"Log" :
+	{
+		"Description" : "日志相关命令"
+	},
+	"Log.Open" :
+	{
+		"Description" : "格式：
+Log.Open
+解释：打开日志文件，并开始记录日志。
+如果日志文件打开成功，则脚本后续执行过程中，所有TracePrint命令的输出内容都会同时写入日志文件。
+直到脚本执行结束，或者是使用Log.Close关闭日志文件
+日志文件的存储路径是存储卡上按键精灵的临时文件目录（可用GetTempDir()获得）下的log子目录。
+日志文件名是脚本启动时的系统时间（精确到秒）。
+返回值：如果日志文件打开成功，则返回True，否则返回False"
+	},
+	"Log.Close" :
+	{
+		"Description" : "格式：
+Log.Close
+解释：关闭日志文件。脚本后续执行过程中，TracePrint命令的输出内容不再写入日志文件。
+当脚本执行结束时，也会自动关闭日志文件。"
+	},
+	
+	"UBound" :
+	{
+		"Description" : "格式：UBound(数组)
+解释：获取数组的最大下标，即是数组的长度减1"
+	},
+	
+	"UTF8" :
+	{
+		"Description" : "用于处理UTF8编码的中英文字符串的命令集合"
+	},
+	"UTF8.Left" :
+	{
+		"Description" : "格式：
+UTF8.Left(字符串, 长度)
+解释：返回指定数目的从字符串的左边算起的字符。
+用法和Left（不带UTF8前缀）一致，但能够识别UTF8编码的中文字符，并将每个英文字母或汉字的长度都识别为1。"
+	},
+	"UTF8.Mid" :
+	{
+		"Description" : "格式：
+UTF8.Mid(字符串, 起始位置, 长度)
+解释：从字符串中返回指定数目的字符, 起始位置从1开始递增。
+用法和Mid（不带UTF8前缀）一致，但能够识别UTF8编码的中文字符，并将每个英文字母或汉字的长度都识别为1。"
+	},
+	"UTF8.Right" :
+	{
+		"Description" : "格式：
+UTF8.Right(字符串, 长度)
+解释：返回指定数目的从字符串的右边算起的字符。
+用法和Right（不带UTF8前缀）一致，但能够识别UTF8编码的中文字符，并将每个英文字母或汉字的长度都识别为1。"
+	},
+	"UTF8.Len" :
+	{
+		"Description" : "格式：
+UTF8.Len(字符串表达式)
+解释：返回字符串内字符的数目。
+用法和Len（不带UTF8前缀）一致，但能够识别UTF8编码的中文字符，并将每个英文字母或汉字的长度都识别为1。"
+	},
+	"UTF8.StrCut" : 
+	{
+		"Description" : "格式：StrCut(字符串, 起始位置, 移除的长度n)
+解释：移除字符串中指定位置及指定长度的内容，并返回移除后的字符串，起始位置从1开始递增。"
+	},
+	"UTF8.StrGetAt" :
+	{
+		"Description" : "格式：
+UTF8.StrGetAt(字符串, 字符位置)
+解释：返回字符串中指定位置的字符，字符位置从1开始递增。"
+	},
+	"UTF8.StrnComp" : 
+	{
+		"Description" : "格式：StrnComp(字符串1, 字符串2, 对比长度n, 忽略大小写)
+解释：返回两个字符串前n个字符比较的结果。
+“忽略大小写”是可选参数，默认不忽略大小写。如果需要忽略，请将此参数设为1或者True。
+当字符串1小于字符串2时，返回-1；当字符串1等于字符串2时，返回0；当字符串1大于字符串2时，返回1。"
+	},
+	"UTF8.StrReverse" :
+	{
+		"Description" : "格式：
+UTF8.StrReverse(字符串)
+解释：返回字符串，此字符串与指定字符串顺序相反。
+用法和StrReverse（不带UTF8前缀）一致，但能够识别UTF8编码的中文字符，并以英文字母或汉字作为字符串操作的基本单位。"
+	},
+	"UTF8.InStr" :
+	{
+		"Description" : "格式：
+UTF8.InStr(起始位置, 字符串1, 字符串2, 忽略大小写)
+解释：返回字符串2在字符串1中第一次出现的位置，从字符串1的某个指定起始位置开始搜索。
+用法和InStr（不带UTF8前缀）一致，但能够识别UTF8编码的中文字符，并将每个英文字母或汉字的长度都识别为1。"
+	},
+	"UTF8.InStrRev" :
+	{
+		"Description" : "格式：
+UTF8.InStrRev(字符串1, 字符串2, 起始位置, 忽略大小写)
+解释：返回字符串2在字符串1中出现的从结尾计起的位置。从字符串1的某个指定起始位置开始逆向搜索。
+用法和InStrRev（不带UTF8前缀）一致，但能够识别UTF8编码的中文字符，并将每个英文字母或汉字的长度都识别为1。"
+	},
+	
+	"Sys" :
+	{
+		"Description" : "用于获取和修改Android系统状态的命令集合"
+	},
+	"Sys.GetFront" :
+	{
+		"Description" : "格式：Sys.GetFront()
+解释：返回当前应用的包名。"
+	},
+	"Sys.AppIsFront" :
+	{
+		"Description" : "格式：Sys.AppIsFront(应用包名)
+解释：判断指定包名的应用是否在前台，返回true表示应用位于前台，false则相反。"
+	},
+	"Sys.GetClipText" :
+	{
+		"Description" : "格式：Sys.GetClipText()
+解释：返回以字符串形式表示的系统剪贴板里面的文本。如果系统剪贴板里面没有内容，或者没有文本内容，返回空字符串。"
+	},
+	"Sys.SetClipText" :
+	{
+		"Description" : "格式：Sys.SetClipText 文本内容
+解释：将系统剪贴板里面的设为指定的文本内容。"
+	},
+	"Sys.ClearMemory" :
+	{
+		"Description" : "格式：Sys.ClearMemory()
+解释：一键清理系统缓存。"
+	},
+	"Sys.ClearAppCache" :
+	{
+		"Description" : "格式：Sys.ClearAppCache(app包名)
+解释：清除指定应用的缓存"
+	},
+	"Sys.GetBatteryLevel" : 
+	{
+		"Description" : "格式：Sys.GetBatteryLevel()
+解释：获取设备的剩余电量"
+	},
+	"Sys.MemorySearch" : 
+	{
+		"Description" : "格式：Sys.MemorySearch(app包名,是否新搜索,首次搜索起始地址,待搜索数据,待搜索数据的数据类型,搜索模式,搜索数据数目)
+解释：搜索内存"
+	},
+	"Sys.MemoryRead" : 
+	{
+		"Description" : "格式：Sys.MemoryRead(app包名,地址,待读取数据的数据类型)
+解释：读取内存"
+	},
+	"Sys.MemoryWrite" : 
+	{
+		"Description" : "格式：Sys.MemoryWrite(app包名,地址,待写入的值,待写入数据的数据类型)
+解释：写入内存"
+	},
+	"Sys.Version" : 
+	{
+		"Description" : "格式：Sys.Version()
+解释：获取执行器的版本号"
+	},
+	"Sys.OsVersion" : 
+	{
+		"Description" : "格式：Sys.OsVersion()
+解释：获取系统的版本号"
+	},
+	"Sys.IsRunning" : 
+	{
+		"Description" : "格式：Sys.IsRunning(包名)
+解释：判断应用是否正在运行"
+	},
+	"Phone" : 
+	{
+		"Description" : "和电话功能相关的命令集合"
+	},
+	"Phone.Dial" : 
+	{
+			"Description" : "格式：Phone.Dial 电话号码
+解释：调用手机的系统拨号盘，拨打指定的电话号码，但暂不拨出。
+参数“电话号码”可以是文本或者数字，如 Phone.Dial 10086 和 Phone.Dial \"10086\" 具有完全相同的效果。"
+	},
+	"Phone.DialOut" : 
+	{
+			"Description" : "格式：Phone.DialOut 电话号码
+解释：调用手机的系统拨号程序，直接拨出指定的电话号码。
+参数“电话号码”可以是文本或者数字，如 Phone.DialOut 10086 和 Phone.DialOut \"10086\" 具有完全相同的效果。"
+	},
+	"Phone.Message" : 
+	{
+			"Description" : "格式：Phone.Message 电话号码, 短信内容
+解释：给指定的电话号码发送短信，短信的长度由手机自身的限制决定（如160个字符）。参数“电话号码”可以是文本或者数字。"
+	},
+	"Rem" : 
+	{
+			"Description" : "格式：Rem 文字
+解释：标记命令。即可当注释，也可以为Goto跳转指令作标记。"
+	},
+	"Goto" : 
+	{
+			"Description" : "格式：Goto 标号
+解释：跳转语句，可以跳转到Rem标记过的标记处继续执行。"
+	},
+	"Import" : 
+	{
+			"Description" : "格式：Import 命令库或者插件文件名
+解释：导入一个命令库mql文件或者插件lua文件，导入后可以直接使用这个命令库或者插件。"
+	}
+}

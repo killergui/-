@@ -1,0 +1,69 @@
+KeyPress "Home"
+Delay 2000
+Dim screenX,screenY,deviceID,colorDep,shijian
+screenX = GetScreenX()
+screenY = GetScreenY()
+colorDep = GetScreenColorDep()
+deviceID = GetDeviceID()
+shijian=Now()
+Call 信息提示("手机分辨率是：" & screenX & "*" & screenY & Chr(10) & "手机色深是：" & colorDep & "位" & Chr(10) & "手机IMEI号是：" & deviceID & Chr(10) & "当前时间是是：" & shijian)
+Delay 1000 
+ 
+//--------------------------------------------------------------------------------------------
+Call 信息提示("自动滑动演示")
+Swipe screenX/2, screenY/2, 0, screenY/2
+Delay 500
+Swipe screenX/2, screenY/2, screenX, screenY/2
+Delay 500
+Swipe screenX/2, 1, screenX/2, screenY
+Delay 500
+
+//--------------------------------------------------------------------------------------------
+Call 信息提示("按下HOME键")
+KeyPress "Home"
+Delay 2000
+
+//--------------------------------------------------------------------------------------------
+Call 信息提示("震两秒试试？")
+Vibrate 2000
+Delay 1000
+
+//--------------------------------------------------------------------------------------------
+Call 信息提示("音量调节释放")
+For 3
+    KeyPress "VolUp"
+    Delay 200
+next
+For 3
+    KeyPress "VolDown"
+    Delay 200
+next
+Delay 2000
+
+//--------------------------------------------------------------------------------------------
+Call 信息提示("试试看拨打电话")
+Phone.Dial (10086)  //不会拨打，只是输入电话号码（拨打：Phone.DialOut 10086）
+Delay 1500
+KeyPress "home"
+Delay 1000
+
+//--------------------------------------------------------------------------------------------
+Call 信息提示("试试看发给移动查话费")
+Phone.Message 10086, "11"
+
+//--------------------------------------------------------------------------------------------
+Call 信息提示("最后去按键移动版官网看看吧~")
+Delay 1000
+RunApp "com.android.quicksearchbox"
+Delay 2000
+InputText "m.anjian.com"
+Delay 100
+KeyPress "Enter"
+Delay 2000
+
+//--------------------------------------------------------------------------------------------
+Sub 信息提示(内容)
+    TracePrint 内容
+    ShowMessage 内容
+    Delay 1500
+End Sub

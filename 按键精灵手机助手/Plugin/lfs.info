@@ -1,0 +1,35 @@
+
+{
+	"Description" : "文件系统库",
+	"Name" : "文件系统库",
+	"Attributes" : 
+	{
+		"Description" : "格式: lfs.Attributes(文件路径)\n解释: 获取文件属性",
+		"Name" : "获取文件属性",
+		"TranslateTemplate" : "获取 $1 文件属性"
+	},
+	"Chdir" : 
+	{
+		"Description" : "格式: lfs.Chdir(文件路径)\n解释: 设定lfs库工作路径",
+		"Name" : "设定lfs库工作路径",
+		"TranslateTemplate" : "把lfs库工作路径设置为 $1"
+	},
+	"Currentdir" : 
+	{
+		"Description" : "格式: lfs.Currentdir()\n解释: 获取当前lfs库工作路径",
+		"Name" : "获取当前lfs库工作路径",
+		"TranslateTemplate" : "获取当前lfs库工作路径"
+	},
+	"Mkdir" : 
+	{
+		"Description" : "格式: lfs.Mkdir(目录路径)\n解释: 新建目录",
+		"Name" : "新建目录",
+		"TranslateTemplate" : "新建目录"
+	},
+	"Rmdir" : 
+	{
+		"Description" : "格式: lfs.Rmdir(目录路径)\n解释: 删除目录",
+		"Name" : "删除目录",
+		"TranslateTemplate" : "删除目录"
+	},
+}

@@ -1,0 +1,811 @@
+//体力相关,副本相关
+
+Sub 推关()
+    Dim 推关状态
+    If ReadUIConfig("副本推关设置") = True Then 
+        For i = 1 To 2
+            Rem 副本推关
+            推关状态 = ReadConfig("是否已推关" & i, False)
+            If 推关状态 = 0 Then 
+                TracePrint "今日未推关"&i
+                当前体力 = 读取当前体力()
+                If 当前体力 < 5 Then 
+                    TracePrint "当前体力不足执行推关"
+                    Exit Sub
+                ElseIf 当前体力 < 10 Then 
+                    i = 2
+                    TracePrint "当前体力不足执行精英推关"
+                    Exit Sub
+                End If
+                
+                Call 副本准备(i, 1, 3)
+                
+                If 上次推关结果 = True Then 
+                    Goto 副本推关
+                End If
+                
+                TracePrint "完成类型"&i&"推关"
+                WriteConfig "是否已推关" & i, True, True
+            End If
+        Next
+    End If
+    TracePrint "推关检测执行完毕"
+End Sub
+
+Sub 体力消耗方式读取()
+    //使用体力执行类型: 1 = 皇榜任务 , 2 = 刷碎片, 3 = 推进度, 4 = 升阶, 5 = 刷最高级副本
+    If ReadUIConfig("体力消耗") = 0 Then 
+        体力消耗方式 = 2
+        ShowMessage "刷碎片"
+    ElseIf ReadUIConfig("体力消耗") = 1 Then
+        体力消耗方式 =  4
+        ShowMessage "升阶"
+    ElseIf ReadUIConfig("体力消耗") = 2 Then
+        体力消耗方式 = 5
+        ShowMessage "刷最高级副本"
+    End If
+    TracePrint "体力消耗方式为"&体力消耗方式
+End sub
+
+Sub 消耗体力()
+    Rem 消耗体力
+    当前体力 = 读取当前体力()
+    If 当前体力 < 55 Then 
+        Exit Sub
+    End If
+    Call 体力消耗方式读取()
+    TracePrint "体力消耗方式"&体力消耗方式
+    Select Case 体力消耗方式
+        //备忘,2\4暂时还没做,后续再做
+    Case 2
+        Call 副本准备(2, 2, 体力消耗方式)
+    Case 4
+        Call 副本准备(1, 1, 体力消耗方式)
+    Case 5
+        Call 副本准备(1, 10, 体力消耗方式)
+    End Select
+    Goto 消耗体力
+	
+End Sub
+
+Sub 进副本(类型)
+    //副本类型枚举:1 = 普通,2 = 精英, 3 = 名将
+    
+    Dim 副本图标临时坐标X, 副本图标临时坐标Y
+    副本图标临时坐标X = 副本坐标X : 副本图标临时坐标Y = 副本坐标Y
+    Rem 进副本界面
+    
+    所在场景 = 场景相关操作.所在场景()
+    Select Case 所在场景
+    Case 1, 2
+        Tap 副本图标临时坐标X, 副本图标临时坐标Y	
+    Case Else
+        场景相关操作.关闭界面()
+        Delay 2000
+        TracePrint "暂时无法点击副本图标,等待2秒"
+        Goto 进副本界面
+    End Select
+    
+    Delay 2000
+    所在场景 = 场景相关操作.所在场景()
+    TracePrint "副本类型",类型
+    TracePrint "所在场景",所在场景
+    Select Case 类型
+    Case 1
+        If 所在场景 = 38 Or 所在场景 = 39 Then 
+            TracePrint "即将进入普通副本界面"
+            Touch 普通副本坐标X, 普通副本坐标Y, 250
+            Goto 进副本界面
+        ElseIf 所在场景 <> 3 Then
+            Goto 进副本界面
+        End If
+    Case 2
+        If 所在场景 = 3 Or 所在场景 = 39 Then 
+            TracePrint "即将进入精英副本界面"
+            Touch 精英副本坐标X, 精英副本坐标Y, 250
+            Goto 进副本界面
+        ElseIf 所在场景 <> 38 Then
+            Goto 进副本界面
+        End If
+    Case 3
+        If 所在场景 = 3 Or 所在场景 = 38 Then 
+            TracePrint "即将进入名将副本界面"
+            Touch 名将副本坐标X, 名将副本坐标Y, 250
+            Goto 进副本界面
+        ElseIf 所在场景 <> 39 Then
+            Goto 进副本界面
+        End If
+    End Select
+    Delay 1500
+End Sub
+
+Function 副本信息(类型)
+    Call 进副本(类型)
+    Rem 打开章节选择
+    TracePrint "打开章节选择"
+    Touch 章节选择坐标X, 章节选择坐标Y, 250
+    Delay 2500
+    Dim intX,intY
+
+    FindPic 141, 58, 215, 321, "Attachment:章节选择.png", "000000", 0, 0.87, intX, intY
+    If intX > -1 And intY > -1 Then 
+        FindPic 158,460,176,553,"Attachment:章节选择1.png","000000",0,0.95,intX,intY
+        If intX > -1 And intY > -1 Then
+            Touch 章节位置6坐标X, 章节位置6坐标Y, 250
+            Delay 500
+        Else 
+            TracePrint "当前第六个位置没有副本数据,尝试第五个位置"
+        End If
+        
+        Rem 关闭章节选择
+        TracePrint "关闭章节选择"
+        Touch 章节选择坐标X, 章节选择坐标Y, 250
+        Delay 1000
+        FindPic 141, 58, 215, 321, "Attachment:章节选择.png", "000000", 0, 0.87, intX, intY
+        If intX > -1 And intY > -1 Then 
+            TracePrint "没有找到章节选择,无法关闭,重试"
+            Goto 关闭章节选择
+        End If
+    Else
+        TracePrint "没有找到章节选择,无法打开,重试"
+        Goto 打开章节选择
+    End If
+	
+        
+
+    Dim 副本数组, 最大章节数, 当前章节数字
+    
+    最大章节数 = ReadConfig("最大章节" & 类型, 0)
+    For i = 0 To (打最后几章副本 - 1)
+        当前章节数字 = 章节数(类型)
+        If 当前章节数字 > 最大章节数 Then 
+            最大章节数 = 当前章节数字
+            TracePrint "写入最大章节"&类型, 最大章节数
+            WriteConfig "最大章节"&类型, 最大章节数, True
+        End If
+        
+        //找已通关小副本号
+        副本数组 = 场景相关操作.找多图(90, 360, 630, 1200, "Attachment:副本星数.png", 2, 2)
+        If UBOUND(副本数组) < 4 Then 
+            //待挑战副本
+            Dim 最大副本坐标
+            最大副本坐标 = 待挑战副本()
+            If 最大副本坐标 <> Null Then 
+                副本数组(UBound(副本数组) + 1) = 最大副本坐标
+            End If	
+        End If
+
+        //识别副本编号,效率不高,暂时先注释
+        //        For Each a In 副本数组
+        //            Dim 识别区域X1, 识别区域Y1, 识别区域X2, 识别区域Y2
+        //            识别区域X1 = a(0) - 160 : 识别区域Y1 = a(1) - 130
+        //            识别区域X2 = a(0) : 识别区域Y2 = a(1)
+        //            副本编号 = Ocr(识别区域X1,识别区域Y1,识别区域X2,识别区域Y2,"C9CCCD-111111|78868F-111111|F7F8F8-111111|B1B4B5-111111|4B5355-111111|D6D7D8-111111|F8F9F9-111111|E9EAEA-111111|F1F1F1-111111|EEEEEF-111111",0.9)
+        //            Traceprint 副本编号
+        //            //因为字体识别有异常,会识别出大写的一,所以此处做特殊处理
+        //            If UTF8.InStr(1, 副本编号, "一") > 0 Then 
+        //                a(2) = 1
+        //            Else 
+        //                a(2) = Int(副本编号)
+        //            End If
+        //            TracePrint "识别结束"
+        //        Next
+            
+        //进副本预览去获取数据
+        For m = 0 To UBOUND(副本数组)
+            TracePrint "将要进入副本"
+            For Each a In 副本数组(m)
+                TracePrint a
+            Next
+            Call 进副本预览(副本数组(m, 0), 副本数组(m, 1))
+            Call 获取单个副本数据(副本数组(m))
+            副本数组(m, 4) = 当前章节数字
+            副本数组(m, 5) = 类型
+            Rem 关闭副本预览界面
+            场景相关操作.关闭界面 
+            If 场景相关操作.所在场景() = 37 Then 
+                Goto 关闭副本预览界面
+            End If
+        Next
+        
+        //小关按照从大到小排序
+        Dim temp1
+        For n = 0 to UBound(副本数组)
+            For j = n + 1 To UBOUND(副本数组)
+                If CInt(副本数组(n, 2)) < CInt(副本数组(j, 2)) Then 
+                    temp1 = 副本数组(n)
+                    副本数组(n) = 副本数组(j)
+                    副本数组(j) = temp1
+                End If
+            Next
+        Next
+        
+        //写入配置的是单条副本的一维数组数据,因为不支持多维,副本数组数据结构为,0:X坐标,1:Y坐标,2:副本编号,3:剩余次数,4:章节数,5:副本类型,6:副本星数
+        For Each a In 副本数组
+            WriteConfig "副本数据" & 类型 & "." & 当前章节数字 & "." & a(2), a, True
+            If a(6) = 0 Then 
+                WriteConfig "最大副本" & 类型, a, True
+            End If
+        Next
+        
+        Delay 500
+        //切换到上一章
+        If i < (打最后几章副本 - 1) Then 
+            TracePrint "查找完一章的数据,即将进入上一章"
+            Touch 上一页坐标X, 上一页坐标Y, 100
+            Delay 1000
+        End If
+    Next
+    场景相关操作.关闭界面()
+End Function
+
+Function 章节数(类型)
+
+    Dim 章节文字, 副本编号, 副本数组, 最大章节数
+    章节文字 = Ocr(663,502,698,607,"A1C7C7-111111|ABD4D4-111111|98BDBD-111111|AAD3D3-111111|A3C9CA-111111|A3CBCB-111111|ABD4D4-111111|8AABAB-111111|9ABFC0-111111|A5CDCD-111111",0.9)
+    Traceprint 章节文字
+		
+    Dim temp, 文字数量, 待转换文字
+    文字数量 = UTF8.Len(章节文字)
+    If 文字数量 = 3 Then 
+        待转换文字 = UTF8.Mid(章节文字, 2, 1)
+    ElseIf 文字数量 = 4 Then
+        待转换文字 = UTF8.Mid(章节文字, 2, 2)
+    ElseIf 文字数量 = 5 Then
+        待转换文字 = UTF8.Mid(章节文字, 2, 3)
+    Else 
+        TracePrint "文本过长或过短,可能识别错了"
+        ShowMessage "章节识别可能出错,请尝试重启",3000,390,640
+    End If
+        
+    temp = 类型转换.汉字转数字(待转换文字)
+    If temp = null Then 
+        ShowMessage "章节数识别有误",1000, 50, 260
+        temp = 6
+    End If
+    TracePrint "章节数", temp
+    最大章节数 = ReadConfig("最大章节" & 类型, 0)
+    If temp > 最大章节数 Then 
+        TracePrint "写入最大章节"&类型, temp
+        WriteConfig "最大章节"&类型, temp, True
+    End If
+    章节数 = temp
+End Function
+
+Function 待挑战副本()
+    //找最近的未通关副本
+    Dim intX,intY
+    For 2
+        FindColor 120,200,655,1280,"957379",0,0.99,intX,intY
+        If intX > -1 And intY > -1 Then 
+            待挑战副本 = Array(intX, intY)
+        End If
+        Delay 250
+    Next
+End Function
+
+Sub 获取单个副本数据(副本数据)
+    Rem 数据识别
+    Dim ocrchar, 字符长度, intX,intY
+    ocrchar=Ocr(454,851,495,962,"9FB1BC-111111|8E9EA8-111111|819099-111111|AEC2CE-111111|A0B2BD-111111|85959E-111111|90A0AA-111111|636D73-111111|6F7C83-111111",0.9)
+    Traceprint ocrchar
+    字符长度 = UTF8.Len(ocrchar)
+    If 字符长度 = 4 Or 字符长度 = 3 Then  
+        副本数据(3) = Int(UTF8.Left(ocrchar, 1))
+    ElseIf 字符长度 = 5 Then
+        副本数据(3) = Int(UTF8.Left(ocrchar, 2))
+    Else 
+        TracePrint "获取剩余次数异常,重试"
+        ShowMessage "获取剩余次数异常,重试",1000,0,0
+        Goto 数据识别
+    End If
+    Rem 星数识别
+    FindPic 427,244,508,413,"Attachment:界面无星.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        副本数据(6) = 0
+    End If
+    FindPic 449,260,492,409,"Attachment:界面无星1.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        副本数据(6) = 0
+    End If
+    FindPic 427,244,508,413,"Attachment:界面一星.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        副本数据(6) = 1
+    End If
+    FindPic 427,244,508,413,"Attachment:界面二星.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        副本数据(6) = 2
+    End If
+    FindPic 427,244,508,413,"Attachment:界面三星.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        副本数据(6) = 3
+    End If
+    If 副本数据(6) = Null Then 
+        TracePrint "星数识别异常,重试"
+        Goto 星数识别
+    End If
+    TracePrint "星数识别",副本数据(6)
+    Rem 编号识别
+    ocrchar=Ocr(576,237,617,270,"4D7DAB-111111|60A0E0-111111|42688C-111111|3E6080-111111|4D7DAC-111111|67ACF2-111111|609FDE-111111|5890C9",0.9)
+    If UTF8.Len(ocrchar) = 1 Then 
+        副本数据(2) = Int(ocrchar)
+    Else 
+        TracePrint "编号识别异常,重试"
+        ShowMessage "编号识别异常,重试",1000,0,0
+        Goto 编号识别
+    End If
+    TracePrint "编号识别",副本数据(2)
+End Sub
+	
+Sub 进副本预览(坐标X, 坐标Y )
+    Dim 点击坐标X, 点击坐标Y, 点击偏移X, 点击偏移Y
+    //因为找图获得的坐标不太稳定,所以设置一定的点击偏移
+    点击偏移X = 80 : 点击偏移Y = 30
+    Rem 进副本预览
+    点击坐标X = 坐标X - 点击偏移X : 点击坐标Y = 坐标Y + 点击偏移Y
+    Touch 点击坐标X, 点击坐标Y, 100
+    Delay 500
+    所在场景 = 场景相关操作.所在场景()
+    If 所在场景 <> 37 Then  
+        点击偏移X = 点击偏移X - 10
+        点击偏移Y = 点击偏移Y - 10
+        Goto 进副本预览
+    End If
+End Sub
+
+Sub 副本准备(副本类型, 挑战次数, 执行类型)
+    //使用体力执行类型: 1 = 皇榜任务 , 2 = 刷碎片, 3 = 推进度, 4 = 升阶, 5 = 刷最高级副本, 6打名将副本
+    //副本数组数据结构为,0:X坐标,1:Y坐标,2:副本编号,3:剩余次数,4:章节数,5:副本类型,6:副本星数
+    Rem 打副本准备
+    TracePrint "副本类型",副本类型
+    Call 进副本(副本类型)
+    Dim 挑战副本数据, 最大章节数, 当前章节副本列表(), 副本剩余次数
+    最大章节数 = ReadConfig("最大章节" & 副本类型, 1)
+    TracePrint "筛选要打的副本数据"
+    Rem 获取副本信息
+    Select Case 执行类型
+    Case 1, 5
+        
+        TracePrint "最大章节"&副本类型, 最大章节数
+        
+        For i = 1 To 5
+            Dim tempStr = "副本数据" & 副本类型 & "." & 最大章节数 & "." & i
+        	
+            当前章节副本列表(i) = ReadConfig("副本数据" & 副本类型 & "." & 最大章节数 & "." & i, 0)
+        Next
+        If UBOUND(当前章节副本列表) = -1 Then 
+            TracePrint "当前章节副本信息为空将搜索上一章的数据"
+            最大章节数 = 最大章节数 - 1
+            If 最大章节数 <= 0 Then 
+                TracePrint "没有找到任何可以打的副本,退出打副本"
+                Exit Sub
+            End If
+            Rem 翻页1
+            Touch 上一页坐标X, 上一页坐标Y, 100
+            Delay 2000
+            
+
+            If 章节数(副本类型) = 最大章节数 Then
+                Goto 获取副本信息
+            Else 
+                Goto 翻页1
+            End If
+        End If
+        For Each a In 当前章节副本列表
+            If a = 0 Then 
+                TracePrint "当前副本数据无效"
+            Else 
+                TracePrint "编号"&a(2), "星级"&a(6), "剩余次数"&a(3)
+                If a(3) = 0 Then 
+                    TracePrint "当前副本剩余次数为0"
+                ElseIf a(6) = 3 Then
+                    For Each b In a
+                        If b = null Then 
+                            TracePrint "此条副本数据异常,部分数据不存在,重新初始化此类副本数据"
+                            Call 副本信息(副本类型)
+                            Goto 打副本准备
+                        End If
+                    Next
+                    If 挑战副本数据 = Null Then
+                        挑战副本数据 = a
+                    ElseIf a(2) > 挑战副本数据(2) Then
+                        挑战副本数据 = a
+                    End If	
+                End If
+            End If
+        Next
+        If 挑战副本数据 = Null Then  
+            
+            最大章节数 = 最大章节数 - 1
+            If 最大章节数 <= 0 Then 
+                TracePrint "没有找到任何可以打的副本,退出打副本"
+                Exit Sub
+            ElseIf 最大章节数 <= ReadConfig("最大章节" & 副本类型, 1) - 打最后几章副本 Then
+                TracePrint "章节数据有误,尝试重新初始化所有副本数据"
+                ShowMessage "无法获取到可以刷的副本,重新获取副本数据"
+                打最后几章副本 = 打最后几章副本 + 1
+                Call 副本信息(副本类型)
+                Goto 打副本准备
+            End If
+            Rem 翻页2
+            Touch 上一页坐标X, 上一页坐标Y, 100
+            Delay 2000
+            If 章节数(副本类型) = 最大章节数 Then
+                Goto 获取副本信息
+            Else 
+                Goto 翻页2
+            End If
+        End If
+        副本剩余次数 = 挑战副本数据(3)
+        TracePrint "副本数据获取完毕即将挑战"&挑战副本数据(4)&"章"&"第"&挑战副本数据(2)&"关"
+    Case 3
+        最大章节数 = ReadConfig("最大章节" & 副本类型, 1)
+        TracePrint "最大章节"&副本类型, 最大章节数
+        For i = 1 To 5
+            当前章节副本列表(i) = ReadConfig("副本数据" & 副本类型 & "." & 最大章节数 & "." & i)
+        Next
+        If UBOUND(当前章节副本列表) = -1 Then 
+            TracePrint "当前章节副本信息为空将搜索上一章的数据"
+            最大章节数 = 最大章节数 - 1
+            If 最大章节数 <= 0 Then 
+                TracePrint "没有找到任何可以打的副本,退出打副本"
+                Exit Sub
+            End If
+            Rem 翻页3
+            Touch 上一页坐标X, 上一页坐标Y, 100
+            Delay 2000
+            If 章节数(副本类型) = 最大章节数 Then
+                Goto 获取副本信息
+            Else 
+                Goto 翻页3
+            End If
+        End If
+        For Each a In 当前章节副本列表
+            If a = Null Then 
+                TracePrint "当前副本数据无效"
+            Else 
+                TracePrint "编号"&a(2), "星级"&a(6), "剩余次数"&a(3)
+                For Each b In a
+                    If b = null Then 
+                        TracePrint "此条副本数据异常,部分数据不存在,重新初始化此类副本数据"
+                        Call 副本信息(副本类型)
+                        Goto 打副本准备
+                    End If
+                Next
+                If a(6) = 0 Then 
+                    挑战副本数据 = a
+                    Exit For
+                End If
+            End If
+        Next
+        If 挑战副本数据 = Null Then 
+            TracePrint "没找到未通关的副本,尝试查找上一章"
+            If UBOUND(当前章节副本列表) = 4 Then 
+                最大章节数 = 最大章节数 + 1
+                Rem 翻页4
+                Touch 下一页坐标X, 下一页坐标Y, 100
+                Delay 2000
+                If 章节数(副本类型) = 最大章节数 Then 
+                    Goto 翻页4
+                Else 
+                    Goto 获取副本信息
+                End If
+            End If
+        End If
+        
+        副本剩余次数 = 挑战副本数据(3)
+        TracePrint "副本数据获取完毕即将挑战"&挑战副本数据(4)&"章"&"第"&挑战副本数据(2)&"关"
+    Case 6
+        //暂时没完成,先退出
+        Exit Sub
+    End Select
+    
+    Call 进副本预览(挑战副本数据(0), 挑战副本数据(1))
+    Call 获取单个副本数据(挑战副本数据)  
+    挑战副本数据(5) = 副本类型
+    //副本数组数据结构为,0:X坐标,1:Y坐标,2:副本编号,3:剩余次数,4:章节数,5:副本类型,6:副本星数
+    WriteConfig "副本数据" & 副本类型 & "." & 挑战副本数据(4) & "." & 挑战副本数据(2), 挑战副本数据, True
+    
+    //预期打的次数是挑战次数,但是因为体力,副本剩余次数的影响,可能会调整打副本次数
+    Dim 最终打副本次数, 最大副本数据
+
+    If 副本剩余次数 > 0 Then 
+        //特殊检测体力是否足够
+        Dim	intX, intY
+        FindColor 152,368,188,443,"0000F9",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "体力不足继续挑战此类副本,退出"
+            Exit Sub
+        End If
+        
+        TracePrint "预期挑战次数"&挑战次数, "副本剩余次数"&副本剩余次数, "副本星级"&挑战副本数据(6)
+        If 副本剩余次数 > 挑战次数 Then 
+            最终打副本次数 = 挑战次数
+        Else 
+            最终打副本次数 = 副本剩余次数
+        End If
+        
+        //如果是三星就进行扫荡,否则挑战
+        TracePrint "挑战次数"&挑战次数
+		
+        If 挑战副本数据(6) = 3 Then
+            Rem 进入扫荡
+            Touch 进入扫荡坐标X, 进入扫荡坐标Y, 250
+            Delay 1000
+            所在场景 = 场景相关操作.所在场景()
+            If 所在场景 = 40 Or 所在场景 = 41 Then 
+                TracePrint "最终打副本次数",最终打副本次数
+                Call 打副本(2, 最终打副本次数, 挑战副本数据)
+            Else 
+                Goto 进入扫荡   
+            End If
+        Else 
+            Rem 进入副本选择队伍
+            Touch 挑战坐标X, 挑战坐标Y, 250
+            Delay 1000
+            所在场景 = 场景相关操作.所在场景()
+            If 所在场景 <> 40 Then
+                Goto 进入副本选择队伍
+            Else 
+                Call 打副本(1, 最终打副本次数, 挑战副本数据)
+                Rem 重新进副本
+                所在场景 = 场景相关操作.所在场景()
+                If 所在场景 = 3 Or 所在场景 = 38 Or 所在场景 = 39 Then 
+                    TracePrint "战斗完毕,正常原路返回"
+                ElseIf 所在场景 = 1 Or 所在场景 = 2 Then
+                    TracePrint "战斗完毕,当前场景为"&所在场景
+                    Call 进副本(副本类型)
+                Else 
+                    TracePrint "战斗完毕,当前场景为"&所在场景
+                    场景相关操作.关闭界面()
+                    Delay 1000
+                    Goto 重新进副本
+                End If 
+                If 执行类型 = 3 Then 
+                    TracePrint "推关结束"
+                    If 上次推关结果 = True Then 
+                        TracePrint "推关结果胜利,需要更新副本数据"
+                        //需要查找下一个未通关副本
+                        最大副本数据 = 待挑战副本()
+                        
+                        If 最大副本数据 <> Null Then 
+                            TracePrint "将要进入副本"
+                            最大副本数据(4) = 章节数(副本类型)
+                            Call 进副本预览(最大副本数据(0), 最大副本数据(1))
+                            Call 获取单个副本数据(最大副本数据)  
+                            最大副本数据(5) = 副本类型
+                            WriteConfig "副本数据" & 副本类型 & "." & 最大副本数据(4) & "." & 最大副本数据(2), 最大副本数据, True
+                            Rem 关闭副本预览界面3
+                            场景相关操作.关闭界面 
+                            If 场景相关操作.所在场景() = 37 Then 
+                                Goto 关闭副本预览界面3
+                            End If
+                        End If	
+                    End If
+                End If
+            End If
+        End If
+    Else 
+        场景相关操作.关闭界面()
+    End If
+    TracePrint "结束本轮打副本"
+End Sub
+
+Sub 打副本(类型, 次数, 挑战副本数据)
+    //打副本类型枚举: 1 = 正常打, 2 = 扫荡
+    TracePrint "即将开战"
+    Dim ocrchar, intX, intY
+    Select Case 类型
+    Case 1
+        Rem 进战斗界面
+        Touch 开战坐标X, 开战坐标Y, 100
+        Delay 1000
+    		
+        所在场景 = 场景相关操作.所在场景()
+        If 所在场景 = 18 Then 
+            FindPic 580,1020,720,1280,"Attachment:速度1.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                Touch 速度坐标X, 速度坐标Y, 100
+            End If
+
+            FindPic 580,1020,720,1280,"Attachment:自动.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then 
+                TracePrint "尝试切换手动"
+                Touch 自动坐标X, 自动坐标Y, 100
+            End If
+            
+            Rem 战斗循环
+				
+            //检测是否进入第三场战斗
+				
+            ocrchar=Ocr(606,597,638,667,"D7D7D7-111111|D4D5D5-111111|C7C9CB-111111|C0C2C7-111111|ACAFBA-111111|9FA2AE-111111",0.9)
+            Traceprint ocrchar
+            If ocrchar = "3/3" Then 
+                FindPic 580,1020,720,1280,"Attachment:手动.png","000000",0,0.9,intX,intY
+                If intX > -1 And intY > -1 Then 
+                    TracePrint "尝试切换自动"
+                    Touch 自动坐标X, 自动坐标Y, 100
+                End If
+            End If
+            //检测是否出现单挑
+            FindPic 5,1094,107,1237,"Attachment:跳过2.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then 
+                TracePrint "尝试点击单挑跳过"
+                Touch 单挑跳过坐标X, 单挑跳过坐标Y, 100
+            End If
+            
+            //检测是否战斗结束
+            FindPic 36,940,137,1139,"Attachment:离开.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then 
+            	
+                //胜利和败北文字出现时有动画,会有一定延迟,所以要特殊处理
+            	
+                Do
+                    FindPic 378,38,685,428,"Attachment:胜利.png","000000",0,0.9,intX,intY
+                    If intX > -1 And intY > -1 Then 
+                        TracePrint "战斗胜利更新相关数据"
+                	
+                        上次推关结果 = True
+                        挑战副本数据(3) = Int(挑战副本数据(3)) - 1
+                
+                        Rem 星数识别
+                        FindPic 510,422,671,837,"Attachment:通关一星.png","000000",0,0.9,intX,intY
+                        If intX > -1 And intY > -1 Then
+                            挑战副本数据(6) = 1
+                        End If
+                        FindPic 510,422,671,837,"Attachment:通关二星.png","000000",0,0.9,intX,intY
+                        If intX > -1 And intY > -1 Then
+                            挑战副本数据(6) = 2
+                        End If
+                        FindPic 510,422,671,837,"Attachment:通关三星.png","000000",0,0.9,intX,intY
+                        If intX > -1 And intY > -1 Then
+                            挑战副本数据(6) = 3
+                        End If
+                        If 挑战副本数据(6) = Null Then 
+                            TracePrint "星数识别异常,重试"
+                            Goto 星数识别
+                        End If
+                        WriteConfig "副本数据" & 挑战副本数据(5) & "." & 挑战副本数据(4) & "." & 挑战副本数据(2), 挑战副本数据 , True
+                        TracePrint "战斗胜利,更新副本数据"
+                        Touch 离开坐标X, 离开坐标Y, 100
+                        Exit Do
+                    End If
+            
+                    FindPic 466,90,706,373,"Attachment:败北.png","000000",0,0.9,intX,intY
+                    If intX > -1 And intY > -1 Then 
+                        上次推关结果 = False
+                        Touch 离开坐标X, 离开坐标Y, 100
+                        Exit Do
+                    End If 
+                Loop
+            	
+
+            Else 
+                Delay 1000
+                TracePrint "战斗循环完成一次"
+                Goto 战斗循环
+            End If
+				
+            FindPic 584,1047,701,1258,"Attachment:跳过1.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                Touch 剧情跳过坐标X, 剧情跳过坐标Y, 100
+            End If	
+        ElseIf 所在场景 <> 40 Then
+            FindPic 584,1047,701,1258,"Attachment:跳过1.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                Touch 剧情跳过坐标X, 剧情跳过坐标Y, 100
+            End If
+            场景相关操作.关闭界面()
+            Goto 进战斗界面
+        End If
+    Case 2
+        Rem 进扫荡界面
+        所在场景 = 场景相关操作.所在场景()
+        If 所在场景 = 40 Then 
+            Touch 开战坐标X, 开战坐标Y, 250
+            Goto 进扫荡界面
+        ElseIf 所在场景 = 41 Then
+            If 次数 > 1 Then 
+                Dim 字符长度, 准备挑战次数
+                Rem 设置次数
+                ocrchar=Ocr(290,785,319,901,"9FB1BC-111111|8E9EA8-111111|819099-111111|AEC2CE-111111|A0B2BD-111111|85959E-111111|90A0AA-111111|636D73|6F7C83",0.9)
+                Traceprint ocrchar
+                字符长度 = UTF8.Len(ocrchar)
+                If 字符长度 = 5 Then 
+                    准备挑战次数 = Int(UTF8.Left(ocrchar, 2))
+                ElseIf 字符长度 <> 0 Then
+                    准备挑战次数 = Int(UTF8.Left(ocrchar, 1))
+                Else 
+                    TracePrint "识别出错了,当前字符长度"&字符长度
+                End If
+                If 准备挑战次数 > 次数 Then 
+                    Touch 减号坐标X, 减号坐标Y, 250
+                    Delay 500
+                    Goto 设置次数
+                ElseIf 准备挑战次数 < 次数 Then
+                    Touch 加号坐标X, 加号坐标Y, 250
+                    Delay 500
+                    Goto 设置次数
+                End If
+            End If
+            TracePrint "准备挑战次数",准备挑战次数
+            Rem 点击开始扫荡
+            Touch 开始扫荡坐标X, 开始扫荡坐标Y, 250
+            Delay 2000
+            所在场景 = 场景相关操作.所在场景()
+            If 所在场景 = 41 Then 
+                TracePrint "没有点到扫荡,从头来"
+                Goto 点击开始扫荡
+            ElseIf 所在场景 = 37 Then
+                挑战副本数据(3) = int(挑战副本数据(3)) - 次数
+                TracePrint "战斗胜利,更新这个副本的剩余挑战次数"
+                WriteConfig "副本数据"&挑战副本数据(5)&"."&挑战副本数据(4)&"."&挑战副本数据(2), 挑战副本数据, True
+            End If
+        End If
+    End Select
+End Sub
+
+Sub 领取星级奖励()
+    //宝箱是否可以领取
+    Call 领副本宝箱()
+    Delay 1000
+    Dim intX, intY
+    //上一页
+    FindColor 295,138,433,231,"2626AD",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        Touch 上一页坐标X, 上一页坐标Y, 100
+        Delay 2000
+        Call 领副本宝箱()
+    End If
+    Delay 1000
+    //下一页
+    FindColor 292,1160,429,1270,"2626AD",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        Touch 上一页坐标X, 上一页坐标Y, 100
+        Delay 2000
+        Call 领副本宝箱()
+    End If
+End Sub
+
+Sub 领副本宝箱()
+    Dim intX,intY
+    Do
+        FindColor 14,627,87,1154,"2626AD",0,0.99,intX,intY
+        If intX > -1 And intY > -1 Then 
+            TracePrint "尝试领取宝箱"
+            Touch intX - 20, intY - 30, 100
+            Delay 1000
+        Else 
+            Exit Sub
+        End If
+    Loop
+End Sub
+
+Function 读取当前体力()
+    Rem 识别体力文字
+    Dim ocrchar, 字符长度
+    UseDict (1)
+    //备忘,8月4日晚,突然在主城无法识别到文字,暂时换为在副本界面识别
+    If 所在场景 = 1 Then 
+        ocrchar=Ocr(639,291,676,402,"9FB1BC-111111|8E9EA8-111111|819099-111111|AEC2CE-111111|A0B2BD-111111|85959E-111111|90A0AA-111111|636D73-111111|BCBCBB-111111|838382-111111",0.9)
+    ElseIf 所在场景 = 2 Then
+        ocrchar = Ocr(638, 226, 675, 356, "9FB1BC-111111|8E9EA8-111111|819099-111111|AEC2CE-111111|A0B2BD-111111|85959E-111111|90A0AA-111111|636D73-111111|BCBCBB-111111|838382-111111", 0.9)
+    ElseIf 所在场景 = 3 Or 所在场景 = 38 Then
+        ocrchar=Ocr(670,860,693,975,"8AADAC-111111|8DB1B0-111111|8EB2B1-111111|96BDBD-111111|8CB0AF-111111|98C0C0-111111|94BBBB-111111|8BAFAE-111111|6A827F-111111|82A3A2-111111",0.9)
+    Else 
+        Call 回主城(1)
+    End If
+
+    Traceprint ocrchar
+    字符长度 = UTF8.Len(ocrchar)
+    If 字符长度 = 7 Then 
+        读取当前体力 = Int(UTF8.Left(ocrchar, 3))
+    ElseIf 字符长度 = 6 Then
+        读取当前体力 = Int(UTF8.Left(ocrchar, 2))
+    ElseIf 字符长度 = 5 Then
+        读取当前体力 = Int(UTF8.Left(ocrchar, 1))
+    Else
+        TracePrint "读取体力文字异常,重试"
+        Goto 识别体力文字
+    End If
+End Function

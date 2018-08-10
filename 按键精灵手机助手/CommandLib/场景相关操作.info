@@ -1,0 +1,29 @@
+
+{
+	"Description" : null,
+	"主城底部是否收起" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"主城顶部是否收起" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"关闭界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"所在场景" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"找多图" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	}
+}

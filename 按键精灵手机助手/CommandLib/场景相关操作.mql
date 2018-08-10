@@ -1,0 +1,611 @@
+Function 所在场景()
+    //界面枚举 
+    //1 = 主城, 2 = 大地图, 3 = 副本, 4 = 商城, 5 = 日常活动, 6 = 任务, 7 = 建筑, 8 = 出征, 9 = 兵事 , 10 = 签到, 11 = 七日狂欢, 12 = 月卡, 
+    //13 = 皇榜任务, 14 = 武将, 15 = 阵容, 16 = 背包, 17 = 军团, 18 = 战斗中, 19 = 邮件, 20 = 资源, 21 = 公告, 22 = 登录界面, 23 = 酒肆, 24 = 官职, 25 = 祭坛, 
+    //26 = 成就, 27 = 技法所, 28 = 计略府, 29 = 军械所, 30 = 城墙, 31 = 派遣 , 32 = VIP, 33 = 主公 , 34 = 开服基金 , 35 = 市场, 36 = 断线重连, 37 = 副本预览, 38 = 精英副本
+    //39 = 名将副本, 40 = 选择队伍, 41 = 扫荡预览, 42 = 登录, 43 = 登录成功, 44 = 国家, 45 = 兵力, 46 = 附近界面, 47 = 筛选界面, 48 = 寻访界面, 49 = 错误, 50 = 仓库, 51 = 建筑升级, 52 = 军团帮助
+    //53 = 军团俸禄, 54 = 活动详情, 55 = 补领确认, 56 = 宴请结果, 57 = 繁荣度, 58 = 排行榜, 59 = 帮助界面, 60 = 设置, 61 = 读条等待, 62 = 获得武将, 63 = 白云, 64 = 充值提示, 65 = 武将详情页
+
+    Dim intX,intY
+	
+    Dim 判定范围1, 判定范围2, 判定范围3, 判定范围4, 判定范围5, 判定范围6
+    判定范围1 = Array(114,451,167,831) '开始游戏按钮
+    判定范围2 = Array(0,1100,150,1280) '切换主城和大地图按钮
+    判定范围3 = Array(580,0,720,140) '副本图标
+    判定范围4 = Array(580,0,720,220) '左上角标题
+    判定范围5 = Array(600,500,720,800) '中部标题1
+    判定范围6 = Array(580,530,680,780) '中部标题2
+		
+    FindPic 判定范围1(0),判定范围1(1),判定范围1(2),判定范围1(3),"Attachment:开始游戏.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 22
+        Exit Function
+    End If
+	
+    FindPic 判定范围2(0), 判定范围2(1), 判定范围2(2), 判定范围2(3),"Attachment:地图.png","000000",0,0.8,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 1
+        Exit Function
+    End If
+
+    FindPic 判定范围2(0), 判定范围2(1), 判定范围2(2), 判定范围2(3), "Attachment:主城.png", "000000", 0, 0.7, intX, intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 2
+        Exit Function
+    Else 
+        FindPic 625,1159,717,1277,"Attachment:附近图标.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then
+            所在场景 = 2
+            Exit Function
+        End If
+    End If
+	
+    FindPic 判定范围3(0), 判定范围3(1), 判定范围3(2), 判定范围3(3),"Attachment:副本.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 3
+        Exit Function
+    End If
+	
+    FindPic 判定范围4(0), 判定范围4(1), 判定范围4(2), 判定范围4(3),"Attachment:商城.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 4
+        Exit Function
+    End If
+		
+    FindPic 判定范围5(0), 判定范围5(1), 判定范围5(2), 判定范围5(3),"Attachment:日常活动.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 5
+        Exit Function
+    End If
+		
+    FindPic 判定范围4(0), 判定范围4(1), 判定范围4(2), 判定范围4(3),"Attachment:任务.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 6
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:建筑.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 7
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:出征.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 8
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:兵事.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 9
+        Exit Function
+    End If
+	
+    FindPic 判定范围5(0), 判定范围5(1), 判定范围5(2), 判定范围5(3),"Attachment:签到.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 10
+        Exit Function
+    End If
+	
+    FindPic 判定范围4(0), 判定范围4(1), 判定范围4(2), 判定范围4(3),"Attachment:七日狂欢.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 11
+        Exit Function
+    End If
+	
+    FindPic 400,720,520,1080,"Attachment:月卡.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 12
+        Exit Function
+    End If
+	
+    FindPic 580,380,640,550,"Attachment:皇榜任务.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 13
+        Exit Function
+    End If
+	
+    FindPic 判定范围4(0), 判定范围4(1), 判定范围4(2), 判定范围4(3),"Attachment:武将.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 14
+        Exit Function
+    End If
+	
+    FindPic 判定范围4(0), 判定范围4(1), 判定范围4(2), 判定范围4(3),"Attachment:阵容.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 15
+        Exit Function
+    End If
+	
+    FindPic 判定范围4(0), 判定范围4(1), 判定范围4(2), 判定范围4(3),"Attachment:背包.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 16
+        Exit Function
+    End If
+	
+    FindPic 判定范围4(0), 判定范围4(1), 判定范围4(2), 判定范围4(3),"Attachment:军团.png","000000",0,0.8,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 17
+        Exit Function
+    End If
+    
+    FindPic 580,1020,720,1280,"Attachment:暂停.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 18
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:邮件.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 19
+        Exit Function
+    Else 
+        FindPic 573,583,639,689,"Attachment:邮件军团.png","000000",0,0.95,intX,intY
+        If intX > -1 And intY > -1 Then
+            所在场景 = 19
+            Exit Function
+        Else 
+            FindPic 581,581,634,702,"Attachment:邮件系统.png","000000",0,0.95,intX,intY
+            If intX > -1 And intY > -1 Then
+                所在场景 = 19
+                Exit Function
+            End If
+        End If
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:资源.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 20
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:公告.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 21
+        Exit Function
+    End If
+	
+    FindPic 判定范围4(0), 判定范围4(1), 判定范围4(2), 判定范围4(3),"Attachment:酒肆.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 23
+        Exit Function
+    End If
+	
+    FindPic 判定范围4(0), 判定范围4(1), 判定范围4(2), 判定范围4(3),"Attachment:官职.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 24
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:祭坛.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 25
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:成就.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 26
+        Exit Function
+    Else 
+        FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:国家成就.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then
+            所在场景 = 26
+            Exit Function
+        End If
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:技法所.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 27
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:计略府.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 28
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:军械所.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 29
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:城墙.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 30
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:派遣.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 31
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:VIP.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 32
+        Exit Function
+    End If
+	
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:主公.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 33
+        Exit Function
+    End If
+	
+    FindPic 判定范围5(0), 判定范围5(1), 判定范围5(2), 判定范围5(3),"Attachment:开服基金.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 34
+        Exit Function
+    End If
+	
+    FindPic 判定范围5(0), 判定范围5(1), 判定范围5(2), 判定范围5(3),"Attachment:市场.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 35
+        Exit Function
+    End If
+    
+    FindPic 469,601,511,684,"Attachment:提示.png","000000",0,0.98,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 36
+        FindPic 323,518,438,849,"Attachment:是否立即领取.png","000000",0,0.99,intX,intY
+        If intX > -1 And intY > -1 Then
+            所在场景 = 55
+        End If
+        Exit Function
+    End If
+	
+    FindPic 131,861,207,1030,"Attachment:挑战.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 37
+        Exit Function
+    End If
+    
+    FindPic 131, 861, 207, 1030, "Attachment:重置.png", "000000", 0, 0.9, intX, intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 37
+        Exit Function
+    End If
+    
+    FindPic 524,22,580,105,"Attachment:精英副本.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 38
+        Exit Function
+    End If
+    
+    FindPic 判定范围5(0), 判定范围5(1), 判定范围5(2), 判定范围5(3),"Attachment:选择队伍.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 40
+        Exit Function
+    End If
+	
+    FindPic 491,593,530,681,"Attachment:扫荡标题.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 41
+        Exit Function
+    End If
+    
+    FindPic 274,510,372,785,"Attachment:登录.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 42
+        Exit Function
+    End If
+    
+    FindPic 629,502,697,566,"Attachment:登录成功.png","000000",0,0.95,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 43
+        Exit Function
+    End If
+    
+    FindPic 528,338,589,519,"Attachment:前朝.png","000000",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 44
+        Exit Function
+    End If
+    FindPic 589,578,640,718,"Attachment:兵力标题.png","000000",0,0.98,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 45
+        Exit Function
+    End If
+    
+    FindPic 584, 208, 630, 498, "Attachment:附近.png", "000000", 0, 0.98, intX, intY
+    If intX > -1 And intY > -1 Then 
+        所在场景 = 46
+        Exit Function
+    End If
+
+    FindPic 582,524,620,741,"Attachment:显示设置.png","000000",0,0.98,intX,intY
+    If intX > -1 And intY > -1 Then 
+        所在场景 = 47
+        Exit Function
+    End If
+    
+    FindPic 504,543,593,745,"Attachment:城池寻访.png","000000",0,0.95,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 48
+        Exit Function
+    End If
+    
+    FindPic 462,590,526,701,"Attachment:错误.png","000000",0,0.95,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 49
+        Exit Function
+    End If
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:仓库.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 50
+        Exit Function
+    End If
+    
+    FindPic 22,906,171,1170,"Attachment:升级.png","000000",0,0.95,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 51
+        Exit Function
+    End If
+    
+    FindPic 576,556,626,737,"Attachment:军团帮助.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 52
+        Exit Function
+    End If
+    
+    FindPic 586,556,634,750,"Attachment:军团俸禄.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 53
+        Exit Function
+    End If
+    
+    FindPic 596,435,703,844,"Attachment:活动详情.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 54
+        Exit Function
+    End If
+    
+    FindPic 370,204,719,1095,"Attachment:恭喜获得.png","000000",0,0.95,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 56
+        Exit Function
+    End If
+    
+    FindPic 575,1051,643,1156,"Attachment:繁荣度说明图标.png","000000",0,0.95,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 57
+        Exit Function
+    End If
+    FindPic 584,719,685,1103,"Attachment:排行榜.png","000000",0,0.95,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 58
+        Exit Function
+    End If
+    FindPic 617,599,687,703,"Attachment:帮助.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 59
+        Exit Function
+    End If
+    
+    FindPic 512,567,573,674,"Attachment:设置.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 60
+        Exit Function
+    End If
+    FindColor 51,300,69,452,"183D9A-111111",0,0.95,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 61
+        Exit Function
+    End If
+    
+    FindPic 484,442,645,856,"Attachment:恭喜获得1.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 62
+        Exit Function
+    End If
+    
+    FindPic 0,0,720,1280,"Attachment:白云.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 63
+        Exit Function
+    End If
+    
+    FindPic 456,524,530,790,"Attachment:充值界面提示.png","000000",0,0.96,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 64
+        Exit Function
+    End If
+    
+    FindPic 564,785,624,934,"Attachment:列传.png","000000",4,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 65
+        Exit Function
+    End If
+End Function
+
+Function 关闭界面()	
+    Dim 当前场景, intX, intY, 重启参数
+    重启参数 = 0
+    Rem 关闭界面
+    当前场景 = 所在场景()
+    Select Case 当前场景
+    Case 3, 4, 6, 11, 14, 15, 16, 17, 23, 24, 38, 51, 65
+        Tap 680,1230
+    Case 8 ,9, 19, 21, 25, 28, 29, 30, 32, 33, 53
+        Tap 640,1140
+    Case 10, 34, 35, 46
+        Tap 630, 1090
+    Case 12
+        Tap 525, 1110
+    Case 13, 52
+        Tap 640, 1020
+    Case 22
+        Tap 140, 640
+    Case 27, 31, 37
+        Tap 640, 1060
+    Case 5
+        Tap 630, 1200
+    Case 26
+        Tap 660, 1200
+    Case 1
+        TracePrint "这个主界面要怎么关"&当前场景
+    Case 2
+        Touch 70, 1205, 100
+    Case 36
+        FindPic 209,390,304,899,"Attachment:重新登录.png","000000",0,0.99,intX,intY
+        If intX > -1 And intY > -1 Then
+            Touch 250, 640, 100
+        Else 
+            Touch 248, 520, 100
+        End If
+    Case 40
+        Touch 670, 1140, 100
+    Case 41
+        Touch 550, 910, 100
+    Case 18
+        TracePrint "战斗场景,暂时不支持关闭,请等待战斗结束"
+        ShowMessage "战斗场景,暂时不支持关闭,请等待战斗结束", 2000, 390, 640
+    Case 43
+        Touch 660, 920, 100
+    Case 44
+        Touch 590, 1070, 100
+    Case 7, 20, 45, 54
+        Touch 630, 1110, 100
+    Case 47
+        Touch 620, 940, 100
+    Case 48
+        Touch 600, 920, 100
+    Case 49 
+        Touch 250, 640, 100
+    Case 50
+        Touch 635, 1000, 100
+    Case 55
+        Touch 250, 750, 100
+    Case 56
+        Touch 55, 480, 100
+    Case 57
+        Touch 400, 600, 100
+    Case 58
+        Touch 660, 1110, 100
+    Case 59
+        Touch 660, 1080, 100
+    Case 60
+        Touch 545, 910, 100
+    Case 61
+        ShowMessage "等待加载", 1000, 50, 620
+    Case 62
+        Touch 100, 640, 100
+    Case 63
+        TracePrint "在切换城内城外"
+        If 重启参数 = 5 Then 
+            KillApp "com.shouyou.sgzerq.hm"   
+            Delay 5000
+            RunApp "com.shouyou.sgzerq.hm"
+        End If
+        重启参数 = 重启参数 + 1
+        Delay 3000
+        Goto 关闭界面
+    Case 64
+        Touch 250, 520, 100
+    Case Else
+        ShowMessage "这个界面不知道啊,无法关闭,请手动关闭,并告诉我", 1500, 300, 500
+        //        KeyPress "Back"
+    End Select
+End Function
+
+Function 主城顶部是否收起()
+    Dim intX,intY
+    FindPic 525,1105,598,1182,"Attachment:顶部收起.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        主城顶部是否收起 = False
+    Else 
+        主城顶部是否收起 = True
+    End If
+End Function
+
+Function 主城底部是否收起()
+    Dim intX,intY
+    If 所在场景() = 1 Or 所在场景() = 2 Then 
+        FindPic 14,405,72,478,"Attachment:底部收起.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then 
+            主城底部是否收起 = False
+        Else 
+            TracePrint "没有找到左边的图标"
+            主城底部是否收起 = True
+        End If
+    Else 
+        关闭界面()
+    End If
+
+End Function
+
+Function 找多图(起X, 起Y, 止X, 止Y, 图片, 横向拆分数量, 纵向拆分数量 )
+	
+    Dim tx, ty, areaX1, areaY1, areaX2, areaY2,总区块, tempX, tempY, temp1, temp2, temp3, 坐标数组(), 单个坐标(), 数据有效性
+    tx = (止X - 起X) / 横向拆分数量 : ty = (止Y - 起Y) / 纵向拆分数量
+    总区块 = 横向拆分数量 * 纵向拆分数量
+	
+    Dim t = 0
+	
+    //先横向,再纵向
+    For i = 1 To 总区块
+        //横向时,Y值不需要每次都变动,只在循环次数等于横向拆分数量满足条件后才变化
+        数据有效性 = True
+        temp1 = int(i / 横向拆分数量)
+        temp2 =  i Mod 横向拆分数量
+        If temp2 > 0 Then 
+            tempY = temp1 + 1
+        End If
+        temp3 = i Mod 横向拆分数量
+        If temp3 > 0 Then 
+            tempX = temp3
+        Else 
+            tempX = 横向拆分数量
+        End If
+		
+        areaX1 = 起X  + tx * (tempX -1) : areaY1 = 起Y + ty * (tempY - 1)
+        areaX2 = 起X + tx * tempX : areaY2 = 起Y + ty * tempY
+        TracePrint "开始准备第"&i&"个区域"
+        Do
+            TracePrint "开始找图"
+            Dim intX,intY
+            //TracePrint "areaX1",areaX1,"areaY1",areaY1,"areaX2",areaX2,"areaY2" ,areaY2
+            FindPic areaX1,areaY1,areaX2,areaY2,图片,"000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then 
+                TracePrint intX, intY 
+                If UBOUND(坐标数组) > -1 Then 
+                    For x = 0 To UBOUND(坐标数组)
+                        单个坐标 = 坐标数组(x)
+                        //						TracePrint UBOUND(坐标数组)
+                        //						TracePrint "第"&x&"个X坐标"&单个坐标(0),"第"&x&"个Y坐标"&单个坐标(1)
+                        If Abs(单个坐标(0) - intX) < 100 And Abs(单个坐标(1) - intY) < 100 Then 
+                            数据有效性 = False
+                            TracePrint "此组数据是旧"
+                            Exit For
+                        End If
+                    Next
+                End If
+                If 数据有效性 = True Then 
+                    单个坐标 = Array(intX, intY)
+                    坐标数组(t) = 单个坐标
+                    t = t + 1
+                End If
+                If (intY + 100) >= areaY2 Then 
+					
+                    If (intX + 30) >= areaX1 Then
+                        Exit Do
+                    Else 
+                        areaX1 = intX + 30
+                    End If
+                Else 
+                    areaY1 = intY + 100
+                End If
+            Else 
+                Exit Do
+            End If
+        Loop
+    Next
+    找多图 = 坐标数组
+	
+End Function

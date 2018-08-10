@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<Window size="242,282" sizebox="4,4,6,6" caption="0,0,0,67" mininfo="240,430" maxinfo="240,430" roundcorner="3,3">
+  <Font name="Arial" size="12" bold="false" italic="false" default="true" />
+  <Font name="Arial" size="12" bold="true" italic="false" />
+  <VerticalLayout width="242" height="282" bordercolor="#FFFBB000" bordersize="1">
+    <VerticalLayout width="240" height="280" padding="1,1,0,0">
+      <HorizontalLayout width="240" height="64" bkimage="bg_bd_logo.png" bkcolor="#FFFFFFFF">
+        <Button name="closebtn" width="46" height="32" padding="194,0,0,0" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center"
+                normalimage="file=&apos;btn_close.png&apos; source=&apos;0,0,46,32&apos;" hotimage="file=&apos;btn_close.png&apos; source=&apos;46,0,92,46&apos;" pushedimage="file=&apos;btn_close.png&apos; source=&apos;92,0,138,32&apos;" />
+      </HorizontalLayout>
+      <HorizontalLayout width="240" height="144" bkcolor="#FFF0F0F0">
+        <Button name="HoneyElfLogo" width="102" height="102" padding="69,30,0,0" bkimage="bd_logo.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+      </HorizontalLayout>
+      <HorizontalLayout width="240" height="72" bkcolor="#FFF0F0F0">
+        <Button bordersize="1" width="112" height="35" padding="64,0,0,0" bkimage="bd_text.png" bkcolor="#00B9D1EF" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" align="center" />
+      </HorizontalLayout>
+    </VerticalLayout>
+  </VerticalLayout>
+</Window>

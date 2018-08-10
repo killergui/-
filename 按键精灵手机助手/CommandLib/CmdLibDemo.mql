@@ -1,0 +1,19 @@
+import "CmdLibUtil.mql"
+
+Dim 全局变量_A = 100
+
+Function callPluginFunction()
+	callPluginFunction = DateTime.Day()
+End Function
+
+Function 获取全局变量_A()
+	获取全局变量_A = 全局变量_A
+End Function
+
+Function 相减(para1, para2)
+	相减 = para1 - para2
+End Function
+
+Function 相加(para1, para2)
+	相加 = CmdLibUtil.相加(para1, para2)
+End Function

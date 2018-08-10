@@ -1,0 +1,29 @@
+
+{
+	"Description" : "正则匹配库",
+	"Name" : "正则匹配库",
+	"LPeg_P" : 
+	{
+		"Description" : "格式: lpeg.LPeg_P(匹配字符串)\n解释: 匹配字符串开头",
+		"Name" : "匹配字符串开头",
+		"TranslateTemplate" : "匹配字符串开头"
+	},
+	"LPeg_R" : 
+	{
+		"Description" : "格式: lpeg.LPeg_R(匹配字符串)\n解释: 匹配字符串范围",
+		"Name" : "匹配字符串范围",
+		"TranslateTemplate" : "匹配字符串范围"
+	},
+	"LPeg_S" : 
+	{
+		"Description" : "格式: lpeg.LPeg_S(匹配字符串)\n解释: 匹配字符串集合",
+		"Name" : "匹配字符串集合",
+		"TranslateTemplate" : "匹配字符串集合"
+	},
+	"LPeg_match" : 
+	{
+		"Description" : "格式: lpeg.LPeg_match(匹配模式, 原字符串)\n解释: 根据指定模式匹配字符串",
+		"Name" : "根据指定模式匹配字符串",
+		"TranslateTemplate" : "根据 $1 模式匹配字符串 $2"
+	},
+}

@@ -1,0 +1,23 @@
+
+{
+	"Description" : "网络通信库(不支持ios版)",
+	"Name" : "网络通信库(不支持ios版)",
+	"CliendConnect" : 
+	{
+		"Description" :  "格式: socket.CliendConnect(ip地址,端口)\n解释: 连接主机",
+		"Name" : "连接主机",
+		"TranslateTemplate" : "连接主机"
+	},
+	"ClientReceive" : 
+	{
+		"Description" : "格式: socket.ClientReceive()\n解释: 接收主机发来的消息",
+		"Name" : "接收主机发来的消息",
+		"TranslateTemplate" : "接收主机发来的消息"
+	},
+	"ClientSend" : 
+	{
+		"Description" : "格式: socket.ClientSend(消息)\n解释: 发送消息到主机",
+		"Name" : "发送消息到主机",
+		"TranslateTemplate" : "发送 $1 消息到主机"
+	},
+}

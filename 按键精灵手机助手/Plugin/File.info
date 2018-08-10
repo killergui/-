@@ -1,0 +1,71 @@
+
+{
+	"Description" : "文件操作功能",
+	"Name" : "文件操作命令",
+	"Append" : 
+	{
+		"Description" : "格式：File.Append(文件名, 追加的内容)\n解释：向指定的文本文件追加内容",
+		"Name" : "追加内容到文件",
+		"TranslateTemplate" : "追加内容 $2 到文件 $1 的尾部"
+	},
+	"Bytes" : 
+	{
+		"Description" : "格式：File.Bytes(文件名)\n解释：获取指定的文本文件的字节数大小",
+		"Name" : "获取文件字节数大小",
+		"TranslateTemplate" : "获取文件 $1 的字节数大小"
+	},
+	"DeleteLine" : 
+	{
+		"Description" : "格式：File.DeleteLine(文件名, 行号)\n解释：删除指定的文本文件中指定行的内容",
+		"Name" : "删除文本指定行内容",
+		"TranslateTemplate" : "删除文本文件 $1 第 $2 行的全部内容"
+	},
+	"Length" : 
+	{
+		"Description" : "格式：File.Length(文件名)\n解释：获取指定的文本文件的字符数大小",
+		"Name" : "获取文本字符数量",
+		"TranslateTemplate" : "获取文件 $1 的字符数大小"
+	},
+	"LinesNumber" : 
+	{
+		"Description" : "格式：File.LinesNumber(文件名)\n解释：获取指定的文本文件的行数",
+		"Name" : "获取文本总行数",
+		"TranslateTemplate" : "文本文件 $1 的总行数"
+	},
+	"Read" : 
+	{
+		"Description" : "格式：File.Read(文件名)\n解释：读取指定的文本文件，把文件的所有内容作为一个字符串返回",
+		"Name" : "读取文件内容",
+		"TranslateTemplate" : "读取文件 $1 的内容"
+	},
+	"ReadLine" : 
+	{
+		"Description" : "格式：File.ReadLine(文件名, 行号)\n解释：读取指定的文本文件指定行的内容",
+		"Name" : "读取文本指定行内容",
+		"TranslateTemplate" : "读取文件 $1 第 $2 行的内容"
+	},
+	"ReadLines" : 
+	{
+		"Description" : "格式：File.ReadLines(文件名)\n解释：读取指定的文本文件，把文件的所有内容作为一个字符串数组返回，数组中的每个元素代表文件中的一行",
+		"Name" : "读取文本文件内容,存为数组",
+		"TranslateTemplate" : "读取文件 $1 的内容到数组"
+	},
+	"Write" : 
+	{
+		"Description" : "格式：File.Write(文件名, 内容1, 内容2, ...)\n解释：把一个或多个字符串依次写入指定的文本文件",
+		"Name" : "写内容到文件",
+		"TranslateTemplate" : "写入 $2 到文件 $1"
+	},
+	"WriteLine" : 
+	{
+		"Description" : "格式：File.WriteLine(文件名, 行号, 插入内容)\n解释：把内容插入到文本文件指定行中",
+		"Name" : "写入文本内容到指定行",
+		"TranslateTemplate" : "插入内容 $3 到文件 $1 指定行 $2 中"
+	},
+	"WriteLines" : 
+	{
+		"Description" : "格式：File.WriteLines(文件名, 待写入文本的内容) \n解释：写入数组内容到文件",
+		"Name" : "写入数组内容到文件",
+		"TranslateTemplate" : "写入数组内容 $2 到文件 $1 中"
+	}
+}

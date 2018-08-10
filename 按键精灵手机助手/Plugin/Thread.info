@@ -1,0 +1,35 @@
+
+{
+	"Description" : "多线程功能",
+	"Name" : "多线程命令",
+	"GetShareVar" : 
+	{
+		"Description" : "格式：Thread.GetShareVar(共享变量名称)\n解释：普通的变量是每个线程独有的，无法共享。这个命令和Thread.SetShareVar可以读写线程间共享的变量\n共享变量的名称可以是整数或字符串\n返回值是共享变量的当前值",
+		"Name" : "获取共享变量值",
+		"TranslateTemplate" : "线程间共享变量 $1 的值"
+	},
+	"SetShareVar" : 
+	{
+		"Description" : "格式：Thread.SetShareVar(共享变量名称, 共享变量值)\n解释：普通的变量是每个线程独有的，无法共享。这个命令和Thread.GetShareVar可以读写线程间共享的变量\n共享变量的名称可以是整数或字符串，指定的值将被写入指定名称的共享变量",
+		"Name" : "设置共享变量",
+		"TranslateTemplate" : "设置线程间共享变量 $1 的值为 $2"
+	},
+	"Start" : 
+	{
+		"Description" : "格式：Thread.Start(线程函数, 参数1, 参数2, ...)\n解释：启动一个线程，线程执行指定的函数，并把参数依次传入指定的函数\n返回值为线程的标识符，可用于中止或等待线程",
+		"Name" : "启动线程",
+		"TranslateTemplate" : "启动一个线程，执行 $1"
+	},
+	"Stop" : 
+	{
+		"Description" : "格式：Thread.Stop(线程标识符)\n解释：请求指定的线程中止，参数“线程标识符”是Thread.Start()的返回值\n注意：线程可能不会立即响应中止的请求",
+		"Name" : "结束线程",
+		"TranslateTemplate" : "请求线程 $1 中止"
+	},
+	"Wait" : 
+	{
+		"Description" : "格式：Thread.Wait(线程标识符)\n解释：等待指定的线程中止，参数“线程标识符”是Thread.Start()的返回值\n直到指定的线程中止以后，Thread.Wait()才会返回",
+		"Name" : "等待线程",
+		"TranslateTemplate" : "等待线程 $1 中止"
+	}
+}

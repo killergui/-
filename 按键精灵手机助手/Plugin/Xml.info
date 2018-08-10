@@ -1,0 +1,41 @@
+
+{
+	"Name" : "处理Xml文件",
+	"Description" : "处理Xml文件",
+	"Append" : 
+	{
+		"Description" : "格式: Xml.Append(XML数据, 节点名)\n解释: 添加设置节点键值",
+		"Name" : "添加设置节点键值",
+		"TranslateTemplate" : "在 $1 节点中添加子节点 $2"
+	},
+	"Find" : 
+	{
+		"Description" : "格式: Xml.Find(XML数据, 节点名)\n解释: 查找节点",
+		"Name" : "查找节点",
+		"TranslateTemplate" : "在 $1 中查找 $2 节点数据"
+	},
+	"New" : 
+	{
+		"Description" : "格式: Xml.New(节点名)\n解释: 新建一个节点",
+		"Name" : "新建一个节点",
+		"TranslateTemplate" : "新建一个节点 $1"
+	},
+	"ParseByXmlFile" : 
+	{
+		"Description" : "格式: Xml.ParseByXmlFile(文件路径)\n解释: 从文件中读取XML数据",
+		"Name" : "从文件中读取XML数据",
+		"TranslateTemplate" : "从文件 $1 中读取XML数据"
+	},
+	"ParseByXmlStr" : 
+	{
+		"Description" :"格式: Xml.ParseByXmlStr(字符串)\n解释: 从字符串中读取XML数据",
+		"Name" : "从字符串中读取XML数据",
+		"TranslateTemplate" : "从字符串 $1 中读取XML数据"
+	},
+	"Save" : 
+	{
+		"Description" : "格式: Xml.Save(XML数据, 文件路径)\n解释: 把XML数据保存到文件",
+		"Name" : "保存XML数据到文件",
+		"TranslateTemplate" : "把XML数据 $1 保存到文件 $2"
+	},
+}

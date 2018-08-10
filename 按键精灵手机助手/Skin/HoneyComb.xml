@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<Window size="380,245" sizebox="4,4,6,6" caption="0,0,0,245" mininfo="380,245" maxinfo="380,245" roundcorner="3,3">
+    <Font name="Arial" size="12" bold="false" italic="false" default="true" />
+    <Font name="Arial" size="12" bold="true" italic="false" />
+    <VerticalLayout width="380" height="245" bkimage="bg_login.png" bkcolor="#FF2573BE" bordercolor="#006B93B2">
+        <HorizontalLayout width="380" height="36" bkcolor="#006B93B2">
+            <Button name="closebtn" width="20" height="20" padding="352,8,0,0" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_close.png&apos; source=&apos;0,0,20,20&apos;" hotimage="file=&apos;btn_close.png&apos; source=&apos;20,0,40,20&apos;" pushedimage="file=&apos;btn_close.png&apos; source=&apos;40,0,60,20&apos;" />
+        </HorizontalLayout>
+        <HorizontalLayout width="380" height="126" bkcolor="#006B93B2">
+            <Button name="elfButton" width="103" height="102" padding="49,10,0,0" bkimage="logo_xjl.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+            <Button name="HoneyButton" width="103" height="102" padding="74,10,0,0" bkimage="bd_logo.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+        </HorizontalLayout>
+         <HorizontalLayout width="380" height="75" bkcolor="#006B93B2">
+            <Button name="elfTextButton" width="131" height="32" padding="36,10,0,0" bkimage="logo_xjl_text.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+            <Button name="HoneyTextButton" width="131" height="32" padding="43,10,0,0" bkimage="logo_fw_text.png" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+        </HorizontalLayout>
+    </VerticalLayout>
+</Window>

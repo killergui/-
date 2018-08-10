@@ -1,0 +1,40 @@
+//PC端运行脚本前必须先点击【界面设计】上方的【预览】按钮，在手机屏幕显示的界面中修改控件值并保存，再点运行按钮即可读取界面控件值
+Delay 3000
+Dim 账号输入框,账号数组,账号数量
+TracePrint ReadUIConfig("功能")
+If ReadUIConfig("功能")=0 then
+    Call 文本框读取()
+ElseIf ReadUIConfig("功能")=1 then
+    Call 下拉框读取()
+ElseIf ReadUIConfig("功能")=2 then
+    Call 多选框读取()
+End if
+Delay 2000
+
+Sub 文本框读取()
+    账号输入框 = ReadUIConfig("账号","text1.text2.text3")'获取账号输入框内容，如果为空则默认为text1.text2.text3
+    账号数组 = Split(账号输入框,".")
+    账号数量=0
+    For Each 每个账号 in 账号数组
+        账号数量=账号数量+1
+        ShowMessage "第"&账号数量&"个账号是："&每个账号
+        Delay 2000
+    next
+    ShowMessage "一共填了"&账号数量&"个账号，展示完毕"
+End sub
+Sub 下拉框读取()
+    If ReadUIConfig("区服")=0 then
+        ShowMessage "当前选的区服是1区"
+    ElseIf ReadUIConfig("区服")=1 then
+        ShowMessage "当前选的区服是2区"
+    ElseIf ReadUIConfig("区服")=2 then
+        ShowMessage "当前选的区服是3区"
+    End if
+End sub
+Sub 多选框读取()
+    If ReadUIConfig("多选框1")=true then
+        ShowMessage "么么哒~~~"
+    Else
+        ShowMessage "还能愉快的做朋友吗？"
+    End if
+End sub

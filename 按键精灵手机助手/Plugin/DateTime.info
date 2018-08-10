@@ -1,0 +1,65 @@
+
+{
+	"DateTimeToNumTimes" : 
+	{
+		"Description" : null,
+		"Name" : null,
+		"TranslateTemplate" : null
+	},
+	"Day" : 
+	{
+		"Description" : "格式：DateTime.Day(时间)\n解释：计算时间是当月的第几天\n参数“时间”为可选，可以填写Time()得到的时间。如果不填，则取当前时间",
+		"Name" : "获得时间是当月的第几天",
+		"TranslateTemplate" : "获得时间是当月的第几天"
+	},
+	"Description" : "时间日期功能",
+	"Format" : 
+	{
+		"Description" : "格式：DateTime.Format(格式，时间)\n解释：按照指定的格式输出时间\n参数“格式”为字符串，分别用%Y, %m, %d, %H, %M, %S代表年,月,日,时,分,秒\n如果不填格式，默认格式为%Y-%m-%d %H:%M:%S\n参数“时间”为可选，可以填写Time()得到的时间。如果不填，则取当前时间",
+		"Name" : "按照格式输出时间",
+		"TranslateTemplate" : "按照 $1 格式输出 $2 时间"
+	},
+	"Hour" : 
+	{
+		"Description" : "格式：DateTime.Hour(时间)\n解释：计算时间中的小时数\n参数“时间”为可选，可以填写Time()得到的时间。如果不填，则取当前时间",
+		"Name" : "获得时间中的小时数",
+		"TranslateTemplate" : "获得时间中的小时数"
+	},
+	"Minute" : 
+	{
+		"Description" : "格式：DateTime.Minute(时间)\n解释：计算时间中的分钟数\n参数“时间”为可选，可以填写Time()得到的时间。如果不填，则取当前时间",
+		"Name" : "获得时间中的分钟数",
+		"TranslateTemplate" : "获得时间中的分钟数"
+	},
+	"Month" : 
+	{
+		"Description" : "格式：DateTime.Month(时间)\n解释：计算时间中的月份\n参数“时间”为可选，可以填写Time()得到的时间。如果不填，则取当前时间",
+		"Name" : "获得时间中的月份",
+		"TranslateTemplate" : "获得时间中的月份"
+	},
+	"Name" : "时间日期命令",
+	"Second" : 
+	{
+		"Description" : "格式：DateTime.Second(时间)\n解释：计算时间中的秒数\n参数“时间”为可选，可以填写Time()得到的时间。如果不填，则取当前时间",
+		"Name" : "获得时间中的秒数",
+		"TranslateTemplate" : "获得时间中的秒数"
+	},
+	"WeekDay" : 
+	{
+		"Description" : "格式：DateTime.WeekDay(时间)\n解释：计算某个时间是星期几\n参数“时间”为可选，可以填写Time()得到的时间。如果不填，则取当前时间\n返回值为1代表星期一，返回值为7代表星期日",
+		"Name" : "获得时间是星期几",
+		"TranslateTemplate" : "获得时间是星期几"
+	},
+	"Year" : 
+	{
+		"Description" : "格式：DateTime.Year(时间)\n解释：计算时间中的年份\n参数“时间”为可选，可以填写Time()得到的时间。如果不填，则取当前时间",
+		"Name" : "获得时间中的年份",
+		"TranslateTemplate" : "获得时间中的年份"
+	},
+	"YearDay" : 
+	{
+		"Description" : "格式：DateTime.YearDay(时间)\n解释：计算某个时间是当年的第几天\n参数“时间”为可选，可以填写Time()得到的时间。如果不填，则取当前时间\n返回值为1代表当年的1月1日",
+		"Name" : "获得时间是当年的第几天",
+		"TranslateTemplate" : "获得时间是当年的第几天"
+	}
+}

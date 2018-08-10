@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="gb2312"?>
+<Command desc="按键精灵(手机版)-全部命令" icon="011">
+<![CDATA[这里包含了按键精灵（手机版）官方目前支持的所有语句，有尽可能详细的帮助和例子，希望能对您开发脚本提供帮助。介绍一些小技巧：<br>1. 选中命令可以看到这个命令的帮助 <br>2. 某些命令可以直接插入到代码里 <br>3. 双击命令可以插入代码。]]>
+<fileintroduction>
+<![CDATA[
+按键命令库有2个功能：显示命令帮助和插入命令。
+
+按键精灵命令库的功能描述
+
+按键精灵命令库XML节点属性说明：
+1、节点名：Command
+2、desc：节点显示的文字
+3、icon：节点的图标索引
+4、insertinfo：插入的信息，是一个完整的命令，例如：返回值：用户输入的文字=InputBox(提示用户的内容：字符串)
+5、helpfile：帮助信息对应的HTML文件名
+6、CDATA区：如果没有HelpFile字段，则尝试读取CDATA区作为帮助信息
+]]>
+</fileintroduction>
+	<Command desc="基本命令" icon="009">
+	<![CDATA[基本命令是按键精灵的核心，主要包括虚拟按键触摸模拟、基本逻辑判断、核心功能命令等关键命令，具有使用简单、效率高的特点，通常是您编写脚本的必备功能]]>
+		<Command desc="触摸命令" icon="007">
+			<Command desc="KeyPress 按键" icon="006" insertdialog="Touch.KeyPress" insertinfo="KeyPress 键名"  helpfile="Basic/Touch/KeyPress"/>
+			<Command desc="KeyDown 按下" icon="006" insertdialog="Touch.KeyPress" insertinfo="KeyDown 键名" helpfile="Basic/Touch/KeyDown"/>
+			<Command desc="KeyUp 弹起" icon="006" insertdialog="Touch.KeyPress" insertinfo="KeyUp 键名" helpfile="Basic/Touch/KeyUp"/>
+			<Command desc="Swipe 划动" icon="006" insertdialog="Touch.Swipe" insertinfo="Swipe X1坐标, Y1坐标, X2坐标, Y2坐标" helpfile="Basic/Touch/Swipe"/>
+			<Command desc="Tap 短暂点击屏幕" icon="006" insertdialog="Touch.Tap" insertinfo="Tap X坐标, Y坐标" helpfile="Basic/Touch/Tap"/>
+			<Command desc="Touch 按住一段时间" icon="006" insertdialog="Touch.Touch" insertinfo="Touch X坐标, Y坐标, 100" helpfile="Basic/Touch/Touch"/>
+			<Command desc="TouchDown 按住不放" icon="006" insertinfo="TouchDown X坐标, Y坐标" helpfile="Basic/Touch/TouchDown"/>
+			<Command desc="TouchMove 滑动" icon="006" insertinfo="TouchMove X坐标, Y坐标" helpfile="Basic/Touch/TouchMove"/>
+			<Command desc="TouchUp 弹起" icon="006" insertinfo="TouchUp" helpfile="Basic/Touch/TouchUp"/>
+			<Command desc="CatchTouchPoint 获取用户点击坐标" icon="006" insertinfo="返回值 = CatchTouchPoint(1)" helpfile="Basic/Touch/CatchTouchPoint"/>
+		</Command>
+		<Command desc="控制命令" icon="007">
+			<Command desc="For 循环一定次数" icon="006" insertdialog="Control.for" insertinfo="For i = 1 To 10
+    //这里的脚本可以循环10次
+Next" helpfile="Basic/Control/For"/>
+			<Command desc="If 如果..则" icon="006" insertdialog="Control.If" insertinfo="i = 0   
+If i = 0 Then  
+    //满足条件，执行下面的脚本  
+End If
+//通过判断表达式的取值，来执行后面的动作或控制" helpfile="Basic/Control/If"/>
+			<Command desc="While 如果..则循环" icon="006" insertdialog="Control.If" insertinfo="i = 10
+While i <> 0
+    i = i - 1
+Wend
+//当循环条件成立的时候，反复执行循环体" helpfile="Basic/Control/While"/>
+			<Command desc="Call 调用过程" icon="006" insertdialog="Control.Call" insertinfo="Call 过程名()" helpfile="Basic/Control/Call"/>
+			<Command desc="Sub 子程序" icon="006" insertdialog="Control.Sub" insertinfo="Sub 子程序()
+    //我是一个过程,被你调用了
+End Sub
+//定义一个过程,可以在脚本中调用这个过程" helpfile="Basic/Control/Sub"/>
+			<Command desc="EndScript 脚本停止运行" icon="006" insertdialog="Control.EndScript" insertinfo="EndScript" helpfile="Basic/Control/EndScript"/>
+			<Command desc="Select Case 情况条件选择" icon="006" insertinfo="Select Case 选择条件
+Case 0
+    //情况1
+Case 1
+    //情况2
+Case Else
+    //否则
+End Select" helpfile="Basic/Control/Select"/>
+			<Command desc="Do 循环" icon="006" insertinfo="Do While 条件
+    Exit Do
+    //退出循环
+Loop" helpfile="Basic/Control/Do"/>
+			<Command desc="Function 函数" icon="006" insertinfo="Function 函数(参数列表)
+    //我是一个函数
+End Function
+//定义一个函数,可以在脚本中调用这个函数，支持参数和返回值" helpfile="Basic/Control/Function"/>
+			<Command desc="Rem 标记" icon="006" insertinfo="Rem 脚本开始" helpfile="Basic/Control/Rem"/>
+			<Command desc="Goto 跳转到标记" icon="006" insertinfo="Goto 标记" helpfile="Basic/Control/Goto"/>
+		</Command>
+		<Command desc="颜色命令" icon="007">
+			<Command desc="GetPixelColor 得到指定点颜色" icon="006" insertdialog="Color.GetPixelColor" insertinfo="GetColor = GetPixelColor(x, y)" helpfile="Basic/Color/GetPixelColor"/>
+			<Command desc="FindColor 找色" icon="006" insertdialog="Color.FindColor" insertinfo="FindColor 0, 0, 0, 0, 颜色值, 0, 1.0, intX, intY
+//如果没有找到，intX和intY的值都会被置为-1
+If intX > -1 And intY > -1 Then
+End If" helpfile="Basic/Color/FindColor"/>
+			<Command desc="FindMultiColor 多点找色" icon="006" insertinfo="FindMultiColor 0, 0, 0, 0, 颜色值, 偏移的颜色串, 0, 0.9, intX, intY
+//如果没有找到，intX和intY的值都会被置为-1
+If intX > -1 And intY > -1 Then
+End If" helpfile="Basic/Color/FindMultiColor"/>
+			<Command desc="CmpColor 对比指定点颜色" icon="006" insertinfo="是否相等 = CmpColor(x, y, 颜色值, 0.9)" helpfile="Basic/Color/CmpColor"/>
+			<Command desc="CmpColorEx 对比多个点颜色" icon="006" insertinfo="是否相等 = CmpColorEx(多个坐标的颜色值, 0.9)" helpfile="Basic/Color/CmpColorEx"/>
+			<Command desc="ColorDiff 获取俩个颜色BGR差值之和" icon="006" insertinfo="颜色差值 = ColorDiff(颜色值1, 颜色值2)" helpfile="Basic/Color/ColorDiff"/>
+			<Command desc="ColorToRGB 分解颜色为RGB分量" icon="006" insertinfo="ColorToRGB(颜色值, R, G, B)" helpfile="Basic/Color/ColorToRGB"/>
+			<Command desc="EnableFastCapture 快速取色" icon="006" insertinfo="result = EnableFastCapture(True)" helpfile="Basic/Color/EnableFastCapture"/>
+			<Command desc="GetColorNum 获取区域颜色数量" icon="006" insertinfo="颜色数量 = GetColorNum(0, 0, 0, 0, 颜色值, 1.0)" helpfile="Basic/Color/GetColorNum"/>
+			<Command desc="RGB 合并颜色" icon="006" insertinfo="颜色值 = RGB(红, 绿, 蓝)" helpfile="Basic/Color/RGB"/>
+		</Command>
+		<Command desc="图形命令" icon="007">
+			<Command desc="FindPic 找图" icon="006" insertdialog="Pic.FindPic" insertinfo="FindPic 0, 0, 0, 0, &quot;Attachment:1.png&quot;,&quot;000000&quot;, 0, 0.9, intX, intY
+//如果没有找到，intX和intY的值都会被置为-1
+If intX > -1 And intY > -1 Then
+End If" helpfile="Basic/Pic/FindPic"/>
+			<Command desc="SnapShot 截屏至文件" icon="006" insertdialog="Pic.SnapShot" insertinfo="SnapShot &quot;pic.png&quot;" helpfile="Basic/Pic/SnapShot"/>
+			<Command desc="KeepCapture 截图至内存" icon="006" insertinfo="KeepCapture" helpfile="Basic/Pic/KeepCapture"/>
+			<Command desc="ReleaseCapture 释放内存中的截图" icon="006" insertinfo="ReleaseCapture" helpfile="Basic/Pic/ReleaseCapture"/>
+			<Command desc="GetKeepState 获取保持截屏状态" icon="006" insertinfo="返回值 = GetKeepState()" helpfile="Basic/Pic/GetKeepState"/>
+		</Command>
+		<Command desc="文字命令" icon="007">
+			<Command desc="SetDictEx 设置字库文件(增强版)" icon="003" insertinfo="TracePrint SetDictEx(0, &quot;Attachment:mq_soft.txt&quot;)" helpfile="Basic/OCR/SetDictEx"/>
+			<Command desc="UseDict 使用字库" icon="006" insertinfo="TracePrint UseDict(0)" helpfile="Basic/OCR/UseDict"/>
+			<Command desc="SetRowsNumber 设置特征匹配行数" icon="003" insertinfo="SetRowsNumber(33)" helpfile="Basic/OCR/SetRowsNumber"/>
+			<Command desc="SetOffsetInterval 设置点阵比对间隔" icon="003" insertinfo="SetOffsetInterval(1)" helpfile="Basic/OCR/SetOffsetInterval"/>
+			<Command desc="FindStr 区域找字" icon="006" insertinfo="索引值 = FindStr(0,0,0,0,&quot;按键精灵&quot;,&quot;9f2e3f-000000&quot;,0.9,intX,intY)" helpfile="Basic/OCR/FindStr"/>
+			<Command desc="Ocr 文字识别" icon="006" insertinfo="识别文字=Ocr(0,0,0,0,&quot;9f2e3f-000000&quot;,0.9)" helpfile="Basic/OCR/Ocr"/>
+		</Command>
+		<Command desc="设备命令" icon="007">
+			<Command desc="GetScreenX 返回屏幕宽度" icon="006" insertdialog="Device.GetScreenX" insertinfo="屏幕宽度 = GetScreenX()" helpfile="Basic/Device/GetScreenX"/>
+			<Command desc="GetScreenY 返回屏幕高度" icon="006" insertdialog="Device.GetScreenY"" insertinfo="屏幕高度 = GetScreenY()" helpfile="Basic/Device/GetScreenY"/>
+			<Command desc="GetScreenColorDep 返回屏幕颜色深度" icon="006" insertdialog="Device.GetScreenColorDep" insertinfo="色彩位数 = GetScreenColorDep()" helpfile="Basic/Device/GetScreenColorDep"/>
+			<Command desc="KeepScreen 设置屏幕是否常亮" icon="006" insertdialog="Device.KeepScreen" insertinfo="KeepScreen True" helpfile="Basic/Device/KeepScreen"/>
+			<Command desc="GetDeviceID 获取设备唯一编号" icon="006" insertdialog="Device.GetDeviceID"" insertinfo="设备ID = GetDeviceID()" helpfile="Basic/Device/GetDeviceID"/>
+			<Command desc="PlaySound 播放音频文件" icon="006" insertdialog="Device.PlaySound" insertinfo="PlaySound &quot;Attachment:音频.mp3&quot;" helpfile="Basic/Device/PlaySound"/>
+			<Command desc="StopPlay 停止音频播放" icon="006"  insertinfo="StopPlay" helpfile="Basic/Device/StopPlay"/>
+			<Command desc="Vibrate 手机震动" icon="006" insertdialog="Device.Vibrate" insertinfo="Vibrate 1000 " helpfile="Basic/Device/Vibrate"/>
+			<Command desc="GetScreenRotation 获取屏幕旋转方向" icon="006" insertinfo="屏幕旋转方向 = GetScreenRotation()" helpfile="Basic/Device/GetScreenRotation"/>
+			<Command desc="GetTempDir 获取临时目录" icon="006" insertinfo="临时目录 = GetTempDir()" helpfile="Basic/Device/GetTempDir"/>
+			<Command desc="GetSdcardDir 获取SD卡目录(不支持ios版)" icon="006" insertinfo="SD卡目录 = GetSdcardDir()" helpfile="Basic/Device/GetSdcardDir"/>
+			<Command desc="GetAppDataPath 获取应用程序存档路径" icon="006" insertinfo="返回值 = GetAppDataPath(应用包名)" helpfile="Basic/Device/GetAppDataPath"/>
+			<Command desc="GetRunningApp 读取包名列表" icon="006" insertinfo="包名列表 = GetRunningApp() " helpfile="Basic/Device/GetRunningApp"/>
+			<Command desc="ResetScreenScale 取消屏幕缩放" icon="006" insertinfo="ResetScreenScale" helpfile="Basic/Device/ResetScreenScale"/>
+			<Command desc="SetScreenScale 设置屏幕缩放" icon="003" insertinfo="SetScreenScale 设备宽度, 设备高度, 0" helpfile="Basic/Device/SetScreenScale"/>
+			<Command desc="Shake 手机摇一摇" icon="006" insertinfo="Shake" helpfile="Basic/Device/Shake"/>
+		</Command>
+		<Command desc="其他命令" icon="007">
+			<Command desc="Dim 定义变量" icon="006" insertinfo="Dim 变量" helpfile="Basic/Other/Dim"/>
+			<Command desc="InputText 输入内容" icon="006" insertdialog="Other.InputText" insertinfo="InputText &quot;文字&quot;" helpfile="Basic/Other/InputText"/>
+			<Command desc="TracePrint 调试输出" icon="006" insertdialog="Other.TracePrint" insertinfo="TracePrint 变量" helpfile="Basic/Other/TracePrint"/>
+			<Command desc="ShowMessage 显示信息" icon="006" insertdialog="Other.ShowMessage" insertinfo="ShowMessage &quot;文字&quot;" helpfile="Basic/Other/ShowMessage"/>
+			<Command desc="Delay 延时" icon="006" insertdialog="Other.Delay" insertinfo="Delay 毫秒数" helpfile="Basic/Other/Delay"/>
+			<Command desc="RunApp 运行" icon="006" insertdialog="Other.RunApp" insertinfo="RunApp &quot;com.tencent.mm&quot;" helpfile="Basic/Other/RunApp"/>
+			<Command desc="KillApp 关闭应用" icon="006" insertdialog="Other.RunApp" insertinfo="KillApp 软件的包名" helpfile="Basic/Other/KillApp"/>
+			<Command desc="PutAttachment 释放附件" icon="006" insertdialog="Other.PutAttachment" insertinfo="PutAttachment &quot;路径&quot;, &quot;要释放的文件名&quot;" helpfile="Basic/Other/PutAttachment"/>
+			<Command desc="// 脚本注释" icon="006" insertinfo="//注释的内容" helpfile="Basic/Other/Rem"/>
+			<Command desc="Import 导入命令" icon="006" insertinfo="Import &quot;LUA文件或插件名字&quot;" helpfile="Basic/Other/Import"/>
+			<Command desc="SetControlBarPos 设置浮窗" icon="003" insertinfo="SetControlBarPos 0,1" helpfile="Basic/Other/SetControlBarPos"/>
+			<Command desc="SetAppSpeed 加速或减速APP(不支持ios版)" icon="003" insertinfo="SetAppSpeed(应用包名,加速倍率)" helpfile="Basic/Other/SetAppSpeed"/>
+		</Command>
+		<Command desc="网络命令" icon="007">
+			<Command desc="GetNetworkTime 获取网络时间" icon="006" insertinfo="网络时间 = GetNetworkTime()" helpfile="Basic/Net/GetNetworkTime"/>
+			<Command desc="SendSimpleEmail 发送邮件" icon="003" insertinfo="返回值 = SendSimpleEmail(服务器,发件人邮箱,密码,主题,内容,收件地址)" helpfile="Basic/Net/SendSimpleEmail"/>
+		</Command>
+		<Command desc="界面配置" icon="007">
+			<Command desc="ReadUIConfig 读取界面配置" icon="006" insertinfo="ReadUIConfig(界面控件名称, 10000)" helpfile="Basic/Config/ReadUIConfig"/>
+			<Command desc="ReadConfig 读取文件配置" icon="006" insertinfo="内容 = ReadConfig(配置项名称)" helpfile="Basic/Config/ReadConfig"/>
+			<Command desc="WriteConfig 写入文件配置" icon="006" insertinfo="WriteConfig(配置项名称, 写入的值, true)" helpfile="Basic/Config/WriteConfig"/>
+		</Command>
+		<Command desc="事件函数" icon="020">
+			<Command desc="OnScriptExit 脚本停止事件函数" icon="003" insertinfo="Function OnScriptExit()
+    TracePrint &quot;脚本已经停止！&quot;
+    ShowMessage &quot;脚本已经停止！&quot;
+End Function" helpfile="Basic/Event/OnScriptExit"/>
+		</Command>
+	</Command>
+	<Command desc="界面命令(不支持ios版)" icon="010">
+		<Command desc="创建控件" icon="008">
+			<Command desc="NewLayout 创建布局" icon="006" insertinfo="UI.NewLayout(布局名,1,宽,高)" helpfile="UI/Create/NewLayout"/>
+			<Command desc="NewRow 布局另起一行" icon="006" insertinfo="UI.NewRow(布局名,控件名称,宽,高)" helpfile="UI/Create/NewRow"/>
+			<Command desc="AddTextView 创建文字框控件" icon="006" insertinfo="UI.AddTextView(布局名,控件名称,文字内容,宽,高)" helpfile="UI/Create/AddTextView"/>
+			<Command desc="AddEditText 创建输入框控件" icon="006" insertinfo="UI.AddEditText(布局名,控件名称,文字内容,宽,高)" helpfile="UI/Create/AddEditText"/>
+			<Command desc="AddButton 创建按钮控件" icon="006" insertinfo="UI.AddButton(布局名,控件名称,标题内容,宽,高)" helpfile="UI/Create/AddButton"/>
+			<Command desc="AddRadioGroup 创建单选框控件" icon="006" insertinfo="UI.AddRadioGroup(布局名,控件名称,{&quot;1&quot;,&quot;2&quot;,&quot;3&quot;},1,宽,高)" helpfile="UI/Create/AddRadioGroup"/>
+			<Command desc="AddCheckBox 创建多选框控件" icon="006" insertinfo="UI.AddCheckBox(布局名,控件名称,文字内容,True,宽,高)" helpfile="UI/Create/AddCheckBox"/>
+			<Command desc="AddImageView 创建图像控件" icon="006" insertinfo="UI.AddImageView(布局名,控件名称,图像绝对路径,宽,高)" helpfile="UI/Create/AddImageView"/>
+			<Command desc="AddSpinner 创建下拉框控件" icon="006" insertinfo="UI.AddSpinner(布局名,控件名称,{&quot;1&quot;,&quot;2&quot;,&quot;3&quot;},1,宽,高)" helpfile="UI/Create/AddSpinner"/>
+			<Command desc="AddLine 创建线控件" icon="006" insertinfo="UI.AddLine(布局名,控件名称,宽,高)" helpfile="UI/Create/AddLine"/>
+			<Command desc="AddWebView 创建浏览器控件" icon="006" insertinfo="UI.AddWebView(布局名,控件名称,网址,宽,高)" helpfile="UI/Create/AddWebView"/>
+			<Command desc="AddTabHost 创建标签页控件" icon="006" insertinfo="UI.AddTabHost(布局名,控件名称)" helpfile="UI/Create/AddTabHost"/>
+			<Command desc="AddTab 创建子签页控件" icon="006" insertinfo="UI.AddTab(标签页名,控件名称,文字内容)" helpfile="UI/Create/AddTab"/>
+		</Command>
+		<Command desc="重设控件" icon="008">
+			<Command desc="SetTextView 重设文字框控件" icon="003" insertinfo="UI.SetTextView(控件名称,文字内容,宽,高)" helpfile="UI/Modify/SetTextView"/>
+			<Command desc="SetEditText 重设输入框控件" icon="003" insertinfo="UI.SetEditText(控件名称,文字内容,宽,高)" helpfile="UI/Modify/SetEditText"/>
+			<Command desc="SetButton 重设按钮控件" icon="003" insertinfo="UI.SetButton(控件名称,标题内容,宽,高)" helpfile="UI/Modify/SetButton"/>
+			<Command desc="SetRadioGroup 重设单选框控件" icon="003" insertinfo="UI.SetRadioGroup(控件名称,{&quot;4&quot;,&quot;5&quot;,&quot;6&quot;},1,宽,高)" helpfile="UI/Modify/SetRadioGroup"/>
+			<Command desc="SetCheckBox 重设多选框控件" icon="003" insertinfo="UI.SetCheckBox(控件名称,文字内容,True,宽,高)" helpfile="UI/Modify/SetCheckBox"/>
+			<Command desc="SetImageView 重设图像控件" icon="003" insertinfo="UI.SetImageView(控件名称,图像绝对路径,宽,高)" helpfile="UI/Modify/SetImageView"/>
+			<Command desc="SetSpinner 重设下拉框控件" icon="003" insertinfo="UI.SetSpinner(控件名称,{&quot;4&quot;,&quot;5&quot;,&quot;6&quot;},1,宽,高)" helpfile="UI/Modify/SetSpinner"/>
+			<Command desc="SetLine 重设线控件" icon="003" insertinfo="UI.SetLine(控件名称,宽,高)" helpfile="UI/Modify/SetLine"/>
+			<Command desc="SetWebView 重设浏览器控件" icon="003" insertinfo="UI.SetWebView(控件名称,网址,宽,高)" helpfile="UI/Modify/SetWebView"/>
+		</Command>
+		<Command desc="属性" icon="008">
+			<Command desc="SetText 设置文字" icon="003" insertinfo="UI.SetText(控件名称,文字内容)" helpfile="UI/Property/SetText"/>
+			<Command desc="SetTitleText 设置标题内容" icon="003" insertinfo="UI.SetTitleText(布局名,标题内容)" helpfile="UI/Property/SetTitleText"/>
+			<Command desc="SetEnabled 设置可用状态" icon="003" insertinfo="UI.SetEnabled(控件名称,禁用状态)" helpfile="UI/Property/SetEnabled"/>
+			<Command desc="SetVisible 设置显示状态" icon="003" insertinfo="UI.SetVisible(控件名称,显示方式)" helpfile="UI/Property/SetVisible"/>
+			<Command desc="SetBackColor 设置背景颜色" icon="003" insertinfo="UI.SetBackColor(控件名称,颜色值)" helpfile="UI/Property/SetBackColor"/>
+			<Command desc="SetTextColor 设置文字颜色" icon="003" insertinfo="UI.SetTextColor(控件名称,颜色值)" helpfile="UI/Property/SetTextColor"/>
+			<Command desc="SetTitleBackColor 设置标题栏背景颜色" icon="003" insertinfo="UI.SetTitleBackColor(布局名,颜色值)" helpfile="UI/Property/SetTitleBackColor"/>
+			<Command desc="GetText 获取文字" icon="006" insertinfo="文字内容 = UI.GetText(控件名称)" helpfile="UI/Property/GetText"/>
+			<Command desc="GetTitleText 获取标题内容" icon="006" insertinfo="标题内容 = UI.GetTitleText(布局名)" helpfile="UI/Property/GetTitleText"/>
+			<Command desc="GetEnabled 获取可用状态" icon="006" insertinfo="禁用状态 = UI.GetEnabled(控件名称)" helpfile="UI/Property/GetEnabled"/>
+			<Command desc="GetVisible 获取显示状态" icon="006" insertinfo="显示方式 = UI.GetVisible(控件名称)" helpfile="UI/Property/GetVisible"/>
+			<Command desc="GetTextColor 获取文字颜色" icon="006" insertinfo="颜色值 = UI.GetTextColor(控件名称)" helpfile="UI/Property/GetTextColor"/>
+			<Command desc="SetEditInputType 设置输入类型" icon="003" insertinfo="UI.SetEditInputType(控件名称, 类型)" helpfile="UI/Property/SetEditInputType"/>
+			<Command desc="SetTextSize 设置文字大小" icon="003" insertinfo="UI.SetTextSize(控件名称, 大小)" helpfile="UI/Property/SetTextSize"/>
+		</Command>
+		<Command desc="方法" icon="008">
+			<Command desc="GetValue 获取布局内控件值" icon="006" insertinfo="UI.GetValue(控件名)" helpfile="UI/Method/GetValue"/>
+			<Command desc="Show 显示布局" icon="006" insertinfo="UI.Show(布局名)" helpfile="UI/Method/Show"/>
+			<Command desc="Close 关闭布局" icon="003" insertinfo="UI.Close(布局名)" helpfile="UI/Method/Close"/>
+			<Command desc="LoadProFile 读取设置" icon="006" insertinfo="UI.LoadProfile(配置路径)" helpfile="UI/Method/LoadProFile"/>
+			<Command desc="SaveProFile 保存设置" icon="003" insertinfo="UI.SaveProfile(配置路径)" helpfile="UI/Method/SaveProFile"/>
+			<Command desc="SetFullScreen 设置控件宽度全屏" icon="003" insertinfo="UI.SetFullScreen(控件名称)" helpfile="UI/Method/SetFullScreen"/>
+			<Command desc="SetPadding 设置控件内边距" icon="003" insertinfo="UI.SetPadding(控件名称,左边距,上边距,右边距,下边距)" helpfile="UI/Method/SetPadding"/>
+			<Command desc="SetGravity 设置控件对齐方式" icon="003" insertinfo="UI.SetGravity(控件名称,对齐方式)" helpfile="UI/Method/SetGravity"/>
+		</Command>
+		<Command desc="事件" icon="008">
+			<Command desc="SetOnClick 控件单击事件" icon="003" insertinfo="UI.SetOnClick(控件名称,事件函数名)" helpfile="UI/Event/SetOnClick"/>
+			<Command desc="SetOnChange 控件改变事件" icon="003" insertinfo="UI.SetOnChange(控件名称,事件函数名)" helpfile="UI/Event/SetOnChange"/>
+			<Command desc="SetOnShow 布局显示事件" icon="003" insertinfo="UI.SetOnShow(布局名,事件函数名)" helpfile="UI/Event/SetOnShow"/>
+			<Command desc="SetOnClose 布局关闭事件" icon="003" insertinfo="UI.SetOnClose(布局名,事件函数名)" helpfile="UI/Event/SetOnClose"/>
+		</Command>
+		<Command desc="静态事件" icon="008">
+			<Command desc="GetAttribute 获取静态控件属性值" icon="006" insertinfo="属性列表 = UIP.GetAttribute(控件名称)" helpfile="UI/Event/GetAttribute"/>
+			<Command desc="SetAttribute 设置静态控件属性值" icon="003" insertinfo="UIP.SetAttribute(控件名称,属性列表)" helpfile="UI/Event/SetAttribute"/>
+		</Command>
+	</Command>
+	<Command desc="扩展命令" icon="020">
+		<Command desc="Device 设备命令" icon="008">
+			<Command desc="GetIP 获取设备IP" icon="006" insertinfo="设备IP = Device.GetIp()" helpfile="Expand/Device/GetIP"/>
+			<Command desc="GetModel 获取设备型号" icon="006" insertinfo="设备型号 = Device.GetModel()" helpfile="Expand/Device/GetModel"/>
+			<Command desc="GetImsi 获取设备IMSI号" icon="006" insertinfo="设备IMSI号 = Device.GetImsi()" helpfile="Expand/Device/GetImsi"/>
+			<Command desc="GetIccid 获取设备SIM卡ID" icon="006" insertinfo="SIM卡ID = Device.GetIccid()" helpfile="Expand/Device/GetIccid"/>
+			<Command desc="GetDPI 获取设备屏幕DPI大小" icon="006" insertinfo="返回值 = Device.GetDPI()" helpfile="Expand/Device/GetDPI"/>
+			<Command desc="Lock 锁屏" icon="006" insertinfo="Device.Lock()" helpfile="Expand/Device/Lock"/>
+			<Command desc="UnLock 解锁" icon="006" insertinfo="Device.UnLock()" helpfile="Expand/Device/UnLock"/>
+			<Command desc="IsLock 是否锁屏" icon="006" insertinfo="返回值 = Device.IsLock()" helpfile="Expand/Device/IsLock"/>
+			<Command desc="Reboot 重启设备" icon="006" insertinfo="Device.Reboot()" helpfile="Expand/Device/Reboot"/>
+			<Command desc="PowerOff 关机" icon="006" insertinfo="Device.PowerOff()" helpfile="Expand/Device/PowerOff"/>
+			<Command desc="SetAutoLockTime 设置锁屏时间" icon="003" insertinfo="Device.SetAutoLockTime(30) " helpfile="Expand/Device/SetAutoLockTime"/>
+			<Command desc="GetName 获取设备名" icon="006" insertinfo="返回值 = Device.GetName()" helpfile="Expand/Device/GetName"/>
+			<Command desc="GetBacklightLevel 获取屏幕亮度值" icon="006" insertinfo="返回值 = Device.GetBacklightLevel()" helpfile="Expand/Device/GetBacklightLevel"/>
+			<Command desc="SetBacklightLevel 设置屏幕亮度值" icon="003" insertinfo="Device.SetBacklightLevel(50)" helpfile="Expand/Device/SetBacklightLevel"/>
+			<Command desc="SetVolumeLevel 设置设备中所有音量" icon="003" insertinfo="Device.SetVolumeLevel(50)" helpfile="Expand/Device/SetVolumeLevel"/>
+		</Command>
+		<Command desc="Phone 电话命令" icon="008">
+			<Command desc="Dial 输入电话号码" icon="006" insertinfo="Phone.Dial 10086" helpfile="Expand/Phone/Dial"/>
+			<Command desc="DialOut 拨打电话号码" icon="006" insertinfo="Phone.DialOut 10086" helpfile="Expand/Phone/DialOut"/>
+			<Command desc="Message 发短信" icon="006" insertinfo="Phone.Message 10086, &quot;11&quot;" helpfile="Expand/Phone/Message"/>
+		</Command>
+		<Command desc="Sys 系统命令" icon="008">
+			<Command desc="GetClipText 读取剪贴板" icon="006" insertinfo="剪贴板内容 = Sys.GetClipText()" helpfile="Expand/Sys/GetClipText"/>
+			<Command desc="SetClipText 设置剪贴板" icon="003" insertinfo="Sys.SetClipText &quot;按键精灵&quot;" helpfile="Expand/Sys/SetClipText"/>
+			<Command desc="ClearAppCache 清除应用数据" icon="006" insertinfo="Sys.ClearAppCache 应用包名" helpfile="Expand/Sys/ClearAppCache"/>
+			<Command desc="ClearMemory 清理内存" icon="006" insertinfo="Sys.ClearMemory()" helpfile="Expand/Sys/ClearMemory"/>
+			<Command desc="GetBatteryLevel 获取电池电量" icon="006" insertinfo="剩余电量 = Sys.GetBatteryLevel()" helpfile="Expand/Sys/GetBatteryLevel"/>
+			<Command desc="AppIsFront 判断应用是否在前台" icon="006" insertinfo="返回值 = Sys.AppIsFront(应用包名)" helpfile="Expand/Sys/AppIsFront"/>
+			<Command desc="GetFront 获取当前应用包名" icon="006" insertinfo="返回值 = Sys.GetFront()" helpfile="Expand/Sys/GetFront"/>
+			<Command desc="MemorySearch 搜索内存(不支持ios版)" icon="006" insertinfo="返回值 = Sys.MemorySearch()" helpfile="Expand/Sys/MemorySearch"/>
+			<Command desc="MemoryRead 读取内存(不支持ios版)" icon="006" insertinfo="返回值 = Sys.MemoryRead()" helpfile="Expand/Sys/MemoryRead"/>
+			<Command desc="MemoryWrite 写入内存(不支持ios版)" icon="006" insertinfo="返回值 = Sys.MemoryWrite()" helpfile="Expand/Sys/MemoryWrite"/>
+			<Command desc="Version 获取引擎版本号" icon="006" insertinfo="返回值 = Sys.Version()" helpfile="Expand/Sys/Version"/>
+			<Command desc="OsVersion 获取安卓版本号" icon="006" insertinfo="返回值 = Sys.OsVersion()" helpfile="Expand/Sys/OsVersion"/>
+			<Command desc="isRunning 判断包名是否已运行" icon="006" insertinfo="返回值 = Sys.isRunning(应用包名)" helpfile="Expand/Sys/isRunning"/>
+		</Command>
+		<Command desc="Dir 目录命令" icon="008">
+			<Command desc="Copy 复制文件或文件夹" icon="006" insertinfo="Dir.Copy(文件路径1,文件路径2)" helpfile="Expand/Dir/Copy"/>
+			<Command desc="Create 创建文件夹" icon="006" insertinfo="返回值 = Dir.Create(文件路径)" helpfile="Expand/Dir/Create"/>
+			<Command desc="Delete 删除文件" icon="006" insertinfo="Dir.Delete (文件路径)" helpfile="Expand/Dir/Delete"/>
+			<Command desc="Exist 判断文件是否存在" icon="006" insertinfo="TracePrint Dir.Exist(文件路径)" helpfile="Expand/Dir/Exist"/>
+			<Command desc="Move 移动文件" icon="006" insertinfo="Dir.move(文件路径1,文件路径2)" helpfile="Expand/Dir/Move"/>
+			<Command desc="Rename 重命名文件" icon="006" insertinfo="Dir.Rename(文件路径1,文件路径2)" helpfile="Expand/Dir/Rename"/>
+		</Command>
+		<Command desc="Log 日志命令" icon="008">
+			<Command desc="Open 开启日志记录" icon="006" insertinfo="Log.Open" helpfile="Expand/Log/Open"/>
+			<Command desc="Close 关闭日志记录" icon="006" insertinfo="Log.Close" helpfile="Expand/Log/Close"/>
+		</Command>
+		<Command desc="UTF8 字符串命令" icon="008">
+			<Command desc="InStr 查找字符" icon="006" insertinfo="结果 = UTF8.InStr(1, &quot;您好,按键精灵欢迎您&quot;, &quot;按键&quot;)" helpfile="Expand/UTF8/InStr"/>
+			<Command desc="InStrRev 反方向查找字符" icon="006" insertinfo="结果 = UTF8.InStrRev(&quot;您好,按键精灵欢迎您&quot;, &quot;按键&quot;, -1)" helpfile="Expand/UTF8/InStrRev"/>
+			<Command desc="Left 取左边字符" icon="006" insertinfo="结果 = UTF8.Left(&quot;您好,按键精灵欢迎您&quot;, 6)" helpfile="Expand/UTF8/Left"/>
+			<Command desc="Len 获取字符串数目" icon="006" insertinfo="结果 = UTF8.Len(&quot;您好,按键精灵欢迎您&quot;)" helpfile="Expand/UTF8/Len"/>
+			<Command desc="Mid 截取指定字符串" icon="006" insertinfo="结果 = UTF8.Mid(&quot;您好,按键精灵欢迎您&quot;,6,2)" helpfile="Expand/UTF8/Mid"/>
+			<Command desc="Right 取右边字符" icon="006" insertinfo="结果 = UTF8.Right(&quot;00&quot; & 1, 3)" helpfile="Expand/UTF8/Right"/>
+			<Command desc="StrCut 移除指定数目字符" icon="006" insertinfo="结果 = UTF8.StrCut(&quot;您好按键精灵欢迎您&quot;, 3, 7)" helpfile="Expand/UTF8/StrCut"/>
+			<Command desc="StrGetAt 获取指定位置字符" icon="006" insertinfo="结果 = UTF8.StrGetAt(&quot;我爱你&quot;, 2)" helpfile="Expand/UTF8/StrGetAt"/>
+			<Command desc="StrReverse 返回方向相反的字符串" icon="006" insertinfo="结果 = UTF8.StrReverse(&quot;我爱按键精灵&quot;)" helpfile="Expand/UTF8/StrReverse"/>
+		</Command>
+		<Command desc="Encode 加解密命令" icon="008">
+			<Command desc="Md5 字符串MD5加密" icon="006" insertinfo="结果 = Encode.Md5(&quot;我爱你&quot;)" helpfile="Expand/Encode/Md5"/>
+			<Command desc="JsonToTable 将Json字符串转换成键值表" icon="006" insertinfo="键值表 = Encode.JsonToTable(Json字符串)" helpfile="Expand/Encode/JsonToTable"/>
+			<Command desc="TableToJson 将键值表转换成Json字符串" icon="006" insertinfo="Json字符串 = Encode.TableToJson(键值表)" helpfile="Expand/Encode/TableToJson"/>
+		</Command>
+		<Command desc="Url 网络操作" icon="008">
+			<Command desc="Get 以Get方式访问地址" icon="006" insertinfo="返回值 = Url.Get(&quot;bbs.anjian.com&quot;)" helpfile="Expand/Url/Get"/>
+			<Command desc="Post 以Post方式访问地址" icon="003" insertinfo="返回值 = Url.Post(请求地址, Post数据)" helpfile="Expand/Url/Post"/>
+		</Command>
+		<Command desc="Image 图像命令" icon="008">
+			<Command desc="FindMultiColor 区域多点找色获取数量" icon="006" insertinfo="返回值 = FindMultiColor(0, 0, 0, 0, 颜色值, 偏移的颜色串, 0, 0.9)" helpfile="Expand/Image/FindMultiColor"/>
+			<Command desc="GetScreenData 获取屏幕图像数据" icon="006" insertinfo="返回值 = Image.GetScreenData(0,0,100,100)" helpfile="Expand/Image/GetScreenData"/>
+		</Command>
+		<Command desc="Contacts 通讯录命令" icon="008">
+			<Command desc="Add 添加联系人" icon="006" insertinfo="Contacts.Add 姓, 名, 手机号" helpfile="Expand/Contacts/Add"/>
+			<Command desc="Delete 删除联系人" icon="006" insertinfo="Contacts.Delete(手机号)" helpfile="Expand/Contacts/Delete"/>
+			<Command desc="Clear 清空联系人" icon="006" insertinfo="Contacts.Clear()" helpfile="Expand/Contacts/Clear"/>
+		</Command>
+		<Command desc="Dialog 对话窗命令" icon="008">
+			<Command desc="MsgBox 弹出对话窗" icon="006" insertinfo="返回值 = Dialog.MsgBox(&quot;你是不是一个大笨蛋&quot;,2)" helpfile="Expand/Dialog/MsgBox"/>
+			<Command desc="InputBox 弹出输入对话窗" icon="006" insertinfo="返回值 = Dialog.InputBox(&quot;请输入您的名字&quot;)" helpfile="Expand/Dialog/InputBox"/>
+		</Command>
+	</Command>
+	<Command desc="标准库函数" icon="018">
+		<Command desc="数学函数" icon="008">
+			<Command desc="Abs 绝对值" icon="003" insertinfo="Abs(数值)" helpfile="Standard/Math/Abs"/>
+			<Command desc="Atn 反正切" icon="003" insertinfo="Atn(数值)" helpfile="Standard/Math/Atn"/>
+			<Command desc="Cos 余弦" icon="003" insertinfo="Cos(数值)" helpfile="Standard/Math/Cos"/>
+			<Command desc="Exp 自然对数的冥次方" icon="003" insertinfo="Exp(数值)" helpfile="Standard/Math/Exp"/>
+			<Command desc="Fix 取整" icon="003" insertinfo="Fix(数值)" helpfile="Standard/Math/Fix"/>
+			<Command desc="Int 取整" icon="003" insertinfo="Int(数值)" helpfile="Standard/Math/Int"/>
+			<Command desc="Ln 自然对数为底的对数" icon="003" insertinfo="Ln(数值)" helpfile="Standard/Math/Ln"/>
+			<Command desc="Oct 转换成八进制" icon="003" insertinfo="Oct(数值)" helpfile="Standard/Math/Oct"/>
+			<Command desc="Randomize 初始化随机数" icon="003" insertinfo="Randomize" helpfile="Standard/Math/Randomize"/>
+			<Command desc="Rnd 随机数" icon="003" insertinfo="Rnd(数值)" helpfile="Standard/Math/Rnd"/>
+			<Command desc="Round 四舍五入" icon="003" insertinfo="Round(数值)" helpfile="Standard/Math/Round"/>
+			<Command desc="Sgn 数字符号" icon="003" insertinfo="Sgn(数值)" helpfile="Standard/Math/Sgn"/>
+			<Command desc="Sin 正弦" icon="003" insertinfo="Sin(数值)" helpfile="Standard/Math/Sin"/>
+			<Command desc="Sqr 平方根" icon="003" insertinfo="Sqr(数值)" helpfile="Standard/Math/Sqr"/>
+			<Command desc="Tan 正切" icon="003" insertinfo="Tan(数值)" helpfile="Standard/Math/Tan"/>
+		</Command>
+		<Command desc="字符串函数" icon="008">
+			<Command desc="Asc 获得ANSI码" icon="003" insertinfo="Asc(字符串)" helpfile="Standard/String/Asc"/>
+			<Command desc="Chr 获得字符" icon="003" insertinfo="Chr(可以标识字符的数字)" helpfile="Standard/String/Chr"/>
+			<Command desc="Hex 转十六进制" icon="003" insertinfo="Hex(表达式)" helpfile="Standard/String/Hex"/>
+			<Command desc="InStr 查找字符" icon="003" insertinfo="InStr(1, 接受搜索的字符串, 要搜索的字符串)" helpfile="Standard/String/InStr"/>
+			<Command desc="InStrRev 反方向查找字符" icon="003" insertinfo="InStrRev(接受搜索的字符串, 要搜索的字符串, -1)" helpfile="Standard/String/InStrRev"/>
+			<Command desc="Join 合成字符串" icon="003" insertinfo="Join(字符串数组, &quot;&quot;)" helpfile="Standard/String/Join"/>
+			<Command desc="LCase 转小写" icon="003" insertinfo="LCase(字符串)" helpfile="Standard/String/LCase"/>
+			<Command desc="Left 取左边字符" icon="003" insertinfo="Left(字符串,要返回字符数)" helpfile="Standard/String/Left"/>
+			<Command desc="Len 获得字符串数目" icon="003" insertinfo="Len(字符串)" helpfile="Standard/String/Len"/>
+			<Command desc="LTrim 去掉字符串左边空格" icon="003" insertinfo="LTrim(字符串)" helpfile="Standard/String/LTrim"/>
+			<Command desc="Mid 取指定字符串" icon="003" insertinfo="Mid(字符串,开始位置,返回字符数)" helpfile="Standard/String/Mid"/>
+			<Command desc="Replace 替换字符" icon="003" insertinfo="Replace(字符串,被替字符串,替换字符串)" helpfile="Standard/String/Replace"/>
+			<Command desc="Right 取右边字符" icon="003" insertinfo="Right(字符串,要返回的字符数)" helpfile="Standard/String/Right"/>
+			<Command desc="RTrim 去掉字符串右边空格" icon="003" insertinfo="RTrim(字符串)" helpfile="Standard/String/RTrim"/>
+			<Command desc="Space 空格" icon="003" insertinfo="Space(需要的空格数)" helpfile="Standard/String/Space"/>
+			<Command desc="StrComp 对比俩个字符串" icon="003" insertinfo="StrComp(字符串1,字符串2)" helpfile="Standard/String/StrComp"/>
+			<Command desc="StrReverse 比较字符串" icon="003" insertinfo="StrReverse(字符串)" helpfile="Standard/String/StrReverse"/>
+			<Command desc="String 生成重复字符串" icon="003" insertinfo="String(字符串长度,字符)" helpfile="Standard/String/String"/>
+			<Command desc="Trim 去掉字符串左右俩边空格" icon="003" insertinfo="Trim(字符串)" helpfile="Standard/String/Trim"/>
+			<Command desc="UCase 转大写" icon="003" insertinfo="UCase(字符串)" helpfile="Standard/String/UCase"/>
+		</Command>
+		<Command desc="数组函数" icon="008">
+			<Command desc="Array 合成数组" icon="003" insertinfo="Array(值1,值2,值3)" helpfile="Standard/Array/Array"/>
+			<Command desc="Split 分割数组" icon="003" insertinfo="Split(字符串,分隔符)" helpfile="Standard/Array/Split"/>
+			<Command desc="UBound 数组长度" icon="003" insertinfo="UBound(数组变量)" helpfile="Standard/Array/UBound"/>
+			<Command desc="Clone 拷贝数组" icon="003" insertinfo="Clone(数组变量)" helpfile="Standard/Array/Clone"/>
+		</Command>
+		<Command desc="类型转换函数" icon="008">
+			<Command desc="CBool 转布尔" icon="003" insertinfo="CBool(表达式)" helpfile="Standard/Type/CBool"/>
+			<Command desc="CInt 转整数" icon="003" insertinfo="CInt(表达式)" helpfile="Standard/Type/CInt"/>
+			<Command desc="CLng 转长整数" icon="003" insertinfo="CLng(表达式)" helpfile="Standard/Type/CLng"/>
+			<Command desc="CSng 转单精度浮点数" icon="003" insertinfo="CSng(表达式)" helpfile="Standard/Type/CSng"/>
+			<Command desc="CDbl 转双精度浮点数" icon="003" insertinfo="CDbl(表达式)" helpfile="Standard/Type/CDbl"/>
+			<Command desc="CStr 转字符串" icon="003" insertinfo="CStr(表达式)" helpfile="Standard/Type/Cstr"/>
+		</Command>
+		<Command desc="日期时间函数" icon="008">
+			<Command desc="Date 获得系统日期" icon="003" insertinfo="Date" helpfile="Standard/Date/Date"/>
+			<Command desc="Time 获得系统时间" icon="003" insertinfo="Time" helpfile="Standard/Date/Time"/>
+			<Command desc="Now 获得系统日期和时间" icon="003" insertinfo="Now" helpfile="Standard/Date/Now"/>
+			<Command desc="TickCount 获取脚本运行时间" icon="003" insertinfo="TickCount" helpfile="Standard/Date/TickCount"/>
+		</Command>
+		<Command desc="其他函数" icon="008">
+			<Command desc="IsArray 判断是否为数组" icon="003" insertinfo="IsArray(变量)" helpfile="Standard/Other/IsArray"/>
+			<Command desc="IsNull 判断是否为空" icon="003" insertinfo="IsNull(表达式)" helpfile="Standard/Other/IsNull"/>
+			<Command desc="IsNumeric 判断是否为数字" icon="003" insertinfo="IsNumeric(表达式)" helpfile="Standard/Other/IsNumeric"/>
+			<Command desc="Null 数据为空" icon="003" insertinfo="数组 = Null" helpfile="Standard/Other/Null"/>
+		</Command>
+	</Command>
+	<Command desc="运算符" icon="019">
+		<Command desc="算术运算符" icon="019">
+			<Command desc="加法运算(+)" icon="019" helpfile="Operation/Count/Add"/>
+			<Command desc="减法运算/负号(-)" icon="019" helpfile="Operation/Count/Subtract"/>
+			<Command desc="乘法运算(*)" icon="019" helpfile="Operation/Count/Multiply"/>
+			<Command desc="除法运算(/)" icon="019" helpfile="Operation/Count/Divide"/>
+			<Command desc="整除运算(\\)" icon="019" helpfile="Operation/Count/IntegerDivide"/>
+			<Command desc="求幂运算(^)" icon="019" helpfile="Operation/Count/Exponentiation"/>
+			<Command desc="取余运算(Mod)" icon="019" helpfile="Operation/Count/Mod"/>
+		</Command>
+		<Command desc="连接运算符" icon="019">
+			<Command desc="强制连接(&)" icon="019" helpfile="Operation/Connection/Concatenation"/>
+		</Command>
+		<Command desc="关系运算符" icon="019">
+			<Command desc="等于/赋值(=)" icon="019"  helpfile="Operation/Relation/Equal"/>
+			<Command desc="不等于(<>)" icon="019" helpfile="Operation/Relation/NotEqual"/>
+			<Command desc="大于(>)" icon="019" helpfile="Operation/Relation/MoreThan"/>
+			<Command desc="小于(<)" icon="019" helpfile="Operation/Relation/LessThan"/>
+			<Command desc="大于等于/不小于(>=)" icon="019" helpfile="Operation/Relation/GreatThan"/>
+			<Command desc="小于等于/不大于(<=)" icon="019" helpfile="Operation/Relation/NoGreaterThan"/>
+		</Command>
+		<Command desc="逻辑运算符" icon="019">
+			<Command desc="逻辑与(And)" icon="019" helpfile="Operation/Logic/And"/>
+			<Command desc="逻辑非(Not)" icon="019" helpfile="Operation/Logic/Not"/>
+			<Command desc="逻辑或(Or)" icon="019" helpfile="Operation/Logic/Or"/>
+		</Command>
+	</Command>
+	<Command desc="插件命令" icon="000">
+<![CDATA[按键精灵插件是按键精灵提供的一种开放的功能接口。您需要懂的一些LUA编写程序的知识，就可以通过自己写按键精灵插件，实现比较特殊、高级的功能。按键精灵官方会不断扩充插件的功能，也欢迎您把自己写的插件提交给我们，和大家共同分享您的智慧！]]>
+	</Command>
+	<Command desc="我的命令库" icon="011">
+<![CDATA[我的命令库是按键精灵提供的一种开放的功能接口。只要您稍懂一点按键脚本编写的知识，就可以通过自己写我的命令库，实现比较特殊、高级的功能。]]>
+	</Command>
+</Command>

@@ -1,0 +1,124 @@
+
+{
+	"Description" : null,
+	"七日狂欢奖励" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"任务完成" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"俸禄" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"免费祭祀" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"副本事件" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"可以祭祀" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"小红点列表" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"新兵事" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"新军团" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"新武将" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"新活动" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"新背包" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"新邮件" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"是否有七日狂欢奖励" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"是否有任务完成" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"是否有副本相关" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"是否有新活动" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"是否有邮件" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"有新活动" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"木材免费祭祀" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"皇榜奖励" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"石头免费祭祀" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"矿石免费祭祀" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"签到奖励" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	}
+}

@@ -1,0 +1,96 @@
+For 300     //重复300次 
+
+/*-------识别背景颜色范围--------*/
+    //上面取一个点
+    Dim g,k
+    g = GetPixelColor(629,1133)  
+    TracePrint g
+   
+    //下面取两个点
+    Dim k1
+    k1= GetPixelColor(2,795)  
+    TracePrint k1
+    Dim k2
+    k2= GetPixelColor(475,795)
+    TracePrint k2
+//判断取的点位置的背景是否被小块遮挡住了
+    If k1 = k2 Then 
+        k=k1
+    End If
+//拆分取样点颜色值，并转为十进制
+    Dim r1,g1,b1
+    ColorToRGB g, r1, g1, b1
+    TracePrint r1&g1&b1
+
+    Dim r2,g2,b2,ss1,ss2,ss3,s,hh1,hh2,hh3,h
+    ColorToRGB k, r2, g2, b2
+    TracePrint r2&g2&b2
+//背景从上往下是渐变的，所以要获取渐变范围的中间值，获得之后转化为十六进制的颜色值
+    ss1 = Hex((b1 + b2) / 2)
+    ss2 = Hex((g1 + g2) / 2)
+    ss3 = Hex((r1 + r2) / 2)
+    s = ss1 & ss2 & ss3
+//计算偏色范围 
+    hh1 = Hex(Abs((b1 - b2) / 2))
+    If Len(hh1) = 1 Then 
+        hh1="0"&hh1
+    End If
+    hh2 = Hex(Abs((g1 - g2) / 2))
+    If Len(hh2) = 1 Then 
+        hh2="0"&hh2
+    End If
+    hh3 = Hex(Abs((r1 - r2) / 2))
+    If Len(hh3) = 1 Then 
+        hh3="0"&hh3
+    End If
+    h = hh1 & hh2 & hh3
+//通过找图获取棋子的位置 
+    Dim intX, intY,t
+    FindPic 0, 0, 0, 0, "Attachment:1.png", "000000", 0, 0.9, intX, intY
+    TracePrint intx
+    
+    KeepCapture 
+    //从点（0，160）开始，每隔3像素去一个点，然后和刚刚计算出的背景颜色范围进行比较，相同返回1，不同返回0
+    For j=0 to 300
+        Dim w,n,m,q
+        w=""
+        For i=0 to 159
+            n = CmpColor(0 + i*3 , 160+j, s&"-"&h, 1)+1
+            w = w & n
+        Next
+        If intx < 240 Then 
+            m = UTF8.InStr(int((intx+25)/3), w, "0")  //棋子在屏幕左侧，找0的命令，从棋子的右侧25像素开始，目的是跳过棋子对于找图的干扰
+        ElseIf intx > 240 Then
+            m=UTF8.InStrRev(w,"0",int((intx-25)/3))-2  //棋子在右侧，反向查找，目的同上
+        Else
+//找到0以后跳出，就跳出循环
+        End If
+        If m > 0 Then 
+            Exit For
+        End If
+    Next
+    //通过找到0的位置，可以确定下一块跳台最高点位置的横坐标q
+    q =3*m
+    TracePrint q
+    ReleaseCapture 
+    
+    //计算棋子和下一块跳台中心点的水平距离 ，区分棋子在左还是在右
+    If intx < 240 Then 
+        t = (q - intx) / Sqr(3) * 2  //两个跳台中心点的连线和水平的夹角是30度，根据几何上的勾股定理，已知直角边，求斜边的长度
+    ElseIf intx > 240 Then
+        t = (intx - q) / Sqr(3) * 2
+    End If
+    TracePrint intx
+    //开始起跳，具体按下的时间长短
+    TouchDown 400, 130, 1
+    Delay t * 3.1  //3.1是距离和反应时间的常数，这个根据模拟器的不同，电脑反应速度，都可能有影响，自己根据实际情况微调
+    TouchUp 1
+    Delay 2000
+    //背景过段时间会发生变化，要判断背景是否变化
+    Dim z
+    z= GetPixelColor(0, 160)
+    TracePrint z
+    If z <> g Then 
+        Delay 6000
+    End If
+Next

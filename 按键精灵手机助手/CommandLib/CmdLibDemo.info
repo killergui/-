@@ -1,0 +1,24 @@
+
+{
+	"Description" : "命令库测试示例",
+	"callPluginFunction" : 
+	{
+		"Description" : "格式：CmdLibDemo.callPluginFunction()\n解释：调用插件里的函数",
+		"TranslateTemplate" : "调用插件里的函数"
+	},
+	"相减" : 
+	{
+		"Description" : "格式：CmdLibDemo.相减(变量1, 变量2)\n解释：计算变量之差",
+		"TranslateTemplate" : "变量$1减去$2"
+	},
+	"相加" : 
+	{
+		"Description" : "格式：CmdLibDemo.相加(变量1, 变量2)\n解释：计算变量之和",
+		"TranslateTemplate" : "变量$1与$2的和"
+	},
+	"获取全局变量_A" : 
+	{
+		"Description" : "格式：CmdLibDemo.获取全局变量_A()\n解释：获取命令库内部的全局变量",
+		"TranslateTemplate" : "获取命令库内部的全局变量"
+	}
+}

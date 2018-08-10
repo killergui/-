@@ -1,0 +1,29 @@
+
+{
+	"Description" : "轻量级的数据库",
+	"Name" : "轻量级的数据库",
+	"SQLDelete" : 
+	{
+		"Description" : "格式: sqlite3.SQLDelete(数据库路径,表名,过滤条件)\n解释: 删除数据库记录",
+		"Name" : "删除数据库记录",
+		"TranslateTemplate" : "删除数据库记录"
+	},
+	"SQLInsert" : 
+	{
+		"Description" : "格式: sqlite3.SQLInsert(数据库路径,表名,插入内容)\n解释: 插入数据到数据库",
+		"Name" : "插入数据",
+		"TranslateTemplate" : "插入数据到数据库"
+	},
+	"SQLSelect" : 
+	{
+		"Description" : "格式: sqlite3.SQLSelect(数据库路径,表名,列名,过滤条件)\n解释: 根据条件查询数据",
+		"Name" : "查询数据",
+		"TranslateTemplate" : "查询数据"
+	},
+	"SQLUpdate" : 
+	{
+		"Description" : "格式: sqlite3.SQLUpdate(数据库路径,表名,修改内容,过滤条件)\n解释: 根据过滤条件修改数据库内容",
+		"Name" : "修改数据库",
+		"TranslateTemplate" : "修改数据库"
+	},
+}

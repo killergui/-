@@ -1,0 +1,63 @@
+Function 获取任务列表(剩余皇榜任务次数)
+    Dim 皇榜任务坐标偏移量,皇榜任务坐标初始起X, 皇榜任务坐标初始起Y, 皇榜任务坐标初始止X, 皇榜任务坐标初始止Y, 循环次数, 皇榜任务坐标起X, 皇榜任务坐标止X
+    Dim 任务描述坐标初始起X, 任务描述坐标初始起Y, 任务描述坐标初始止X, 任务描述坐标初始止Y, 任务描述坐标起X, 任务描述坐标止X, intX, intY
+    皇榜任务坐标偏移量 = 164
+    皇榜任务坐标初始起X = 440
+    皇榜任务坐标初始起Y = 880
+    皇榜任务坐标初始止X = 550
+    皇榜任务坐标初始止Y = 1000
+    任务描述坐标初始起X = 471
+    任务描述坐标初始起Y = 375
+    任务描述坐标初始止X = 501
+    任务描述坐标初始止Y = 570
+    TracePrint UseDict(0)
+	
+    Dim 获取任务列表(),单个任务
+    Dim 任务类型,任务等级,任务子类,temp
+    //读取3行数据,根据行数变化X坐标的值,相应的图片和文字识别范围发生变化
+    循环次数 = 剩余皇榜任务次数
+    For i = 1 To 循环次数
+        皇榜任务坐标起X = 皇榜任务坐标初始起X - 皇榜任务坐标偏移量 * (i - 1)
+        皇榜任务坐标止X = 皇榜任务坐标初始止X - 皇榜任务坐标偏移量 * (i - 1)
+		
+        FindPic 皇榜任务坐标起X, 皇榜任务坐标初始起Y, 皇榜任务坐标止X, 皇榜任务坐标初始止Y, "Attachment:皇榜任务前往.png", "000000", 0, 0.7, intX, intY
+        If intX > -1 And intY > -1 Then 
+			
+            Dim ocrchar
+            任务描述坐标起X = 任务描述坐标初始起X - 皇榜任务坐标偏移量 * (i - 1)
+            任务描述坐标止X = 任务描述坐标初始止X - 皇榜任务坐标偏移量 * (i - 1)
+            ocrchar = Ocr(任务描述坐标起X, 任务描述坐标初始起Y, 任务描述坐标止X, 任务描述坐标初始止Y, "AFAFAF-222222|7A7A79-111111|6E6E6E-222222|727271-111111|A6A6A6-111111", 0.9)
+			
+            //判断任务类型并解析条件
+			
+            任务类型 = UTF8.Left(ocrchar, 2)
+            TracePrint ocrchar
+            If 任务类型 = "击杀" Then 
+                //根据字数判断10级怪会有问题,所以增加一个判断
+                任务等级 = UTF8.Mid(ocrchar, 2, 3)
+                temp = UTF8.Right(ocrchar, 1)
+                If temp = "级" Then 
+                    任务等级 = UTF8.Mid(ocrchar, 3, 2)
+                    任务子类 = UTF8.Mid(ocrchar, 6, 2)
+                Else 
+                    任务等级 = UTF8.Mid(ocrchar, 3, 1)
+                    任务子类 = UTF8.Mid(ocrchar, 5, 2)
+                End If	
+            ElseIf 任务类型 = "采集" Then
+            	任务等级 = Null
+                任务子类 = UTF8.Right(ocrchar, 2)
+            ElseIf 任务类型 = "收取" Then
+            	任务等级 = Null
+                任务子类 = Null
+            Else 
+                任务子类 = Null
+                任务等级 = UTF8.Mid(ocrchar, 7, 1)
+            End If
+            单个任务 = Array(任务类型, 任务等级, 任务子类, intX + 5, intY + 5)
+            获取任务列表(i - 1) = 单个任务
+            TracePrint 获取任务列表(i - 1)
+        Else 
+            TracePrint "没找到皇榜前往图标"
+        End If
+    Next
+End Function

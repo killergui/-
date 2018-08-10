@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<Window size="348,500" caption="0,0,0,500" roundcorner="4,4">
+    <Font name="宋体" size="14" bold="false" italic="false" default="true" />
+    <VerticalLayout width="348" height="500" inset="5,5,5,5">
+        <VerticalLayout width="348" height="500">
+            <HorizontalLayout>
+                <VerticalLayout width="348" height="500">
+                    <HorizontalLayout width="348" height="500">
+                        <VerticalLayout width="348" height="500">
+                            <VerticalLayout width="348" height="450" bkimage="file=&apos;Big.jpg&apos; source=&apos;284,40,632,490&apos; dest=&apos;0,0,348,450&apos;" />
+                            <Control name="control_0" width="348" height="30" bkimage="file=&apos;Big.jpg&apos; source=&apos;284,572,632,602&apos; dest=&apos;0,0,348,30&apos;" />
+                        </VerticalLayout>
+                    </HorizontalLayout>
+                </VerticalLayout>
+            </HorizontalLayout>
+        </VerticalLayout>
+        <Control name="center_img" float="true" pos="9,9,0,0" width="334" height="364" bkimage="wording1.png" />
+        <Text name="progress_text" float="true" pos="119,337,0,0" width="110" height="30" textpadding="2,0,2,0" textcolor="#FFFFFFFF" align="wrap" />
+        <Button name="restart" text="立即体验" float="true" pos="80,388,0,0" width="210" height="50" bkimage="file=&apos;winbk.jpg&apos; source=&apos;422,552,632,602&apos; dest=&apos;0,0,210,50&apos;" align="wrap" />
+    </VerticalLayout>
+</Window>

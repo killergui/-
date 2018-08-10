@@ -1,0 +1,19 @@
+
+{
+	"Description" : null,
+	"两位汉字转数字" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"十以内汉字转数字" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"汉字转数字" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	}
+}

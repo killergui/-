@@ -1,0 +1,17 @@
+
+{
+	"Description" : "处理Json内容",
+	"Name" : "处理Json内容",
+	"Decode" : 
+	{
+		"Description" : "格式: Cjson.Decode(json字符串)\n解释: json字符串转换table",
+		"Name" : "json字符串转换table",
+		"TranslateTemplate" : "把 $1 转换成talbe数据"
+	},
+	"Encode" : 
+	{
+		"Description" : "格式: Cjson.Encode(table数据)\n解释: table字符串转换json",
+		"Name" : "table字符串转换json",
+		"TranslateTemplate" : "把 $1 转换成json数据"
+	},
+}

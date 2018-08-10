@@ -1,0 +1,5 @@
+
+
+Function 相加(para1, para2)
+	相加 = para1 + para2
+End Function

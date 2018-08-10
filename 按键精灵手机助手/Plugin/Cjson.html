@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>插件帮助</title>
+<style>
+body{font-size:12px; font-family:Verdana,"宋体"}
+.ts{ background:#fff; margin:0 0 40px 0;}
+.ts th{ color:#7B797B; background:#DEDFDE; line-height:24px;}
+.ts td {padding:6px 0;}
+.name { font-size:16px; font-weight:bold; border-top:1px dashed #9C9A9C; border-bottom:1px dashed #9C9A9C; color:#006939;}
+.canshu { background:#E7E7EF;}
+.red{ color:#d60000;}
+.green{ color:#006939;}
+.blue{ color:#316AC5;}
+.fanhui{ border-bottom:1px dashed #9C9A9C;}
+.lizi{ border-bottom:1px dashed #9C9A9C;}
+</style></head><body>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="Decode"></a>Cjson.Decode json数据转换table 
+</td></tr><tr><th>命令功能：</th><td>
+json数据转换table 
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1【必要】：字符串, json字符串
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+键值表：返回json字符串所对应的键值表
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵手机版语法</span>
+</th><td class="lizi"><pre>
+Import "Cjson.lua"
+Dim json, table
+json = "{""age"":""23"",""testArray"":{""array"":[8,9,11,14,25]},""Himi"":""himigame.com""}"
+<span class="green">// json数据转换table</span>
+table = Cjson.Decode(json)
+<span class="green">// 输出table内容</span>
+For Each k, v In table
+    TracePrint k, v
+Next
+<span class="green">// table数据转换json</span>
+json = Cjson.Encode(table)
+TracePrint json
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="Encode"></a>Cjson.Encode table数据转换json
+</td></tr><tr><th>命令功能：</th><td>
+table数据转换json
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1【必要】：键值表, 需要转换的table数据
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+返回json字符串
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵手机版语法</span>
+</th><td class="lizi"><pre>
+Import "Cjson.lua"
+Dim json, table
+json = "{""age"":""23"",""testArray"":{""array"":[8,9,11,14,25]},""Himi"":""himigame.com""}"
+<span class="green">// json数据转换table</span>
+table = Cjson.Decode(json)
+<span class="green">// 输出table内容</span>
+For Each k, v In table
+    TracePrint k, v
+Next
+<span class="green">// table数据转换json</span>
+json = Cjson.Encode(table)
+TracePrint json
+</td></tr></table>
+
+
+
+</body>
+</html>
+

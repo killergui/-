@@ -1,0 +1,11 @@
+
+{
+	"Description" : "文字编码库",
+	"Name" : "文字编码库",
+	"Transcoding" : 
+	{
+		"Description" : "格式: iconv.Transcoding(目标编码,原始编码,字符串)\n解释: 将字符串进行指定的编码转换",
+		"Name" : "字符串编码转换",
+		"TranslateTemplate" : "把 $3 从 $2 编码转换成 $1 编码"
+	},
+}
