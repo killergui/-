@@ -1,1 +1,15 @@
-GetTempDir()
+Call 重启脚本()
+
+
+
+
+
+Sub 重启脚本()
+
+//循环数量达到50次，即自动重启脚本
+If K = 50 Then
+RestartScript //重新启动脚本运行
+Else
+Call 数字0()
+End If 
+End Sub

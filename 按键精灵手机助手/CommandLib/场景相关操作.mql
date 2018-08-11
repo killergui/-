@@ -124,7 +124,7 @@ Function 所在场景()
         Exit Function
     End If
 	
-    FindPic 判定范围4(0), 判定范围4(1), 判定范围4(2), 判定范围4(3),"Attachment:军团.png","000000",0,0.8,intX,intY
+    FindPic 判定范围4(0), 判定范围4(1), 判定范围4(2), 判定范围4(3),"Attachment:军团.png","000000",0,0.7,intX,intY
     If intX > -1 And intY > -1 Then
         所在场景 = 17
         Exit Function
@@ -208,7 +208,7 @@ Function 所在场景()
         Exit Function
     End If
 	
-    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:军械所.png","000000",0,0.9,intX,intY
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:军械所.png","000000",0,0.8,intX,intY
     If intX > -1 And intY > -1 Then
         所在场景 = 29
         Exit Function
@@ -432,7 +432,7 @@ Function 关闭界面()
     Select Case 当前场景
     Case 3, 4, 6, 11, 14, 15, 16, 17, 23, 24, 38, 51, 65
         Tap 680,1230
-    Case 8 ,9, 19, 21, 25, 28, 29, 30, 32, 33, 53
+    Case 8 ,9, 19, 21, 25, 28, 30, 32, 33, 53
         Tap 640,1140
     Case 10, 34, 35, 46
         Tap 630, 1090
@@ -444,7 +444,7 @@ Function 关闭界面()
         Tap 140, 640
     Case 27, 31, 37
         Tap 640, 1060
-    Case 5
+    Case 5, 29
         Tap 630, 1200
     Case 26
         Tap 660, 1200
@@ -509,7 +509,7 @@ Function 关闭界面()
     Case 64
         Touch 250, 520, 100
     Case Else
-        ShowMessage "这个界面不知道啊,无法关闭,请手动关闭,并告诉我", 1500, 300, 500
+        ShowMessage "这个界面不知道啊,无法关闭,请手动关闭,并告诉我", 1500, 50, 620
         //        KeyPress "Back"
     End Select
 End Function
