@@ -1006,15 +1006,9 @@ Sub 领取体力()
         FindColor 574,1015,670,1151,"4069B3",0,0.99,intX,intY
         If intX > -1 And intY > -1 Then 
             TracePrint "找到活动详情面板"
-            Touch intX, intY, 100
-            Delay 1000
+            Touch intX,intY, 100
         End If
-        FindPic 469,601,511,684,"Attachment:提示.png","000000",0,0.98,intX,intY
-        If intX > -1 And intY > -1 Then 
-            TracePrint "发现提示界面"
-            Touch 250, 640, 100
-            Delay 1000
-        End If
+        
     Loop   
     TracePrint "活动小红点处理完毕"
 End Sub
@@ -3253,16 +3247,10 @@ Sub 进皇榜界面()
 End Sub
 
 Sub 接皇榜任务()
-    If ReadUIConfig("是否自动执行皇榜") = False Then 
-        TracePrint "设置不执行皇榜"
-        Exit Sub	
-    End If
-    TracePrint "是否已接皇榜",ReadConfig("是否已接皇榜")
     If ReadConfig("是否已接皇榜") = 1 Then 
         TracePrint "已经结果皇榜任务"
         Exit Sub
     End If
-    
     Call 进军团界面()
     Call 进城池界面()
     TracePrint UseDict(1)
@@ -3352,6 +3340,7 @@ Sub 接皇榜任务()
                 Traceprint ocrchar	
                 If UTF8.InStr(1, ocrchar, "0/3") > 0 Then
                     TracePrint "一个任务没接成功,也许是昨日皇榜任务未完成"
+                    Call 完成皇榜任务()
                     Exit Sub
                 End If
                 TouchDown 145, 660, 0
@@ -3377,14 +3366,8 @@ Sub 接皇榜任务()
 End Sub
 
 Sub 完成皇榜任务()
-    If ReadUIConfig("是否自动执行皇榜") = False Then 
-        TracePrint "设置不执行皇榜"
-        Exit Sub
-    End If
-    Dim 寻找类型, 目标种类, 目标等级, 用户设置, 伤兵信息, 队伍兵量信息, 队伍状态, 任务列表
-    用户设置 = 队伍设置()
-    伤兵信息 = 兵事处理()
-    队伍状态 = 判断队伍状态()
+    
+    
     Call 进皇榜界面()
     Call 领取皇榜任务奖励()
     Delay 2000
@@ -3395,60 +3378,47 @@ Sub 完成皇榜任务()
         TracePrint "已经完成了3次皇榜任务了"
         Exit Sub
     End If
-    
+    Dim 寻找类型, 目标种类, 目标等级, 用户设置, 伤兵信息, 队伍兵量信息, 队伍状态, 任务列表
     目标种类 = Array() : 目标等级 = Array()
     任务列表 = 获取任务列表()
     If 任务列表 <> Null Then 
         If 任务列表(0) = "击杀" Then 
+            用户设置 = 队伍设置()
+            伤兵信息 = 兵事处理()
+            队伍状态 = 判断队伍状态()
             TracePrint "执行打野任务"
-            //尝试点击前往图标
-            Touch 任务列表(4), 任务列表(5), 100
-            Delay 2000
-            If 场景相关操作.所在场景() = 13 Then 
-                TracePrint "无法直接前往,自行手动搜索"
-                
-                If 任务列表(2) = "黄巾军" Then 
-                    目标种类(0) = True
-                ElseIf 任务列表(2) = "流寇" Then
-                    目标种类(1) = True
-                ElseIf 任务列表(2) = "山贼" Then
-                    目标种类(2) = True
-                ElseIf 任务列表(2) = "马贼" Then
-                    目标种类(3) = True
-                End If
-                目标等级(任务列表(1) - 1) = True
-                For i = 0 To 4
-                    If 用户设置(0, i) = True Then 
-                        If 队伍状态(i) = 1 Then
-                            TracePrint "判断伤兵比例", (伤兵信息(0) / 伤兵信息(1) * 100)
-                            If (伤兵信息(0) / 伤兵信息(1) * 100) < 用户设置(7) Then 
-                                队伍兵量信息 = 判断队伍兵量(i)
-                                If 队伍兵量信息(3) > 用户设置(8) Then 
-                                    TracePrint "出城寻找怪物"
-                                    Call 搜索目标(1, 目标种类, 目标等级, True)
-                                    Call 前往目标(1, i)
-                                End If
-                            End If
-                        End If
-                    End If
-                Next 
-            Else 
-                TracePrint "跳转成功,准备点击怪物"
-                For i = 0 To 4
-                    If 用户设置(0, i) = True Then 
-                        If 队伍状态(i) = 1 Then
-                            TracePrint "判断伤兵比例", (伤兵信息(0) / 伤兵信息(1) * 100)
-                            If (伤兵信息(0) / 伤兵信息(1) * 100) < 用户设置(7) Then 
-                                队伍兵量信息 = 判断队伍兵量(i)
-                                If 队伍兵量信息(3) > 用户设置(8) Then 
-                                    TracePrint "出城寻找怪物"
-                                    Call 前往目标(1, i)
-                                End If
-                            End If
-                        End If
-                    End If
-                Next  
+            If 任务列表(2) = "黄巾军" Then 
+                目标种类(0) = True
+                TracePrint "检查"
+            ElseIf 任务列表(2) = "流寇" Then
+                目标种类(1) = True
+                TracePrint "检查"
+            ElseIf 任务列表(2) = "山贼" Then
+                目标种类(2) = True
+                TracePrint "检查"
+            ElseIf 任务列表(2) = "马贼" Then
+                目标种类(3) = True
+                TracePrint "检查"
             End If
+            TracePrint "检查"
+            目标等级(任务列表(1) - 1) = True
+            For i = 0 To 4
+                TracePrint "检查"
+                If 用户设置(0, i) = True Then 
+                    TracePrint "检查"
+                    If 队伍状态(i) = 1 Then
+                        TracePrint "判断伤兵比例", (伤兵信息(0) / 伤兵信息(1) * 100)
+                        If (伤兵信息(0) / 伤兵信息(1) * 100) < 用户设置(7) Then 
+                            队伍兵量信息 = 判断队伍兵量(i)
+                            If 队伍兵量信息(3) > 用户设置(8) Then 
+                                TracePrint "出城寻找怪物"
+                                Call 搜索目标(1, 目标种类, 目标等级, True)
+                                Call 前往目标(1, i)
+                            End If
+                        End If
+                    End If
+                End If
+            Next
             TracePrint "执行打野任务完毕"
         ElseIf 任务列表(0) = "普通" Then
             TracePrint "执行普通副本任务"
@@ -3492,6 +3462,7 @@ Sub 完成皇榜任务()
             TracePrint "执行精英副本任务完毕"
         End If
     End If
+    
     TracePrint "执行完毕一次皇榜任务"
 End Sub
 
@@ -3507,7 +3478,7 @@ Function 获取任务列表()
 			
         //判断任务类型并解析条件
         //任务类型: 1 = 打野怪, 2 = 打普通副本, 3 = 采集, 4 = 收取, 5 = 市场购买, 6 = 寻访, 7 = 打其他玩家主城, 8 = 打精英副本
-        //任务数组结构: 0 = 类型, 1 = 采集数量或打怪级别或寻访次数, 2 = 子类型(野怪或者采集类型), 3 = 打怪次数, 4 = 前往图标X, 5 = 前往图标Y
+        //任务数组结构: 0 = 类型, 1 = 采集数量或打怪级别或寻访次数, 2 = 子类型(野怪或者采集类型), 3 = 打怪次数
         任务类型 = UTF8.Left(ocrchar, 2)
         If 任务类型 = "击杀" Then 
             temp1 = UTF8.InStr(1, ocrchar, "级")
@@ -3532,7 +3503,7 @@ Function 获取任务列表()
             任务等级 = Null
             任务数量 = UTF8.Mid(ocrchar, 7, temp1 - 7)
         End If
-        单个任务 = Array(任务类型, 任务等级, 任务子类, 任务数量, intX + 5,intY + 5)
+        单个任务 = Array(任务类型, 任务等级, 任务子类, 任务数量)
         获取任务列表 = 单个任务
         TracePrint 单个任务(0),单个任务(1),单个任务(2),单个任务(3)
     Else 
@@ -3845,8 +3816,7 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
     Rem 打副本准备
     TracePrint "副本类型",副本类型
     Call 进副本(副本类型)
-    Dim 挑战副本数据, 副本列表, 副本剩余次数, intX,intY, 名将第几关, ocrchar, areaX1, areaY1, 当前体力, 体力换算次数
-    当前体力 = 读取当前体力()
+    Dim 挑战副本数据, 副本列表, 副本剩余次数, intX,intY, 名将第几关, ocrchar, areaX1, areaY1
     容错参数 = 0
     TracePrint "筛选要打的副本数据"
     Rem 获取副本信息
@@ -3975,31 +3945,25 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
     Call 进副本预览(挑战副本数据(0), 挑战副本数据(1))
     
     //预期打的次数是挑战次数,但是因为体力,副本剩余次数的影响,可能会调整打副本次数
-    Dim 最终打副本次数
+    Dim 最终打副本次数, 最大副本数据
 
-    If 副本剩余次数 > 0 Then
-        TracePrint "预期挑战次数"&挑战次数, "副本剩余次数"&副本剩余次数, "副本星级"&挑战副本数据(4)
-        If 副本类型 = 1 Then 
-            体力换算次数 = Int(当前体力 / 5)
-        ElseIf 副本类型 = 2 Then
-            体力换算次数 = Int(当前体力 / 10)
-        Else 
-            体力换算次数 = 1
+    If 副本剩余次数 > 0 Then 
+        //特殊检测体力是否足够
+        FindColor 152,368,188,443,"0000F9",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "体力不足继续挑战此类副本,退出"
+            Exit Sub
         End If
+        
+        TracePrint "预期挑战次数"&挑战次数, "副本剩余次数"&副本剩余次数, "副本星级"&挑战副本数据(4)
         If 副本剩余次数 > 挑战次数 Then 
             最终打副本次数 = 挑战次数
         Else 
             最终打副本次数 = 副本剩余次数
         End If
-        //如果自动使用包子则跳过体力换算次数的检测
-        If ReadUIConfig("是否自动使用包子") = False Then 
-            If 最终打副本次数 < 体力换算次数 Then 
-                最终打副本次数 = 体力换算次数
-            End If
-        End If
         
         //如果是三星就进行扫荡,否则挑战
-        TracePrint "最终打副本次数"&最终打副本次数
+        TracePrint "挑战次数"&挑战次数
 		
         If 挑战副本数据(4) = 3 Then
             Rem 进入扫荡
@@ -4089,7 +4053,7 @@ Sub 打副本(类型, 次数)
 				
             ocrchar=Ocr(606,597,638,667,"D7D7D7-111111|D4D5D5-111111|C7C9CB-111111|C0C2C7-111111|ACAFBA-111111|9FA2AE-111111",0.9)
             Traceprint ocrchar
-            If ocrchar = "3/3" Or ocrchar = "33" Then 
+            If ocrchar = "3/3" Then 
                 FindPic 580,1020,720,1280,"Attachment:手动.png","000000",0,0.9,intX,intY
                 If intX > -1 And intY > -1 Then 
                     TracePrint "尝试切换自动"
@@ -4136,15 +4100,8 @@ Sub 打副本(类型, 次数)
             End If	
         ElseIf 所在场景 <> 40 Then
             FindPic 584,1047,701,1258,"Attachment:跳过1.png","000000",0,0.9,intX,intY
-            If intX > -1 And intY > -1 Then 
-                TracePrint "跳过剧情"
+            If intX > -1 And intY > -1 Then
                 Touch 剧情跳过坐标X, 剧情跳过坐标Y, 100
-            End If
-            FindPic 171,545,273,745,"Attachment:使用.png","000000",0,0.95,intX,intY
-            If intX > -1 And intY > -1 Then 
-                TracePrint "体力不足,使用包子补充"
-                Touch 210, 645, 100
-                Delay 1000
             End If
             场景相关操作.关闭界面()
             Goto 进战斗界面
@@ -4180,23 +4137,15 @@ Sub 打副本(类型, 次数)
                 End If
             End If
             TracePrint "准备挑战次数",准备挑战次数
-            容错参数 = 0
             Rem 点击开始扫荡
             Touch 开始扫荡坐标X, 开始扫荡坐标Y, 250
             Delay 2000
-            FindPic 171,545,273,745,"Attachment:使用.png","000000",0,0.95,intX,intY
-            If intX > -1 And intY > -1 Then 
-                TracePrint "体力不足,使用包子补充"
-                Touch 210, 645, 100
-                Delay 1000
-            End If
             所在场景 = 场景相关操作.所在场景()
-            If 所在场景 = 37 Then 
-                TracePrint "扫荡结束"
-            ElseIf 容错参数 < 5 Then
-                容错参数 = 容错参数 + 1
+            If 所在场景 = 41 Then 
                 TracePrint "没有点到扫荡,从头来"
                 Goto 点击开始扫荡
+            ElseIf 所在场景 = 37 Then
+                TracePrint "扫荡结束"
             End If
         End If
     End Select
@@ -4251,15 +4200,12 @@ Function 读取当前体力()
         ocrchar=Ocr(644,232,675,321,"9FB1BC-111111|8E9EA8-111111|819099-111111|AEC2CE-111111|A0B2BD-111111|85959E-111111|90A0AA-111111|636D73-111111|BCBCBB-111111|838382-111111",0.9)
     ElseIf 所在场景 = 3 Or 所在场景 = 38 Then
         ocrchar=Ocr(670,860,693,975,"8AADAC-111111|8DB1B0-111111|8EB2B1-111111|96BDBD-111111|8CB0AF-111111|98C0C0-111111|94BBBB-111111|8BAFAE-111111|6A827F-111111|82A3A2-111111",0.9)
-    ElseIf 容错参数 < 5 Then
-    	容错参数 = 容错参数 + 1 
+    Else 
         Call 回主城(1)
-        Goto 识别体力文字
     End If
 
     Traceprint ocrchar
     字符长度 = UTF8.Len(ocrchar)
-    TracePrint "容错参数",容错参数,"字符长度",字符长度
     If 字符长度 = 7 Then 
         读取当前体力 = Int(UTF8.Left(ocrchar, 3))
     ElseIf 字符长度 = 6 Then
@@ -4267,13 +4213,10 @@ Function 读取当前体力()
     ElseIf 字符长度 = 5 Then
         读取当前体力 = Int(UTF8.Left(ocrchar, 1))
     Else 
-        If 容错参数 < 8 Then 
+        If 容错参数 < 3 Then 
             容错参数 = 容错参数 + 1
             TracePrint "读取体力文字异常,重试"
             Goto 识别体力文字
-        Else 
-            TracePrint "错误次数太多,放弃,设置体力为0"
-            读取当前体力 = 0
         End If
     End If
 End Function
@@ -4312,7 +4255,7 @@ Sub 升级大殿()
         If intX > -1 And intY > -1 Then 
             容错参数 = 0
             Rem 点击升级按钮
-            Touch intX + 5, intY + 5, 100
+            Touch intX, intY, 100
             Delay 1500
             FindPic 21,927,118,1149,"Attachment:元宝加速2.png","000000",3,0.9,intX,intY
             If intX > -1 And intY > -1 Then 
@@ -4324,7 +4267,7 @@ Sub 升级大殿()
                     容错参数 = 容错参数 + 1
                     TracePrint "点击升级失败,重试"
                     Goto 点击升级按钮
-                ElseIf 容错参数 < 5 Then
+                Else 
                     Call 升级建筑(1)
                 End If
             End If
@@ -4332,6 +4275,7 @@ Sub 升级大殿()
             TracePrint "没找到升级图标"
         End If
     End If
+
 End Sub
 
 Sub 点击军械所()
