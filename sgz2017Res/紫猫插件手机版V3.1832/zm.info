@@ -1,0 +1,1072 @@
+{
+	"Name" : "紫猫插件V3.1832 QQ群7333555",
+	"Description" : "由紫猫学院倾力打造的安卓全能插件。\n详细文档见(https://zimaoxy.com/m/)，有任何意见或建议请联系QQ345911220",
+	"UUID" : 
+	{
+		"Description" : "格式: zm.UUID()\n解释: 生成唯一不重复的36位UUID, 建议在脚本开头执行一次zm.Init()后使用本命令\n返回: UUID, 字符串, 成功返回一个标准UUID, 失败返回null\n参数: 无\n例子: Dim uuid = zm.UUID()  //随机生成一个UUID, 建议脚本开头执行一次zm.Init()后使用本命令",
+		"Name" : "生成UUID()  [UUID]",
+		"TranslateTemplate" : "生成UUID"
+	},
+	"Delay" : 
+	{
+		"Description" : "格式: zm.Delay(延时毫秒[,浮动毫秒])\n解释: 防检测随机延迟一段时间, 若省略参数2则不随机时间\n返回: 随机时间, 数值型, 成功返回延时的实际时间, 失败返回null\n参数: 延时毫秒, 数值型, 要延时的时间, 单位毫秒\n参数: 浮动毫秒, 数值型, 可选, 与延时毫秒参数组成随机数范围, 省略默认则不随机\n例子: zm.Delay(100)        //固定延迟100毫秒\n例子: zm.Delay(100, 200)   //表示随机延迟100到200毫秒",
+		"Name" : "超级延时(延时毫秒[,浮动毫秒])  [随机时间]",
+		"TranslateTemplate" : "超级延时 $1 到 $2 毫秒"
+	},
+	"CheckForUpdates" : 
+	{
+		"Description" : "格式: zm.CheckForUpdates()\n解释: 检查是否有新版插件可以更新\n返回: 是否有更新, 布尔型, 有更新返回true, 无更新返回false, 失败返回null\n参数: 无\n例子: zm.CheckForUpdates()        //检查更新",
+		"Name" : "检查更新()  [是否有更新]",
+		"TranslateTemplate" : "检查紫猫插件更新"
+	},
+	"GetVersion" : 
+	{
+		"Description" : "格式: zm.GetVersion()\n解释: 获取当前紫猫插件版本号\n返回: 插件版本, 字符串, 当前插件版本号\n参数: 无\n例子: TracePrint zm.GetVersion()        //获取插件版本号",
+		"Name" : "获取插件版本()  [插件版本]",
+		"TranslateTemplate" : "获取紫猫插件版本号"
+	},
+	"GetLuaVersion" : 
+	{
+		"Description" : "格式: zm.GetLuaVersion()\n解释: 获取当前运行的Lua环境版本号\n返回: 插件版本, 字符串, 当前Lua版本号\n参数: 无\n例子: TracePrint zm.GetLuaVersion()        //获取Lua版本号",
+		"Name" : "获取Lua环境版本()  [插件版本]",
+		"TranslateTemplate" : "获取当前Lua环境版本"
+	},
+	"Type" : 
+	{
+		"Description" : "格式: zm.Type(数据)\n解释: 获取参数的数据类型, 有以下几种类型\n        number, string, boolen, nil, table, userdata\n返回: 数据类型, 字符串, 得到参数的数据类型\n参数: 数据, 任意类型, 待获取数据类型的参数\n例子: TracePrint zm.Type(\"123\")        //返回number数据类型",
+		"Name" : "获取数据类型(数据)  [数据类型]",
+		"TranslateTemplate" : "获取 $1 的数据类型"
+	},
+	"About" : 
+	{
+		"Description" : "格式: zm.About([函数名])\n解释: 介绍插件更新记录与获取指定插件函数的帮助网址\n返回: 网址, 字符串, 得到指定插件函数的帮助网址\n参数: 函数名, 字符串, 可选, 得到该函数的帮助网址\n例子: TracePrint zm.About()        //自动输出最新版更新介绍\n例子: TracePrint zm.About(\"Type\")  //得到zm.Type()的在线帮助网址",
+		"Name" : "关于([函数名])  [网址]",
+		"TranslateTemplate" : "获取 zm.$1() 命令的帮助网址"
+	},
+	"VarInfo" : 
+	{
+		"Description" : "格式: zm.VarInfo([参数1][,参数2...])\n解释: 获取参数的长度, 数据类型与值, 可以直接获取表的值\n返回: 详细信息, 字符串, 得到所有参数的详细信息内容\n参数: 参数, 任意类型, 可选, 不限参数数量, 表示要获取信息的参数\n例子: TracePrint zm.VarInfo(\"Hello\")        //输出数据类型, 长度, 字符串内容\n例子: TracePrint zm.VarInfo({1,2,3,\"紫猫\":\"学院\"})  //输出table的长度与详细内容",
+		"Name" : "获取参数信息([参数1][,参数2...])  [详细信息]",
+		"TranslateTemplate" : "获取 $1 等参数的详细信息"
+	},
+	"PosExclude" : 
+	{
+		"Description" : "格式: zm.PosExclude(原坐标数组, x1, y1[, 半径或x2[, y2]])\n解释: 在二维坐标数组中排除指定范围的坐标, 支持圆形范围和矩形范围\n返回: 坐标数组, table, 得到排除后剩下的坐标\n参数: 原坐标数组, table, 待筛选的坐标数组, 格式为{{x,y},{x,y},{xy},...}, 兼容超级图色里的返回找到所有坐标格式\n参数: x1, 数值型, 表示左上角x坐标或圆心x坐标\n参数: y1, 数值型, 表示左上角y坐标或圆心y坐标\n参数: 半径或x2, 数值型, \n        当不填写参数y2时, 表示圆心范围的半径, \n        当填写参数y2时表示矩形右下角x坐标\n参数: y2, 数值型, 可选, 矩形右下角y坐标\n例子: Dim xy = zm.PosExclude({{10,20},{30,40}}, 15, 15, 10)    //以圆形15,15, 半径10排除坐标, 最终得到{{30,40}}\n例子: Dim xy = zm.PosExclude({{10,20},{30,40}}, 5, 5, 25, 25)  //以范围5,5,25,25排除坐标, 最终得到{{30,40}}",
+		"Name" : "排除指定范围坐标(原坐标数组, x1, y1[, 半径或x2[, y2]])  [坐标数组]",
+		"TranslateTemplate" : "在 $1 坐标中排除 $2 $3 $4 $5 范围坐标"
+	},
+	"PosInclude" : 
+	{
+		"Description" : "格式: zm.PosInclude(原坐标数组, x1, y1[, 半径或x2[, y2]])\n解释: 在二维坐标数组中获取包含范围的坐标, 支持圆形范围和矩形范围\n返回: 坐标数组, table, 得到包含指定范围的坐标\n参数: 原坐标数组, table, 待筛选的坐标数组, 格式为{{x,y},{x,y},{xy},...}, 兼容超级图色里的返回找到所有坐标格式\n参数: x1, 数值型, 表示左上角x坐标或圆心x坐标\n参数: y1, 数值型, 表示左上角y坐标或圆心y坐标\n参数: 半径或x2, 数值型, \n        当不填写参数y2时, 表示圆心范围的半径, \n        当填写参数y2时表示矩形右下角x坐标\n参数: y2, 数值型, 可选, 矩形右下角y坐标\n例子: Dim xy = zm.PosInclude({{10,20},{30,40}}, 15, 15, 10)    //以圆形15,15, 半径10获取坐标, 最终得到{{10,20}}\n例子: Dim xy = zm.PosInclude({{10,20},{30,40}}, 5, 5, 25, 25)  //以范围5,5,25,25获取坐标, 最终得到{{10,20}}",
+		"Name" : "获取包含范围坐标(原坐标数组, x1, y1[, 半径或x2[, y2]])  [坐标数组]",
+		"TranslateTemplate" : "在 $1 坐标中获取包含 $2 $3 $4 $5 范围坐标"
+	},
+	"PosSort" : 
+	{
+		"Description" : "格式: zm.PosSort(坐标数组[, x, y][, 是否降序])\n解释: 对二维坐标数组按远近进行排序, 支持升序, 降序\n返回: 坐标数组, table, 得到排序后的坐标数组\n参数: 坐标数组, table, 等待排序的坐标数组, 格式为{{x,y},{x,y},{xy},...}, 传址调用, 兼容超级图色里的返回找到所有坐标格式\n参数: x, number, 可选, 表示用于比较远近的x坐标, 省略默认为0\n参数: y, number, 可选, 表示用于比较远近的y坐标, 省略默认为0\n参数: 是否降序, boolean, 可选, 填写true表示从远到近, 填写false表示从近到远, 省略为false\n例子: Dim xy = zm.PosSort({{30,25},{10,20}})    //按照与坐标0,0的远近排序, 最终得到{{10,20},{30,25}}\n例子: Dim xy = zm.PosSort({{30,25},{10,20}}, true)    //按照与坐标0,0的远近降序, 最终得到{{30,25},{10,20}}\n例子: Dim xy = zm.PosSort({{10,20},{30,40}}, 15, 15)  //按照与坐标15,15的远近排序, 最终得到{{10,20},{30,40}}",
+		"Name" : "坐标排序(坐标数组[, x, y][, 是否降序])  [坐标数组]",
+		"TranslateTemplate" : "对 $1 坐标按远近排序"
+	},
+	"Timestamp" : 
+	{
+		"Description" : "格式: zm.Timestamp(日期时间)\n解释: 将时间格式的字符串转换成时间戳, 支持2017年7月23日 23:29:31, 2017-07-23 23:29:38等格式\n返回: 时间戳, number, 成功返回时间戳数值, 失败返回null\n参数: 日期时间, string, 可选, 待转换的日期时间, 支持2017年7月23日 23:29:31, 2017-07-23 23:29:38等格式, 省略默认为当前本地时间\n例子: Dim t = zm.Timestamp(\"2018年7月16日 14:03:26\")",
+		"Name" : "转时间戳(日期时间)  [时间戳]",
+		"TranslateTemplate" : "将 $1 转为时间戳数值"
+	},
+	"TimeDiff" : 
+	{
+		"Description" : "格式: zm.TimeDiff(时间1[, 时间2][, 单位][, 是否取整])\n解释: 计算时间1减去时间2的时间差, 返回单位以第3个参数为准\n返回: 时间差, number, 成功返回两者时间差, 单位由参数3决定\n参数: 时间1, number或string, 第1个时间, 字符串时支持\"2017年7月23日 23:29:31\", \"2017-07-23 23:29:38\"等格式, 数值时表示时间戳\n参数: 时间2, number或string, 可选, 第2个时间, 字符串时支持\"2017年7月23日 23:29:31\", \"2017-07-23 23:29:38\"等格式, 数值时表示时间戳, 省略默认为当前时间\n参数: 单位, string, 可选, 表示计算返回的时间单位, 可填写[\"年\", \"月\", \"日\", \"天\", \"时\", \"分\", \"秒\"]或[\"Y\", \"m\", \"d\", \"H\", \"M\", \"S\"], 省略默认为\"秒\"\n参数: 是否取整, boolean, 可选, 表示返回值是否只保留整数, 省略默认为false\n例子: //计算参数1减去参数2, 返回单位秒数\n        TracePrint zm.TimeDiff(\"2019年8月3日 14:03:26\", \"2018-08-03 22:06:04\")\n        //计算2018-12-01 00:00:00减去当前时间, 返回单位天数, 并取整\n        TracePrint zm.TimeDiff(\"2018-12-01\", \"日\", true)",
+		"Name" : "计算时间差(时间1[, 时间2][, 单位][, 是否取整])  [时间差]",
+		"TranslateTemplate" : "计算 $1 - $2 的时间差"
+	},
+	"TimeAdd" : 
+	{
+		"Description" : "格式: zm.TimeAdd([时间, ]数值[, 单位])\n解释: 计算时间加减后的数值, 数值单位由参数3决定\n返回: 计算结果, number, 返回时间加减计算后的时间戳结果\n参数: 时间, number或string, 可选, 待计算的时间, 字符串时支持\"2017年7月23日 23:29:31\", \"2017-07-23 23:29:38\"等格式, 数值时表示时间戳, 省略默认为当前时间\n参数: 数值, number, 表示要加减的具体数值, 支持正负数\n参数: 单位, string, 可选, 表示数值的计算单位, 可填写[\"年\", \"月\", \"日\", \"天\", \"时\", \"分\", \"秒\"]或[\"Y\", \"m\", \"d\", \"H\", \"M\", \"S\"], 省略默认为\"秒\"\n例子: //计算15天后的时间日期\n        TracePrint zm.TimeAdd(\"2019年8月3日 14:03:26\", 15, \"日\")\n        //计算当前时间往后20个月的时间\n        TracePrint zm.TimeAdd(20, \"月\")",
+		"Name" : "时间计算([时间, ]数值[, 单位])  [计算结果]",
+		"TranslateTemplate" : "计算时间 $1 + $2 , 单位 $3"
+	},
+	"GetNetworkTime" : 
+	{
+		"Description" : "格式: zm.GetNetworkTime([格式])\n解释: 通过多个接口获取毫秒级网络时间\n返回: 网络时间, number或string, 成功返回时间戳或格式化时间字符串, 失败返回null\n参数: 格式, number或string, 可选, 表示返回的格式, 当数值型时, 0表示返回时间戳数值, 1表示返回\"年-月-日 时:分:秒\", 2表示返回\"年月日时分秒\",\n        当字符串时表示自定义格式化, 与DateTime.Format()的第一个参数格式相同, 省略默认为0\n例子: Dim t = zm.GetNetworkTime()",
+		"Name" : "获取精准网络时间([格式])  [网络时间]",
+		"TranslateTemplate" : "以格式 $1 获取精准网络时间"
+	},
+	"LTrim" : 
+	{
+		"Description" : "格式: zm.LTrim(原字符串[, 删除字符])\n解释: 删除左边的指定连续字符集合\n返回: 新字符串, 字符串, 成功返回删除字符后的内容, 失败返回null\n参数: 原字符串, 字符串, 待删除字符的原字符串\n参数: 删除字符, 字符串, 可选, 要删除的连续字符内容, 省略默认为\" \\r\\n\\t\"\n例子: TracePrint zm.LTrim(\" 紫猫编程学院  \") //左边的空格被删除了, 右边保留\n例子: TracePrint zm.LTrim(\"bdacee紫猫编程学院acbed\", \"abcdefg\") //左边连续的abcdefg这几个字符被删除了",
+		"Name" : "删除前导字符(原字符串[, 删除字符])  [新字符串]",
+		"TranslateTemplate" : "删除 $1 左边的 $2 连续字符"
+	},
+	"RTrim" : 
+	{
+		"Description" : "格式: zm.RTrim(原字符串[, 删除字符])\n解释: 删除右边的指定连续字符集合\n返回: 新字符串, 字符串, 成功返回删除字符后的内容, 失败返回null\n参数: 原字符串, 字符串, 待删除字符的原字符串\n参数: 删除字符, 字符串, 可选, 要删除的连续字符内容, 省略默认为\" \\r\\n\\t\"\n例子: TracePrint zm.RTrim(\" 紫猫编程学院  \") //右边的空格被删除了, 左边保留\n例子: TracePrint zm.RTrim(\"bdacee紫猫编程学院acbed\", \"abcdefg\") //右边连续的abcdefg这几个字符被删除了",
+		"Name" : "删除后导字符(原字符串[, 删除字符])  [新字符串]",
+		"TranslateTemplate" : "删除 $1 右边的 $2 连续字符"
+	},
+	"Trim" : 
+	{
+		"Description" : "格式: zm.Trim(原字符串[, 删除字符])\n解释: 删除左右两边的指定连续字符集合\n返回: 新字符串, 字符串, 成功返回删除字符后的内容, 失败返回null\n参数: 原字符串, 字符串, 待删除字符的原字符串\n参数: 删除字符, 字符串, 可选, 要删除的连续字符内容, 省略默认为\" \\r\\n\\t\"\n例子: TracePrint zm.Trim(\" 紫猫编程学院  \") //左右两边空格都被删除\n例子: TracePrint zm.Trim(\"bdacee紫猫编程学院acbed\", \"abcdefg\") //左右两边连续的abcdefg都被删除了",
+		"Name" : "删除前后导字符(原字符串[, 删除字符])  [新字符串]",
+		"TranslateTemplate" : "删除 $1 左右两边的 $2 连续字符"
+	},
+	"Execute" : 
+	{
+		"Description" : "格式: zm.Execute(命令行)\n解释: 执行execute命令行并返回结果\n返回: 执行结果, 字符串, 成功返回执行后的内容, 失败返回null\n参数: 命令行, 字符串, 要执行的命令行代码\n例子: TracePrint zm.Execute(\"ls\")  //获取当前目录下所有文件名",
+		"Name" : "执行execute(命令行)  [执行结果]",
+		"TranslateTemplate" : "以execute方式执行 $1"
+	},
+	"TableClear" : 
+	{
+		"Description" : "格式: zm.TableClear(表)\n解释: 将传入的参数表全部清空为null\n返回: 表, table, 成功返回长度为-1的表, 失败返回null\n参数: 表, table, 待清空的键值对表\n例子: Dim t = zm.TableClear({1,2,3})  //得到长度-1的表t",
+		"Name" : "清空表(表)  [表]",
+		"TranslateTemplate" : "清空表 $1"
+	},
+	"Clone" : 
+	{
+		"Description" : "格式: zm.Clone(表)\n解释: 拷贝table或数组,且不影响旧表,支持嵌套表或嵌套数组的拷贝\n返回: 表, table, 成功返回克隆后的新表, 失败返回null\n参数: 表, table, 待克隆的键值对表\n例子: Dim oldT = {1,2,3}\n        Dim newT = zm.Clone(oldT)  //得到成员值一样, 但相互独立的表newT",
+		"Name" : "超级克隆(表)  [表]",
+		"TranslateTemplate" : "超级克隆 $1"
+	},
+	"Split" : 
+	{
+		"Description" : "格式: zm.Split(原字符串, 分隔符[, 模式匹配])\n解释: 按指定分隔符或长度对原内容进行分割, 支持模式匹配\n返回: 一维数组, table, 成功返回分割后的一维数组, 失败返回null\n参数: 原字符串, string, 待分割的原字符串内容\n参数: 分隔符, string或number, 分割规则\n        当是字符串时, 表示按此分隔符进行分割\n        当是数值时, 表示按此长度进行分割\n参数: 模式匹配, boolean, 可选, 是否开启模式匹配, 省略默认为false\n例子: Dim t = zm.Split(\"1,2,3,4,5\", \",\") //按照逗号分割字符串成一维数组\n例子: Dim t = zm.Split(\"紫猫编程学院\", 1) //按照长度1进行分割\n例子: Dim t = zm.Split(\"这234句话里45645646有605数字\", \"%d+\", true) //开启模式匹配, 按照匹配文字分割",
+		"Name" : "超级分割(原字符串, 分隔符[, 模式匹配])  [一维数组]",
+		"TranslateTemplate" : "对 $1 按 $2 进行超级分割"
+	},
+	"ArrayInsert" : 
+	{
+		"Description" : "格式: zm.ArrayInsert(原数组, 插入值[, 下标][, 传值调用])\n解释: 插入元素到一维数组中\n返回: 一维数组, table, 成功返回插入新值的一维数组, 失败返回null\n参数: 原数组, table, 待插入内容的原数组\n参数: 插入值, 任意类型, 要插入的数据\n参数: 下标, number, 可选, 要插入的下标位置, 省略默认为追加到原数组末尾\n参数: 传值调用, boolean, 可选, 是否要传值调用数组, 省略默认为false\n例子: Dim t = zm.ArrayInsert({1,2,3}, \"紫猫\") //在数组末尾追加字符串\"紫猫\"",
+		"Name" : "插入数组成员(原数组, 插入值[, 下标][, 传值调用])  [一维数组]",
+		"TranslateTemplate" : "在数组 $1 的 $3 位置插入值 $2"
+	},
+	"ArrayRemove" : 
+	{
+		"Description" : "格式: zm.ArrayRemove(原数组, 下标[, 传值调用])\n解释: 删除一维数组中的指定下标成员\n返回: 一维数组, table, 成功返回删除成员后的一维数组, 失败返回null\n参数: 原数组, table, 待删除成员的原数组\n参数: 下标, number, 要删除的下标位置\n参数: 传值调用, boolean, 可选, 是否要传值调用数组, 省略默认为false\n例子: Dim t = zm.ArrayRemove({1,2,3}, 1) //删除下标为1的成员",
+		"Name" : "删除数组成员(原数组, 下标[, 传值调用])  [一维数组]",
+		"TranslateTemplate" : "删除数组 $1 的下标 $2 成员"
+	},
+	"ArraySort" : 
+	{
+		"Description" : "格式: zm.ArraySort(原数组[, 是否降序[, 是否转数值[, 传值调用]]])\n解释: 对一维数组进行排序\n返回: 一维数组, table, 成功返回排序后的一维数组, 失败返回null\n参数: 原数组, table, 待排序的原数组\n参数: 是否降序, boolean, 可选, 是否要降序排序, 省略默认false\n参数: 是否转数值, boolean, 可选, 是否要把成员转换成数值型, 省略默认false\n参数: 传值调用, boolean, 可选, 是否要传值调用数组, 省略默认为false\n例子: Dim t = zm.ArraySort({12,2,63,55}) //以升序形式排序数组元素\n例子: Dim t = zm.ArraySort({12,2,63,55}, false) //以降序形式排序数组元素\n例子: Dim t = zm.ArraySort({\"12\",\"2\",\"63\",\"55\"}, true, true) //将成员转为数值型并以升序形式排序数组",
+		"Name" : "数组排序(原数组[, 是否降序[, 是否转数值[, 传值调用]]])  [一维数组]",
+		"TranslateTemplate" : "对数组 $1 进行排序"
+	},
+	"ArraySearch" : 
+	{
+		"Description" : "格式: zm.ArraySearch(原数组, 查找内容[, 模糊匹配[, 忽略大小写[, 查找模式]]]])\n解释: 在一维数组中搜索元素位置\n返回: 下标位置, number或table, 成功返回查找的结果, 数据类型由参数查找模式决定, 失败返回null\n参数: 原数组, table, 被查找的原数组\n参数: 查找内容, 任意类型, 要查找的内容, 注意数据类型\n参数: 模糊匹配, boolean, 可选, 是否要模糊搜索, 省略为false\n参数: 忽略大小写, boolean, 可选, 是否要忽略大小写, 省略默认false\n参数: 查找模式, number, 可选, 决定返回值类型, 省略默认为null\n        null表示返回第一个找到的下标, 没找到返回-1\n        0为返回所有下标组成的数组, 没找返回长度-1的数组\n        其他数值为返回该数量的下标组成的数组, 没找返回长度-1的数组\n例子: Dim n = zm.ArraySearch({\"紫猫\",\"编程\",\"学院\"}, \"编程\") //找到返回下标1",
+		"Name" : "搜索数组(原数组, 查找内容[, 模糊匹配[, 忽略大小写[, 查找模式]]]])  [下标位置]",
+		"TranslateTemplate" : "查找数组 $1 中的 $2 位置"
+	},
+	"ArrayRemoveDuplicate" : 
+	{
+		"Description" : "格式: zm.ArrayRemoveDuplicate(原数组[, 忽略大小写[, 传值调用]])\n解释: 删除一维数组中重复的成员\n返回: 一维数组, table, 成功返回去重复后的数组, 失败返回null\n参数: 原数组, table, 待去重复的一维数组\n参数: 忽略大小写, boolean, 可选, 是否要忽略大小写, 省略默认false\n参数: 传值调用, boolean, 可选, 是否要传值调用数组, 省略默认为false\n例子: Dim t = zm.ArrayRemoveDuplicate({\"紫猫\",\"编程\",\"紫猫\",\"学院\"}) //返回{\"紫猫\",\"编程\",\"学院\"}",
+		"Name" : "数组去重复(原数组[, 忽略大小写[, 传值调用]])  [一维数组]",
+		"TranslateTemplate" : "对数组 $1 进行去重复"
+	},
+	"ArrayReplace" : 
+	{
+		"Description" : "格式: zm.ArrayReplace(原数组, 查找内容, 替换内容[, 模糊匹配[, 忽略大小写[, 替换数量]]])\n解释: 搜索并替换一维数组中的指定元素内容\n返回: 一维数组, table, 成功返回替换后的数组内容, 失败返回null\n参数: 原数组, table, 被查找替换的原数组\n参数: 查找内容, 任意类型, 要查找的内容, 注意数据类型\n参数: 替换内容, 任意类型, 要替换后的内容, 注意数据类型\n参数: 模糊匹配, boolean, 可选, 是否要模糊搜索, 省略为false\n参数: 忽略大小写, boolean, 可选, 是否要忽略大小写, 省略默认false\n参数: 替换数量, number, 可选, -1表示全部替换, 其他数值为替换次数, 省略默认为-1\n例子: Dim t = zm.ArraySearch({\"紫猫\", \"老师\", \"QQ是多少\"}, \"QQ\", \"345911220\", true) //返回{\"紫猫\",\"老师\",\"345911220\"}",
+		"Name" : "替换数组元素(原数组, 查找内容, 替换内容[, 模糊匹配[, 忽略大小写[, 替换数量]]])  [一维数组]",
+		"TranslateTemplate" : "把数组 $1 中的 $2 替换成 $3"
+	},
+	"ConvBase" : 
+	{
+		"Description" : "格式: zm.ConvBase(转换内容, 起始进制, 目标进制)\n解释: 从2进制到62进制任意转换, 注意返回是string类型\n返回: 转换结果, string, 成功返回转换后的字符串, 失败返回null\n参数: 转换内容, string或number, 等待转换进制的内容\n参数: 起始进制, number, 原来的进制, 填写范围2到62\n参数: 目标进制, number, 要转换后的进制, 填写范围2到62\n例子: TracePrint zm.ConvBase(10, 8, 16) //把八进制的10转换成16进制, 返回8",
+		"Name" : "任意进制转换(转换内容, 起始进制, 目标进制)  [转换结果]",
+		"TranslateTemplate" : "把 $1 从 $2 进制转换成 $3 进制"
+	},
+	"ConvCoding" : 
+	{
+		"Description" : "格式: zm.ConvCoding(转换内容, 原始编码, 目标编码)\n解释: 使用iconv进行编码转换, 常用于将gb2312的网页源码转换为utf8编码内容\n返回: 转换结果, string, 成功返回转换后的字符串, 失败返回null\n参数: 转换内容, string, 等待转换编码的内容\n参数: 原始编码, string, 转换前的编码, 常见有gb2312, gbk, utf-8等\n参数: 目标编码, string, 转换后的编码, 常见有gb2312, gbk, utf-8等\n例子: Dim str = zm.ConvCoding(text, \"gb2312\", \"utf-8\") //读取电脑文件内容后转码成utf8",
+		"Name" : "转换任意编码(转换内容, 原始编码, 目标编码)  [转换结果]",
+		"TranslateTemplate" : "把 $1 从 $2 编码转换成 $3 编码"
+	},
+	"ConvUnicodeToUTF16" : 
+	{
+		"Description" : "格式: zm.ConvUnicodeToUTF16(Unicode码)\n解释: Unicode转UTF16字符串, 可用于静态界面的emoji代码, 失败返回null\n        emoji整理网址: https://apps.timwhitlock.info/emoji/tables/unicode\n返回: 转换结果, string, 返回以\\uXXXX表示的UTF16字符串\n参数: Unicode码, string或number, 要转换的Unicode值, 数值型表示十进制, 字符串型表示十六进制\n例子: TracePrint zm.ConvUnicodeToUTF16(\"1F601\") //显示\\ud83d\\ude01",
+		"Name" : "Unicode转UTF16(Unicode码)  [转换结果]",
+		"TranslateTemplate" : "把Unicode码 $1 转为UTF16"
+	},
+	"ConvUnicodeToUTF8" : 
+	{
+		"Description" : "格式: zm.ConvUnicodeToUTF8(Unicode码)\n解释: Unicode转UTF8字符串, 可用于动态界面的emoji代码, 失败返回null\n        emoji整理网址: https://apps.timwhitlock.info/emoji/tables/unicode\n返回: 转换结果, string, 返回UTF8字符串\n参数: Unicode码, string或number, 要转换的Unicode值, 数值型表示十进制, 字符串型表示十六进制\n例子: Dim 笑脸 = zm.ConvUnicodeToUTF8(&H1F601)\n        UI.NewLayout \"layout1\"\n        UI.AddTextView \"layout1\", \"emoji\", 笑脸\n        UI.Show \"layout1\"\n        TracePrint zm.ConvUTF8ToUnicode(笑脸)",
+		"Name" : "Unicode转UTF8(Unicode码)  [转换结果]",
+		"TranslateTemplate" : "把Unicode码 $1 转为UTF8"
+	},
+	"ConvUTF8ToUnicode" : 
+	{
+		"Description" : "格式: zm.ConvUTF8ToUnicode(UTF8)\n解释: 将UTF8转为Unicode\n返回: 转换结果, number, 返回Unicode码\n参数: UTF8, string, 要转换的UTF8\n例子: Dim 笑脸 = zm.ConvUnicodeToUTF8(&H1F601)\n        UI.NewLayout \"layout1\"\n        UI.AddTextView \"layout1\", \"emoji\", 笑脸\n        UI.Show \"layout1\"\n        TracePrint zm.ConvUTF8ToUnicode(笑脸)",
+		"Name" : "UTF8转Unicode(UTF8)  [转换结果]",
+		"TranslateTemplate" : "把UTF8 $1 转为Unicode"
+	},
+	"ConvUTF8ToCP1252" : 
+	{
+		"Description" : "格式: zm.ConvUTF8ToCP1252(UTF8)\n解释: UTF8转CP1252码\n返回: 转换结果, number, 返回CP1252码\n参数: UTF8, string, 要转换的UTF8\n例子: //ISO-8859-1里的欧元符号\n        Dim str1252 = \"1\\128\"\n        TracePrint str1252\n        //以UTF8输出欧元符号\n        Dim strutf8 = zm.ConvCP1252ToUTF8(str1252)\n        TracePrint strutf8\n        //UTF8转为CP1252\n        Dim str1252_2 = zm.ConvUTF8ToCP1252(strutf8)\n        TracePrint str1252_2",
+		"Name" : "UTF8转CP1252(UTF8)  [转换结果]",
+		"TranslateTemplate" : "把UTF8 $1 转为CP1252"
+	},
+	"ConvCP1252ToUTF8" : 
+	{
+		"Description" : "格式: zm.ConvCP1252ToUTF8(CP1252码)\n解释: CP1252码转UTF8\n返回: 转换结果, number, 返回UTF8\n参数: CP1252码, string, 要转换的CP1252码\n例子: //ISO-8859-1里的欧元符号\n        Dim str1252 = \"1\\128\"\n        TracePrint str1252\n        //以UTF8输出欧元符号\n        Dim strutf8 = zm.ConvCP1252ToUTF8(str1252)\n        TracePrint strutf8\n        //UTF8转为CP1252\n        Dim str1252_2 = zm.ConvUTF8ToCP1252(strutf8)\n        TracePrint str1252_2",
+		"Name" : "CP1252转UTF8(CP1252码)  [转换结果]",
+		"TranslateTemplate" : "把CP1252 $1 转为UTF8"
+	},
+	"RndInitSeed" : 
+	{
+		"Description" : "格式: zm.RndInitSeed([种子])\n解释: 使用socket库初始化随机种子, 防止规律随机, 建议省略参数, zm.Init()内部已经执行此函数, 无需重复调用\n返回: 种子值, number, 返回随机数种子\n参数: 种子, number, 可选, 要初始化的种子, 省略默认将对当前时间计算获取种子值\n例子: zm.RndInitSeed() //如果你开头执行过zm.Init()命令, 则无需再调用本命令",
+		"Name" : "初始化随机种子([种子])  [种子值]",
+		"TranslateTemplate" : "初始化随机种子 $1"
+	},
+	"RndNum" : 
+	{
+		"Description" : "格式: zm.RndNum([数值a][, 数值b])\n解释: 获取指定范围的随机数, 两个参数不区分大小顺序。\n返回: 随机结果, number, 返回得到的随机数\n参数: 数值a, number, 可选, 随机范围最大值或最小值, 省略默认为0\n参数: 数值b, number, 可选, 随机范围最大值或最小值, 省略默认为0\n例子: TracePrint zm.RndNum(100, 10) //随机10到100\n        TracePrint zm.RndNum(10, 100) //随机10到100\n        TracePrint zm.RndNum(100)     //随机0到100",
+		"Name" : "随机数字([数值a][, 数值b])  [随机结果]",
+		"TranslateTemplate" : "在 $1, $2 范围内随机取值"
+	},
+	"RndPos" : 
+	{
+		"Description" : "格式: zm.RndPos([x, y, ...][坐标数组, ...])\n解释: 从多个坐标中随机获取一个坐标与对应的序号, 序号从0开始\n        参数二选一, 可以传入数组, 也可以传入数字\n返回: 随机坐标, table, 返回序号与坐标, 序号从0开始, 格式为{id, x, y}\n参数: x, number, 横坐标数值, 与坐标数组参数二选一, 详见例子\n参数: y, number, 纵坐标数值, 与坐标数组参数二选一, 详见例子\n参数: 坐标数组, table, 由坐标组成的数组, 格式为{x,y}, 与坐标数值参数二选一, 详见例子\n例子: //------------数值坐标参数例子------------//\n        //支持任意数量的坐标, 只要按照x,y格式顺序填写即可\n        //不可以与坐标数组参数同时填写!\n        //下面例子是从(100,200),(300,400),(500,600)这3个坐标中随机获取一个坐标\n        Dim xy = zm.RndPos(100,200,300,400,500,600)\n        TracePrint \"序号:\" & xy(0), \", x坐标=\" & xy(1), \", y坐标=\" & xy(2)\n        \n        //------------坐标数组参数例子------------//\n        //支持任意数量的坐标数组, 不可以与数值坐标参数同时填写!\n        //下面例子是从(100,200),(300,400),(500,600)这3个坐标中随机获取一个坐标\n        Dim xxyy = zm.RndPos({100,200},{300,400},{500,600})\n        TracePrint \"序号:\" & xxyy(0), \", x坐标=\" & xxyy(1), \", y坐标=\" & xxyy(2)",
+		"Name" : "随机坐标([x, y, ...][坐标数组, ...])  [随机坐标]",
+		"TranslateTemplate" : "随机获取一个坐标"
+	},
+	"RndArrElement" : 
+	{
+		"Description" : "格式: zm.RndArrElement(原数组[, 起始下标[, 终止下标]])\n解释: 从一维数组的指定下标范围随机取元素\n返回: 数组成员, 任意类型, 返回随机到的数组成员\n参数: 原数组, table, 待随机取值的一维数组\n参数: 起始下标, number, 可选, 表示下标随机范围, 当终止下标省略时, 随机0到起始下标。\n参数: 终止下标, number, 可选, 表示下标随机范围, 当起始下标省略时, 随机0到最大下标。\n例子: TracePrint zm.RndArrElement({\"紫\", \"猫\", \"编\", \"程\", \"学\", \"院\", 345911220}) //随机获取一个元素值",
+		"Name" : "随机数组成员(原数组[, 起始下标[, 终止下标]])  [数组成员]",
+		"TranslateTemplate" : "从数组 $1 中随机下标 $2 到 $3 元素"
+	},
+	"RndUniqueArr" : 
+	{
+		"Description" : "格式: zm.RndUniqueArr([一维数组][最小值, 最大值][, 个数])\n解释: 从一维数组或指定数值范围中随机取指定个数的不重复结果\n返回: 数组, table, 返回随机到的不重复内容\n参数: 一维数组, table, 可选, 一维数组, 待随机的数组, 与最小值最大值参数二选一\n参数: 最小值, number, 可选, 随机最小值, 与数组参数二选一\n参数: 最大值, number, 可选, 随机最大值, 与数组参数二选一\n例子: Dim t = zm.RndUniqueArr({\"紫\", \"猫\", \"编\", \"程\", \"学\", \"院\", 345911220}, 3) //随机获取3个不重复元素\n例子: Dim t = zm.RndUniqueArr(1, 100, 20) //从1到100中随机获取20个不重复数值",
+		"Name" : "随机不重复数组成员([一维数组][最小值, 最大值][, 个数])  [数组]",
+		"TranslateTemplate" : "随机不重复数组成员"
+	},
+	"RndStr" : 
+	{
+		"Description" : "格式: zm.RndStr(个数[, 模式[, 是否不重复]])\n解释: 随机指定范围的字符串内容\n返回: 随机结果, string, 返回随机到的字符串内容\n参数: 个数, number, 随机字符个数\n参数: 模式, number, 可选, 表示随机内容, 可取以下数值, 并且能相加组合, 省略默认为1+2+4\n        1: 随机0到9数字字符\n        2: 随机a到z的小写字母\n        4: 随机A到Z的大写字母\n        8: 随机标点符号!#$%&()*+,-./:;<=>?@[\\]^_`{|}~'\n参数: 是否不重复, boolean, 可选, 是否取不重复随机内容, 省略默认为false\n例子: TracePrint zm.RndStr(5) //随机长度为5的字符串\n例子: TracePrint zm.RndStr(6, 2) //随机长度为6的小写字母\n例子: TracePrint zm.RndStr(10, 1 + 4, true) //随机长度为10的不重复数字+大写字母",
+		"Name" : "随机字符串(个数[, 模式[, 是否不重复]])  [随机结果]",
+		"TranslateTemplate" : "随机获取 $1 个字符"
+	},
+	"RndName" : 
+	{
+		"Description" : "格式: zm.RndName([性别])\n解释: 随机取姓名, 可以指定性别\n返回: 姓名, string, 返回随机到的姓名\n参数: 性别, number, 可选, 0表示女性姓名, 1表示男性姓名, 省略默认为null, 表示全随机\n例子: TracePrint zm.RndName() //随机获取一个姓名",
+		"Name" : "随机姓名([性别])  [姓名]",
+		"TranslateTemplate" : "随机取名"
+	},
+	"EncodeURL" : 
+	{
+		"Description" : "格式: zm.EncodeURL(明文)\n解释: 对网址进行URL编码, 空格转+, 保留-_.~这几个符号, 例如紫猫编码后就是%E7%B4%AB%E7%8C%AB\n返回: 密文, string, 返回URL编码后的内容, 失败返回null\n参数: 明文, string, 待编码的内容\n例子: TracePrint zm.EncodeURL(\"紫猫\") //输出%E7%B4%AB%E7%8C%AB",
+		"Name" : "URL编码(明文)  [密文]",
+		"TranslateTemplate" : "对 $1 进行URL编码"
+	},
+	"DecodeURL" : 
+	{
+		"Description" : "格式: zm.DecodeURL(密文)\n解释: 对网址进行URL解码, +转空格, 保留-_.~这几个符号, 例如%E7%B4%AB%E7%8C%AB解码后就是紫猫\n返回: 明文, string, 返回URL解码后的内容, 失败返回null\n参数: 密文, string, 待解码的内容\n例子: TracePrint zm.EncodeURL(\"%E7%B4%AB%E7%8C%AB\") //输出紫猫",
+		"Name" : "URL解码(密文)  [明文]",
+		"TranslateTemplate" : "对 $1 进行URL解码"
+	},
+	"EncodeMD5File" : 
+	{
+		"Description" : "格式: zm.EncodeMD5File(路径)\n解释: 计算一个文件的MD5值\n返回: MD5, string, 返回指定文件的MD5值, 失败返回null\n参数: 路径, string, 要计算MD5值的文件路径\n例子: TracePrint zm.EncodeMD5File(GetTempDir() & \"Plugin/File.lua\") //输出文件md5值",
+		"Name" : "计算文件MD5值(路径)  [MD5]",
+		"TranslateTemplate" : "计算 $1 的MD5值"
+	},
+	"InitBase64" : 
+	{
+		"Description" : "格式: zm.InitBase64([字符表[, 填充符]])\n解释: 初始化设置Base64的加解密模式, 支持URL安全Base64, 默认为标准Base64, 已集成到zm.Init 初始化插件环境中\n返回: 字符表, string, 返回设定的base64字符表, 失败返回null\n参数: 字符表, string或number, 可选, 省略默认为标准Base64加解密\n        数值1为base64标准加解密\n        数值2为base64url安全加解密\n        数值3为base64noterm标准无填充加解密\n        填写长度64的不重复字符串时表示自定义编码表\n参数: 填充符, string, 可选, 末尾填充字符, 省略默认为标准Base64加解密\n例子: TracePrint zm.InitBase64() //标准Base64编码\n例子: TracePrint zm.InitBase64(2) //Base64URL安全编码",
+		"Name" : "初始化Base64模式([字符表[, 填充符]])  [字符表]",
+		"TranslateTemplate" : "初始化Base64"
+	},
+	"EncodeBase64" : 
+	{
+		"Description" : "格式: zm.EncodeBase64(原文)\n解释: 对一串文本内容进行快速Base64加密, 可通过zm.InitBase64()设置加密模式\n返回: 密文, string, 返回Base64加密后的内容, 失败返回null\n参数: 原文, string, 待加密的原文本内容\n例子: TracePrint zm.EncodeBase64(\"紫猫编程学院\") //对紫猫编程学院进行BASE64加密, 得到57Sr54yr57yW56iL5a2m6Zmi",
+		"Name" : "快速Base64文本加密(原文)  [密文]",
+		"TranslateTemplate" : "对 $1 进行Base64加密"
+	},
+	"EncodeBase64File" : 
+	{
+		"Description" : "格式: zm.EncodeBase64File(原文件路径, 加密保存路径)\n解释: 对一个文件进行快速Base64加密, 可通过zm.InitBase64()设置加密模式\n返回: 密文, string, 返回文件二进制base64的内容, 失败返回null\n参数: 原文件路径, string, 待加密的文件路径, 文件必须存在\n参数: 加密保存路径, string, 加密文件保存的路径\n例子: zm.EncodeBase64File(\"/sdcard/1.txt\", \"/sdcard/2.txt\") //把1.txt加密成2.txt, 注意, 1.txt文件必须存在!",
+		"Name" : "快速Base64文件加密(原文件路径, 加密保存路径)  [密文]",
+		"TranslateTemplate" : "对 $1 文件进行Base64加密保存到 $2 中"
+	},
+	"DecodeBase64" : 
+	{
+		"Description" : "格式: zm.DecodeBase64(密文)\n解释: 对一串文本内容进行快速Base64解密, 可通过zm.InitBase64()设置加密模式\n返回: 明文, string, 返回Base64解密后的内容, 失败返回null\n参数: 密文, string, 待解密的内容\n例子: TracePrint zm.DecodeBase64(\"57Sr54yr57yW56iL5a2m6Zmi\") //对57Sr54yr57yW56iL5a2m6Zmi进行BASE64解密, 得到紫猫编程学院",
+		"Name" : "快速Base64文本解密(密文)  [明文]",
+		"TranslateTemplate" : "对 $1 进行Base64解密"
+	},
+	"DecodeBase64File" : 
+	{
+		"Description" : "格式: zm.DecodeBase64File(加密文件路径, 解密保存路径)\n解释: 对一个文件进行快速Base64解密, 可通过zm.InitBase64()设置加密模式\n返回: 明文, string, 返回文件二进制的内容, 失败返回null\n参数: 加密文件路径, string, Base64文件路径, 文件必须存在\n参数: 解密保存路径, string, 解密文件后保存的路径\n例子: zm.DecodeBase64File(\"/sdcard/1.txt\", \"/sdcard/2.txt\") //把1.txt解密成2.txt, 注意, 1.txt文件必须存在!",
+		"Name" : "快速Base64文件解密(加密文件路径, 解密保存路径)  [明文]",
+		"TranslateTemplate" : "对 $1 文件进行Base64解密保存到 $2 中"
+	},
+	"EncodeHMAC" : 
+	{
+		"Description" : "格式: zm.EncodeHMAC(消息, 密钥[, 算法][, 返回格式])\n解释: 计算消息的HMAC签名结果, 支持md2,md4,md5,sha1,sha224,sha256,ripemd128,ripemd160算法\n返回: 签名结果, string或table, 返回HMAC签名结果, 数据类型由参数返回格式决定\n参数: 消息, string, 待计算的消息内容\n参数: 密钥, string, 用于计算的密钥\n参数: 算法, string, 可选, 省略默认为sha1算法, 可填写md2,md4,md5,sha1,sha224,sha256,ripemd128,ripemd160\n参数: 返回格式, number, 可选, 表示返回值内容, 省略默认为16\n        0为原生二进制数据字符串\n        2为字节数组\n        16为十六进制字符串\n        64为原生内容base64编码\n例子: Dim hmac = zm.EncodeHMAC(\"紫猫学院\", \"_ZM_.vip\") //对紫猫学院以密钥zimao.vip进行HMAC-SHA1签名返回十六进制字符串",
+		"Name" : "HMAC签名(消息, 密钥[, 算法][, 返回格式])  [签名结果]",
+		"TranslateTemplate" : "对消息 $1 以密钥 $2 按算法 $3 进行HMAC签名"
+	},
+	"EncodeAES" : 
+	{
+		"Description" : "格式: zm.EncodeAES(明文, 密钥[, 高级属性])\n解释: 对数据进行非标准AES加密, 支持AES128,AES196和AES256\n返回: 加密结果, string, 返回AES加密结果\n参数: 明文, string, 待加密的内容\n参数: 密钥, string, 用于加密的密码, 最大长度为数据块/8\n参数: 高级属性, table, 可选, 用于设置加解密模式等选项，格式为{“属性名”:”属性值”,…}, 详见下方内容\n        属性名 | 可选值列表 | 默认值 | 作用\n        mode | ecb,cbc,ctr,ofb,cfb,ige,pcbc | ecb | 加解密模式\n        padding | zero,pkcs7,isoiec7816,ansix923 | zero | 填充方式\n        block | 128,192,256 | 128 | 数据块\n        iv | 任意字符串 | 0 | iv偏移量, ecb模式不用填写, 其他模式必填且要有16个字节长度\n        cipherout | 0,2,16,64 | 16 | 密文类型, 0为原二进制字符串, 2为字节数组, 16为十六进制字符串, 64为原二进制字符串Base64编码\n例子: Dim aes = zm.EncodeAES(\"紫猫学院\", \"_ZM_.vip\") //对紫猫学院以密钥zimao.vip进行AES加密",
+		"Name" : "AES加密(明文, 密钥[, 高级属性])  [加密结果]",
+		"TranslateTemplate" : "对 $1 以密钥 $2 进行AES加密"
+	},
+	"DecodeAES" : 
+	{
+		"Description" : "格式: zm.DecodeAES(密文, 密钥[, 高级属性])\n解释: 对数据进行非标准AES解密, 支持AES128,AES196和AES256\n返回: 解密结果, string, 返回AES解密结果\n参数: 密文, string, 待解密的密文内容\n参数: 密钥, string, 用于解密的密码, 最大长度为数据块/8\n参数: 高级属性, table, 可选, 用于设置加解密模式等选项，格式为{“属性名”:”属性值”,…}, 详见下方内容\n        属性名 | 可选值列表 | 默认值 | 作用\n        mode | ecb,cbc,ctr,ofb,cfb,ige,pcbc | ecb | 加解密模式\n        padding | zero,pkcs7,isoiec7816,ansix923 | zero | 填充方式\n        block | 128,192,256 | 128 | 数据块\n        iv | 任意字符串 | 0 | iv偏移量, ecb模式不用填写, 其他模式必填且要有16个字节长度\n        cipherout | 0,2,16,64 | 16 | 密文类型, 0为原二进制字符串, 2为字节数组, 16为十六进制字符串, 64为原二进制字符串Base64编码\n例子: Dim aes = zm.DecodeAES(\"552735436AE4A96E81AE9997914E0DF3\", \"_ZM_.vip\") //解密结果是紫猫学院",
+		"Name" : "AES解密(密文, 密钥[, 高级属性])  [解密结果]",
+		"TranslateTemplate" : "对 $1 以密钥 $2 进行AES解密"
+	},
+	"EncodeDES" : 
+	{
+		"Description" : "格式: zm.EncodeDES(明文, 密钥[, 高级属性])\n解释: 对数据进行非标准DES加密, 支持DES和DES3\n返回: 加密结果, string, 返回DES加密结果, 失败返回null\n参数: 明文, string, 待加密的内容\n参数: 密钥, string, 用于加密的密码, 最大长度为8\n参数: 高级属性, table, 可选, 用于设置加解密模式等选项，格式为{“属性名”:”属性值”,…}, 详见下方内容\n        属性名 | 可选值列表 | 默认值 | 作用\n        mode | ecb,cbc,ctr,ofb,cfb,ige,pcbc | ecb | 加解密模式\n        padding | zero,pkcs7,isoiec7816,ansix923 | zero | 填充方式\n        block | des,des3 | des | 加密算法\n        iv | 任意字符串 | 0 | iv偏移量, ecb模式不用填写, 其他模式必填且要有16个字节长度\n        cipherout | 0,2,16,64 | 16 | 密文类型, 0为原二进制字符串, 2为字节数组, 16为十六进制字符串, 64为原二进制字符串Base64编码\n例子: Dim des = zm.EncodeDES(\"紫猫学院\", \"_ZM_.vip\") //对紫猫学院以密钥zimao.vip进行DES加密",
+		"Name" : "DES加密(明文, 密钥[, 高级属性])  [加密结果]",
+		"TranslateTemplate" : "对 $1 以密钥 $2 进行DES加密"
+	},
+	"DecodeDES" : 
+	{
+		"Description" : "格式: zm.DecodeDES(密文, 密钥[, 高级属性])\n解释: 对数据进行非标准DES解密, 支持DES和DES3\n返回: 解密结果, string, 返回DES解密结果, 失败返回null\n参数: 密文, string, 待解密的内容\n参数: 密钥, string, 用于解密的密码, 最大长度为8\n参数: 高级属性, table, 可选, 用于设置加解密模式等选项，格式为{“属性名”:”属性值”,…}, 详见下方内容\n        属性名 | 可选值列表 | 默认值 | 作用\n        mode | ecb,cbc,ctr,ofb,cfb,ige,pcbc | ecb | 加解密模式\n        padding | zero,pkcs7,isoiec7816,ansix923 | zero | 填充方式\n        block | des,des3 | des | 加密算法\n        iv | 任意字符串 | 0 | iv偏移量, ecb模式不用填写, 其他模式必填且要有16个字节长度\n        cipherout | 0,2,16,64 | 16 | 密文类型, 0为原二进制字符串, 2为字节数组, 16为十六进制字符串, 64为原二进制字符串Base64编码\n例子: Dim des = zm.DecodeDES(\"F6D8E9EBB96451844A2B29DCD192F7C5\", \"_ZM_.vip\") //解密结果是紫猫学院",
+		"Name" : "DES解密(密文, 密钥[, 高级属性])  [解密结果]",
+		"TranslateTemplate" : "对 $1 以密钥 $2 进行DES解密"
+	},
+	"EncodeTEA" : 
+	{
+		"Description" : "格式: zm.EncodeTEA(明文, 密钥[, 高级属性])\n解释: 对数据进行TEA加密, 支持TEA和XTEA\n返回: 加密结果, string, 返回TEA加密结果, 失败返回null\n参数: 明文, string, 待加密的内容\n参数: 密钥, string, 用于加密的密码, 最大长度为16\n参数: 高级属性, table, 可选, 用于设置加解密模式等选项，格式为{“属性名”:”属性值”,…}, 详见下方内容\n        属性名 | 可选值列表 | 默认值 | 作用\n        mode | ecb,cbc,ctr,ofb,cfb,ige,pcbc | ecb | 加解密模式\n        padding | zero,pkcs7,isoiec7816,ansix923 | zero | 填充方式\n        block | tea,xtea | tea | 加密算法\n        iv | 任意字符串 | 0 | iv偏移量, ecb模式不用填写, 其他模式必填且要有16个字节长度\n        cipherout | 0,2,16,64 | 16 | 密文类型, 0为原二进制字符串, 2为字节数组, 16为十六进制字符串, 64为原二进制字符串Base64编码\n例子: Dim tea = zm.EncodeTEA(\"紫猫学院\", \"_ZM_.vip\") //对紫猫学院以密钥zimao.vip进行TEA加密",
+		"Name" : "TEA加密(明文, 密钥[, 高级属性])  [加密结果]",
+		"TranslateTemplate" : "对 $1 以密钥 $2 进行TEA加密"
+	},
+	"DecodeTEA" : 
+	{
+		"Description" : "格式: zm.DecodeTEA(密文, 密钥[, 高级属性])\n解释: 对数据进行TEA解密, 支持TEA和XTEA\n返回: 解密结果, string, 返回TEA解密结果, 失败返回null\n参数: 密文, string, 待解密的内容\n参数: 密钥, string, 用于解密的密码, 最大长度为16\n参数: 高级属性, table, 可选, 用于设置加解密模式等选项，格式为{“属性名”:”属性值”,…}, 详见下方内容\n        属性名 | 可选值列表 | 默认值 | 作用\n        mode | ecb,cbc,ctr,ofb,cfb,ige,pcbc | ecb | 加解密模式\n        padding | zero,pkcs7,isoiec7816,ansix923 | zero | 填充方式\n        block | tea,xtea | tea | 加密算法\n        iv | 任意字符串 | 0 | iv偏移量, ecb模式不用填写, 其他模式必填且要有16个字节长度\n        cipherout | 0,2,16,64 | 16 | 密文类型, 0为原二进制字符串, 2为字节数组, 16为十六进制字符串, 64为原二进制字符串Base64编码\n例子: Dim tea = zm.DecodeTEA(\"F89AF6A6A87D976E9D2D670C6E100AA9\", \"_ZM_.vip\") //解密结果是紫猫学院",
+		"Name" : "TEA解密(密文, 密钥[, 高级属性])  [解密结果]",
+		"TranslateTemplate" : "对 $1 以密钥 $2 进行TEA解密"
+	},
+	"EncodeSHA" : 
+	{
+		"Description" : "格式: zm.EncodeSHA(数据[, 算法])\n解释: 对数据进行SHA签名计算, 支持SHA1,SHA224和SHA256\n返回: SHA结果, string, 返回SHA计算结果\n参数: 数据, string, 待计算的内容\n参数: 算法, string, 可选, 省略默认为sha1算法, 可填写sha1, sha224, sha256\n例子: TracePrint \"sha1:\", zm.EncodeSHA(\"紫猫\")\n例子: TracePrint \"sha224:\", zm.EncodeSHA(\"紫猫\", \"sha224\")\n例子: TracePrint \"sha256:\", zm.EncodeSHA(\"紫猫\", \"sha256\")",
+		"Name" : "SHA计算(数据[, 算法])  [SHA结果]",
+		"TranslateTemplate" : "计算 $1 的SHA结果"
+	},
+	"EncodeMD5" : 
+	{
+		"Description" : "格式: zm.EncodeMD5(数据[, 算法])\n解释: 对数据进行MD5计算, 支持MD2,MD4和MD5\n返回: MD5结果, string, 返回MD5计算结果, 也支持MD4和MD2\n参数: 数据, string, 待计算的内容\n参数: 算法, string, 可选, 省略默认为md5, 可填写md2, md4, md5\n例子: TracePrint \"md5:\", zm.EncodeMD5(\"紫猫\")\n例子: TracePrint \"md4:\", zm.EncodeMD5(\"紫猫\", \"md4\")\n例子: TracePrint \"md2:\", zm.EncodeMD5(\"紫猫\", \"md2\")",
+		"Name" : "MD5计算(数据[, 算法])  [MD5结果]",
+		"TranslateTemplate" : "计算 $1 的MD5结果"
+	},
+	"EncodeRIPEMD" : 
+	{
+		"Description" : "格式: zm.EncodeRIPEMD(数据[, 算法])\n解释: 对数据进行RIPEMD计算, 支持RIPEMD128和RIPEMD160\n返回: RIPEMD结果, string, 返回RIPEMD128计算结果, 也支持RIPEMD160\n参数: 数据, string, 待计算的内容\n参数: 算法, string, 可选, 省略默认为ripemd128, 可填写ripemd128, ripemd160\n例子: TracePrint \"ripemd128:\", zm.EncodeRIPEMD(\"紫猫\")\n例子: TracePrint \"ripemd160:\", zm.EncodeRIPEMD(\"紫猫\", \"ripemd160\")",
+		"Name" : "RIPEMD计算(数据[, 算法])  [RIPEMD结果]",
+		"TranslateTemplate" : "计算 $1 的RIPEMD结果"
+	},
+	"FileTemp" : 
+	{
+		"Description" : "格式: zm.FileTemp([文件名])\n解释: 随机生成一个不重复的临时文件路径名, 当你执行写文件等保存文件操作后, 才会真正生成文件\n返回: 文件路径, string, 返回一个临时文件路径, 失败返回null\n参数: 文件名, string, 可选, 指定文件名, 省略默认为随机文件名\n例子: TracePrint \"临时文件路径:\", zm.FileTemp()",
+		"Name" : "生成临时文件([文件名])  [文件路径]",
+		"TranslateTemplate" : "生成文件名为 $1 的临时文件路径"
+	},
+	"FileInit" : 
+	{
+		"Description" : "格式: zm.FileInit(参数表)\n解释: 初始化设置File系列命令的默认参数内容, 对绝大多数File系列命令有效\n返回: 属性表, table, 返回File默认参数表, 失败返回null\n参数: 参数表, table, 设置File系列命令的默认编码与是否自动判断编码, 默认为{\"encode\":\"utf-8\"}\n        属性名 | 数据类型 | 可选值 | 默认值 | 解释 \n        encode | 字符串 | \"utf-8\", \"电脑\", \"auto\" | \"utf-8\" | 设置默认文件编码, 可填写任意正常有效编码或特殊编码\"电脑\"和\"auto\", \"电脑\"表示从电脑上传过来的文件, \"auto\"表示自动判断编码, 但会降低读写速度\n例子: zm.FileInit {\"autocode\":true} //设置默认自动识别文件编码",
+		"Name" : "设置File默认参数(参数表)  [属性表]",
+		"TranslateTemplate" : "设置File默认参数为 $1"
+	},
+	"FileGetEncode" : 
+	{
+		"Description" : "格式: zm.FileGetEncode(文件路径)\n解释: 获取一个文件的编码, 目前仅支持UTF-8和中文编码(兼容gb2312等)\n返回: 文件编码, string, 成功返回utf-8或gb18030, 失败返回null\n参数: 文件路径, string, 要操作的文件路径\n例子: Dim code = zm.FileGetEncode(\"/sdcard/紫猫.txt\") //得到文件编码, 可以给zm.FileInt()使用, 也可以写读写命令使用",
+		"Name" : "获取文件编码(文件路径)  [文件编码]",
+		"TranslateTemplate" : "获取 $1 文件编码"
+	},
+	"FileRead" : 
+	{
+		"Description" : "格式: zm.FileRead(文件路径[, 文件编码])\n解释: 读取文件所有内容, 支持设置文件编码\n返回: 文本内容, string, 返回该文件的所有文本内容, 失败返回null\n参数: 文件路径, string, 要操作的文件路径\n参数: 文件编码, string, 可选, 填写\"auto\"可实现自动判断编码, 解决乱码问题, 省略默认为初始化编码\n例子: TracePrint zm.FileRead(\"/sdcard/电脑文件.txt\", \"电脑\") //可以直接读取电脑传过来的文件",
+		"Name" : "读取文本文件(文件路径[, 文件编码])  [文本内容]",
+		"TranslateTemplate" : "以 $2 编码读取 $1 文件"
+	},
+	"FileReadLine" : 
+	{
+		"Description" : "格式: zm.FileReadLine(文件路径, 指定行[, 文件编码])\n解释: 读取指定行文本内容, 支持倒数行数, 超出行数返回null, 支持设置文件编码\n返回: 文本内容, string, 返回指定行的文本内容, 失败返回null\n参数: 文件路径, string, 要操作的文件路径\n参数: 指定行, number, 表示读取第几行内容, 负数为倒数第几行内容\n参数: 文件编码, string, 可选, 填写\"auto\"可实现自动判断编码, 解决乱码问题, 省略默认为初始化编码\n例子: TracePrint zm.FileReadLine(\"/sdcard/紫猫学院.txt\", 2) //读取第2行内容\n例子: TracePrint zm.FileReadLine(\"/sdcard/紫猫学院.txt\", -5) //读取倒数第5行内容",
+		"Name" : "读取指定行文本(文件路径, 指定行[, 文件编码])  [文本内容]",
+		"TranslateTemplate" : "以 $3 编码读取 $1 文件的第 $2 行内容"
+	},
+	"FileReadLines" : 
+	{
+		"Description" : "格式: zm.FileReadLines(文件路径[, 文件编码])\n解释: 读取文件所有内容保存到一维数组中, 支持设置文件编码\n返回: 文本数组, table, 返回文件每一行内容保存到一维数组中\n参数: 文件路径, string, 要操作的文件路径\n参数: 文件编码, string, 可选, 填写\"auto\"可实现自动判断编码, 解决乱码问题, 省略默认为初始化编码\n例子: Dim txtArr = zm.FileReadLine(\"/sdcard/紫猫学院.txt\") //读取所有内容保存到数组txtArr中\n例子: Dim txtArr = zm.FileReadLine(\"/sdcard/紫猫学院.txt\", \"电脑\") //以电脑文件编码读取所有内容保存到数组txtArr中",
+		"Name" : "读取文本数组(文件路径[, 文件编码])  [文本数组]",
+		"TranslateTemplate" : "以 $2 编码读取 $1 文件内容保存到数组"
+	},
+	"FileReadForm" : 
+	{
+		"Description" : "格式: zm.FileReadForm(文件路径, 分隔符[, 文件编码])\n解释: 按指定分隔符读取文件所有内容保存到二维数组中, 支持设置文件编码\n返回: 文本数组, table, 返回每一行被分隔后的二维数组文本\n参数: 文件路径, string, 要操作的文件路径\n参数: 分隔符, string或number, 字符串表示每行文本中的分隔符, 数值型表示按长度分隔\n参数: 文件编码, string, 可选, 填写\"auto\"可实现自动判断编码, 解决乱码问题, 省略默认为初始化编码\n例子: Dim path = \"/sdcard/紫猫学院.txt\"\n        zm.FileWrite path, {\"帐号1====密码1====大区1\", \"帐号2====密码2====大区2\", \"帐号3====密码3====大区3\"}\n        Dim txts = zm.FileReadForm(path, \"====\")\n        TracePrint zm.VarInfo(txts)",
+		"Name" : "读取文本表格(文件路径, 分隔符[, 文件编码])  [文本数组]",
+		"TranslateTemplate" : "以 $3 编码读取 $1 文件内容按 $2 分隔保存到二维数组"
+	},
+	"FileReadBinary" : 
+	{
+		"Description" : "格式: zm.FileReadBinary(文件路径[, 读取长度][, 返回十六进制数组])\n解释: 以二进制读取文件内容\n返回: 二进制, string, 返回读取到的二进制内容\n参数: 文件路径, string, 要操作的文件路径\n参数: 读取长度, number, 可选, 要读取的字节长度, 省略默认为全部读取\n参数: 返回十六进制数组, table, 可选, 数组变量, 用于返回十六进制数组结果\n例子: Dim bin = zm.FileReadBinary(\"/sdcard/截图1.png\") //读取二进制数据, 一般无法直接输出, 可以用Len查看长度",
+		"Name" : "读取二进制文件(文件路径[, 读取长度][, 返回十六进制数组])  [二进制]",
+		"TranslateTemplate" : "读取 $1 文件二进制内容"
+	},
+	"FileReadBinaryBase64" : 
+	{
+		"Description" : "格式: zm.FileReadBinaryBase64(文件路径)\n解释: 读取文件二进制内容, 并转为Base64编码, 受zm.InitBase64()影响, 失败返回null\n返回: Base64内容, string, 返回读取的Base64结果, 失败返回null\n参数: 文件路径, string, 要操作的文件路径\n例子: Dim b64 = zm.FileReadBinaryBase64(\"/sdcard/截图1.png\") //内容可能比较长, 无法显示",
+		"Name" : "以Base64读取二进制文件(文件路径)  [Base64内容]",
+		"TranslateTemplate" : "读取 $1 文件二进制内容"
+	},
+	"FileWrite" : 
+	{
+		"Description" : "格式: zm.FileWrite(文件路径, 内容[, ...])\n解释: 覆盖写入文本内容到文件中, 支持zm.FileInit()默认参数\n返回: 文本数组, table, 返回写入的文本数组, 失败返回null\n参数: 文件路径, string, 要操作的文件路径\n参数: 内容, string或table, 支持一个数组参数或者多个字符串参数\n        如果内容是一个数组参数, 则表示换行写入每个元素\n        如果内容是多个字符串参数, 则表示不换行依次写入每个字符串\n例子: zm.FileWrite(\"/sdcard/紫猫学院.txt\", \"欢迎加入紫猫学院,\", \"紫猫老师QQ: 345911220 \", \"免费交流群: 7333555\") //不换行覆盖写入\n例子: zm.FileWrite(\"/sdcard/紫猫学院.txt\", {\"欢迎加入紫猫学院,\", \"紫猫老师QQ: 345911220 \", \"免费交流群: 7333555\"}) //换行覆盖写入",
+		"Name" : "覆盖写入文本(文件路径, 内容[, ...])  [文本数组]",
+		"TranslateTemplate" : "覆盖写入 $2 到文件 $1 中"
+	},
+	"FileWriteLine" : 
+	{
+		"Description" : "格式: zm.FileWriteLine(文件路径, 指定行, 内容[, ...])\n解释: 追加写入到指定行, 支持zm.FileInit()默认参数\n返回: 文本数组, table, 返回写入后的文本数组, 失败返回null\n参数: 文件路径, string, 要操作的文件路径\n参数: 指定行, number, 表示插入第几行内容, 负数为倒数第几行, 0为末尾新增一行, 不能超出最大行\n参数: 内容, string或table, 支持一个数组参数或者多个字符串参数\n        如果内容是一个数组参数, 则表示换行写入每个元素\n        如果内容是多个字符串参数, 则表示不换行依次写入每个字符串\n例子: zm.FileWrite(\"/sdcard/紫猫学院.txt\", 2, \"好好学习, 天天向上\") //在文件第2行插入文本",
+		"Name" : "插入指定行文本(文件路径, 指定行, 内容[, ...])  [文本数组]",
+		"TranslateTemplate" : "追加 $3 到文件 $1 的第 $2 行中"
+	},
+	"FileWriteBinary" : 
+	{
+		"Description" : "格式: zm.FileWriteBinary(文件路径, 二进制文本)\n解释: 覆盖写入二进制到文件中\n返回: 是否成功, boolean, 成功返回true, 失败或出错返回null\n参数: 文件路径, string, 要操作的文件路径\n参数: 二进制文本, string, 待写入的二进制内容\n例子: Dim bin = zm.FileReadBinary(\"/sdcard/截图1.png\")\n        zm.FileWriteBinary \"/sdcard/截图2.png\", bin",
+		"Name" : "覆盖写入二进制(文件路径, 二进制文本)  [是否成功]",
+		"TranslateTemplate" : "覆盖写入二进制 $2 到文件 $1 中"
+	},
+	"FileWriteBinaryBase64" : 
+	{
+		"Description" : "格式: zm.FileWriteBinaryBase64(文件路径, Base64文本)\n解释: 将内容进行Base64解密, 并以二进制写入文件中, 受zm.InitBase64()影响\n返回: 是否成功, boolean, 成功返回true, 失败或出错返回null\n参数: 文件路径, string, 要操作的文件路径\n参数: Base64文本, string, 待解密的Base64文本内容\n例子: Dim b64 = zm.FileReadBinaryBase64(\"/sdcard/截图1.png\")\n        zm.FileWriteBinaryBase64 \"/sdcard/截图2.png\", b64",
+		"Name" : "覆盖写入Base64解密二进制(文件路径, Base64文本)  [是否成功]",
+		"TranslateTemplate" : "覆盖写入Base64 $2 到文件 $1 中"
+	},
+	"FileWriteAppend" : 
+	{
+		"Description" : "格式: zm.FileWriteAppend(文件路径, 内容[, ...])\n解释: 追加写入文本内容到文件中, 写完自动换行, 支持zm.FileInit()默认参数\n返回: 是否成功, boolean, 成功返回true, 失败或出错返回null\n参数: 文件路径, string, 要操作的文件路径\n参数: 内容, string或table, 支持一个数组参数或者多个字符串参数\n        如果内容是一个数组参数, 则表示换行写入每个元素\n        如果内容是多个字符串参数, 则表示不换行依次写入每个字符串\n例子: zm.FileWriteAppend(\"/sdcard/紫猫学院.txt\", \"好好学习, 天天向上\") //在末尾追加内容",
+		"Name" : "追加写入文本(文件路径, 内容[, ...])  [是否成功]",
+		"TranslateTemplate" : "追加 $2 到文件 $1 行中"
+	},
+	"FileDeleteLine" : 
+	{
+		"Description" : "格式: zm.FileDeleteLine(文件路径, 指定行)\n解释: 删除指定行文本内容, 支持zm.FileInit()默认参数\n返回: 文本数组, table, 成功返回删除后的文本数组, 失败或出错返回null\n参数: 文件路径, string, 要操作的文件路径\n参数: 指定行, number, 表示删除第几行内容, 负数为倒数第几行内容\n例子: zm.FileDeleteLine(\"/sdcard/紫猫学院.txt\", 1) //删除第一行内容",
+		"Name" : "删除指定行(文件路径, 指定行)  [文本数组]",
+		"TranslateTemplate" : "删除文件 $1 的第 $2 行内容"
+	},
+	"FileReplaceLine" : 
+	{
+		"Description" : "格式: zm.FileReplaceLine(文件路径, 指定行, 内容[, ...])\n解释: 替换指定行文本, 支持zm.FileInit()默认参数\n返回: 文本数组, table, 成功返回替换后的文本数组, 失败或出错返回null\n参数: 文件路径, string, 要操作的文件路径\n参数: 指定行, number, 表示替换第几行内容, 负数为倒数第几行内容\n参数: 内容, string或table, 替换后的内容, 支持一个数组参数或者多个字符串参数\n        如果内容是一个数组参数, 则表示换行写入每个元素\n        如果内容是多个字符串参数, 则表示不换行依次写入每个字符串\n例子: zm.FileReplaceLine(\"/sdcard/紫猫学院.txt\", 2, \"免费交流群7333555\") //把第2行替换成指定内容",
+		"Name" : "替换指定行文本(文件路径, 指定行, 内容[, ...])  [文本数组]",
+		"TranslateTemplate" : "替换文件 $1 的第 $2 行内容为 $3"
+	},
+	"FileLinesNumber" : 
+	{
+		"Description" : "格式: zm.FileLinesNumber(文件路径)\n解释: 获取文本总行数\n返回: 总行数, number, 成功返回文件总行数, 失败返回null\n参数: 文件路径, string, 要操作的文件路径\n例子: Dim line = zm.FileLinesNumber(\"/sdcard/紫猫学院.txt\") //获取文件总行数",
+		"Name" : "获取文件总行数(文件路径)  [总行数]",
+		"TranslateTemplate" : "获取文件 $1 的总行数"
+	},
+	"FileBytes" : 
+	{
+		"Description" : "格式: zm.FileBytes(文件路径)\n解释: 获取以字节为单位的文件大小\n返回: 文件大小, number, 成功返回文件字节大小, 失败返回null\n参数: 文件路径, string, 要操作的文件路径\n例子: Dim b = zm.FileBytes(\"/sdcard/紫猫学院.txt\") //获取文件字节大小",
+		"Name" : "获取文件字节大小(文件路径)  [文件大小]",
+		"TranslateTemplate" : "获取文件 $1 的总字节大小"
+	},
+	"GetGateway" : 
+	{
+		"Description" : "格式: zm.GetGateway(获取默认网关地址)\n解释: 获取默认网关地址\n返回: 网关地址, string, 成功返回默认网关地址, 失败返回null\n参数: 无\n例子: TracePrint zm.GetGateway() //显示当前网关地址",
+		"Name" : "获取默认网关地址(获取默认网关地址)  [网关地址]",
+		"TranslateTemplate" : "获取默认网关地址"
+	},
+	"TracePrint" : 
+	{
+		"Description" : "格式: zm.TracePrint([行号, ]内容[, ...])\n解释: 输出变量的长度, 数据类型与值, 可以直接获取表的值\n返回: 输出内容, string, 成功返回变量的长度, 数据类型与值, 可以直接获取表的值, 失败返回null\n参数: 行号, 字符串, 可选, 调试显示第几行代码, 格式为\"_行号\", 例如\"_10\"表示第10行代码\n参数: 内容, 任意类型, 要输出的内容, 支持多个参数\n例子: zm.TracePrint \"_5\", {\"紫猫\", \"学院\"} //在第5行输出数组内容与长度",
+		"Name" : "超级调试输出([行号, ]内容[, ...])  [输出内容]",
+		"TranslateTemplate" : "超级调试输出 $1"
+	},
+	"SetShowLog" : 
+	{
+		"Description" : "格式: zm.SetShowLog(显示隐藏)\n解释: 设置内置日志输出默认值\n返回: 设置结果, string, 成功返回设置结果, 失败返回null\n参数: 显示隐藏, boolean或string, 可取以下[true, false, “显示”, “隐藏”, “show”, “hide”]几个值\n例子: zm.SetShowLog \"显示\" //设置超级命令系列日志为显示",
+		"Name" : "设置日志输出显示(显示隐藏)  [设置结果]",
+		"TranslateTemplate" : "设置日志为 $1"
+	},
+	"OpenURL" : 
+	{
+		"Description" : "格式: zm.OpenURL(网址)\n解释: 使用默认浏览器打开网页, 支持包含&的网址, 支持IOS\n返回: 无\n参数: 网址, string, 要打开的网址\n例子: zm.OpenURL \"www.baidu.com\"",
+		"Name" : "打开网页(网址)",
+		"TranslateTemplate" : "打开 $1 网址"
+	},
+	"GetIPNet" : 
+	{
+		"Description" : "格式: zm.GetIPNet([返回格式])\n解释: 获取外网IP地址, 根据参数决定返回内容\n返回: IP地址, string或table, 返回IP地址或详细信息表, 由参数返回格式决定返回内容, 失败返回null\n参数: 返回格式, number, 可选, 填写0表示只返回ip地址字符串, 填写1表示返回详细信息表, 包括省份等内容, 省略默认为0\n例子: Dim ip = zm.GetIPNet() //获取外网IP地址",
+		"Name" : "获取外网IP([返回格式])  [IP地址]",
+		"TranslateTemplate" : "获取外网IP地址"
+	},
+	"HttpDownload" : 
+	{
+		"Description" : "格式: zm.HttpDownload([对象][网址[, 保存路径[, 提交cookie[, 请求头信息[, 自定义]]]]])\n解释: 以HTTP协议的Get方法下载文件, 支持提交cookie与头信息, 需要curl支持\n返回: 无\n参数: 对象, table, 可选, 若填写对象将忽略其他参数\n        格式为{“url”:”网址”, “path”:”保存路径”, “cookie”:”cookie字符串或文件”, “header”:{“头信息1”, “头信息2”}, “customize”:”自定义curl参数”}\n参数: 网址, string, 可选, 与对象参数二选一填写, 文件的下载地址\n参数: 保存路径, string, 可选, 文件的保存路径, 省略为当前路径下的默认文件名\n参数: 提交cookie, string, 可选, 要提交的cookie字符串或者cookie文件路径, 省略为””\n参数: 请求头信息, string或table, 可选, 要提交的头信息, 多个头信息可用一维数组传入, 省略为””\n参数: 自定义, string, 可选, curl的高级参数, 一般不需要填写, 省略默认为””\n例子: zm.HttpDownload \"http://m.anjian.com/download/MobileAnjian3.2.9.apk\", \"/sdcard/anjian.apk\" //下载按键精灵手机版APK文件到SD卡目录下",
+		"Name" : "下载文件([对象][网址[, 保存路径[, 提交cookie[, 请求头信息[, 自定义]]]]])",
+		"TranslateTemplate" : "从 $1 文件中下载文件保存到 $2"
+	},
+	"HttpGet" : 
+	{
+		"Description" : "格式: zm.HttpGet([对象][网址[, 网页编码[, 保存cookie[, 提交cookie[, 请求头信息[, 自定义]]]]]])\n解释: 以Http协议的Get方法获取网页源码, 支持提交cookie与头信息, 可保存当前cookie文件, 需要curl支持\n返回: 网页源码, string, 返回网页的源码内容, 失败返回null\n参数: 对象, table, 可选, 若填写对象将忽略其他参数\n        格式为{“url”:”网址”,”code”:”网页编码”, “setcookie”:”保存cookie文件路径”, “cookie”:”发送cookie字符串或文件”, “header”:{“头信息1”, “头信息2”}, “customize”:”自定义curl参数”}\n参数: 网址, string, 可选, 与对象参数二选一填写, 要获取网页源码的网址\n参数: 网页编码, string, 可选, 省略默认为”UTF-8”, 可通过右击查看网页源码中的charset获知正确编码\n参数: 保存cookie, string, 可选, 省略默认为””, 表示保存cookie的路径, 可用 zm.FileTemp() 生成路径保存\n参数: 提交cookie, string, 可选, 要提交的cookie字符串或者cookie文件路径, 省略为””\n参数: 请求头信息, string或table, 可选, 要提交的头信息, 多个头信息可用一维数组传入, 省略为””\n参数: 自定义, string, 可选, curl的高级参数, 一般不需要填写, 省略默认为””\n例子: TracePrint zm.HttpGet(\"www.baidu.com\") //显示百度源码",
+		"Name" : "获取网页源码([对象][网址[, 网页编码[, 保存cookie[, 提交cookie[, 请求头信息[, 自定义]]]]]])  [网页源码]",
+		"TranslateTemplate" : "获取 $1 的网页源码"
+	},
+	"HttpPost" : 
+	{
+		"Description" : "格式: zm.HttpPost([对象][网址[, 提交数据[, 网页编码[, 保存cookie[, 提交cookie[, 请求头信息[, 自定义]]]]]]])\n解释: 以Http协议的Post方法提交数据获取网页源码, 支持提交cookie与头信息, 可用返回参数保存cookie, 需要curl支持\n返回: 网页源码, string, 返回网页的源码内容, 失败返回null\n参数: 对象, table, 可选, 若填写对象将忽略其他参数\n        格式为{“url”:”网址”,”code”:”网页编码”, “setcookie”:”保存cookie文件路径”, “cookie”:”发送cookie字符串或文件”, “header”:{“头信息1”, “头信息2”}, “customize”:”自定义curl参数”}\n参数: 网址, string, 可选, 与对象参数二选一填写, 要获取网页源码的网址\n参数: 提交数据, string, 可选, 省略默认为””, 包含中文或空格之类时, 建议先使用 zm.EncodeURL() 进行编码转换后传入\n参数: 网页编码, string, 可选, 省略默认为”UTF-8”, 可通过右击查看网页源码中的charset获知正确编码\n参数: 保存cookie, string, 可选, 省略默认为””, 表示保存cookie的路径, 可用 zm.FileTemp() 生成路径保存\n参数: 提交cookie, string, 可选, 要提交的cookie字符串或者cookie文件路径, 省略为””\n参数: 请求头信息, string或table, 可选, 要提交的头信息, 多个头信息可用一维数组传入, 省略为””\n参数: 自定义, string, 可选, curl的高级参数, 一般不需要填写, 省略默认为””\n例子: TracePrint zm.HttpPost(\"www.baidu.com\") //显示百度源码",
+		"Name" : "Post提交([对象][网址[, 提交数据[, 网页编码[, 保存cookie[, 提交cookie[, 请求头信息[, 自定义]]]]]]])  [网页源码]",
+		"TranslateTemplate" : "向 $1 网页提交数据 $2"
+	},
+	"NetDataInit" : 
+	{
+		"Description" : "格式: zm.NetDataInit([网址][, 数据表名][, 是否清空])\n解释: 初始化共享网络数据, 创建指定数据表, 参数顺序可以打乱, 需要网站程序配合, 详见命令帮助例子\n返回: 无\n参数: 网址, string, 可选, 网站程序sql.php的网址\n参数: 数据表名, string, 可选, 用于存放变量数据的表\n参数: 网页编码, string, 可选, 省略默认为”UTF-8”, 可通过右击查看网页源码中的charset获知正确编码\n参数: 是否清空, boolean, 可选, 清空指定数据表下所有变量数据, 不会删除数据表, 省略默认为false, 表示不清空\n例子: zm.NetDataInit \"http://192.168.1.100/sql.php\", \"测试脚本\"",
+		"Name" : "初始化网络数据([网址][, 数据表名][, 是否清空])",
+		"TranslateTemplate" : "初始化 $1 的 $2 网络数据共享"
+	},
+	"NetDataSet" : 
+	{
+		"Description" : "格式: zm.NetDataSet(键名, 键值[, 数据表名])\n解释: 往数据表中添加或修改共享网络数据, 需要网站程序配合, 详见命令帮助例子\n返回: 无\n参数: 键名, string, 类似于变量名, 区分大小写\n参数: 键值, 任意类型, 存放的数据, 类似于变量值\n参数: 数据表名, string, 可选, 往指定数据表中设置共享数据, 数据表必须存在, 省略默认为初始化时的数据表名\n例子: //代码过长, 详见命令帮助例子",
+		"Name" : "设置网络数据(键名, 键值[, 数据表名])",
+		"TranslateTemplate" : "在 $3 中设置 $1 的值为 $2"
+	},
+	"NetDataGet" : 
+	{
+		"Description" : "格式: zm.NetDataGet(键名[, 数据表名][, 是否删除])\n解释: 从数据表中获取共享网络数据, 可选参数顺序可以打乱, 需要网站程序配合, 详见命令帮助例子\n返回: 键值, 任意类型, 返回存入的数据, 该数据类型与写入时相同\n参数: 键名, string, 类似于变量名, 区分大小写\n参数: 数据表名, string, 可选, 从指定数据表中获取共享数据, 数据表必须存在, 省略默认为初始化时的数据表名\n参数: 是否删除, boolean, 可选, 表示获取后是否直接删除该键名, 省略默认为false\n例子: //代码过长, 详见命令帮助例子",
+		"Name" : "获取网络数据(键名[, 数据表名][, 是否删除])  [键值]",
+		"TranslateTemplate" : "获取 $2 中的键值 $1"
+	},
+	"NetDataGetRows" : 
+	{
+		"Description" : "格式: zm.NetDataGetRows(行数[, 起始行][, 数据表名][, 是否删除])\n解释: 从数据表中获取指定行数的共享网络数据, 可选参数顺序可以打乱, 需要网站程序配合, 详见命令帮助例子\n返回: 二维表, table, 返回二维表, 格式{{\"id\":id,\"key\":key,\"value\":value}, ...}, 失败返回null\n参数: 行数, number, 从指定数据表中获取多少行数据\n参数: 起始行, number, 可选, 表示从第几行开始获取, 省略默认为1\n参数: 数据表名, string, 可选, 从指定数据表中获取共享数据, 数据表必须存在, 省略默认为初始化时的数据表名\n参数: 是否删除, boolean, 可选, 表示获取后是否直接删除这些数据, 省略默认为false\n例子: //代码过长, 详见命令帮助例子",
+		"Name" : "获取多行网络数据(行数[, 起始行][, 数据表名][, 是否删除])  [二维表]",
+		"TranslateTemplate" : "获取 $2 到 $1 行数据"
+	},
+	"NetDataDel" : 
+	{
+		"Description" : "格式: zm.NetDataDel(键名[, 数据表名])\n解释: 从数据表中删除指定共享网络数据, 仅删除一个变量数据, 不会清空所有数据, 需要网站程序配合, 详见命令帮助例子\n返回: 无\n参数: 键名, string, 类似于变量名, 区分大小写\n参数: 数据表名, string, 可选, 从指定数据表中获取共享数据, 数据表必须存在, 省略默认为初始化时的数据表名\n例子: //代码过长, 详见命令帮助例子",
+		"Name" : "删除网络数据(键名[, 数据表名])",
+		"TranslateTemplate" : "删除 $2 中的 $1 数据"
+	},
+	"NetDataCount" : 
+	{
+		"Description" : "格式: zm.NetDataCount([数据表名])\n解释: 数据表中获取数据总数量, 需要网站程序配合, 详见命令帮助例子\n返回: 数据总数, number, 返回数据总行数, 失败返回null\n参数: 数据表名, string, 可选, 从指定数据表中获取总数量, 数据表必须存在, 省略默认为初始化时的数据表名\n例子: //代码过长, 详见命令帮助例子",
+		"Name" : "网络数据行数([数据表名])  [数据总数]",
+		"TranslateTemplate" : "获取 $1 网络数据总行数"
+	},
+	"NetDataQuery" : 
+	{
+		"Description" : "格式: zm.NetDataQuery(SQL语句)\n解释: 执行SQL语句, 需要一定SQL语法知识, 需要网站程序配合, 详见命令帮助例子\n返回: 执行结果, string, 返回执行SQL后的返回结果, 失败返回null\n参数: SQL语句, string, 要执行的SQL语句\n例子: //代码过长, 详见命令帮助例子",
+		"Name" : "执行SQL语句(SQL语句)  [执行结果]",
+		"TranslateTemplate" : "执行SQL语句 $1"
+	},
+	"TCPConnect" : 
+	{
+		"Description" : "格式: zm.TCPConnect(目标IP, 目标端口[, 超时时间])\n解释: 连接TCP服务端\n返回: 连接结果, number, 成功返回数值1, 失败返回null\n参数: 目标IP, string, 要连接的TCP服务端IP地址\n参数: 目标端口, number, 要连接的TCP服务端端口\n参数: 超时时间, number, 可选, 单位秒, 默认为10秒\n例子: //连接192.168.1.100:12345的TCP服务端\n        Dim isConn = zm.TCPConnect(\"192.168.1.100\", 12345)\n        If isConn Then\n            //发送数据到服务端\n            TracePrint zm.TCPSend(\"QQ345911220\", 15)\n            //接收数据\n            TracePrint zm.TCPReceive(60)\n            //关闭TCP连接\n            TracePrint zm.TCPClose()\n        Else \n            TracePrint \"TCP连接失败\"\n        End If",
+		"Name" : "连接TCP服务端(目标IP, 目标端口[, 超时时间])  [连接结果]",
+		"TranslateTemplate" : "限时 $3 秒内连接 $1:$2 的TCP服务器"
+	},
+	"TCPSend" : 
+	{
+		"Description" : "格式: zm.TCPSend(数据[, 超时时间])\n解释: 发送TCP数据\n返回: 发送结果, number, 成功返回大于0的数据长度, 失败返回null\n参数: 数据, string, 要发送的数据内容, 注意, 末尾会默认加上\\n字符\n参数: 超时时间, number, 可选, 单位秒, 默认为10秒\n例子: //连接192.168.1.100:12345的TCP服务端\n        Dim isConn = zm.TCPConnect(\"192.168.1.100\", 12345)\n        If isConn Then\n            //发送数据到服务端\n            TracePrint zm.TCPSend(\"QQ345911220\", 15)\n            //接收数据\n            TracePrint zm.TCPReceive(60)\n            //关闭TCP连接\n            TracePrint zm.TCPClose()\n        Else \n            TracePrint \"TCP连接失败\"\n        End If",
+		"Name" : "发送TCP数据(数据[, 超时时间])  [发送结果]",
+		"TranslateTemplate" : "在 $2 秒内发送TCP数据 $1"
+	},
+	"TCPReceive" : 
+	{
+		"Description" : "格式: zm.TCPReceive([超时时间[, 接收模式]])\n解释: 接收TCP数据，此命令为阻塞命令！\n返回: 接收数据, string, 成功返回字符串数据内容, 失败返回null\n参数: 超时时间, number, 可选, 单位秒, 默认为10秒\n参数: 接收模式, string, 可选, 支持*a和*l两种模式, 省略默认为*l\n例子: //连接192.168.1.100:12345的TCP服务端\n        Dim isConn = zm.TCPConnect(\"192.168.1.100\", 12345)\n        If isConn Then\n            //发送数据到服务端\n            TracePrint zm.TCPSend(\"QQ345911220\", 15)\n            //接收数据\n            TracePrint zm.TCPReceive(60)\n            //关闭TCP连接\n            TracePrint zm.TCPClose()\n        Else \n            TracePrint \"TCP连接失败\"\n        End If",
+		"Name" : "接收TCP数据([超时时间[, 接收模式]])  [接收数据]",
+		"TranslateTemplate" : "在 $1 秒内接收TCP数据"
+	},
+	"TCPClose" : 
+	{
+		"Description" : "格式: zm.TCPClose()\n解释: 关闭TCP连接\n返回: 关闭结果, number, 返回1表示关闭成功, 返回2表示当前无连接, 失败返回null\n参数: 无\n例子: //连接192.168.1.100:12345的TCP服务端\n        Dim isConn = zm.TCPConnect(\"192.168.1.100\", 12345)\n        If isConn Then\n            //发送数据到服务端\n            TracePrint zm.TCPSend(\"QQ345911220\", 15)\n            //接收数据\n            TracePrint zm.TCPReceive(60)\n            //关闭TCP连接\n            TracePrint zm.TCPClose()\n        Else \n            TracePrint \"TCP连接失败\"\n        End If",
+		"Name" : "关闭TCP连接()  [关闭结果]",
+		"TranslateTemplate" : "关闭TCP连接"
+	},
+	"UDPBind" : 
+	{
+		"Description" : "格式: zm.UDPBind(IP地址, 端口[, 超时时间])\n解释: 绑定UDP\n返回: 绑定结果, number, 成功返回大于0的数值, 失败返回null\n参数: IP地址, string, 要绑定的IP地址\n参数: 端口, number, 要绑定的端口\n参数: 超时时间, number, 可选, 单位秒, 默认为10秒\n例子: //往192.168.1.100:12345发送数据\n        TracePrint zm.UDPSend(\"QQ345911220\", \"192.168.1.100\", 12345)\n        //绑定192.168.1.101:12345\n        Dim isBind = zm.UDPBind(\"192.168.1.101\", 12345, 15)\n        If isBind Then\n            //接收数据\n            TracePrint zm.UDPReceive(60)\n            //关闭UDP\n            TracePrint zm.UDPClose()\n        Else \n            TracePrint \"UDP绑定失败\"\n        End If",
+		"Name" : "绑定UDP(IP地址, 端口[, 超时时间])  [绑定结果]",
+		"TranslateTemplate" : "绑定 $1:$2 的UDP"
+	},
+	"UDPReceive" : 
+	{
+		"Description" : "格式: zm.UDPReceive([超时时间])\n解释: 接收UDP数据, 注意, 此命令为阻塞命令\n返回: 数据, table, 成功返回{数据内容, 来源IP, 来源端口}, 失败返回null\n参数: 超时时间, number, 可选, 单位秒, 默认为10秒\n例子: //往192.168.1.100:12345发送数据\n        TracePrint zm.UDPSend(\"QQ345911220\", \"192.168.1.100\", 12345)\n        //绑定192.168.1.101:12345\n        Dim isBind = zm.UDPBind(\"192.168.1.101\", 12345, 15)\n        If isBind Then\n            //接收数据\n            TracePrint zm.UDPReceive(60)\n            //关闭UDP\n            TracePrint zm.UDPClose()\n        Else \n            TracePrint \"UDP绑定失败\"\n        End If",
+		"Name" : "接收UDP数据([超时时间])  [数据]",
+		"TranslateTemplate" : "在 $1 秒内接收UDP数据"
+	},
+	"UDPSend" : 
+	{
+		"Description" : "格式: zm.UDPSend(数据内容, 目标IP, 目标端口)\n解释: 发送UDP数据\n返回: 发送结果, number, 成功返回大于0的数值, 失败返回null\n参数: 数据内容, string, 要发送的数据内容\n参数: 目标IP, string, 目标IP地址\n参数: 目标端口, number, 目标端口\n例子: //往192.168.1.100:12345发送数据\n        TracePrint zm.UDPSend(\"QQ345911220\", \"192.168.1.100\", 12345)\n        //绑定192.168.1.101:12345\n        Dim isBind = zm.UDPBind(\"192.168.1.101\", 12345, 15)\n        If isBind Then\n            //接收数据\n            TracePrint zm.UDPReceive(60)\n            //关闭UDP\n            TracePrint zm.UDPClose()\n        Else \n            TracePrint \"UDP绑定失败\"\n        End If",
+		"Name" : "发送UDP数据(数据内容, 目标IP, 目标端口)  [发送结果]",
+		"TranslateTemplate" : "向 $2:$3 发送UDP数据 $1"
+	},
+	"UDPClose" : 
+	{
+		"Description" : "格式: zm.UDPClose()\n解释: 关闭UDP\n返回: 关闭结果, number, 成功返回大于0的数值, 失败返回null\n参数: 无\n例子: //往192.168.1.100:12345发送数据\n        TracePrint zm.UDPSend(\"QQ345911220\", \"192.168.1.100\", 12345)\n        //绑定192.168.1.101:12345\n        Dim isBind = zm.UDPBind(\"192.168.1.101\", 12345, 15)\n        If isBind Then\n            //接收数据\n            TracePrint zm.UDPReceive(60)\n            //关闭UDP\n            TracePrint zm.UDPClose()\n        Else \n            TracePrint \"UDP绑定失败\"\n        End If",
+		"Name" : "关闭UDP()  [关闭结果]",
+		"TranslateTemplate" : "关闭UDP"
+	},
+	"OcrYouDaoInit" : 
+	{
+		"Description" : "格式: zm.OcrYouDaoInit([应用ID, 应用密钥][高级属性])\n解释: 初始化设置有道智云OCR的账户数据, 只要调用一次, 账户注册详见命令帮助\n返回: 参数列表, table, 成功返回设置后的参数列表, 失败返回null\n参数: 应用ID, string, 可选, 与高级属性参数二选一, 有道智云后台创建的应用ID, 详见命令帮助\n参数: 应用密钥, string, 可选, 与高级属性参数二选一, 有道智云后台创建的应用密钥, 详见命令帮助\n参数: 高级属性, table, 可选, 与应用ID密钥参数二选一, 建议不写, 以table类型详细设置每个参数, 若填写本参数, 则将忽略其他参数, 详见命令帮助\n例子: zm.OcrYouDaoInit \"请修改成你的应用ID\", \"请修改成你的应用密钥\"",
+		"Name" : "设置有道智云OCR([应用ID, 应用密钥][高级属性])  [参数列表]",
+		"TranslateTemplate" : "设置有道智云OCR"
+	},
+	"SetOcrYouDao" : 
+	{
+		"Description" : "格式: zm.SetOcrYouDao(这是旧版命令接口, 在未来版本中将会被zm.OcrYouDaoInit()代替, 请勿使用!)\n解释: 这是旧版命令接口, 在未来版本中将会被zm.OcrYouDaoInit()代替, 请勿使用!\n返回: 这是旧版命令接口, 在未来版本中将会被zm.OcrYouDaoInit()代替, 请勿使用!\n参数: 这是旧版命令接口, 在未来版本中将会被zm.OcrYouDaoInit()代替, 请勿使用!\n例子: 这是旧版命令接口, 在未来版本中将会被zm.OcrYouDaoInit()代替, 请勿使用!",
+		"Name" : "[弃用]设置有道云识别(这是旧版命令接口, 在未来版本中将会被zm.OcrYouDaoInit()代替, 请勿使用!)  [这是旧版命令接口]",
+		"TranslateTemplate" : "这是旧版命令接口, 在未来版本中将会被zm.OcrYouDaoInit()代替, 请勿使用!"
+	},
+	"OcrYouDao" : 
+	{
+		"Description" : "格式: zm.OcrYouDao([x1, y1, x2, y2][图片路径][, 返回json])\n解释: 在线云识别图片内容, 支持范围识别或指定图片识别, 请先调用zm.OcrYouDaoInit()设置后才使用本命令\n返回: 识别结果, string, 成功返回识别结果, 失败返回null\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径, string, 可选, 要识别内容的图片路径, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不建议填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrYouDaoInit \"请修改成你的应用ID\", \"请修改成你的应用密钥\"\n        Dim ret = zm.OcrYouDao(100,100,400,400)",
+		"Name" : "有道智云OCR([x1, y1, x2, y2][图片路径][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "设置有道智云OCR"
+	},
+	"OcrBaiDuInit" : 
+	{
+		"Description" : "格式: zm.OcrBaiDuInit([高级属性][[apikey, seckey][, 图片朝向][, posturl]])\n解释: 设置百度云文字识别key和请求参数, 一般只要调用一次, 除非需要用不同的识别模式与参数, 账户注册详见命令帮助\n返回: 参数列表, table, 成功返回设置后的参数列表, 失败返回null\n参数: 高级属性, table, 可选, 一般不需要填写, 以table类型详细设置每个参数, 若填写本参数, 则将忽略其他参数, 详见 http://ai.baidu.com/docs#/OCR-API/top 中的请求参数, 其中请求URL的键名为posturl\n参数: apikey, string, 可选, 百度云文字识别控制台创建的API Key, 详见命令帮助\n参数: seckey, string, 可选, 百度云文字识别控制台创建的Secret Key, 详见命令帮助\n参数: 图片朝向, boolean, 可选, 是否开启检测图像朝向功能, 省略默认为false\n参数: posturl, string, 可选, 百度云文字识别的请求URL, 用于不同模式的识别, 省略默认为https://aip.baidubce.com/rest/2.0/ocr/v1/general_basic\n例子: Dim r = zm.OcrBaiDuInit(\"请修改成你的API Key\", \"请修改成你的Secret Key\")",
+		"Name" : "设置百度云文字识别([高级属性][[apikey, seckey][, 图片朝向][, posturl]])  [参数列表]",
+		"TranslateTemplate" : "设置百度云文字识别"
+	},
+	"SetOcrBaiDu" : 
+	{
+		"Description" : "格式: zm.SetOcrBaiDu(这是旧版命令接口, 在未来版本中将会被zm.OcrBaiDuInit()代替, 请勿使用!)\n解释: 这是旧版命令接口, 在未来版本中将会被zm.OcrBaiDuInit()代替, 请勿使用!\n返回: 这是旧版命令接口, 在未来版本中将会被zm.OcrBaiDuInit()代替, 请勿使用!\n参数: 这是旧版命令接口, 在未来版本中将会被zm.OcrBaiDuInit()代替, 请勿使用!\n例子: 这是旧版命令接口, 在未来版本中将会被zm.OcrBaiDuInit()代替, 请勿使用!",
+		"Name" : "[弃用]设置百度云识别(这是旧版命令接口, 在未来版本中将会被zm.OcrBaiDuInit()代替, 请勿使用!)  [这是旧版命令接口]",
+		"TranslateTemplate" : "这是旧版命令接口, 在未来版本中将会被zm.OcrBaiDuInit()代替, 请勿使用!"
+	},
+	"OcrBaiDu" : 
+	{
+		"Description" : "格式: zm.OcrBaiDu([x1, y1, x2, y2][图片路径或URL][, 返回json])\n解释: 在线云识别图片内容, 支持范围识别或指定图片识别, 请先调用zm.OcrBaiDuInit()设置后才使用本命令\n返回: 识别结果, string, 成功返回识别结果, 失败返回null\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径或URL, string, 可选, 要识别内容的图片本地路径或者URL图片链接, 暂不支持https链接, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不建议填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrBaiDuInit(\"请修改成你的API Key\", \"请修改成你的Secret Key\")\n        Dim ret = zm.OcrBaiDu(0, 0, 0, 0) //全屏识别文字",
+		"Name" : "百度云通用文字识别([x1, y1, x2, y2][图片路径或URL][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "百度云文字识别"
+	},
+	"OcrBaiDuAll" : 
+	{
+		"Description" : "格式: zm.OcrBaiDuAll([x1, y1, x2, y2][图片路径])\n解释: 百度云在线识别通用函数, 支持范围识别或指定图片识别\n        必须通过zm.OcrBaiDuInit()设置请求posturl等参数后才使用本命令\n返回: 识别结果, table, 返回格式与百度云文档中返回值相同, 详见百度云文字识别API文档的返回说明内容\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径, string, 可选, 要识别内容的图片本地路径, 不可与范围参数同时存在\n例子: zm.OcrBaiDuInit(\"请修改成你的API Key\", \"请修改成你的Secret Key\")\n        Dim ret = zm.OcrBaiDuAll(0, 0, 0, 0) //全屏识别文字",
+		"Name" : "百度云识别通用函数([x1, y1, x2, y2][图片路径])  [识别结果]",
+		"TranslateTemplate" : "百度云识别通用函数"
+	},
+	"OcrBaiDuIDCard" : 
+	{
+		"Description" : "格式: zm.OcrBaiDuIDCard(正背面, [x1, y1, x2, y2][图片路径][, 返回json])\n解释: 识别身份证正背面, 内置固定的请求URL, 除图片和正背面id_card_side参数外, 需要zm.OcrBaiDuInit()设置后才使用本命令\n返回: 识别结果, table, 返回优化后的识别结果, 格式类似于{“公民身份号码”:”345911220”,”姓名”:”紫猫”, …}, 详细请自行遍历查看\n参数: 正背面, string, 必选, 身份证照片的正背面, 正面照片填写\"正面\"或\"front\", 背面照片填写\"背面\"或\"back\"\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径, string, 可选, 要识别内容的图片本地路径, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不建议填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrBaiDuInit(\"请修改成你的API Key\", \"请修改成你的Secret Key\")\n        Dim ret = zm.OcrBaiDuIDCard(0, 0, 0, 0) ",
+		"Name" : "百度云身份证识别(正背面, [x1, y1, x2, y2][图片路径][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "百度云身份证识别"
+	},
+	"OcrBaiDuBankCard" : 
+	{
+		"Description" : "格式: zm.OcrBaiDuBankCard([x1, y1, x2, y2][图片路径][, 返回json])\n解释: 识别银行卡并返回卡号和发卡行, 内置固定的请求URL, 除图片参数外, 需要zm.OcrBaiDuInit()设置后才使用本命令\n返回: 识别结果, table, 返回优化后的识别结果, 格式为{“bank_card_number”:”622500000000000”,”bank_name”:”招商银行”,”bank_card_type”:1}, 详细请自行遍历查看\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径, string, 可选, 要识别内容的图片本地路径, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不建议填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrBaiDuInit(\"请修改成你的API Key\", \"请修改成你的Secret Key\")\n        Dim ret = zm.OcrBaiDuBankCard(0, 0, 0, 0) ",
+		"Name" : "百度云银行卡识别([x1, y1, x2, y2][图片路径][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "百度云银行卡识别"
+	},
+	"OcrBaiDuDriving" : 
+	{
+		"Description" : "格式: zm.OcrBaiDuDriving([x1, y1, x2, y2][图片路径][, 返回json])\n解释: 对机动车驾驶证所有关键字段进行识别, 内置固定的请求URL, 除图片参数外, 需要zm.OcrBaiDuInit()设置后才使用本命令\n返回: 识别结果, table, 返回优化后的识别结果, 格式类似于{“证号”:”345911220”,”姓名”:”紫猫”, …}, 详细请自行遍历查看\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径, string, 可选, 要识别内容的图片本地路径, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不建议填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrBaiDuInit(\"请修改成你的API Key\", \"请修改成你的Secret Key\")\n        Dim ret = zm.OcrBaiDuDriving(0, 0, 0, 0) ",
+		"Name" : "百度云驾驶证识别([x1, y1, x2, y2][图片路径][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "百度云驾驶证识别"
+	},
+	"OcrBaiDuVehicle" : 
+	{
+		"Description" : "格式: zm.OcrBaiDuVehicle([x1, y1, x2, y2][图片路径][, 返回json])\n解释: 对机动车行驶证正本所有关键字段进行识别, 内置固定的请求URL, 除图片参数外, 需要zm.OcrBaiDuInit()设置后才使用本命令\n返回: 识别结果, table, 返回优化后的识别结果, 格式类似于{“品牌型号”:”保时捷GT37182RUCRE”,”所有人”:”紫猫”, …}, 详细请自行遍历查看\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径, string, 可选, 要识别内容的图片本地路径, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不建议填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrBaiDuInit(\"请修改成你的API Key\", \"请修改成你的Secret Key\")\n        Dim ret = zm.OcrBaiDuVehicle(0, 0, 0, 0) ",
+		"Name" : "百度云行驶证识别([x1, y1, x2, y2][图片路径][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "百度云行驶证识别"
+	},
+	"OcrBaiDuPlate" : 
+	{
+		"Description" : "格式: zm.OcrBaiDuPlate([x1, y1, x2, y2][图片路径][, 返回json])\n解释: 识别机动车车牌并返回签发地和号牌, 内置固定的请求URL, 除图片参数外, 需要zm.OcrBaiDuInit()设置后才使用本命令\n返回: 识别结果, table, 返回优化后的识别结果, 格式类似于{“鄂A345911220”, …}, 详细请自行遍历查看\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径, string, 可选, 要识别内容的图片本地路径, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不建议填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrBaiDuInit(\"请修改成你的API Key\", \"请修改成你的Secret Key\")\n        Dim ret = zm.OcrBaiDuPlate(0, 0, 0, 0) ",
+		"Name" : "百度云车牌识别([x1, y1, x2, y2][图片路径][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "百度云车牌识别"
+	},
+	"OcrBaiDuBusiness" : 
+	{
+		"Description" : "格式: zm.OcrBaiDuBusiness([x1, y1, x2, y2][图片路径][, 返回json])\n解释: 识别营业执照, 并返回关键字段的值, 包括单位名称/法人/地址/有效期/证件编号/社会信用代码等, 内置固定的请求URL, 除图片参数外, 需要zm.OcrBaiDuInit()设置后才使用本命令\n返回: 识别结果, table, 返回优化后的识别结果, 格式类似于{“单位名称”:”紫猫编程学院”,”法人”:”紫猫”, …}, 详细请自行遍历查看\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径, string, 可选, 要识别内容的图片本地路径, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不建议填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrBaiDuInit(\"请修改成你的API Key\", \"请修改成你的Secret Key\")\n        Dim ret = zm.OcrBaiDuBusiness(0, 0, 0, 0) ",
+		"Name" : "百度云营业执照识别([x1, y1, x2, y2][图片路径][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "百度云营业执照识别"
+	},
+	"OcrBaiDuForm" : 
+	{
+		"Description" : "格式: zm.OcrBaiDuForm([x1, y1, x2, y2][图片路径][, 返回json])\n解释: 已整合为同步请求, 自动识别表格线及表格内容, 结构化输出表头, 表尾及每个单元格的文字内容, 内置固定的请求URL, 除图片参数外, 需要zm.OcrBaiDuInit()设置后才使用本命令\n返回: 识别结果, string, 返回表格下载地址或json文本\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径, string, 可选, 要识别内容的图片本地路径, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不建议填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrBaiDuInit(\"请修改成你的API Key\", \"请修改成你的Secret Key\")\n        Dim ret = zm.OcrBaiDuForm(0, 0, 0, 0) ",
+		"Name" : "百度云表格文字识别([x1, y1, x2, y2][图片路径][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "百度云表格文字识别"
+	},
+	"OcrBaiDuReceipt" : 
+	{
+		"Description" : "格式: zm.OcrBaiDuReceipt([x1, y1, x2, y2][图片路径][, 返回json])\n解释: 识别医疗票据/发票/的士票/保险保单等票据类图片中的所有文字, 内置固定的请求URL, 除图片参数外, 需要zm.OcrBaiDuInit()设置后才使用本命令\n返回: 识别结果, table, 返回优化后的识别结果, 格式类似于{“345911220”,”紫猫”, …}, 详细请自行遍历查看\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径, string, 可选, 要识别内容的图片本地路径, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不建议填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrBaiDuInit(\"请修改成你的API Key\", \"请修改成你的Secret Key\")\n        Dim ret = zm.OcrBaiDuReceipt(0, 0, 0, 0) ",
+		"Name" : "百度云通用票据识别([x1, y1, x2, y2][图片路径][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "百度云通用票据识别"
+	},
+	"OcrYouTuInit" : 
+	{
+		"Description" : "格式: zm.OcrYouTuInit(AppID, AppKey)\n解释: 初始化设置腾讯优图OCR云识别(https://ai.qq.com/)应用数据, 只要调用一次, 账户注册详见命令帮助\n返回: 应用数据, table, 返回AppID和AppKey的table表\n参数: AppID, string, 应用的AppID\n参数: AppKey, string, 应用的AppKey\n例子: zm.OcrYouTuInit(\"请修改成你的AppID\", \"请修改成你的AppKey\")\n        Dim ret = zm.OcrYouTu(0, 0, 400, 400) //识别(0,0,400,400)范围内的文字",
+		"Name" : "初始化优图OCR(AppID, AppKey)  [应用数据]",
+		"TranslateTemplate" : "初始化优图OCR"
+	},
+	"OcrYouTu" : 
+	{
+		"Description" : "格式: zm.OcrYouTu([x1, y1, x2, y2][图片路径或URL][, 返回json])\n解释: 在线云识别图片内容, 支持范围识别或指定图片识别, 图片大小上限1MB, 请先调用zm.OcrYouTuInit()初始化后才使用本命令\n返回: 识别结果, string, 成功返回识别结果, 多行内容以\"\\n\"分割, 失败返回null\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径或URL, string, 可选, 要识别内容的图片本地路径或者URL图片链接, 支持https链接, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不需要填写, 以表的形式返回原生结果, 包含位置坐标, 详情请自行遍历查看\n例子: zm.OcrYouTuInit(\"请修改成你的AppID\", \"请修改成你的AppKey\")\n        Dim ret = zm.OcrYouTu(0, 0, 0, 0) //全屏识别文字",
+		"Name" : "优图通用OCR([x1, y1, x2, y2][图片路径或URL][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "优图通用OCR"
+	},
+	"OcrYouTuHandWriting" : 
+	{
+		"Description" : "格式: zm.OcrYouTuHandWriting([x1, y1, x2, y2][图片路径或URL][, 返回json])\n解释: 在线云识别图片内容, 支持范围识别或指定图片识别, 图片大小上限1MB, 请先调用zm.OcrYouTuInit()初始化后才使用本命令\n返回: 识别结果, string, 成功返回识别结果, 多行内容以\"\\n\"分割, 失败返回null\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径或URL, string, 可选, 要识别内容的图片本地路径或者URL图片链接, 支持https链接, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不需要填写, 以表的形式返回原生结果, 包含位置坐标, 详情请自行遍历查看\n例子: zm.OcrYouTuInit(\"请修改成你的AppID\", \"请修改成你的AppKey\")\n        Dim ret = zm.OcrYouTuHandWriting(0, 0, 0, 0) //全屏识别文字",
+		"Name" : "优图手写OCR([x1, y1, x2, y2][图片路径或URL][, 返回json])  [识别结果]",
+		"TranslateTemplate" : "优图手写OCR"
+	},
+	"OcrYouTuIDCard" : 
+	{
+		"Description" : "格式: zm.OcrYouTuIDCard(正反面, [x1, y1, x2, y2][图片路径或URL][, 返回json])\n解释: 在线云识别身份证信息, 支持范围识别或指定图片识别, 图片大小上限1MB, 请先调用zm.OcrYouTuInit()初始化后才使用本命令\n返回: 身份证信息, table, 成功返回键值对table结果, 请遍历查看, 失败返回null\n参数: 正反面, string或number, 必选, 身份证照片的正反面, 正面照片填写\"正面\"或0, 反面照片填写\"反面\"或1\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径或URL, string, 可选, 要识别内容的图片本地路径或者URL图片链接, 支持https链接, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不需要填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrYouTuInit(\"请修改成你的AppID\", \"请修改成你的AppKey\")\n        Dim ret = zm.OcrYouTuIDCard(0, \"/sdcard/身份证正面.png\")",
+		"Name" : "优图身份证OCR(正反面, [x1, y1, x2, y2][图片路径或URL][, 返回json])  [身份证信息]",
+		"TranslateTemplate" : "优图身份证OCR"
+	},
+	"OcrYouTuBC" : 
+	{
+		"Description" : "格式: zm.OcrYouTuBC([x1, y1, x2, y2][图片路径或URL][, 返回json])\n解释: 在线云识别名片信息, 支持范围识别或指定图片识别, 图片大小上限1MB, 请先调用zm.OcrYouTuInit()初始化后才使用本命令\n返回: 名片信息, table, 成功返回键值对table结果, 请遍历查看, 失败返回null\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径或URL, string, 可选, 要识别内容的图片本地路径或者URL图片链接, 支持https链接, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不需要填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrYouTuInit(\"请修改成你的AppID\", \"请修改成你的AppKey\")\n        Dim ret = zm.OcrYouTuBC(\"/sdcard/名片.png\")",
+		"Name" : "优图名片OCR([x1, y1, x2, y2][图片路径或URL][, 返回json])  [名片信息]",
+		"TranslateTemplate" : "优图名片OCR"
+	},
+	"OcrYouTuDriverLicense" : 
+	{
+		"Description" : "格式: zm.OcrYouTuDriverLicense(类型, [x1, y1, x2, y2][图片路径或URL][, 返回json])\n解释: 在线云识别行驶证驾驶证信息, 支持范围识别或指定图片识别, 图片大小上限1MB, 请先调用zm.OcrYouTuInit()初始化后才使用本命令\n返回: 名片信息, table, 成功返回键值对table结果, 请遍历查看, 失败返回null\n参数: 类型, string或number, 必选, 行驶证照片填写\"行驶证\"或0, 驾驶证照片填写\"驾驶证\"或1\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径或URL, string, 可选, 要识别内容的图片本地路径或者URL图片链接, 支持https链接, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不需要填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrYouTuInit(\"请修改成你的AppID\", \"请修改成你的AppKey\")\n        Dim ret = zm.OcrYouTuDriverLicense(0, \"/sdcard/行驶证.png\")",
+		"Name" : "优图行驶证驾驶证OCR(类型, [x1, y1, x2, y2][图片路径或URL][, 返回json])  [名片信息]",
+		"TranslateTemplate" : "优图行驶证驾驶证OCR"
+	},
+	"OcrYouTuPlate" : 
+	{
+		"Description" : "格式: zm.OcrYouTuPlate([x1, y1, x2, y2][图片路径或URL][, 返回json])\n解释: 在线云识别车牌信息, 支持范围识别或指定图片识别, 图片大小上限1MB, 请先调用zm.OcrYouTuInit()初始化后才使用本命令\n返回: 车牌信息, table, 成功返回键值对table结果, 请遍历查看, 失败返回null\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径或URL, string, 可选, 要识别内容的图片本地路径或者URL图片链接, 支持https链接, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不需要填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrYouTuInit(\"请修改成你的AppID\", \"请修改成你的AppKey\")\n        Dim ret = zm.OcrYouTuPlate(\"/sdcard/车牌.png\")",
+		"Name" : "优图车牌OCR([x1, y1, x2, y2][图片路径或URL][, 返回json])  [车牌信息]",
+		"TranslateTemplate" : "优图车牌OCR"
+	},
+	"OcrYouTuBusiness" : 
+	{
+		"Description" : "格式: zm.OcrYouTuBusiness([x1, y1, x2, y2][图片路径或URL][, 返回json])\n解释: 在线云识别营业执照信息, 支持范围识别或指定图片识别, 图片大小上限1MB, 请先调用zm.OcrYouTuInit()初始化后才使用本命令\n返回: 营业执照, table, 成功返回键值对table结果, 请遍历查看, 失败返回null\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径或URL, string, 可选, 要识别内容的图片本地路径或者URL图片链接, 支持https链接, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不需要填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrYouTuInit(\"请修改成你的AppID\", \"请修改成你的AppKey\")\n        Dim ret = zm.OcrYouTuBusiness(\"/sdcard/营业执照.png\")",
+		"Name" : "优图营业执照OCR([x1, y1, x2, y2][图片路径或URL][, 返回json])  [营业执照]",
+		"TranslateTemplate" : "优图营业执照OCR"
+	},
+	"OcrYouTuBankCard" : 
+	{
+		"Description" : "格式: zm.OcrYouTuBankCard([x1, y1, x2, y2][图片路径或URL][, 返回json])\n解释: 在线云识别银行卡信息, 支持范围识别或指定图片识别, 图片大小上限1MB, 请先调用zm.OcrYouTuInit()初始化后才使用本命令\n返回: 银行卡, table, 成功返回键值对table结果, 请遍历查看, 失败返回null\n参数: x1, number, 可选, 识别范围的左上角x坐标, 不可与图片路径参数同时存在\n参数: y1, number, 可选, 识别范围的左上角y坐标, 不可与图片路径参数同时存在\n参数: x2, number, 可选, 识别范围的右上角x坐标, 不可与图片路径参数同时存在\n参数: y2, number, 可选, 识别范围的右上角y坐标, 不可与图片路径参数同时存在\n参数: 图片路径或URL, string, 可选, 要识别内容的图片本地路径或者URL图片链接, 支持https链接, 不可与范围参数同时存在\n参数: 返回json, table, 可选, 一般不需要填写, 以表的形式返回原生结果, 详情请自行遍历查看\n例子: zm.OcrYouTuInit(\"请修改成你的AppID\", \"请修改成你的AppKey\")\n        Dim ret = zm.OcrYouTuBankCard(\"/sdcard/银行卡.png\")",
+		"Name" : "优图银行卡OCR([x1, y1, x2, y2][图片路径或URL][, 返回json])  [银行卡]",
+		"TranslateTemplate" : "优图银行卡OCR"
+	},
+	"SpeechSsYouTuInit" : 
+	{
+		"Description" : "格式: zm.SpeechSsYouTuInit([高级属性][AppID, AppKey])\n解释: 初始化优图语音合成的账户数据, 一般只要调用一次, 账户注册详见命令帮助\n返回: 参数列表, table, 成功返回设置后的参数列表, 失败返回null\n参数: 高级属性, table, 可选, 一般不需要填写, 以table类型详细设置每个参数, 若填写本参数, 则将忽略其他参数, 详见 https://ai.qq.com/doc/aaitts.shtml 中的请求参数\n参数: app_id, string, 可选, 语音合成应用的AppID, 详见命令帮助\n参数: app_key, string, 可选, 语音合成应用的AppKey, 详见命令帮助\n例子: zm.SpeechSsYouTuInit(\"请修改成你的AppID\", \"请修改成你的AppKey\")\n        zmm.SpeechSsYouTu(\"紫猫老师真帅!\", True)\n        Delay(5000) //防止脚本停止导致播放停止",
+		"Name" : "初始化优图语音合成([高级属性][AppID, AppKey])  [参数列表]",
+		"TranslateTemplate" : "初始化优图语音合成"
+	},
+	"SpeechSsYouTu" : 
+	{
+		"Description" : "格式: zm.SpeechSsYouTu(文本内容[, 是否播放[, 是否删除]])\n解释: 使用优图提供的语音合成功能实现文字转声音并播放, 注意脚本停止会导致播放停止.\n        请先调用zm.SpeechSsYouTuInit()初始化后才使用本命令, 设置发音人等内容都在初始化中调整\n返回: 文件路径, string, 成功返回合成的音频文件路径, 失败返回null\n参数: 文本内容, string, 准备合成语音的文本内容\n参数: 是否播放, boolean, 可选, 是否自动播放音频, 注意脚本停止会导致播放停止\n参数: 是否删除, boolean, 可选, 是否删除合成的文件, 注意前面必须要有是否播放参数\n例子: zm.SpeechSsYouTuInit(\"请修改成你的AppID\", \"请修改成你的AppKey\") //初始化账户数据\n        zm.SpeechSsYouTuInit({\"speaker\":6}) //更换发音人\n        zmm.SpeechSsYouTu(\"紫猫老师真帅!\", True)\n        Delay(5000) //防止脚本停止导致播放停止",
+		"Name" : "优图语音合成播放(文本内容[, 是否播放[, 是否删除]])  [文件路径]",
+		"TranslateTemplate" : "合成 $1 语音"
+	},
+	"GetPicSize" : 
+	{
+		"Description" : "格式: zm.GetPicSize(图片路径)\n解释: 获取一张图片的宽度和高度, 支持PNG, BMP, GIF这3种图片格式, 支持附件路径\n返回: 图片宽高, table, 成功返回格式{宽度, 高度, \"w\":宽度, \"h\":高度, \"type\":图片类型}\n参数: 图片路径, string, 图片的所在路径, 支持附件\n例子: Dim 图片宽高 = zm.GetPicSize(\"Attachment:紫猫.png\")\n        TracePrint \"第1种写法: 宽度=\", 图片宽高(0), \", 高度=\", 图片宽高(1)\n        TracePrint \"第2种写法: 宽度=\", 图片宽高[\"w\"], \", 高度=\", 图片宽高[\"h\"]",
+		"Name" : "获取图片宽高(图片路径)  [图片宽高]",
+		"TranslateTemplate" : "获取图片 $1 的宽度和高度"
+	},
+	"BGRToRGB" : 
+	{
+		"Description" : "格式: zm.BGRToRGB(BGR颜色或RGB颜色)\n解释: RGB与BGR颜色相互转换\n返回: 颜色, string, 返回转换后的RGB格式颜色\n参数: BGR颜色或RGB颜色, number或string, BGR格式的颜色, 数值型时表示十进制, 字符串时表示十六进制。\n例子: TracePrint zm.BGRToRGB(\"FF00AA\")",
+		"Name" : "BGR与RGB互转(BGR颜色或RGB颜色)  [颜色]",
+		"TranslateTemplate" : "将BGR颜色 $1 转为RGB"
+	},
+	"RGBToBGR" : 
+	{
+		"Description" : "格式: zm.RGBToBGR(RGB颜色或BGR颜色)\n解释: RGB与BGR颜色相互转换\n返回: 颜色, string, 返回转换后的BGR格式颜色\n参数: RGB颜色或BGR颜色, number或string, RGB格式的颜色, 数值型时表示十进制, 字符串时表示十六进制。\n例子: TracePrint zm.BGRToRGB(\"FF00AA\")",
+		"Name" : "RGB与BGR互转(RGB颜色或BGR颜色)  [颜色]",
+		"TranslateTemplate" : "将BGR颜色 $1 转为RGB"
+	},
+	"RGBToColor" : 
+	{
+		"Description" : "格式: zm.RGBToColor(R颜色分量, G颜色分量, B颜色分量)\n解释: 合成三个RGB颜色分量到十六进制RGB字符串中\n返回: RGB颜色, string, 返回合成后的RGB格式颜色\n参数: R颜色分量, number或string, 红色分量, 数值型时表示十进制, 字符串时表示十六进制\n参数: G颜色分量, number或string, 绿色分量, 数值型时表示十进制, 字符串时表示十六进制\n参数: B颜色分量, number或string, 蓝色分量, 数值型时表示十进制, 字符串时表示十六进制\n例子: TracePrint zm.RGBToColor(10,20,30)",
+		"Name" : "合成RGB颜色(R颜色分量, G颜色分量, B颜色分量)  [RGB颜色]",
+		"TranslateTemplate" : "将 $1, $2, $3 合成RGB颜色"
+	},
+	"BGRToColor" : 
+	{
+		"Description" : "格式: zm.BGRToColor(B颜色分量, G颜色分量, R颜色分量)\n解释: 合成三个BGR颜色分量到十六进制BGR字符串中\n返回: BGR颜色, string, 返回合成后的BGR格式颜色\n参数: B颜色分量, number或string, 蓝色分量, 数值型时表示十进制, 字符串时表示十六进制\n参数: R颜色分量, number或string, 红色分量, 数值型时表示十进制, 字符串时表示十六进制\n参数: G颜色分量, number或string, 绿色分量, 数值型时表示十进制, 字符串时表示十六进制\n例子: TracePrint zm.BGRToColor(10,20,30)",
+		"Name" : "合成BGR颜色(B颜色分量, G颜色分量, R颜色分量)  [BGR颜色]",
+		"TranslateTemplate" : "将 $1, $2, $3 合成BGR颜色"
+	},
+	"ColorToRGB" : 
+	{
+		"Description" : "格式: zm.ColorToRGB(RGB颜色或BGR颜色[, 返回颜色表])\n解释: 分解RGB颜色至R、G、B三个分量中\n返回: 颜色表, table, 返回分解后的结果, 格式为{r, g, b, \"r\":r, \"g\":g, \"b\":b}\n参数: RGB颜色或BGR颜色, number或string, RGB颜色, 字符串时为十六进制, 数值时为十进制\n参数: 返回颜色表, table, 可选, 返回分解保存的表, 格式与返回值相同\n例子: TracePrint zmVarInfo(zm.ColorToRGB(\"11BBDD\"))",
+		"Name" : "分解RGB颜色(RGB颜色或BGR颜色[, 返回颜色表])  [颜色表]",
+		"TranslateTemplate" : "分解 $1 到RGB三分量中"
+	},
+	"ColorToHSV" : 
+	{
+		"Description" : "格式: zm.ColorToHSV(hsv颜色[, 返回颜色表])\n解释: 分解HSV颜色至H、S、V三个分量中\n返回: 颜色表, table, 返回分解后的结果, 格式为{h, s, v, \"h\":h, \"s\":s, \"v\":v}\n参数: hsv颜色, string, HSV颜色, 格式为“H.S.V”\n参数: 返回颜色表, table, 可选, 返回分解保存的表, 格式与返回值相同\n例子: TracePrint zmVarInfo(zm.ColorToHSV(\"100.20.30\"))",
+		"Name" : "分解HSV颜色(hsv颜色[, 返回颜色表])  [颜色表]",
+		"TranslateTemplate" : "分解 $1 到hsv三分量中"
+	},
+	"RGBToHSV" : 
+	{
+		"Description" : "格式: zm.RGBToHSV(rgb颜色[, 是否bgr颜色])\n解释: 将RGB颜色转换成HSV颜色\n返回: hsv颜色, string, 返回“H.S.V”格式的颜色\n参数: rgb颜色, number或string, RGB颜色, 字符串时为十六进制, 数值时为十进制\n参数: 是否bgr颜色, boolean, 可选, true表示参数1格式为BGR颜色, false表示参数1为RGB颜色, 省略默认为false\n例子: TracePrint zm.RGBToHSV(\"102030\")",
+		"Name" : "RGB转HSV(rgb颜色[, 是否bgr颜色])  [hsv颜色]",
+		"TranslateTemplate" : "转换RGB颜色 $1 到HSV颜色"
+	},
+	"HSVToRGB" : 
+	{
+		"Description" : "格式: zm.HSVToRGB(hsv颜色[, 是否返回bgr颜色])\n解释: 将HSV颜色转换成RGB颜色\n返回: rgb颜色, string, 返回十六进制的颜色, 格式由参数2决定\n参数: hsv颜色, string, HSV颜色, 格式为“H.S.V”\n参数: 是否返回bgr颜色, boolean, 可选, true表示返回BGR颜色, false表示返回RGB颜色, 省略默认为false\n例子: TracePrint zm.HSVToRGB(\"100.20.30\")",
+		"Name" : "HSV转RGB(hsv颜色[, 是否返回bgr颜色])  [rgb颜色]",
+		"TranslateTemplate" : "转换HSV颜色 $1 到RGB颜色"
+	},
+	"ColorSim" : 
+	{
+		"Description" : "格式: zm.ColorSim(颜色1, 颜色2)\n解释: 获取两个颜色之间的相似度, 注意两个参数颜色格式必须一致, 可能与按键自带的相似度算法不同\n返回: 相似度, number, 返回两个颜色的相似度\n参数: 颜色1, string或number或table, BGR或RGB颜色, 字符串时表示十六进制, 数值时表示十进制, table时格式为{r, g, b}\n参数: 颜色2, string或number或table, BGR或RGB颜色, 字符串时表示十六进制, 数值时表示十进制, table时格式为{r, g, b}\n例子: TracePrint zm.ColorSim(\"FFFFFF\", \"000000\")\n        TracePrint zm.ColorSim(\"FFFFFF\", \"FFFFFF\")\n        TracePrint zm.ColorSim(\"FFFFFF\", \"EEEEEE\")",
+		"Name" : "计算颜色相似度(颜色1, 颜色2)  [相似度]",
+		"TranslateTemplate" : "获取 $1 和 $2 的颜色相似度"
+	},
+	"IsDisplayDead" : 
+	{
+		"Description" : "格式: zm.IsDisplayDead(x1, y1, x2, y2, 时长[, 相似度])\n解释: 获取指定范围时间内是否出现卡屏, 画面不变化的情况, 如果画面变化则立即返回\n返回: 是否卡屏, boolean, 卡屏返回true, 不卡屏返回false\n参数: x1, number, 卡屏判断范围左上角x坐标\n参数: y1, number, 卡屏判断范围左上角y坐标\n参数: x2, number, 卡屏判断范围右下角x坐标\n参数: y2, number, 卡屏判断范围右下角y坐标\n参数: 时长, number, 限时判断时长, 单位毫秒\n参数: 相似度, number, 可选, 画面变化相似度, 省略默认为0.8\n例子: TracePrint zm.IsDisplayDead(100,100,200,200,5000)//在5秒内判断屏幕100,100,200,200范围是否卡屏",
+		"Name" : "是否卡屏(x1, y1, x2, y2, 时长[, 相似度])  [是否卡屏]",
+		"TranslateTemplate" : "判断范围 $1 $2 $3 $4 是否卡屏"
+	},
+	"SetScreenScale" : 
+	{
+		"Description" : "格式: zm.SetScreenScale(开发宽度, 开发高度[, 输出缩放])\n解释: 与按键自带的SetScreenScale()相比, 多了对zm.FindPic()和zm.FindStr()的支持, 另外还可以使用zm.GetScreenScale()获取缩放状态\n        缩放找图和缩放找字仅针对传入与传出坐标进行缩放, 对应的图片与字库请自行设置多套数据供命令调用\n返回: 无\n参数: 开发宽度, number, 开发脚本时使用的设备横向分辨率\n参数: 开发高度, number, 开发脚本时使用的设备纵向分辨率\n参数: 输出缩放, number, 可选参数, 默认为1\n        0表示只对传入函数的坐标（如范围坐标等）进行缩放, 从函数传出的坐标（如返回坐标等）不缩放, 即为当前设备的真实坐标\n        1表示对传入的坐标（如范围坐标等）进行缩放, 对函数传出的坐标（如返回坐标）进行反向缩放\n例子: zm.SetScreenScale 720, 1280",
+		"Name" : "超级缩放(开发宽度, 开发高度[, 输出缩放])",
+		"TranslateTemplate" : "设置超级缩放的开发宽度 $1 , 开发高度 $2"
+	},
+	"ResetScreenScale" : 
+	{
+		"Description" : "格式: zm.ResetScreenScale()\n解释: 取消超级缩放功能\n返回: 无\n参数: 无\n例子: zm.ResetScreenScale",
+		"Name" : "取消超级缩放()",
+		"TranslateTemplate" : "取消超级缩放"
+	},
+	"GetScreenScale" : 
+	{
+		"Description" : "格式: zm.GetScreenScale()\n解释: 获取超级缩放状态, 只有通过zm.SetScreenScale()和zm.ResetScreenScale()设置的超级缩放有效, 对官方自带的缩放无效\n返回: 缩放状态, number, 返回数字, 具体如下:\n        -1表示没有缩放\n        0表示传入缩放, 传出不缩放\n        1表示传入缩放, 传出反向缩放\n参数: 无\n例子: TracePrint zm.GetScreenScale()",
+		"Name" : "获取超级缩放状态()  [缩放状态]",
+		"TranslateTemplate" : "获取超级缩放状态"
+	},
+	"Swipe" : 
+	{
+		"Description" : "格式: zm.Swipe(x1, y1, x2, y2[, 划动耗时[, 轨迹次数]][, 模式][, 禁用轨迹])\n解释: 快速精准无惯性的模拟划动操作, 可切换模式支持网页划动\n返回: 无\n参数: x1, number, 划动的起点坐标\n参数: y1, number, 划动的起点坐标\n参数: x2, number, 划动的终点坐标\n参数: y2, number, 划动的终点坐标\n参数: 划动耗时, number, 可选, 划动花费的时间, 单位毫秒, 省略默认为100毫秒\n参数: 轨迹次数, number, 可选, 划动轨迹多少次, 省略默认为10, 若填写轨迹次数参数, 则前面必须写耗时参数\n参数: 模式, number, 可选, -1为普通模拟，-2为硬件模拟，-3为翻页模拟, 当普通模式无法划动时, 可以试下切换至硬件模拟或翻页模拟, 省略默认为-1\n参数: 禁用轨迹, boolean, 可选, 是否模拟真实带轨迹移动, 对翻页模式无效, 省略默认为false表示禁用, 启用后耗时参数与轨迹次数将会失效\n例子: zm.Swipe 100, 500, 100, 200, 500, -2",
+		"Name" : "超级划动(x1, y1, x2, y2[, 划动耗时[, 轨迹次数]][, 模式][, 禁用轨迹])",
+		"TranslateTemplate" : "从 $1, $2 划动到 $3, $4 耗时 $5"
+	},
+	"SetTap" : 
+	{
+		"Description" : "格式: zm.SetTap(属性表)\n解释: 修改 zm.Tap() 的默认参数值, 并影响超级图色命令中的点击参数效果\n返回: 参数列表, table, 返回设置后的参数列表, 失败返回null\n参数: 属性表, table, 按照指定格式对表中的键值对进行赋值\n        例如{“t”:2000, “showlog”:”显示”}表示修改点击后默认延时时间为3000毫秒, 日志输出默认为显示\n        详细属性如下:\n        minx: 数值型, 表示点击x坐标的浮动下限, 省略默认为0\n        maxx: 数值型, 表示点击x坐标的浮动上限, 省略默认为0\n        miny: 数值型, 表示点击y坐标的浮动下限, 省略默认为0\n        maxy: 数值型, 表示点击y坐标的浮动上限, 省略默认为0\n        t: 数值型, 点击后默认延时时间, 单位毫秒, 省略默认为0\n        mintouch: 数值型, 点击时按下与弹起之间的最小间隔, 单位毫秒, 省略默认为0\n        maxtouch: 数值型, 点击时按下与弹起之间的最大间隔, 单位毫秒, 省略默认为50\n        norandom: 布尔型, 是否禁用随机, 填写true后所有点击都失去随机效果, 省略默认为false\n        showlog: 字符串, 显示输出日志, 可选[“显示”,”隐藏”,”show”,”hide”]这几个值, 省略默认\"隐藏\"\n例子: //设置固定坐标x浮动范围[-10,15], 固定坐标y浮动范围[-5,20], 点击后默认延时2000毫秒\n        zm.SetTap {\"minx\":-10, \"maxx\":15, \"miny\":-5, \"maxy\":20, \"t\":2000}",
+		"Name" : "设置Tap默认参数(属性表)  [参数列表]",
+		"TranslateTemplate" : "设置zm.Tap()默认参数 $1"
+	},
+	"Tap" : 
+	{
+		"Description" : "格式: zm.Tap([对象][坐标字符串][x, y][, rx, ry][, 延时毫秒][, 禁用随机][, 显示日志][, 输出行号][, 备注])\n解释: 短暂点击屏幕并延时, 可加入随机防检测\n返回: 点击坐标, table, 返回实际点击的坐标与延时表, 格式为{x,y,t,”x”:x,”y”:y,”t”:t}, 失败返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: 坐标字符串, string, 可选, 与下面的x,y参数二选一填写, 坐标格式为\"x,y\", 省略默认为null\n参数: x, number, 可选, 要点击的x坐标, 填写对象参数后可省略\n参数: y, number, 可选, 要点击的y坐标, 填写对象参数后可省略\n参数: rx, number, 可选, 从x到rx范围中随机获取一个数作为横坐标x, 省略默认与x相同\n参数: ry, number, 可选, 从y到ry范围中随机获取一个数作为纵坐标y, 省略默认与y相同\n参数: 延时毫秒, number, 可选, 点击后延时时间, 单位毫秒, 省略默认为0\n参数: 禁用随机, boolean, 可选, 填写true时禁用任何随机功能, 填写false表示不禁用, 省略默认为false\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n例子: //点击固定坐标100,200后延时3000毫秒\n        zm.Tap 100, 200, 3000\n        //点击字符串坐标100,200后, 延时300毫秒\n        zm.Tap \"100,200\", 300\n        //在范围100,200,150,250内随机点击某个点, 并显示输出\n        zm.Tap 100, 200, 150, 250, \"show\"\n        //设置固定坐标x浮动范围[-10,15], 固定坐标y浮动范围[-5,20], 点击后默认延时2000毫秒\n        zm.SetTap {\"minx\":-10, \"maxx\":15, \"miny\":-5, \"maxy\":20, \"t\":2000}\n        //x从100-10到100+15中随机取值, y从200-5到200+20中随机取值, 点击后默认延时2000毫秒\n        Dim t = zm.Tap(100, 200)\n        //查看实际点击坐标\n        TracePrint zm.VarInfo(t)",
+		"Name" : "超级点击([对象][坐标字符串][x, y][, rx, ry][, 延时毫秒][, 禁用随机][, 显示日志][, 输出行号][, 备注])  [点击坐标]",
+		"TranslateTemplate" : "超级点击坐标 $1 $2"
+	},
+	"SetFindPic" : 
+	{
+		"Description" : "格式: zm.SetFindPic(属性表)\n解释: 设置zm.FindPic()的参数默认值, 参数为键值对表, 改动后影响后面所有zm.FindPic()\n返回: 参数列表, table, 返回设置后的参数列表, 失败返回null\n参数: 属性表, table, 按照指定格式对表中的键值对进行赋值, \n        例如{“sim”:0.9, “showlog”:”显示”}表示修改相似度默认为0.9, 日志输出默认为显示\n        详细属性如下:\n        x1: 数值型, 查找范围左上角x坐标, 省略默认为0\n        y1: 数值型, 查找范围左上角y坐标, 省略默认为0\n        x2: 数值型, 查找范围右下角x坐标, 省略默认为0\n        y2: 数值型, 查找范围右下角y坐标, 省略默认为0\n        pic: 字符串, 默认图片路径, 当图片参数只有文件名时, 自动追加此路径, 省略默认为\"Attachment:\"\n        color: 字符串, 图片偏色, 省略默认为\"000000\"\n        dir: 字符串, 查找方向, 可选[“左上”,”中心”,”右上”,”左下”,”右下”]这几个值, 省略默认为\"左上\"\n        sim: 数值型, 查找相似度, 省略默认为0.8\n        timeout: 数值型, 查找超时时间, 省略默认为1毫秒\n        tap: 布尔型, 找到后是否点击, 省略默认为false\n        showlog: 字符串, 日志输出显示, 可选[“显示”,”隐藏”,”show”,”hide”]这几个值, 省略默认为\"隐藏\"\n        ret: table, 参数返回值, 只能写数组变量名, 设置后, 若命令不带参数返回值, 则默认返回到此变量中, 省略默认为null\n例子: Dim IXYs() //预定义默认参数返回数组\n        //设置默认参数返回值IXYs, 若找图命令不填写参数返回值, 则默认保存在该变量中\n        //设置默认日志输出为显示状态, 后面所有 zm.FindColor() 都默认输出调试信息\n        zm.SetFindPic {\"ret\":IXYs, \"showlog\":\"显示\"}",
+		"Name" : "设置FindPic默认参数(属性表)  [参数列表]",
+		"TranslateTemplate" : "设置zm.FindPic()默认参数 $1"
+	},
+	"FindPic" : 
+	{
+		"Description" : "格式: zm.FindPic([对象][x1, y1, x2, y2, ][图片][, 偏色][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 超级找图查找屏幕上的图片, 并识别是否点击, 详见帮助信息\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, 没找到或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: x1, number, 可选, 查找范围的左上角x坐标, 省略默认为0\n参数: y1, number, 可选, 查找范围的左上角y坐标, 省略默认为0\n参数: x2, number, 可选, 查找范围的右下角x坐标, 省略默认为0\n参数: y2, number, 可选, 查找范围的右下角y坐标, 省略默认为0\n参数: 图片, string, 可选, 查找的图片路径, 多个图片路径用“|”隔开, 支持透明图, 支持PNG BMP JPG等格式\n参数: 偏色, string, 可选, 图片的偏色, 格式为“BBGGRR”, 省略默认为”000000”\n参数: 方向, string, 可选, 从指定方向开始查找, 省略默认为\"左上\", 支持[\"左上\",\"中心\",\"右上\",\"左下\",\"右下\",\"上左\",\"上右\",\"下左\",\"下右\"]这几个值\n参数: 相似度, number, 可选, 对比查找的相似度小数, 省略默认为0.8, 取值范围[0, 1.0], 越高越相似\n参数: 智能相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 查找超时, number, 可选, 最大查找耗时, 单位毫秒, 如果一次找不到, 可以限时循环查找, 省略默认为1\n参数: 是否点击, boolean, 可选, 是否需要找到后自动点击该坐标, 支持[true, false]这两个值, 省略默认为false\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续查找, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级找图([对象][x1, y1, x2, y2, ][图片][, 偏色][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [查找结果]",
+		"TranslateTemplate" : "超级找图"
+	},
+	"FindPicTap" : 
+	{
+		"Description" : "格式: zm.FindPicTap([对象][x1, y1, x2, y2, ][图片][, 偏色][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 与zm.FindPic()类似, 区别在于本命令内置找到后点击. 由于查找与点击是两个动作组成, 为方便代码阅读理解, 故新增本命令\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, 没找到或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: x1, number, 可选, 查找范围的左上角x坐标, 省略默认为0\n参数: y1, number, 可选, 查找范围的左上角y坐标, 省略默认为0\n参数: x2, number, 可选, 查找范围的右下角x坐标, 省略默认为0\n参数: y2, number, 可选, 查找范围的右下角y坐标, 省略默认为0\n参数: 图片, string, 可选, 查找的图片路径, 多个图片路径用“|”隔开, 支持透明图, 支持PNG BMP JPG等格式\n参数: 偏色, string, 可选, 图片的偏色, 格式为“BBGGRR”, 省略默认为”000000”\n参数: 方向, string, 可选, 从指定方向开始查找, 省略默认为\"左上\", 支持[\"左上\",\"中心\",\"右上\",\"左下\",\"右下\",\"上左\",\"上右\",\"下左\",\"下右\"]这几个值\n参数: 相似度, number, 可选, 对比查找的相似度小数, 省略默认为0.8, 取值范围[0, 1.0], 越高越相似\n参数: 智能相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 查找超时, number, 可选, 最大查找耗时, 单位毫秒, 如果一次找不到, 可以限时循环查找, 省略默认为1\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续查找, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级找图点击([对象][x1, y1, x2, y2, ][图片][, 偏色][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [查找结果]",
+		"TranslateTemplate" : "超级找图点击"
+	},
+	"FindPicTable" : 
+	{
+		"Description" : "格式: zm.FindPicTable(对象table)\n解释: 与zm.FindPic()类似, 参数只有一个对象数组, 可实现遍历参数的键值对象进行查找\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{\"success\":找到数量, \"fail\":没找到数量, \"键名\":{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, ...}, 全部没找到或出错返回null\n参数: 对象table, table, 把zm.FindPic()的对象参数放入table数组中, 实现遍历查找图片\n例子: Dim t = {\"怪物1\":{\"图片1.bmp\", true}, \"怪物2\":{10,20,30,40,\"图片2.bmp\"}}\n        Dim ret = zm.FindPicTable(t) //遍历查找怪物1和怪物2\n        TracePrint zm.VarInfo(ret)",
+		"Name" : "超级找图遍历(对象table)  [查找结果]",
+		"TranslateTemplate" : "超级找图遍历"
+	},
+	"FindPicEx" : 
+	{
+		"Description" : "格式: zm.FindPicEx([对象][x1, y1, x2, y2, ][图片][, 偏色][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 超级找图查找屏幕上的图片返回所有的坐标, 并识别是否点击, 详见帮助信息\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{ {id, x, y}, ..., \"xy\":{id:{ {x,y}, ...}, ...}, \"id\":{id, ...}, \"counts\":数量}, 没找到或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: x1, number, 可选, 查找范围的左上角x坐标, 省略默认为0\n参数: y1, number, 可选, 查找范围的左上角y坐标, 省略默认为0\n参数: x2, number, 可选, 查找范围的右下角x坐标, 省略默认为0\n参数: y2, number, 可选, 查找范围的右下角y坐标, 省略默认为0\n参数: 图片, string, 可选, 查找的图片路径, 多个图片路径用“|”隔开, 支持透明图, 支持PNG BMP 格式, 暂不支持JPG图片\n参数: 偏色, string, 可选, 图片的偏色, 格式为“BBGGRR”, 省略默认为”000000”\n参数: 相似度, number, 可选, 对比查找的相似度小数, 省略默认为0.8, 取值范围[0, 1.0], 越高越相似\n参数: 智能相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 查找超时, number, 可选, 最大查找耗时, 单位毫秒, 如果一次找不到, 可以限时循环查找, 省略默认为1\n参数: 是否点击, boolean, 可选, 是否需要找到后自动点击该坐标, 支持[true, false]这两个值, 省略默认为false\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续查找, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级找图返回所有坐标([对象][x1, y1, x2, y2, ][图片][, 偏色][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [查找结果]",
+		"TranslateTemplate" : "超级找图返回所有坐标"
+	},
+	"SetFindMultiColor" : 
+	{
+		"Description" : "格式: zm.SetFindMultiColor(属性表)\n解释: 设置zm.FindMultiColor()的参数默认值, 参数为键值对表, 改动后影响后面所有zm.FindMultiColor()\n返回: 参数列表, table, 返回设置后的参数列表, 失败返回null\n参数: 属性表, table, 按照指定格式对表中的键值对进行赋值, \n        例如{“sim”:0.9, “showlog”:”显示”}表示修改相似度默认为0.9, 日志输出默认为显示\n        详细属性如下:\n        x1: 数值型, 查找范围左上角x坐标, 省略默认为0\n        y1: 数值型, 查找范围左上角y坐标, 省略默认为0\n        x2: 数值型, 查找范围右下角x坐标, 省略默认为0\n        y2: 数值型, 查找范围右下角y坐标, 省略默认为0\n        dir: 字符串, 查找方向, 可选[“左上”,”中心”,”右上”,”左下”,”右下”]这几个值, 省略默认为\"左上\"\n        sim: 数值型, 查找相似度, 省略默认为0.9\n        timeout: 数值型, 查找超时时间, 省略默认为1毫秒\n        tap: 布尔型, 找到后是否点击, 省略默认为false\n        showlog: 字符串, 日志输出显示, 可选[“显示”,”隐藏”,”show”,”hide”]这几个值, 省略默认为\"隐藏\"\n        ret: table, 参数返回值, 只能写数组变量名, 设置后, 若命令不带参数返回值, 则默认返回到此变量中, 省略默认为null\n例子: Dim IXYs() //预定义默认参数返回数组\n        //设置默认参数返回值IXYs, 若多点找色命令不填写参数返回值, 则默认保存在该变量中\n        //设置默认日志输出为显示状态, 后面所有 zm.FindMultiColor() 都默认输出调试信息\n        zm.SetFindMultiColor {\"ret\":IXYs, \"showlog\":\"显示\"}",
+		"Name" : "设置FindMultiColor默认参数(属性表)  [参数列表]",
+		"TranslateTemplate" : "设置zm.FindMultiColor()默认参数 $1"
+	},
+	"FindMultiColor" : 
+	{
+		"Description" : "格式: zm.FindMultiColor([对象][x1, y1, x2, y2, ][第一点颜色, 偏移颜色组, ...][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 超级多点找色查找, 并识别是否点击, 详见帮助信息\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, 没找到或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: x1, number, 可选, 查找范围的左上角x坐标, 省略默认为0\n参数: y1, number, 可选, 查找范围的左上角y坐标, 省略默认为0\n参数: x2, number, 可选, 查找范围的右下角x坐标, 省略默认为0\n参数: y2, number, 可选, 查找范围的右下角y坐标, 省略默认为0\n参数: 第一点颜色, string, 可选, 要查找的16进制颜色, 格式为“BBGGRR”, 多个颜色用“|”隔开, 偏色使用“-”隔开, 比如”FFFFFF-101010|123456”, 后面必须跟偏移颜色组, 支持多参数, 详见示例\n参数: 偏移颜色组, string, 可选, 相对与第一个颜色坐标点的偏移颜色组, 推荐用抓抓工具快速生成, 前面必须是第一点颜色，支持多参数, 详见示例\n参数: 方向, string, 可选, 从指定方向开始查找, 省略默认为\"左上\", 支持[\"左上\",\"中心\",\"右上\",\"左下\",\"右下\",\"上左\",\"上右\",\"下左\",\"下右\"]这几个值\n参数: 相似度, number, 可选, 对比查找的相似度小数, 省略默认为0.9, 取值范围[0, 1.0], 越高越相似\n参数: 智能相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 查找超时, number, 可选, 最大查找耗时, 单位毫秒, 如果一次找不到, 可以限时循环查找, 省略默认为1\n参数: 是否点击, boolean, 可选, 是否需要找到后自动点击该坐标, 支持[true, false]这两个值, 省略默认为false\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续查找, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级多点找色([对象][x1, y1, x2, y2, ][第一点颜色, 偏移颜色组, ...][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [查找结果]",
+		"TranslateTemplate" : "超级多点找色"
+	},
+	"FindMultiColorEx" : 
+	{
+		"Description" : "格式: zm.FindMultiColorEx([对象][x1, y1, x2, y2, ][第一点颜色, 偏移颜色组, ...][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 超级多点找色返回所有坐标, 并识别是否点击, 详见帮助信息\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{ {id, x, y}, ..., \"xy\":{id:{ {x,y}, ...}, ...}, \"id\":{id, ...}, \"counts\":数量}, 没找到或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: x1, number, 可选, 查找范围的左上角x坐标, 省略默认为0\n参数: y1, number, 可选, 查找范围的左上角y坐标, 省略默认为0\n参数: x2, number, 可选, 查找范围的右下角x坐标, 省略默认为0\n参数: y2, number, 可选, 查找范围的右下角y坐标, 省略默认为0\n参数: 第一点颜色, string, 可选, 要查找的16进制颜色, 格式为“BBGGRR”, 多个颜色用“|”隔开, 偏色使用“-”隔开, 比如”FFFFFF-101010|123456”, 后面必须跟偏移颜色组, 支持多参数, 详见示例\n参数: 偏移颜色组, string, 可选, 相对与第一个颜色坐标点的偏移颜色组, 推荐用抓抓工具快速生成, 前面必须是第一点颜色，支持多参数, 详见示例\n参数: 方向, string, 可选, 从指定方向开始查找, 省略默认为\"左上\", 支持[\"左上\",\"中心\",\"右上\",\"左下\",\"右下\",\"上左\",\"上右\",\"下左\",\"下右\"]这几个值\n参数: 相似度, number, 可选, 对比查找的相似度小数, 省略默认为0.9, 取值范围[0, 1.0], 越高越相似\n参数: 智能相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 查找超时, number, 可选, 最大查找耗时, 单位毫秒, 如果一次找不到, 可以限时循环查找, 省略默认为1\n参数: 是否点击, boolean, 可选, 是否需要找到后自动点击该坐标, 支持[true, false]这两个值, 省略默认为false\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续查找, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级多点找色返回所有坐标([对象][x1, y1, x2, y2, ][第一点颜色, 偏移颜色组, ...][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [查找结果]",
+		"TranslateTemplate" : "超级多点找色返回所有坐标"
+	},
+	"FindMultiColorTap" : 
+	{
+		"Description" : "格式: zm.FindMultiColorTap([对象][x1, y1, x2, y2, ][第一点颜色, 偏移颜色组, ...][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 与zm.FindMultiColor()类似, 区别在于本命令内置找到后点击. 由于查找与点击是两个动作组成, 为方便代码阅读理解, 故新增本命令\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, 没找到或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: x1, number, 可选, 查找范围的左上角x坐标, 省略默认为0\n参数: y1, number, 可选, 查找范围的左上角y坐标, 省略默认为0\n参数: x2, number, 可选, 查找范围的右下角x坐标, 省略默认为0\n参数: y2, number, 可选, 查找范围的右下角y坐标, 省略默认为0\n参数: 第一点颜色, string, 可选, 要查找的16进制颜色, 格式为“BBGGRR”, 多个颜色用“|”隔开, 偏色使用“-”隔开, 比如”FFFFFF-101010|123456”, 后面必须跟偏移颜色组, 支持多参数, 详见示例\n参数: 偏移颜色组, string, 可选, 相对与第一个颜色坐标点的偏移颜色组, 推荐用抓抓工具快速生成, 前面必须是第一点颜色，支持多参数, 详见示例\n参数: 方向, string, 可选, 从指定方向开始查找, 省略默认为\"左上\", 支持[\"左上\",\"中心\",\"右上\",\"左下\",\"右下\",\"上左\",\"上右\",\"下左\",\"下右\"]这几个值\n参数: 相似度, number, 可选, 对比查找的相似度小数, 省略默认为0.9, 取值范围[0, 1.0], 越高越相似\n参数: 智能相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 查找超时, number, 可选, 最大查找耗时, 单位毫秒, 如果一次找不到, 可以限时循环查找, 省略默认为1\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续查找, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级多点找色点击([对象][x1, y1, x2, y2, ][第一点颜色, 偏移颜色组, ...][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [查找结果]",
+		"TranslateTemplate" : "超级多点找色点击"
+	},
+	"FindMultiColorTable" : 
+	{
+		"Description" : "格式: zm.FindMultiColorTable(对象table)\n解释: 与zm.FindMultiColor()类似, 参数只有一个对象数组, 可实现遍历参数的键值对象进行查找\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{\"success\":找到数量, \"fail\":没找到数量, \"键名\":{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, ...}, 全部没找到或出错返回null\n参数: 对象table, table, 把zm.FindMultiColor()的对象参数放入table数组中, 实现遍历多点找色\n例子: Dim t = {\"怪物1\":{\"000000\",\"1|20|123456\" true}, \"怪物2\":{10,20,30,40,\"001011\",\"55|22|ABCDEF\"}}\n        Dim ret = zm.FindMultiColorTable(t) //遍历查找怪物1和怪物2\n        TracePrint zm.VarInfo(ret)",
+		"Name" : "超级多点找色遍历(对象table)  [查找结果]",
+		"TranslateTemplate" : "超级多点找色遍历"
+	},
+	"SetFindColor" : 
+	{
+		"Description" : "格式: zm.SetFindColor(属性表)\n解释: 设置zm.FindColor()的参数默认值, 参数为键值对表, 改动后影响后面所有zm.FindColor()\n返回: 参数列表, table, 返回设置后的参数列表, 失败返回null\n参数: 属性表, table, 按照指定格式对表中的键值对进行赋值, \n        例如{“sim”:0.9, “showlog”:”显示”}表示修改相似度默认为0.9, 日志输出默认为显示\n        详细属性如下:\n        x1: 数值型, 查找范围左上角x坐标, 省略默认为0\n        y1: 数值型, 查找范围左上角y坐标, 省略默认为0\n        x2: 数值型, 查找范围右下角x坐标, 省略默认为0\n        y2: 数值型, 查找范围右下角y坐标, 省略默认为0\n        color: 字符串, 查找的十六进制颜色值, 默认为\"\"\n        dir: 字符串, 查找方向, 可选[“左上”,”中心”,”右上”,”左下”,”右下”]这几个值, 省略默认为\"左上\"\n        sim: 数值型, 查找相似度, 省略默认为1.0\n        timeout: 数值型, 查找超时时间, 省略默认为1毫秒\n        tap: 布尔型, 找到后是否点击, 省略默认为false\n        showlog: 字符串, 日志输出显示, 可选[“显示”,”隐藏”,”show”,”hide”]这几个值, 省略默认为\"隐藏\"\n        ret: table, 参数返回值, 只能写数组变量名, 设置后, 若命令不带参数返回值, 则默认返回到此变量中, 省略默认为null\n例子: Dim IXYs() //预定义默认参数返回数组\n        //设置默认参数返回值IXYs, 若找色命令不填写参数返回值, 则默认保存在该变量中\n        //设置默认日志输出为显示状态, 后面所有 zm.FindColor() 都默认输出调试信息\n        zm.SetFindColor {\"ret\":IXYs, \"showlog\":\"显示\"}",
+		"Name" : "设置FindColor默认参数(属性表)  [参数列表]",
+		"TranslateTemplate" : "设置zm.FindColor()默认参数 $1"
+	},
+	"FindColor" : 
+	{
+		"Description" : "格式: zm.FindColor([对象][x1, y1, x2, y2, ][颜色][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 超级找色查找, 并识别是否点击, 详见帮助信息\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, 没找到或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: x1, number, 可选, 查找范围的左上角x坐标, 省略默认为0\n参数: y1, number, 可选, 查找范围的左上角y坐标, 省略默认为0\n参数: x2, number, 可选, 查找范围的右下角x坐标, 省略默认为0\n参数: y2, number, 可选, 查找范围的右下角y坐标, 省略默认为0\n参数: 颜色, string, 可选, 要查找的16进制颜色，格式为“BBGGRR”，多个颜色用“|”隔开，偏色使用“-”隔开，比如”FFFFFF-101010|123456”\n参数: 方向, string, 可选, 从指定方向开始查找, 省略默认为\"左上\", 支持[\"左上\",\"中心\",\"右上\",\"左下\",\"右下\",\"上左\",\"上右\",\"下左\",\"下右\"]这几个值\n参数: 相似度, number, 可选, 对比查找的相似度小数, 省略默认为1.0, 取值范围[0, 1.0], 越高越相似\n参数: 智能相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 查找超时, number, 可选, 最大查找耗时, 单位毫秒, 如果一次找不到, 可以限时循环查找, 省略默认为1\n参数: 是否点击, boolean, 可选, 是否需要找到后自动点击该坐标, 支持[true, false]这两个值, 省略默认为false\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续查找, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级找色([对象][x1, y1, x2, y2, ][颜色][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [查找结果]",
+		"TranslateTemplate" : "超级找色"
+	},
+	"FindColorEx" : 
+	{
+		"Description" : "格式: zm.FindColorEx([对象][x1, y1, x2, y2, ]颜色[, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 超级找色返回所有坐标, 并识别是否点击, 详见帮助信息\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{ {id, x, y}, ..., \"xy\":{id:{ {x,y}, ...}, ...}, \"id\":{id, ...}, \"counts\":数量}, 没找到或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: x1, number, 可选, 查找范围的左上角x坐标, 省略默认为0\n参数: y1, number, 可选, 查找范围的左上角y坐标, 省略默认为0\n参数: x2, number, 可选, 查找范围的右下角x坐标, 省略默认为0\n参数: y2, number, 可选, 查找范围的右下角y坐标, 省略默认为0\n参数: 颜色, string, 可选, 要查找的16进制颜色，格式为“BBGGRR”，多个颜色用“|”隔开，偏色使用“-”隔开，比如”FFFFFF-101010|123456”\n参数: 相似度, number, 可选, 对比查找的相似度小数, 省略默认为0.9, 取值范围[0, 1.0], 越高越相似\n参数: 智能相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 查找超时, number, 可选, 最大查找耗时, 单位毫秒, 如果一次找不到, 可以限时循环查找, 省略默认为1\n参数: 是否点击, boolean, 可选, 是否需要找到后自动点击该坐标, 支持[true, false]这两个值, 省略默认为false\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续查找, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级找色返回所有坐标([对象][x1, y1, x2, y2, ]颜色[, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [查找结果]",
+		"TranslateTemplate" : "超级找色返回所有坐标"
+	},
+	"FindColorTap" : 
+	{
+		"Description" : "格式: zm.FindColorTap([对象][x1, y1, x2, y2, ][颜色][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 与zm.FindColor()类似, 区别在于本命令内置找到后点击. 由于查找与点击是两个动作组成, 为方便代码阅读理解, 故新增本命令\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, 没找到或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: x1, number, 可选, 查找范围的左上角x坐标, 省略默认为0\n参数: y1, number, 可选, 查找范围的左上角y坐标, 省略默认为0\n参数: x2, number, 可选, 查找范围的右下角x坐标, 省略默认为0\n参数: y2, number, 可选, 查找范围的右下角y坐标, 省略默认为0\n参数: 颜色, string, 可选, 要查找的16进制颜色，格式为“BBGGRR”，多个颜色用“|”隔开，偏色使用“-”隔开，比如”FFFFFF-101010|123456”\n参数: 方向, string, 可选, 从指定方向开始查找, 省略默认为\"左上\", 支持[\"左上\",\"中心\",\"右上\",\"左下\",\"右下\",\"上左\",\"上右\",\"下左\",\"下右\"]这几个值\n参数: 相似度, number, 可选, 对比查找的相似度小数, 省略默认为1.0, 取值范围[0, 1.0], 越高越相似\n参数: 智能相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 查找超时, number, 可选, 最大查找耗时, 单位毫秒, 如果一次找不到, 可以限时循环查找, 省略默认为1\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续查找, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级找色点击([对象][x1, y1, x2, y2, ][颜色][, 方向][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [查找结果]",
+		"TranslateTemplate" : "超级找色点击"
+	},
+	"FindColorTable" : 
+	{
+		"Description" : "格式: zm.FindColorTable(对象table)\n解释: 与zm.FindColor()类似, 参数只有一个对象数组, 可实现遍历参数的键值对象进行查找\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{\"success\":找到数量, \"fail\":没找到数量, \"键名\":{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, ...}, 全部没找到或出错返回null\n参数: 对象table, table, 把zm.FindColor()的对象参数放入table数组中, 实现遍历多点找色\n例子: Dim t = {\"怪物1\":{\"000000\", true}, \"怪物2\":{10,20,30,40,\"001011\"}}\n        Dim ret = zm.FindColorTable(t) //遍历查找怪物1和怪物2\n        TracePrint zm.VarInfo(ret)",
+		"Name" : "超级找色遍历(对象table)  [查找结果]",
+		"TranslateTemplate" : "超级找色遍历"
+	},
+	"SetFindStr" : 
+	{
+		"Description" : "格式: zm.SetFindStr(属性表)\n解释: 设置zm.FindStr()的参数默认值, 参数为键值对表, 改动后影响后面所有zm.FindStr()\n返回: 参数列表, table, 返回设置后的参数列表, 失败返回null\n参数: 属性表, table, 按照指定格式对表中的键值对进行赋值, \n        例如{“sim”:0.8, “showlog”:”显示”}表示修改相似度默认为0.8, 日志输出默认为显示\n        详细属性如下:\n        x1: 数值型, 查找范围左上角x坐标, 省略默认为0\n        y1: 数值型, 查找范围左上角y坐标, 省略默认为0\n        x2: 数值型, 查找范围右下角x坐标, 省略默认为0\n        y2: 数值型, 查找范围右下角y坐标, 省略默认为0\n        color: 字符串, 文字颜色, 默认为\"000000\"\n        dir: 字符串, 查找方向, 可选[“左上”,”中心”,”右上”,”左下”,”右下”]这几个值, 省略默认为\"左上\"\n        sim: 数值型, 查找相似度, 省略默认为0.9\n        timeout: 数值型, 查找超时时间, 省略默认为1毫秒\n        tap: 布尔型, 找到后是否点击, 省略默认为false\n        showlog: 字符串, 日志输出显示, 可选[“显示”,”隐藏”,”show”,”hide”]这几个值, 省略默认为\"隐藏\"\n        ret: table, 参数返回值, 只能写数组变量名, 设置后, 若命令不带参数返回值, 则默认返回到此变量中, 省略默认为null\n例子: Dim IXYs() //预定义默认参数返回数组\n        //设置默认参数返回值IXYs, 若找字命令不填写参数返回值, 则默认保存在该变量中\n        //设置默认日志输出为显示状态, 后面所有 zm.FindStr() 都默认输出调试信息\n        zm.SetFindStr {\"ret\":IXYs, \"showlog\":\"显示\"}",
+		"Name" : "设置FindStr默认参数(属性表)  [参数列表]",
+		"TranslateTemplate" : "设置zm.FindStr()默认参数 $1"
+	},
+	"FindStr" : 
+	{
+		"Description" : "格式: zm.FindStr([对象][x1, y1, x2, y2, ][文字][, 颜色][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 字库文件名][, 字库序号][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 超级找字查找, 并识别是否点击, 详见帮助信息\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name,\"miss\":miss}, 没找到或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: x1, number, 可选, 查找范围的左上角x坐标, 省略默认为0\n参数: y1, number, 可选, 查找范围的左上角y坐标, 省略默认为0\n参数: x2, number, 可选, 查找范围的右下角x坐标, 省略默认为0\n参数: y2, number, 可选, 查找范围的右下角y坐标, 省略默认为0\n参数: 文字, string, 可选, 查找的文字内容, 多个文字用“|”隔开, 可以用$开头表示文字参数\n参数: 颜色, string, 可选, 要文字的16进制颜色，格式为“BBGGRR”，多个颜色用“|”隔开，偏色使用“-”隔开，比如”FFFFFF-101010|123456”\n参数: 相似度, number, 可选, 对比查找的相似度小数, 省略默认为0.9, 取值范围[0, 1.0], 越高越相似\n参数: 智能相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 查找超时, number, 可选, 最大查找耗时, 单位毫秒, 如果一次找不到, 可以限时循环查找, 省略默认为1\n参数: 字库文件名, string, 可选, 填写字库的文件名即可, 附件路径\"Attachment:\"可以省略不写\n参数: 字库序号, string, 可选, 可选, 切换字库序号, 0号字库填写\"#0\", 以此类推, 当填写字库文件名, 不填字库序号时, 默认设置并使用9号字库\n参数: 是否点击, boolean, 可选, 是否需要找到后自动点击该坐标, 支持[true, false]这两个值, 省略默认为false\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续查找, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级找字([对象][x1, y1, x2, y2, ][文字][, 颜色][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 字库文件名][, 字库序号][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [查找结果]",
+		"TranslateTemplate" : "超级找字"
+	},
+	"FindStrTap" : 
+	{
+		"Description" : "格式: zm.FindStrTap([对象][x1, y1, x2, y2, ][文字][, 颜色][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 字库文件名][, 字库序号][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 与zm.FindStr()类似, 区别在于本命令内置找到后点击. 由于查找与点击是两个动作组成, 为方便代码阅读理解, 故新增本命令\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, 没找到或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: x1, number, 可选, 查找范围的左上角x坐标, 省略默认为0\n参数: y1, number, 可选, 查找范围的左上角y坐标, 省略默认为0\n参数: x2, number, 可选, 查找范围的右下角x坐标, 省略默认为0\n参数: y2, number, 可选, 查找范围的右下角y坐标, 省略默认为0\n参数: 文字, string, 可选, 查找的文字内容, 多个文字用“|”隔开, 可以用$开头表示文字参数\n参数: 颜色, string, 可选, 要文字的16进制颜色，格式为“BBGGRR”，多个颜色用“|”隔开，偏色使用“-”隔开，比如”FFFFFF-101010|123456”\n参数: 相似度, number, 可选, 对比查找的相似度小数, 省略默认为0.9, 取值范围[0, 1.0], 越高越相似\n参数: 智能相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 查找超时, number, 可选, 最大查找耗时, 单位毫秒, 如果一次找不到, 可以限时循环查找, 省略默认为1\n参数: 字库文件名, string, 可选, 填写字库的文件名即可, 附件路径\"Attachment:\"可以省略不写\n参数: 字库序号, string, 可选, 可选, 切换字库序号, 0号字库填写\"#0\", 以此类推, 当填写字库文件名, 不填字库序号时, 默认设置并使用9号字库\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续查找, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级找字点击([对象][x1, y1, x2, y2, ][文字][, 颜色][, 相似度[, 智能相似度[, 相似度步长]]][, 查找超时][, 字库文件名][, 字库序号][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [查找结果]",
+		"TranslateTemplate" : "超级找字点击"
+	},
+	"FindStrTable" : 
+	{
+		"Description" : "格式: zm.FindStrTable(对象table)\n解释: 与zm.FindStr()类似, 参数只有一个对象数组, 可实现遍历参数的键值对象进行查找\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{\"success\":找到数量, \"fail\":没找到数量, \"键名\":{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, ...}, 全部没找到或出错返回null\n参数: 对象table, table, 把zm.FindStr()的对象参数放入table数组中, 实现遍历多点找色\n例子: Dim t = {\"怪物1\":{\"史莱姆\",\"000000\",true}, \"怪物2\":{10,20,30,40,\"黑龙\",\"123456\"}}\n        Dim ret = zm.FindStrTable(t) //遍历查找怪物1和怪物2\n        TracePrint zm.VarInfo(ret)",
+		"Name" : "超级找字遍历(对象table)  [查找结果]",
+		"TranslateTemplate" : "超级找字遍历"
+	},
+	"SetCmpColorEx" : 
+	{
+		"Description" : "格式: zm.SetCmpColorEx(属性表)\n解释: 设置zm.CmpColorEx()的参数默认值, 参数为键值对表, 改动后影响后面所有zm.CmpColorEx()\n返回: 参数列表, table, 返回设置后的参数列表, 失败返回null\n参数: 属性表, table, 按照指定格式对表中的键值对进行赋值, \n        例如{“sim”:0.8, “showlog”:”显示”}表示修改相似度默认为0.8, 日志输出默认为显示\n        详细属性如下:\n        sim: 数值型, 颜色相似度, 省略默认为0.9\n        numsim: 数值型, 数量相似度, 省略默认为1.0\n        timeout: 数值型, 对比超时时间, 省略默认为1毫秒\n        tap: 布尔型, 对比成功后是否点击, 省略默认为false\n        showlog: 字符串, 日志输出显示, 可选[“显示”,”隐藏”,”show”,”hide”]这几个值, 省略默认为\"隐藏\"\n        ret: table, 参数返回值, 只能写数组变量名, 设置后, 若命令不带参数返回值, 则默认返回到此变量中, 省略默认为null\n例子: Dim IXYs() //预定义默认参数返回数组\n        //设置默认参数返回值IXYs, 若多点找色命令不填写参数返回值, 则默认保存在该变量中\n        //设置默认日志输出为显示状态, 后面所有 zm.CmpColorEx() 都默认输出调试信息\n        zm.SetCmpColorEx {\"ret\":IXYs, \"showlog\":\"显示\"}",
+		"Name" : "设置CmpColorEx默认参数(属性表)  [参数列表]",
+		"TranslateTemplate" : "设置zm.CmpColorEx()默认参数 $1"
+	},
+	"CmpColorEx" : 
+	{
+		"Description" : "格式: zm.CmpColorEx([对象][颜色组, ...][, 颜色相似度[, 智能颜色相似度[, 颜色相似度步长]]][, 数量相似度][, 对比超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 超级多点比色, 并识别是否点击, 详见帮助信息\n返回: 对比结果, table, 返回符合要求的第一个点坐标并保存到表中, 格式为{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, 对比失败或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: 颜色组, string, 可选, 要对比的颜色组内容, 格式为\"x|y|bgr,...\", 与抓抓上的多点比色里颜色描述相同, 支持多个颜色组参数, 找到任何一个就返回结果\n参数: 颜色相似度, number, 可选, 对比的相似度小数, 省略默认为0.9, 取值范围[0, 1.0], 越高越相似\n参数: 智能颜色相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 颜色相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 数量相似度, string, 可选, 表示一个颜色组中符合要求点的比例, 省略默认为1.0, 取值范围[0, 1.0], 越高越相似\n参数: 对比超时, number, 可选, 最大对比耗时, 单位毫秒, 如果一次对比失败, 可以限时循环对比, 省略默认为1\n参数: 是否点击, boolean, 可选, 是否需要对比成功后自动点击第一个点的坐标, 支持[true, false]这两个值, 省略默认为false\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续对比, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级多点比色([对象][颜色组, ...][, 颜色相似度[, 智能颜色相似度[, 颜色相似度步长]]][, 数量相似度][, 对比超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [对比结果]",
+		"TranslateTemplate" : "超级多点比色"
+	},
+	"CmpColorExTap" : 
+	{
+		"Description" : "格式: zm.CmpColorExTap([对象][颜色组, ...][, 颜色相似度[, 智能颜色相似度[, 颜色相似度步长]]][, 数量相似度][, 对比超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])\n解释: 与zm.CmpColorEx()类似, 区别在于本命令内置对比成功后点击. 由于对比与点击是两个动作组成, 为方便代码阅读理解, 故新增本命令\n返回: 对比结果, table, 返回符合要求的第一个点坐标并保存到表中, 格式为{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, 对比失败或出错返回null\n参数: 对象, table, 可选, 把所有参数放入一个table中传入, 若后面跟有其他参数, 则会对应覆盖对象数据, 省略默认为null\n参数: 颜色组, string, 可选, 要对比的颜色组内容, 格式为\"x|y|bgr,...\", 与抓抓上的多点比色里颜色描述相同, 支持多个颜色组参数, 找到任何一个就返回结果\n参数: 颜色相似度, number, 可选, 对比的相似度小数, 省略默认为0.9, 取值范围[0, 1.0], 越高越相似\n参数: 智能颜色相似度, number, 可选, 与相似度组成组成智能相似计算范围, 适合图色变化大的情况, 省略默认取值与相似度相同, 取值范围[0, 1.0], 越高越相似\n参数: 颜色相似度步长, number, 可选, 智能相似度调节变化间隔, 必须写在相似度后面, 省略默认为0.05, 取值范围[0, 1.0]\n参数: 数量相似度, number, 可选, 表示一个颜色组中符合要求点的比例, 省略默认为1.0, 取值范围[0, 1.0], 越高越相似\n参数: 对比超时, number, 可选, 最大对比耗时, 单位毫秒, 如果一次对比失败, 可以限时循环对比, 省略默认为1\n参数: 是否点击, boolean, 可选, 是否需要对比成功后自动点击第一个点的坐标, 支持[true, false]这两个值, 省略默认为false\n参数: 点击坐标, string, 可选, 点击修改后的坐标, 格式\"±x,±y,t\", 省略为找到的坐标, t是可选的, 表示点击后延时毫秒\n        例如\"100,100\"表示固定点击坐标100,100\n        \"+10,-10\"表示偏移点击找到的x+10,y-10位置\n        \"10,10,2000\"表示点击10,10坐标后延时2000毫秒\n        该参数会受zm.SetTap 设置超级点击影响\n参数: 显示日志, string, 可选, 输出调试日志信息, 支持[\"显示\",\"隐藏\",\"show\",\"hide\"]这几个值, 省略默认为”隐藏”\n参数: 输出行号, string, 可选, 格式为\"_\"开头后跟行号, 比如\"_10\"表示第10行代码, 输出调试信息窗口显示第几行代码, 需开启显示日志才有效\n参数: 备注, string, 可选, 格式为\"@\"开头后跟内容, 比如\"@拾取屠龙刀\", 输出调试信息窗口就会增加这条内容, 若连续两个\"@@\"则表示在浮窗中显示信息, 需要开启显示日志才有效\n参数: 等待消失, number, 可选, 填写-1禁用或-2启用, -2表示找到后或点击后继续对比, 直到找不到或消失超时, 启用后可通过返回值的\"miss\"键名查看是否消失, 省略默认为-1\n参数: 消失超时, number, 可选, 填写负数, 表示等待消失的超时时间, 单位毫秒, 注意必须填写负数, 不可填-1和-2, 省略默认为-2000\n参数: 参数返回值, table, 可选, 只能传入数组变量名, 用于保存查找结果, 格式与命令返回值相同\n例子: //该命令用法多变, 请查看详细帮助信息",
+		"Name" : "超级多点比色([对象][颜色组, ...][, 颜色相似度[, 智能颜色相似度[, 颜色相似度步长]]][, 数量相似度][, 对比超时][, 是否点击][, 点击坐标][, 显示日志][, 输出行号][, 备注][, 等待消失][, 消失超时][, 参数返回值])  [对比结果]",
+		"TranslateTemplate" : "超级多点比色点击"
+	},
+	"CmpColorExTable" : 
+	{
+		"Description" : "格式: zm.CmpColorExTable(对象table)\n解释: 与zm.CmpColorEx()类似, 参数只有一个对象数组, 可实现遍历参数的键值对象进行查找\n返回: 查找结果, table, 找到返回结果保存到表中, 格式为{\"success\":找到数量, \"fail\":没找到数量, \"键名\":{id, x, y, name, \"id\":id, \"x\":x, \"y\":y, \"name\":name, \"miss\":miss}, ...}, 全部没找到或出错返回null\n参数: 对象table, table, 把zm.CmpColorEx()的对象参数放入table数组中, 实现遍历多点找色\n例子: Dim t = {\"怪物1\":{\"@史莱姆\",\"12|432|000000,24|42|123456\",true}, \"怪物2\":{\"@黑龙\",\"32|42|123456|ABEACD\"}}\n        Dim ret = zm.CmpColorExTable(t) //遍历比较怪物1和怪物2\n        TracePrint zm.VarInfo(ret)",
+		"Name" : "超级多点比色遍历(对象table)  [查找结果]",
+		"TranslateTemplate" : "超级多点比色遍历"
+	},
+	"ThreadStatus" : 
+	{
+		"Description" : "格式: zm.ThreadStatus(线程ID)\n解释: 获取多线程的状态, 例如运行中, 被取消了等等\n返回: 线程状态, string, 返回以下几种字符串\n        pending 未启动\n        running 运行中\n        waiting 等待执行\n        done 正常结束\n        error 出错了\n        cancelled 被强制停止了\n        null 参数不是线程ID\n参数: 线程ID, userdata, 启动线程后的返回值\n例子: Dim ThreadID\n        ThreadID = Thread.Start(threadA)\n        For 3\n            TracePrint zm.ThreadStatus(ThreadID)\n            Delay 1000\n        Next\n        Thread.Stop ThreadID\n        TracePrint zm.ThreadStatus(ThreadID)\n        Sub threadA()\n            For 5\n                TracePrint \"执行多线程中...\"\n                Delay 1000\n            Next\n        End Sub",
+		"Name" : "获取线程状态(线程ID)  [线程状态]",
+		"TranslateTemplate" : "获取线程 $1 的状态"
+	},
+	"ThreadWait" : 
+	{
+		"Description" : "格式: zm.ThreadWait(线程ID[, 等待毫秒])\n解释: 暂停当前线程, 等待指定线程执行完毕或超时\n返回: 无\n参数: 线程ID, userdata, 启动线程后的返回值\n参数: 等待毫秒, number, 可选，等待超时时间, 单位毫秒, 省略默认为null, 表示不限时\n例子: //例子过长, 请查看命令帮助",
+		"Name" : "限时等待线程(线程ID[, 等待毫秒])",
+		"TranslateTemplate" : "等待 $1 线程 $2 毫秒"
+	},
+	"SQLiteCreateTbl" : 
+	{
+		"Description" : "格式: zm.SQLiteCreateTbl(数据库路径, 数据表名, 字段名)\n解释: 创建SQLite3数据库的数据表, 若数据库文件不存在, 则自动创建\n返回: 创建结果, boolean, 成功返回true, 失败返回false, 出错返回null\n参数: 数据库路径, string, 数据库文件所在路径\n参数: 数据表名, string, 要创建的数据表名\n参数: 字段名, table, 要创建的字段名, 后面可跟数据类型, 例如{“id INTEGER”,”name TEXT”}\n例子: Dim ret = zm.SQLiteCreateTbl(GetSdcardDir() & \"/_ZM_.db\", \"student\", {\"id INTEGER\",\"name TEXT\"})",
+		"Name" : "创建SQLite3数据表(数据库路径, 数据表名, 字段名)  [创建结果]",
+		"TranslateTemplate" : "在数据库 $1 中创建包含字段 $3 的表 $2"
+	},
+	"SQLiteDropTbl" : 
+	{
+		"Description" : "格式: zm.SQLiteDropTbl(数据库路径, 数据表名)\n解释: 删除SQLite3数据库的数据表\n返回: 删除结果, boolean, 成功返回true, 失败返回false, 出错返回null\n参数: 数据库路径, string, 数据库文件所在路径\n参数: 数据表名, string, 要删除的数据表名\n例子: Dim ret = zm.SQLiteDropTbl(GetSdcardDir() & \"/_ZM_.db\", \"student\")",
+		"Name" : "删除SQLite3数据表(数据库路径, 数据表名)  [删除结果]",
+		"TranslateTemplate" : "在数据库 $1 中删除表 $2"
+	},
+	"SQLiteAddField" : 
+	{
+		"Description" : "格式: zm.SQLiteAddField(数据库路径, 数据表名, 字段名)\n解释: 追加SQLite3数据表的字段名, 若数据库不存在或字段名已存在, 则返回false\n返回: 创建结果, boolean, 成功返回true, 失败返回false, 出错返回null\n参数: 数据库路径, string, 数据库文件所在路径\n参数: 数据表名, string, 要创建的数据表名\n参数: 字段名, table, 要追加的字段名, 后面可跟数据类型, 例如{“id INTEGER”}, 暂时只支持一次添加一个字段\n例子: Dim ret = zm.SQLiteCreateTbl(GetSdcardDir() & \"/_ZM_.db\", \"student\", {\"id INTEGER\",\"name TEXT\"})\n        ret = zm.SQLiteAddField(GetSdcardDir() & \"/_ZM_.db\", \"student\", {\"age INTEGER\"})",
+		"Name" : "追加SQLite3字段(数据库路径, 数据表名, 字段名)  [创建结果]",
+		"TranslateTemplate" : "在数据库 $1  的表 $2中追加字段 $3"
+	},
+	"RegExMatch" : 
+	{
+		"Description" : "格式: zm.RegExMatch(源字符串, 正则表达式[, 返回结果])\n解释: Lua的正则匹配（也叫模式匹配）, 获取匹配成功的结果并保存到数组中\n返回: 匹配结果, table, 成功返回匹配的结果保存到数组中, 失败返回null\n参数: 源字符串, string, 待匹配查找的字符串内容\n参数: 正则表达式, string, 匹配模式, 与Javascript或Perl等正则不同, 详见Lua匹配模式\n参数: 返回结果, table, 可选, 只能填写数据类型为数组的变量, 匹配失败返回最大下标为-1的数组\n例子: Dim ret() //返回表参数, 可以省略该参数\n        Dim s = \"紫猫老师QQ:345911220, Email:345911220@qq.com\"\n        Dim data = zm.RegExMatch(s, \"%d+\", ret)\n        TracePrint zm.VarInfo(data)",
+		"Name" : "正则匹配(源字符串, 正则表达式[, 返回结果])  [匹配结果]",
+		"TranslateTemplate" : "在 $1 中正则匹配 $2"
+	},
+	"RegExMatchEx" : 
+	{
+		"Description" : "格式: zm.RegExMatchEx(源字符串, 正则表达式[, 返回结果])\n解释: 捕获子匹配结果, 并保存到二维数组中\n返回: 匹配结果, table, 成功返回捕获的子匹配结果保存到二维数组中, 失败返回null\n参数: 源字符串, string, 待匹配查找的字符串内容\n参数: 正则表达式, string, 匹配模式, 必须含有子匹配, 与Javascript或Perl等正则不同, 详见Lua匹配模式\n参数: 返回结果, table, 可选, 只能填写数据类型为数组的变量, 匹配失败返回最大下标为-1的数组\n例子: Dim s = \"紫猫老师QQ:345911220, Email:345911220@qq.com\"\n        Dim data = zm.RegExMatchEx(s, \"QQ:(%d+).-Email:(%w-@%w-%.%w+)\")\n        TracePrint zm.VarInfo(data)",
+		"Name" : "正则子匹配(源字符串, 正则表达式[, 返回结果])  [匹配结果]",
+		"TranslateTemplate" : "在 $1 中正则子匹配 $2"
+	},
+	"RegExReplace" : 
+	{
+		"Description" : "格式: zm.RegExReplace(源字符串, 正则表达式, 替换内容[, 替换次数])\n解释: 对源字符串进行模式匹配并替换内容\n返回: 新字符串, string, 成功返回模式匹配替换后的内容, 失败返回null\n参数: 源字符串, string, 待匹配查找的字符串内容\n参数: 正则表达式, string, 匹配模式, 与Javascript或Perl等正则不同, 详见Lua匹配模式\n参数: 替换内容, string或table, 字符串表示替换后的内容, table表示以匹配结果为键名，从表中查找对应的键值替换\n参数: 替换次数, number, 可选, 匹配成功后替换的次数, 省略默认为null, 表示全替换\n例子: Dim data = zm.RegExReplace(\"紫猫老师QQ:12345\", \"%d+\", \"345911220\")",
+		"Name" : "正则替换(源字符串, 正则表达式, 替换内容[, 替换次数])  [新字符串]",
+		"TranslateTemplate" : "在 $1 中正则匹配 $2 结果并替换 $3"
+	},
+	"GetUIValue" : 
+	{
+		"Description" : "格式: zm.GetUIValue(控件名)\n解释: 读取UI动态界面控件的值, 与UI.GetValue(), 本命令直接以(数值型/布尔型/字符串)形式返回结果\n返回: 控件值, 任意类型, 由控件决定对应的数据类型, 返回控件值\n参数: 控件名, string, UI界面的控件名\n例子: '创建一个名称为\"layout1\"的布局控件\n        UI.NewLayout (\"layout1\")\n        '以下例子为分别创建文字框、输入框、按钮等控件并使用获取GetValue它们的值\n        UI.AddTextView(\"layout1\", \"文字框1\", \"姓名：\")\n        Dim 内容= zm.GetUIValue(\"文字框1\")",
+		"Name" : "读取UI控件值(控件名)  [控件值]",
+		"TranslateTemplate" : "读取UI控件 $1 的值"
+	},
+	"Init" : 
+	{
+		"Description" : "格式: zm.Init()\n解释: 初始化插件环境, 只需要执行一次\n返回: 无\n参数: 无\n例子: zm.Init()",
+		"Name" : "初始化插件环境()",
+		"TranslateTemplate" : "初始化紫猫插件环境"
+	},
+	"Test" : 
+	{
+		"Description" : "格式: zm.Test()\n解释: 插件测试函数, 请勿调用\n返回: 无\n参数: 无\n例子: 无",
+		"Name" : "紫猫老师专用测试函数()",
+		"TranslateTemplate" : "紫猫老师专用测试函数"
+	},
+}

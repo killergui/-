@@ -25,5 +25,10 @@
 	{
 		"Description" : null,
 		"TranslateTemplate" : null
+	},
+	"野外顶部是否收起" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
 	}
 }

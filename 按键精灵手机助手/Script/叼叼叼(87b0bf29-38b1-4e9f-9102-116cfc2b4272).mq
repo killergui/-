@@ -3,6 +3,7 @@ Import "场景相关操作.mql"
 Import "任务.mql"
 Import "小红点.mql"
 Import "类型转换.mql"
+Import "zm.luae"
 
 //初始化全局信息 
 Rem 开始
@@ -46,7 +47,7 @@ Dim 元宝捐献坐标X, 元宝捐献坐标Y, 皇榜任务一坐标X, 皇榜任务一坐标Y, 皇榜任务二坐
 Dim 普通副本坐标X, 普通副本坐标Y, 精英副本坐标X, 精英副本坐标Y, 名将副本坐标X, 名将副本坐标Y, 章节选择坐标X, 章节选择坐标Y, 宝箱1坐标X, 宝箱1坐标Y, 宝箱2坐标X, 宝箱2坐标Y
 Dim 宝箱3坐标X, 宝箱3坐标Y, 上一页坐标X, 上一页坐标Y, 下一页坐标X, 下一页坐标Y, 挑战坐标X, 挑战坐标Y, 进入扫荡坐标X, 进入扫荡坐标Y, 开始扫荡坐标X, 开始扫荡坐标Y
 Dim 加号坐标X, 加号坐标Y, 章节位置1坐标X, 章节位置1坐标Y, 章节位置2坐标X, 章节位置2坐标Y, 章节位置3坐标X, 章节位置3坐标Y, 章节位置4坐标X, 章节位置4坐标Y
-Dim 减号坐标X, 减号坐标Y, 章节位置5坐标X, 章节位置5坐标Y, 章节位置6坐标X, 章节位置6坐标Y, 打最后几章副本
+Dim 减号坐标X, 减号坐标Y, 章节位置5坐标X, 章节位置5坐标Y, 章节位置6坐标X, 章节位置6坐标Y
 Dim 自动坐标X, 自动坐标Y, 速度坐标X, 速度坐标Y, 暂停坐标X, 暂停坐标Y, 战斗跳过坐标X, 战斗跳过坐标Y, 离开坐标X, 离开坐标Y, 单挑跳过坐标X, 单挑跳过坐标Y, 剧情跳过坐标X, 剧情跳过坐标Y
 
 Dim 已完成皇榜任务次数,每日皇榜任务次数
@@ -61,12 +62,13 @@ Dim 攻击图标位置X,攻击图标位置Y
 Dim 副本点击坐标偏移X, 副本点击坐标偏移Y
 副本点击坐标偏移X = -60 : 副本点击坐标偏移Y = 40
 Dim 上次推关结果, 体力消耗方式
-Dim 队伍状态数组, 现有士兵数量, 兵营上限, 现有伤兵数量, 伤兵上限, 野外主城坐标X, 野外主城坐标Y, 派遣出征次数, 采集次数, 实际出征次数
+Dim 队伍状态数组, 现有士兵数量, 兵营上限, 现有伤兵数量, 伤兵上限, 野外主城坐标X, 野外主城坐标Y, 派遣出征次数, 采集次数, 实际出征次数, 寻访次数
 Dim 启动时间, 累计运行时长, 循环计时1, 循环计时2, 单次循环计时1, 单次循环计时2, 派遣循环时长, 循环时长1, 循环时长2
 派遣出征次数 = 0 : 采集次数 = 0
-循环时长1 = CLng(ReadUIConfig("循环时间", 0)) * 60 * 1000
+//循环时长1 = CLng(ReadUIConfig("循环时间", 0)) * 60 * 1000
+循环时长1 = 10 * 60 * 1000
 循环时长2 = 3 * 60 * 1000
-派遣循环时长 = 60000
+派遣循环时长 = ReadUIConfig("派遣循环时间")
 ShowMessage "加载配置文件", 1000, 50, 620
 Call 加载配置文件()
 
@@ -80,24 +82,29 @@ Delay 1000
 已完成皇榜任务次数 = 0
 Call 定位主城坐标()
 Call 读取VIP等级()
+
 Rem 每日
 
 ShowMessage "开始执行每日必做", 1000, 50, 620
 Delay 1000
-Call 小红点处理()
 Call 接皇榜任务()
-Call 完成皇榜任务()
-Call 派遣队伍()
 Call 祭祀()
-Call 推关()
-Call 小红点处理()
 Call 收取()
 Call 检查成就()
+Call 小红点处理()
 Call 建筑()
 Call 宴请()
-Call 消耗体力()
 Call 商城购买()
 Call 进市场界面()
+Call 升级军械()
+Call 进计略界面()
+Call 强化前6个人装备()
+Call 推关()
+Call 消耗体力()
+Call 完成皇榜任务()
+Call 派遣队伍()
+Call 领取季节奖励()
+Call 铸币()
 
 循环计时1 = Time()
 循环计时2 = Time()
@@ -114,6 +121,7 @@ End If
 
 Call 完成皇榜任务()
 Call 派遣队伍()
+Call 领取季节奖励()
 Call 军团小红点处理()
 
 累计运行时长 = Int((Time() - 启动时间) / 60)
@@ -134,11 +142,13 @@ If 单次循环计时2 >= 循环时长2 Then
     Call 宴请()
     Call 进市场界面()
     Call 升级军械()
+    Call 进计略界面()
+    Call 强化前6个人装备()
+    Call 铸币()
     循环计时2 = Time()
 End If
 
-ShowMessage "派遣出征次数" & 派遣出征次数 & "\n" & "采集次数" & 采集次数&"\n" &"运行时长"&累计运行时长, 10000, 500, 310
-
+ShowMessage "派遣出征次数" & 派遣出征次数 & "\n" & "采集次数" & 采集次数& "\n" & "寻访次数" & 寻访次数&"\n" &"运行时长"&累计运行时长, 10000, 500, 310
 
 If 累计运行时长 > 60 Then 
     派遣出征次数 = 0
@@ -155,20 +165,19 @@ Goto 循环
 
 Sub 初始化杂项配置
 	
-    打最后几章副本 = Int(ReadUIConfig("打最后几章副本", 1))
     //读取上次运行时间,决定数据是否要更新
     Dim 上次运行日期, 时间差, 本次运行日期, temp1, temp2
     
     上次运行日期 = ReadConfig("上次运行日期", 0)
     TracePrint "上次运行日期"&上次运行日期
-    ShowMessage "上次运行日期", 1000, 50, 620
+    ShowMessage "上次运行日期"&上次运行日期, 1000, 50, 620
     本次运行日期 = Date()
     TracePrint 本次运行日期
     temp1 = Int(Right(上次运行日期, 2))
     temp2 = Int(Right(本次运行日期, 2))
     TracePrint temp1,temp2
     
-    时间差 = temp1
+    时间差 = temp1 - temp2
     If ReadUIConfig("是否清理数据") = True Or 时间差 <> 0 Then 
         //重置祭祀数据
         WriteConfig "是否已经祭祀", False, True
@@ -180,7 +189,9 @@ Sub 初始化杂项配置
         WriteConfig "是否已接皇榜", False, True
         WriteConfig "已完成皇榜任务次数", 0
         //重置签到
-        WriteConfig "是否已签到", False ,True
+        WriteConfig "是否已签到", False, True
+        //重置铸币
+        WriteConfig "今日是否铸币", False, True
     End If
 
     
@@ -551,7 +562,7 @@ Sub 读取VIP等级()
 End Sub
 
 Sub 回主城(类型)
-    //回主城类型:1 = 不关心初始位置, 2 = 必须回到登录时的初始位置, 3 = 野外主城
+    //回主城类型:1 = 不关心初始位置, 2 = 必须回到登录时的初始位置
     Select Case 类型
     Case 1
         容错参数 = 0
@@ -593,9 +604,33 @@ Sub 回主城(类型)
                 Goto 回主城2
             End If
         End If
-    Case 3
+    End Select
+    TracePrint "当前在主城中"
+End Sub
+
+Sub 去野外(类型)
+    //去野外类型:1 = 不关心初始位置, 2 = 必须回到初始位置
+    Select Case 类型
+    Case 1
         容错参数 = 0
-        Rem 回主城3
+        Rem 去野外1
+        所在场景 = 场景相关操作.所在场景()
+        If 所在场景 = 1 Then 
+            Touch 地图坐标X, 地图坐标Y, 100
+            Delay 3000
+        ElseIf 所在场景 = 2 Then
+            TracePrint "在野外啦!"
+        Else 
+            If 容错参数 < 5 Then 
+                容错参数 = 容错参数 + 1
+                场景相关操作.关闭界面 
+                Delay 1000
+                Goto 去野外1
+            End If
+        End If
+    Case 2
+        容错参数 = 0
+        Rem 去野外2
         所在场景 = 场景相关操作.所在场景()
         If 所在场景 = 1 Then 
             Touch 地图坐标X, 地图坐标Y, 100
@@ -603,74 +638,101 @@ Sub 回主城(类型)
         ElseIf 所在场景 = 2 Then
             移动大地图(Int(野外主城坐标X), Int(野外主城坐标Y))
         Else 
-            If 容错参数 < 5 Then 
+            If 容错参数 < 8 Then 
                 容错参数 = 容错参数 + 1
                 场景相关操作.关闭界面 
                 Delay 1000
-                Goto 回主城3
+                Goto 去野外2
             End If
         End If
     End Select
-    TracePrint "当前在主城中"
 End Sub
 
 Sub 界面收起展开(类型)
-    //类型枚举 1 = 主城顶部收起, 2 = 主城底部收起, 3 = 野外顶部收起, 4 = 主城顶部展开, 5 = 主城底部展开
+    //类型枚举 1 = 主城顶部收起, 2 = 主城底部收起, 3 = 野外顶部收起, 4 = 主城顶部展开, 5 = 主城底部展开, 6 = 野外顶部展开
     Select Case 类型
     Case 1, 4
+        容错参数 = 0
         Rem 主城顶部操作
         Delay 2000
-        If 场景相关操作.主城顶部是否收起() = False Then 
-            If 类型 = 1 Then 
-                Touch 顶部收起X, 顶部收起Y, 100
-                TracePrint "点了主城顶部收起坐标是",顶部收起X, 顶部收起Y
-                Goto 主城顶部操作
+        所在场景 = 场景相关操作.所在场景()
+        If 所在场景 = 1 And 容错参数 < 8 Then
+            If 场景相关操作.主城顶部是否收起() = False Then 
+                If 类型 = 1 Then 
+                    容错参数 = 容错参数 + 1
+                    Touch 顶部收起X, 顶部收起Y, 100
+                    TracePrint "点了主城顶部收起坐标是",顶部收起X, 顶部收起Y
+                    Goto 主城顶部操作
+                End If
+            Else
+                If 类型 = 4 Then 
+                    容错参数 = 容错参数 + 1
+                    Touch 顶部收起X, 顶部收起Y, 100
+                    TracePrint "点了主城顶部展开坐标是",顶部收起X, 顶部收起Y
+                    Goto 主城顶部操作 
+                End If
             End If
-        Else
-            If 类型 = 4 Then 
-                Touch 顶部收起X, 顶部收起Y, 100
-                TracePrint "点了主城顶部展开坐标是",顶部收起X, 顶部收起Y
-                Goto 主城顶部操作 
-            End If
+        ElseIf 容错参数 < 8 Then
+            容错参数 = 容错参数 + 1
+            回主城(1)
         End If
     Case 2, 5
-        Rem 主城底部操作
-        Delay 3000
+        容错参数 = 0
+        Rem 底部操作
+        Delay 2000
         所在场景 = 场景相关操作.所在场景()
-        If 所在场景 = 1 Or 所在场景 = 2 Then 
+        If (所在场景 = 1 Or 所在场景 = 2) And 容错参数 < 8 Then 
             If 场景相关操作.主城底部是否收起() = False Then 
-                If 类型 = 2 Then 
+                If 类型 = 2 And 容错参数 = 0 Then 
+                    容错参数 = 容错参数 + 1
                     Touch 收起坐标X, 收起坐标Y, 50
                     TracePrint "点了主城底部收起坐标是",收起坐标X, 收起坐标Y
-                    Goto 主城底部操作
+                    Goto 底部操作
                 End If
             Else 
                 If 类型 = 5 Then 
+                    容错参数 = 容错参数 + 1
                     Touch 展开坐标X, 展开坐标Y, 50
                     TracePrint "点了主城底部展开坐标是",展开坐标X, 展开坐标Y
-                    Goto 主城底部操作
+                    Goto 底部操作
                 End If
             End If
-        Else 
+        ElseIf 容错参数 < 8 Then
+            容错参数 = 容错参数 + 1
             场景相关操作.关闭界面
-        End If 
+        End If
+    Case 3, 6
+        容错参数 = 0
+        Rem 野外顶部操作
+        If 场景相关操作.野外顶部是否收起() = False Then 
+            If 类型 = 3 And 容错参数 < 8 Then 
+                容错参数 = 容错参数 + 1
+                Touch 600, 1140, 50
+                TracePrint "点了野外顶部收起坐标是",收起坐标X, 收起坐标Y
+                Goto 野外顶部操作
+            End If
+        Else 
+            If 类型 = 6 And 容错参数 < 8 Then 
+                容错参数 = 容错参数 + 1
+                Touch 600, 1140, 50
+                TracePrint "点了野外顶部展开坐标是",展开坐标X, 展开坐标Y
+                Goto 野外顶部操作
+            End If
+        End If
     End Select
 End Sub
 
 Sub 定位主城坐标()
     ShowMessage "定位主城坐标", 1000, 50, 620
-    Rem 去野外
-	
-    If 场景相关操作.所在场景() <> 1 Then 
-        Call 回主城(1)
-        Goto 去野外 
+    野外主城坐标X = ReadUIConfig("主城X坐标") : 野外主城坐标Y = ReadUIConfig("主城Y坐标")
+    If 野外主城坐标X <> 0 And 野外主城坐标Y <> 0 Then 
+    	TracePrint "用户自己设置了主城坐标,不用定位了"
+    	Exit Sub 
     End If
-    Touch 地图坐标X, 地图坐标Y, 100
-    Delay 5000
-    If 场景相关操作.所在场景() <> 2 Then 
-        Goto 去野外
-    End If
-    UseDict(1)
+    Call 去野外(2)
+    UseDict (1)
+    容错参数 = 0
+    Rem 定位坐标
     Dim ocrchar, temp, temp1, tempStr
     ocrchar=Ocr(669,515,720,784,"B3C6C8-111111|D5EEF2-111111|BDF1F8-111111|ACD8DE-111111|000000-111111",0.9)
     Traceprint ocrchar
@@ -678,8 +740,14 @@ Sub 定位主城坐标()
     temp1 = Len(ocrchar)
     野外主城坐标X = Mid(ocrchar, 3, temp - 3)
     野外主城坐标Y = Right(ocrchar, temp1 - temp - 1)
-    tempStr = "主城坐标"&野外主城坐标X&","&野外主城坐标Y
+    tempStr = "主城坐标" & 野外主城坐标X & "," & 野外主城坐标Y
+    If 野外主城坐标X = 0 And 野外主城坐标Y = 0 And 容错参数 < 5 Then 
+    	容错参数 = 容错参数 + 1
+    	TracePrint "坐标定位有问题,重试"
+    	Goto 定位坐标
+    End If
     ShowMessage tempStr, 1000, 50, 620
+    ShowMessage "如果主城坐标识别不正确,请停止运行脚本,在设置中手动输入", 1000, 50, 620
     Delay 1000
 End Sub
 
@@ -1006,9 +1074,15 @@ Sub 领取体力()
         FindColor 574,1015,670,1151,"4069B3",0,0.99,intX,intY
         If intX > -1 And intY > -1 Then 
             TracePrint "找到活动详情面板"
-            Touch intX,intY, 100
+            Touch intX, intY, 100
+            Delay 1000
         End If
-        
+        FindPic 454,573,526,711,"Attachment:提示.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then 
+            TracePrint "发现提示界面"
+            Touch 250, 760, 100
+            Delay 1000
+        End If
     Loop   
     TracePrint "活动小红点处理完毕"
 End Sub
@@ -1038,12 +1112,14 @@ Sub 商城购买()
             If intX > -1 And intY > -1 Then
                 TracePrint "包子已经卖光,无法购买"
             Else 
+                容错参数 = 0
                 Rem 点击购买1
                 Touch 450, 500, 100
                 Delay 1000
                 FindPic 167,536,243,732,"Attachment:商城购买.png","000000",0,0.95,intX,intY
                 If intX > -1 And intY > -1 Then
                     TracePrint "已经打开数量界面"
+                    容错参数 = 0
                     Rem 设置次数1
                     ocrchar=Ocr(287,786,328,909,"BFD5E2-111111|8897A0-111111|AEC2CE-111111|9AACB6-111111|ABBECA-111111|9BADB7-111111",0.9)
                     Traceprint ocrchar
@@ -1051,14 +1127,24 @@ Sub 商城购买()
                     temp = InStr(1, ocrchar, "/")
                     准备购买次数 = Int(Left(ocrchar, temp - 1))
                     可购买次数 = Int(Right(ocrchar, 字符长度 - temp))
+                    If (可购买次数 = Null Or 准备购买次数 = Null) And 容错参数 < 20 Then 
+                        容错参数 = 容错参数 + 1
+                        TracePrint "次数识别异常,重试"
+                        Goto 设置次数1
+                    ElseIf 容错参数 >= 20 Then
+                        TracePrint "购买次数识别错误次数过多,放弃"
+                        Exit Sub
+                    End If
                     If 商城购买次数 < 可购买次数 Then 
                         可购买次数 = 商城购买次数
                     End If
-                    If 准备购买次数 > 可购买次数 Then 
+                    If 准备购买次数 > 可购买次数 And 容错参数 < 20 Then 
+                        容错参数 = 容错参数 + 1
                         Touch 305, 420, 100
                         Delay 500
                         Goto 设置次数1
-                    ElseIf 准备购买次数 < 可购买次数 Then
+                    ElseIf 准备购买次数 < 可购买次数 And 容错参数 < 20 Then
+                        容错参数 = 容错参数 + 1
                         Touch 305, 755, 100
                         Delay 500
                         Goto 设置次数1
@@ -1072,7 +1158,8 @@ Sub 商城购买()
                         TracePrint "购买失败,重试"
                         Goto 设置次数1
                     End If
-                Else 
+                ElseIf 容错参数 < 5 Then
+                    容错参数 = 容错参数 + 1
                     TracePrint "点击购买1失败,重试"
                     Goto 点击购买1
                 End If
@@ -1083,6 +1170,7 @@ Sub 商城购买()
             If intX > -1 And intY > -1 Then
                 TracePrint "行军令已经卖光,无法购买"
             Else 
+                容错参数 = 0
                 Rem 点击购买2
                 Touch 450, 1030, 100
                 Delay 1000
@@ -1096,6 +1184,14 @@ Sub 商城购买()
                     temp = InStr(1, ocrchar, "/")
                     准备购买次数 = Int(Left(ocrchar, temp - 1))
                     可购买次数 = Int(Right(ocrchar, 字符长度 - temp))
+                    If (可购买次数 = Null Or 准备购买次数 = Null) And 容错参数 < 5 Then 
+                        容错参数 = 容错参数 + 1
+                        TracePrint "次数识别异常,重试"
+                        Goto 设置次数2
+                    ElseIf 容错参数 >= 5 Then
+                        TracePrint "购买次数识别错误次数过多,放弃"
+                        Exit Sub
+                    End If
                     If 商城购买次数 < 可购买次数 Then 
                         可购买次数 = 商城购买次数
                     End If
@@ -1120,8 +1216,9 @@ Sub 商城购买()
                         TracePrint "购买行军令失败,重试"
                         Goto 设置次数2
                     End If
-                Else 
-                    TracePrint "点击购买1失败,重试"
+                ElseIf 容错参数 < 5 Then
+                    容错参数 = 容错参数 + 1
+                    TracePrint "点击购买2失败,重试"
                     Goto 点击购买2
                 End If
             End If
@@ -1475,12 +1572,12 @@ Sub 进市场界面()
     所在场景 = 场景相关操作.所在场景()
     If 所在场景 = 35 Then 
         TracePrint "进入市场界面"
+        Rem 市场购买
+        Call 市场购买()
         If 读取货币数量() = False Then 
             TracePrint "货币不足,不刷市场了"
             Exit Sub
         End If
-        Rem 市场购买
-        Call 市场购买()
         容错参数 = 0
         Rem 读取剩余免费刷新次数
         Dim ocrchar, temp, 剩余免费次数, 刷新令数量, intX, intY
@@ -1541,6 +1638,10 @@ Function 读取货币数量()
     Dim ocrchar
     ocrchar=Ocr(559,783,591,930,"387A88-111111|4EB1C7-111111|5BCFE8-111111|469EB1-111111|62E0FC-111111|000000|000000|000000|000000|000000",0.9)
     Traceprint ocrchar
+    If Int(ocrchar) = Null Then 
+        读取货币数量 = False
+        Exit Function
+    End If
     If UTF8.InStr(1, ocrchar, "万") > 0 Then 
         读取货币数量 = True
     ElseIf Int(ocrchar) > 800 Then
@@ -1585,7 +1686,9 @@ Function 市场购买()
                     FindPic 185,551,251,733,"Attachment:赠予1.png","000000",0,0.8,intX,intY
                     If intX > -1 And intY > -1 Then
                         TracePrint "货币不足,退出"
-                        市场购买 = False
+                        //关闭界面
+                        Touch 550, 915, 100
+                        Delay 1000
                         Exit Function
                     Else 
                         TracePrint "点击武将失败,重试"
@@ -1652,7 +1755,7 @@ Function 兵事处理()
                 容错参数 = 0
                 Rem 点击招募
                 TracePrint "兵营不满,开始招募"
-                
+                Delay 1000
                 FindPic 96,919,174,1109,"Attachment:元宝加速.png","000000",0,0.98,intX,intY
                 If intX > -1 And intY > -1 Then
                     TracePrint "招募成功"
@@ -1689,6 +1792,7 @@ Function 兵事处理()
                 容错参数 = 0
                 Rem 点击治疗
                 TracePrint "有伤兵,开始治疗"
+                Delay 1000
                 FindPic 96,919,174,1109,"Attachment:元宝加速1.png","000000",0,0.98,intX,intY
                 If intX > -1 And intY > -1 Then
                     TracePrint "治疗中"
@@ -1877,6 +1981,7 @@ Sub 切换自动补兵(类型)
 End Sub
 
 Function 单个队伍兵量(队伍编号)
+    容错参数 = 0
     Rem 进入兵力界面
     Touch 90, 950, 100
     Delay 500
@@ -1884,9 +1989,11 @@ Function 单个队伍兵量(队伍编号)
     
     If 所在场景 = 45 Then 
         TracePrint "进入兵力界面"
-    ElseIf 所在场景 = 15 Then
+    ElseIf 所在场景 = 15 And 容错参数 < 8 Then
+        容错参数 = 容错参数 + 1
         Goto 进入兵力界面
-    Else 
+    ElseIf 容错参数 < 8
+        容错参数 = 容错参数 + 1
         Call 回主城(1)
         Call 进阵容界面()
         Goto 进入兵力界面
@@ -1941,7 +2048,7 @@ End Function
 
 //加载队伍出征设置
 Function 队伍设置()
-    Dim 打怪队伍, 采集队伍, 寻访队伍, 打怪种类, 打怪等级, 打怪次数, 是否使用行军令, 伤兵比例, 满员率, 采集类型, 矿坑等级, 智能采集, 是否自动筛选怪物
+    Dim 打怪队伍, 采集队伍, 寻访队伍, 打怪种类, 打怪等级, 打怪次数, 是否使用行军令, 伤兵比例, 满员率, 采集类型, 矿坑等级, 智能采集, 是否自动筛选怪物, 寻访城池X坐标, 寻访城池Y坐标
     打怪队伍 = Array() : 采集队伍 = Array() : 寻访队伍 = Array() : 打怪种类 = Array() : 打怪等级 = Array() : 采集类型 = Array() : 矿坑等级 = Array()
     //打怪队伍
     For i = 0 To 3
@@ -1953,7 +2060,9 @@ Function 队伍设置()
         采集队伍(i) = ReadUIConfig("采集队伍" & i)
     Next
     //寻访队伍
-    
+    For i = 0 To 3
+        寻访队伍(i) = ReadUIConfig("寻访队伍" & i)
+    Next
     //是否自动筛选怪物
     是否自动筛选怪物 = ReadUIConfig("是否自动筛选怪物", False)
     //怪物种类枚举: 0 = 黄巾军, 1 = 流寇, 2 = 山贼, 4 = 马贼
@@ -1981,14 +2090,15 @@ Function 队伍设置()
         矿坑等级(i) = ReadUIConfig("矿坑等级" & i)
     Next
     智能采集 = ReadUIConfig("智能采集", True)
-    队伍设置 = Array(打怪队伍, 采集队伍, 寻访队伍, 打怪种类, 打怪等级, 打怪次数, 是否使用行军令, 伤兵比例, 满员率, 采集类型, 矿坑等级, 智能采集, 是否自动筛选怪物)
-
+    寻访城池X坐标 = Int(ReadUIConfig("寻访城池X坐标"))
+    寻访城池Y坐标 = Int(ReadUIConfig("寻访城池Y坐标"))
+    队伍设置 = Array(打怪队伍, 采集队伍, 寻访队伍, 打怪种类, 打怪等级, 打怪次数, 是否使用行军令, 伤兵比例, 满员率, 采集类型, 矿坑等级, 智能采集, 是否自动筛选怪物, 寻访城池X坐标, 寻访城池Y坐标)
 End Function
 
 Sub 派遣队伍()
     //类型一: 1 = 普通刷怪, 2 = 皇榜任务
     ShowMessage "派遣队伍", 1000, 50, 620
-    Dim 用户设置, 打怪队伍, 队伍状态, 伤兵信息, 伤兵比例, 是否使用行军令, 打怪种类, 打怪等级, 打怪次数, 满员率设置, 队伍兵量信息, 采集队伍, 采集类型, 矿坑等级, 智能采集, 寻访队伍, 是否自动筛选怪物
+    Dim 用户设置, 打怪队伍, 队伍状态, 伤兵信息, 伤兵比例, 是否使用行军令, 打怪种类, 打怪等级, 打怪次数, 满员率设置, 队伍兵量信息, 采集队伍, 采集类型, 矿坑等级, 智能采集, 寻访队伍, 是否自动筛选怪物, 寻访城池X坐标, 寻访城池Y坐标
 
     TracePrint "准备开始派遣队伍"
 
@@ -2008,7 +2118,9 @@ Sub 派遣队伍()
     矿坑等级 = 用户设置(10)
     智能采集 = 用户设置(11)
     是否自动筛选怪物 = 用户设置(12)
-    For i = 0 To 4
+    寻访城池X坐标 = 用户设置(13)
+    寻访城池Y坐标 = 用户设置(14)
+    For i = 0 To 3
         If 打怪队伍(i) = True Then 
             If 队伍状态(i) = 1 Then 
                 TracePrint "判断伤兵比例", (伤兵信息(0) / 伤兵信息(1) * 100)
@@ -2027,7 +2139,7 @@ Sub 派遣队伍()
         End If
     Next
     队伍状态 = 判断队伍状态()
-    For i = 0 To 4
+    For i = 0 To 3
         TracePrint "采集队伍"&i,采集队伍(i)
         If 采集队伍(i) = True Then 
             TracePrint "队伍状态"&i,队伍状态(i)
@@ -2044,6 +2156,61 @@ Sub 派遣队伍()
                     TracePrint "出城寻找资源"
                     Call 搜索目标(2, 采集类型, 矿坑等级, True)
                     Call 前往目标(2, i)
+                End If
+            End If	
+        End If
+    Next
+    队伍状态 = 判断队伍状态()
+    For i = 0 To 3
+        TracePrint "寻访队伍"&i,寻访队伍(i)
+        If 寻访队伍(i) = True Then 
+            TracePrint "队伍状态"&i,队伍状态(i)
+            If 队伍状态(i) = 1 Then 
+                TracePrint "出城寻访"
+                Call 去野外(1)
+                Call 界面收起展开(3)
+                Call 移动大地图(寻访城池X坐标, 寻访城池Y坐标)
+                
+                容错参数 = 0
+                Rem 点击城池
+                Touch 380, 640, 100
+                Delay 1000
+                Dim intX,intY
+                FindPic 185,666,617,1019,"Attachment:寻访图标.png","000000",0,0.7,intX,intY
+                If intX > -1 And intY > -1 Then
+                    TracePrint "点击城池成功"
+                    容错参数 = 0
+                    Rem 点击寻访图标
+                    Touch intX + 5, intY + 5, 100
+                    Delay 1000
+                    所在场景 = 场景相关操作.所在场景()
+                    If 所在场景 = 48 Then 
+                        TracePrint "进入寻访界面"
+                        容错参数 = 0
+                        Rem 识别剩余次数
+                        Dim ocrchar
+                        ocrchar=Ocr(493,578,517,619,"489867-111111|5BC182-111111|3E7F57-111111",0.9)
+                        Traceprint ocrchar
+                        If Len(ocrchar) = 3 Then 
+                            If Int(Left(ocrchar, 1)) = 0 Then 
+                                TracePrint "今日寻访次数已用完"
+                            Else 
+                                Call 前往目标(3, i)
+                            End If
+                        ElseIf 容错参数 < 5 Then
+                            容错参数 = 容错参数 + 1
+                            TracePrint "识别错误,重试"
+                            Goto 识别剩余次数
+                        End If
+                    ElseIf 容错参数 < 5 Then
+                        TracePrint "进入寻访界面失败,重试"
+                        容错参数 = 容错参数 + 1
+                        Goto 点击寻访图标
+                    End If
+                ElseIf 容错参数 < 5 Then
+                    容错参数 = 容错参数 + 1
+                    TracePrint "点击城池失败,重试"
+                    Goto 点击城池
                 End If
             End If	
         End If
@@ -2067,7 +2234,7 @@ Sub 进附近界面(筛选类型)
     Else 
         If 容错参数 < 5 Then 
             容错参数 = 容错参数 + 1
-            Call 回主城(3)
+            Call 去野外(1)
             Goto 切场景
         End If 
           
@@ -2648,7 +2815,6 @@ Function 确认目标(寻找类型, 目标种类, 目标等级)
     Dim intX1, intY1,intX2,intY2,intX,intY, 临时状态
     临时状态 = True
     //先筛选进行目标筛选
-    Rem 判断筛选结果
     FindPic 432,881,566,1051,"Attachment:前往.png","000000",0,0.9,intX1,intY1
     If intX1 > -1 And intY1 > -1 Then 
         TracePrint "找到怪物"
@@ -2689,7 +2855,8 @@ Function 确认目标(寻找类型, 目标种类, 目标等级)
             确认目标 = False
             TracePrint "没有找到无人目标"
         Else 
-            Rem 前往目标
+            容错参数 = 0
+            Rem 点击前往目标
             Touch intX1, intY1, 100
             Delay 2500
             FindPic 320,474,411,563,"Attachment:搜索图标.png","000000",0,0.9,intX2,intY2
@@ -2740,8 +2907,14 @@ Function 确认目标(寻找类型, 目标种类, 目标等级)
                         Next
                     End If
                 Else 
-                    TracePrint "跳转失败,重试"
-                    Goto 前往目标
+                    所在场景 = 场景相关操作.所在场景()
+                    If 所在场景 = 2 Then 
+                        TracePrint "跳转成功"
+                    ElseIf 容错参数 < 5 Then
+                        容错参数 = 容错参数 + 1
+                        TracePrint "跳转失败,重试"
+                        Goto 点击前往目标
+                    End If
                 End If
             End If
             确认目标 = 临时状态
@@ -2760,73 +2933,78 @@ End Function
 Sub 前往目标(出征类型, 队伍)
     //出征类型: 1 = 打怪, 2 = 采集, 3 = 寻访
     Dim intX,intY
+    容错参数 = 0
+    Rem 进队伍界面
     Select Case 出征类型
     Case 1, 2
-        Rem 进队伍界面
         Touch 350, 760, 100
+    Case 3
+        Touch 215, 810, 100
+    End Select
+    Delay 1500
+    所在场景 = 场景相关操作.所在场景()
+    If 所在场景 = 40 Then 
+        TracePrint "进入队伍界面"
+        If 队伍 = 1 Then 
+            Rem 切换到队伍2
+            Touch 460, 250, 100
+            Delay 1500
+            FindColor 408,168,506,319,"7AC04D",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "进入队伍2"
+            Else 
+                Goto 切换到队伍2
+            End If
+        ElseIf 队伍 = 2 Then
+            Rem 切换到队伍3
+            Touch 360, 250, 100
+            Delay 2000
+            FindColor 307,165,410,328,"7AC04D",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "进入队伍3"
+            Else 
+                Goto 切换到队伍3
+            End If
+        ElseIf 队伍 = 3 Then
+            Rem 切换到队伍4
+            Touch 250, 250, 100
+            Delay 1500
+            FindColor 205,168,306,321,"7AC04D",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "进入队伍4"
+            Else 
+                Goto 切换到队伍4
+            End If
+        End If
+        TracePrint "派遣队伍,队伍即将前往目标"
+        容错参数 = 0
+        Rem 出发
+        Touch 开战坐标X, 开战坐标Y, 100
         Delay 1500
         所在场景 = 场景相关操作.所在场景()
-        If 所在场景 = 40 Then 
-            TracePrint "进入队伍界面"
-            
-            If 队伍 = 1 Then 
-                Rem 切换到队伍2
-                Touch 460, 250, 100
-                Delay 1500
-                FindColor 408,168,506,319,"7AC04D",0,0.9,intX,intY
-                If intX > -1 And intY > -1 Then
-                    TracePrint "进入队伍2"
-                Else 
-                    Goto 切换到队伍2
-                End If
-            ElseIf 队伍 = 2 Then
-                Rem 切换到队伍3
-                Touch 360, 250, 100
-                Delay 2000
-                FindColor 307,165,410,328,"7AC04D",0,0.9,intX,intY
-                If intX > -1 And intY > -1 Then
-                    TracePrint "进入队伍3"
-                Else 
-                    Goto 切换到队伍3
-                End If
-            ElseIf 队伍 = 3 Then
-                Rem 切换到队伍4
-                Touch 250, 250, 100
-                Delay 1500
-                FindColor 205,168,306,321,"7AC04D",0,0.9,intX,intY
-                If intX > -1 And intY > -1 Then
-                    TracePrint "进入队伍4"
-                Else 
-                    Goto 切换到队伍4
-                End If
+        If 所在场景 <> 40 Then 
+            TracePrint "派遣成功"
+            If 出征类型 = 1 Then 
+                派遣出征次数 = 派遣出征次数 + 1
+            ElseIf 出征类型 = 2 Then
+                采集次数 = 采集次数 + 1
+            ElseIf 出征类型 = 3 Then
+                寻访次数 = 寻访次数 + 1
             End If
-            TracePrint "派遣队伍,队伍即将前往目标"
-            Rem 出发
-            Touch 开战坐标X, 开战坐标Y, 100
-            Delay 1500
-            所在场景 = 场景相关操作.所在场景()
-            If 所在场景 = 2 Then 
-                TracePrint "派遣成功"
-            Else 
-                TracePrint "派遣失败,重试"
-                FindPic 171,545,273,745,"Attachment:使用.png","000000",0,0.95,intX,intY
-                If intX > -1 And intY > -1 Then 
-                    ShowMessage "军令不足,使用行军令补充", 1000, 50, 620
-                    Touch 210, 645, 100
-                End If
-                Goto 出发
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "派遣失败,重试"
+            FindPic 171,545,273,745,"Attachment:使用.png","000000",0,0.95,intX,intY
+            If intX > -1 And intY > -1 Then 
+                ShowMessage "军令不足,使用行军令补充", 1000, 50, 620
+                Touch 210, 645, 100
             End If
-        Else 
-            Goto 进队伍界面
+            Goto 出发
         End If
-        
-    Case 3
-    End Select
-    If 出征类型 = 1 Then 
-        派遣出征次数 = 派遣出征次数 + 1
-    ElseIf 出征类型 = 2 Then
-        采集次数 = 采集次数 + 1
-    End If
+    ElseIf 容错参数 < 5 Then
+        容错参数 = 容错参数 + 1
+        Goto 进队伍界面
+    End If 
 End Sub
 
 Function 获取资源量()
@@ -2967,6 +3145,10 @@ Function 最少资源类型()
     End If
     最少资源类型 = temp
 End Function
+
+Sub 寻访设置
+	
+End Sub
 
 //祭祀相关
 Sub 祭祀()
@@ -3247,10 +3429,16 @@ Sub 进皇榜界面()
 End Sub
 
 Sub 接皇榜任务()
+    If ReadUIConfig("是否自动执行皇榜") = False Then 
+        TracePrint "设置不执行皇榜"
+        Exit Sub	
+    End If
+    TracePrint "是否已接皇榜",ReadConfig("是否已接皇榜")
     If ReadConfig("是否已接皇榜") = 1 Then 
         TracePrint "已经结果皇榜任务"
         Exit Sub
     End If
+    
     Call 进军团界面()
     Call 进城池界面()
     TracePrint UseDict(1)
@@ -3284,7 +3472,7 @@ Sub 接皇榜任务()
                     //识别任务内容
                     ocrchar1=Ocr(起始区域X1,起始区域Y1,起始区域X2,起始区域Y2,"44698C-111111|558BC2-111111|66AAEF-111111|578FC8-111111|3B5E81-111111|5991C9-111111|4E7DAA-111111",0.9)
                     Traceprint ocrchar1
-                    ocrchar2=Ocr(269,477,299,627,"595753-111111|73736F-111111|6E6D6B-111111|8E8E8C-111111|9D9C9A-111111",0.9)
+                    ocrchar2=Ocr(起始区域X1 - 20,477,起始区域X1,700,"595753-111111|73736F-111111|6E6D6B-111111|8E8E8C-111111|9D9C9A-111111",0.9)
                     Traceprint ocrchar2
                     If ocrchar1 = "攻城掠地" Then 
                         TracePrint "攻城掠地任务不接"
@@ -3303,9 +3491,14 @@ Sub 接皇榜任务()
                         Touch 捐献坐标X, 捐献坐标Y, 100
                         TracePrint "点击揭榜图标"
                         Delay 1500
-                        //                ElseIf ocrchar = "城池寻访" Then
-                        //                ElseIf ocrchar = "精打细算" Then
-
+                    ElseIf ocrchar = "城池寻访" Then
+                        Touch 捐献坐标X, 捐献坐标Y, 100
+                        TracePrint "点击揭榜图标"
+                        Delay 1500
+                    ElseIf ocrchar = "精打细算" Then
+                        Touch 捐献坐标X, 捐献坐标Y, 100
+                        TracePrint "点击揭榜图标"
+                        Delay 1500
                     ElseIf ocrchar1 = "南征北战" Then
                         Touch 捐献坐标X, 捐献坐标Y, 100
                         TracePrint "点击揭榜图标"
@@ -3340,7 +3533,6 @@ Sub 接皇榜任务()
                 Traceprint ocrchar	
                 If UTF8.InStr(1, ocrchar, "0/3") > 0 Then
                     TracePrint "一个任务没接成功,也许是昨日皇榜任务未完成"
-                    Call 完成皇榜任务()
                     Exit Sub
                 End If
                 TouchDown 145, 660, 0
@@ -3366,8 +3558,12 @@ Sub 接皇榜任务()
 End Sub
 
 Sub 完成皇榜任务()
-    
-    
+    If ReadUIConfig("是否自动执行皇榜") = False Then 
+        TracePrint "设置不执行皇榜"
+        Exit Sub
+    End If
+    Dim 寻找类型, 目标种类, 目标等级, 用户设置, 伤兵信息, 队伍兵量信息, 队伍状态, 任务列表
+
     Call 进皇榜界面()
     Call 领取皇榜任务奖励()
     Delay 2000
@@ -3378,47 +3574,67 @@ Sub 完成皇榜任务()
         TracePrint "已经完成了3次皇榜任务了"
         Exit Sub
     End If
-    Dim 寻找类型, 目标种类, 目标等级, 用户设置, 伤兵信息, 队伍兵量信息, 队伍状态, 任务列表
+    
     目标种类 = Array() : 目标等级 = Array()
     任务列表 = 获取任务列表()
     If 任务列表 <> Null Then 
         If 任务列表(0) = "击杀" Then 
-            用户设置 = 队伍设置()
-            伤兵信息 = 兵事处理()
-            队伍状态 = 判断队伍状态()
             TracePrint "执行打野任务"
-            If 任务列表(2) = "黄巾军" Then 
-                目标种类(0) = True
-                TracePrint "检查"
-            ElseIf 任务列表(2) = "流寇" Then
-                目标种类(1) = True
-                TracePrint "检查"
-            ElseIf 任务列表(2) = "山贼" Then
-                目标种类(2) = True
-                TracePrint "检查"
-            ElseIf 任务列表(2) = "马贼" Then
-                目标种类(3) = True
-                TracePrint "检查"
-            End If
-            TracePrint "检查"
-            目标等级(任务列表(1) - 1) = True
-            For i = 0 To 4
-                TracePrint "检查"
-                If 用户设置(0, i) = True Then 
-                    TracePrint "检查"
-                    If 队伍状态(i) = 1 Then
-                        TracePrint "判断伤兵比例", (伤兵信息(0) / 伤兵信息(1) * 100)
-                        If (伤兵信息(0) / 伤兵信息(1) * 100) < 用户设置(7) Then 
-                            队伍兵量信息 = 判断队伍兵量(i)
-                            If 队伍兵量信息(3) > 用户设置(8) Then 
-                                TracePrint "出城寻找怪物"
-                                Call 搜索目标(1, 目标种类, 目标等级, True)
-                                Call 前往目标(1, i)
+            //尝试点击前往图标
+            Touch 任务列表(4), 任务列表(5), 100
+            Delay 4000
+            If 场景相关操作.所在场景() = 13 Then 
+                TracePrint "无法直接前往,自行搜索"
+                用户设置 = 队伍设置()
+                伤兵信息 = 兵事处理()
+                队伍状态 = 判断队伍状态()
+                If 任务列表(2) = "黄巾军" Then 
+                    目标种类(0) = True
+                ElseIf 任务列表(2) = "流寇" Then
+                    目标种类(1) = True
+                ElseIf 任务列表(2) = "山贼" Then
+                    目标种类(2) = True
+                ElseIf 任务列表(2) = "马贼" Then
+                    目标种类(3) = True
+                End If
+                目标等级(任务列表(1) - 1) = True
+                For i = 0 To 4
+                    If 用户设置(0, i) = True Then 
+                        If 队伍状态(i) = 1 Then
+                            TracePrint "判断伤兵比例", (伤兵信息(0) / 伤兵信息(1) * 100)
+                            If (伤兵信息(0) / 伤兵信息(1) * 100) < 用户设置(7) Then 
+                                队伍兵量信息 = 判断队伍兵量(i)
+                                If 队伍兵量信息(3) > 用户设置(8) Then 
+                                    TracePrint "出城寻找怪物"
+                                    Call 搜索目标(1, 目标种类, 目标等级, True)
+                                    Call 前往目标(1, i)
+                                End If
                             End If
                         End If
                     End If
-                End If
-            Next
+                Next 
+            Else 
+                TracePrint "跳转成功,准备点击怪物"
+                用户设置 = 队伍设置()
+                伤兵信息 = 兵事处理()
+                队伍状态 = 判断队伍状态()
+                For i = 0 To 4
+                    If 用户设置(0, i) = True Then 
+                        If 队伍状态(i) = 1 Then
+                            TracePrint "判断伤兵比例", (伤兵信息(0) / 伤兵信息(1) * 100)
+                            If (伤兵信息(0) / 伤兵信息(1) * 100) < 用户设置(7) Then 
+                                队伍兵量信息 = 判断队伍兵量(i)
+                                If 队伍兵量信息(3) > 用户设置(8) Then 
+                                    TracePrint "出城寻找怪物"
+                                    Touch 380, 640, 100
+                                    Delay 1000
+                                    Call 前往目标(1, i)
+                                End If
+                            End If
+                        End If
+                    End If
+                Next  
+            End If
             TracePrint "执行打野任务完毕"
         ElseIf 任务列表(0) = "普通" Then
             TracePrint "执行普通副本任务"
@@ -3462,7 +3678,6 @@ Sub 完成皇榜任务()
             TracePrint "执行精英副本任务完毕"
         End If
     End If
-    
     TracePrint "执行完毕一次皇榜任务"
 End Sub
 
@@ -3478,7 +3693,7 @@ Function 获取任务列表()
 			
         //判断任务类型并解析条件
         //任务类型: 1 = 打野怪, 2 = 打普通副本, 3 = 采集, 4 = 收取, 5 = 市场购买, 6 = 寻访, 7 = 打其他玩家主城, 8 = 打精英副本
-        //任务数组结构: 0 = 类型, 1 = 采集数量或打怪级别或寻访次数, 2 = 子类型(野怪或者采集类型), 3 = 打怪次数
+        //任务数组结构: 0 = 类型, 1 = 采集数量或打怪级别或寻访次数, 2 = 子类型(野怪或者采集类型), 3 = 打怪次数, 4 = 前往图标X, 5 = 前往图标Y
         任务类型 = UTF8.Left(ocrchar, 2)
         If 任务类型 = "击杀" Then 
             temp1 = UTF8.InStr(1, ocrchar, "级")
@@ -3503,7 +3718,7 @@ Function 获取任务列表()
             任务等级 = Null
             任务数量 = UTF8.Mid(ocrchar, 7, temp1 - 7)
         End If
-        单个任务 = Array(任务类型, 任务等级, 任务子类, 任务数量)
+        单个任务 = Array(任务类型, 任务等级, 任务子类, 任务数量, intX + 5,intY + 5)
         获取任务列表 = 单个任务
         TracePrint 单个任务(0),单个任务(1),单个任务(2),单个任务(3)
     Else 
@@ -3816,7 +4031,8 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
     Rem 打副本准备
     TracePrint "副本类型",副本类型
     Call 进副本(副本类型)
-    Dim 挑战副本数据, 副本列表, 副本剩余次数, intX,intY, 名将第几关, ocrchar, areaX1, areaY1
+    Dim 挑战副本数据, 副本列表, 副本剩余次数, intX,intY, 名将第几关, ocrchar, areaX1, areaY1, 当前体力, 体力换算次数
+    当前体力 = 读取当前体力()
     容错参数 = 0
     TracePrint "筛选要打的副本数据"
     Rem 获取副本信息
@@ -3945,25 +4161,31 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
     Call 进副本预览(挑战副本数据(0), 挑战副本数据(1))
     
     //预期打的次数是挑战次数,但是因为体力,副本剩余次数的影响,可能会调整打副本次数
-    Dim 最终打副本次数, 最大副本数据
+    Dim 最终打副本次数
 
-    If 副本剩余次数 > 0 Then 
-        //特殊检测体力是否足够
-        FindColor 152,368,188,443,"0000F9",0,0.9,intX,intY
-        If intX > -1 And intY > -1 Then
-            TracePrint "体力不足继续挑战此类副本,退出"
-            Exit Sub
-        End If
-        
+    If 副本剩余次数 > 0 Then
         TracePrint "预期挑战次数"&挑战次数, "副本剩余次数"&副本剩余次数, "副本星级"&挑战副本数据(4)
+        If 副本类型 = 1 Then 
+            体力换算次数 = Int(当前体力 / 5)
+        ElseIf 副本类型 = 2 Then
+            体力换算次数 = Int(当前体力 / 10)
+        Else 
+            体力换算次数 = 1
+        End If
         If 副本剩余次数 > 挑战次数 Then 
             最终打副本次数 = 挑战次数
         Else 
             最终打副本次数 = 副本剩余次数
         End If
+        //如果自动使用包子则跳过体力换算次数的检测
+        If ReadUIConfig("是否自动使用包子") = False Then 
+            If 最终打副本次数 < 体力换算次数 Then 
+                最终打副本次数 = 体力换算次数
+            End If
+        End If
         
         //如果是三星就进行扫荡,否则挑战
-        TracePrint "挑战次数"&挑战次数
+        TracePrint "最终打副本次数"&最终打副本次数
 		
         If 挑战副本数据(4) = 3 Then
             Rem 进入扫荡
@@ -4053,7 +4275,7 @@ Sub 打副本(类型, 次数)
 				
             ocrchar=Ocr(606,597,638,667,"D7D7D7-111111|D4D5D5-111111|C7C9CB-111111|C0C2C7-111111|ACAFBA-111111|9FA2AE-111111",0.9)
             Traceprint ocrchar
-            If ocrchar = "3/3" Then 
+            If ocrchar = "3/3" Or ocrchar = "33" Then 
                 FindPic 580,1020,720,1280,"Attachment:手动.png","000000",0,0.9,intX,intY
                 If intX > -1 And intY > -1 Then 
                     TracePrint "尝试切换自动"
@@ -4100,8 +4322,15 @@ Sub 打副本(类型, 次数)
             End If	
         ElseIf 所在场景 <> 40 Then
             FindPic 584,1047,701,1258,"Attachment:跳过1.png","000000",0,0.9,intX,intY
-            If intX > -1 And intY > -1 Then
+            If intX > -1 And intY > -1 Then 
+                TracePrint "跳过剧情"
                 Touch 剧情跳过坐标X, 剧情跳过坐标Y, 100
+            End If
+            FindPic 171,545,273,745,"Attachment:使用.png","000000",0,0.95,intX,intY
+            If intX > -1 And intY > -1 Then 
+                TracePrint "体力不足,使用包子补充"
+                Touch 210, 645, 100
+                Delay 1000
             End If
             场景相关操作.关闭界面()
             Goto 进战斗界面
@@ -4115,6 +4344,7 @@ Sub 打副本(类型, 次数)
         ElseIf 所在场景 = 41 Then
             If 次数 > 1 Then 
                 Dim 字符长度, 准备挑战次数
+                容错参数 = 0
                 Rem 设置次数
                 ocrchar=Ocr(290,785,319,901,"9FB1BC-111111|8E9EA8-111111|819099-111111|AEC2CE-111111|A0B2BD-111111|85959E-111111|90A0AA-111111|636D73|6F7C83",0.9)
                 Traceprint ocrchar
@@ -4126,26 +4356,36 @@ Sub 打副本(类型, 次数)
                 Else 
                     TracePrint "识别出错了,当前字符长度"&字符长度
                 End If
-                If 准备挑战次数 > 次数 Then 
+                If 准备挑战次数 > 次数 And 容错参数 < 20 Then 
+                    容错参数 = 容错参数 + 1
                     Touch 减号坐标X, 减号坐标Y, 250
                     Delay 500
                     Goto 设置次数
-                ElseIf 准备挑战次数 < 次数 Then
+                ElseIf 准备挑战次数 < 次数 And 容错参数 < 20 Then
+                    容错参数 = 容错参数 + 1
                     Touch 加号坐标X, 加号坐标Y, 250
                     Delay 500
                     Goto 设置次数
                 End If
             End If
             TracePrint "准备挑战次数",准备挑战次数
+            容错参数 = 0
             Rem 点击开始扫荡
             Touch 开始扫荡坐标X, 开始扫荡坐标Y, 250
             Delay 2000
+            FindPic 171,545,273,745,"Attachment:使用.png","000000",0,0.95,intX,intY
+            If intX > -1 And intY > -1 Then 
+                TracePrint "体力不足,使用包子补充"
+                Touch 210, 645, 100
+                Delay 1000
+            End If
             所在场景 = 场景相关操作.所在场景()
-            If 所在场景 = 41 Then 
+            If 所在场景 = 37 Then 
+                TracePrint "扫荡结束"
+            ElseIf 容错参数 < 5 Then
+                容错参数 = 容错参数 + 1
                 TracePrint "没有点到扫荡,从头来"
                 Goto 点击开始扫荡
-            ElseIf 所在场景 = 37 Then
-                TracePrint "扫荡结束"
             End If
         End If
     End Select
@@ -4200,12 +4440,15 @@ Function 读取当前体力()
         ocrchar=Ocr(644,232,675,321,"9FB1BC-111111|8E9EA8-111111|819099-111111|AEC2CE-111111|A0B2BD-111111|85959E-111111|90A0AA-111111|636D73-111111|BCBCBB-111111|838382-111111",0.9)
     ElseIf 所在场景 = 3 Or 所在场景 = 38 Then
         ocrchar=Ocr(670,860,693,975,"8AADAC-111111|8DB1B0-111111|8EB2B1-111111|96BDBD-111111|8CB0AF-111111|98C0C0-111111|94BBBB-111111|8BAFAE-111111|6A827F-111111|82A3A2-111111",0.9)
-    Else 
+    ElseIf 容错参数 < 5 Then
+        容错参数 = 容错参数 + 1 
         Call 回主城(1)
+        Goto 识别体力文字
     End If
 
     Traceprint ocrchar
     字符长度 = UTF8.Len(ocrchar)
+    TracePrint "容错参数",容错参数,"字符长度",字符长度
     If 字符长度 = 7 Then 
         读取当前体力 = Int(UTF8.Left(ocrchar, 3))
     ElseIf 字符长度 = 6 Then
@@ -4213,10 +4456,13 @@ Function 读取当前体力()
     ElseIf 字符长度 = 5 Then
         读取当前体力 = Int(UTF8.Left(ocrchar, 1))
     Else 
-        If 容错参数 < 3 Then 
+        If 容错参数 < 8 Then 
             容错参数 = 容错参数 + 1
             TracePrint "读取体力文字异常,重试"
             Goto 识别体力文字
+        Else 
+            TracePrint "错误次数太多,放弃,设置体力为0"
+            读取当前体力 = 0
         End If
     End If
 End Function
@@ -4255,7 +4501,7 @@ Sub 升级大殿()
         If intX > -1 And intY > -1 Then 
             容错参数 = 0
             Rem 点击升级按钮
-            Touch intX, intY, 100
+            Touch intX + 5, intY + 5, 100
             Delay 1500
             FindPic 21,927,118,1149,"Attachment:元宝加速2.png","000000",3,0.9,intX,intY
             If intX > -1 And intY > -1 Then 
@@ -4267,7 +4513,7 @@ Sub 升级大殿()
                     容错参数 = 容错参数 + 1
                     TracePrint "点击升级失败,重试"
                     Goto 点击升级按钮
-                Else 
+                ElseIf 容错参数 < 5 Then
                     Call 升级建筑(1)
                 End If
             End If
@@ -4275,7 +4521,6 @@ Sub 升级大殿()
             TracePrint "没找到升级图标"
         End If
     End If
-
 End Sub
 
 Sub 点击军械所()
@@ -4513,21 +4758,27 @@ Sub 进建筑界面()
 End Sub
 
 //武将提升相关
-Sub 武将小红点处理()
-    
+Sub 进武将界面()
+    容错参数 = 0
     Rem 进武将界面
     Delay 1500
     所在场景 = 场景相关操作.所在场景()
     If 所在场景 = 14 Then 
         TracePrint "已经进入武将界面"
-    ElseIf 所在场景 = 1 Or 所在场景 = 2 Then
+    ElseIf 所在场景 = 1 Or 所在场景 = 2 And 容错参数 < 5 Then
+        容错参数 = 容错参数 + 1
         Call 界面收起展开(5)
         Touch 武将坐标X, 武将坐标Y, 100
         Goto 进武将界面
-    Else 
+    ElseIf 容错参数 < 5 Then
+        容错参数 = 容错参数 + 1
         场景相关操作.关闭界面 
         Goto 进武将界面
-    End If
+    End If	
+End Sub
+
+Sub 武将小红点处理()
+    Call 进武将界面()
     Dim intX, intY
     //先判断是否可以合成
     FindColor 439,1155,541,1238,"2626AD",4,0.99,intX,intY
@@ -4701,9 +4952,99 @@ Sub 武将界面内部处理()
     Loop
 End Sub
 
+Sub 强化前6个人装备()
+    If ReadUIConfig("强化前6个人装备") = False Then 
+        TracePrint "设置不自动强化装备"
+        Exit Sub
+    End If
+    Call 进武将界面()
+    Dim 武将起始坐标X, 武将起始坐标Y, X偏移量, Y偏移量, 当前武将坐标X, 当前武将坐标Y
+    武将起始坐标X = 485 : 武将起始坐标Y = 300 : X偏移量 = 150 : Y偏移量 = 340
+    For i = 0 To 5
+        当前武将坐标X = 武将起始坐标X - Int(i / 3) * X偏移量
+        当前武将坐标Y = 武将起始坐标Y + (i Mod 3) * Y偏移量
+        TracePrint 当前武将坐标X,当前武将坐标Y
+        Touch 当前武将坐标X, 当前武将坐标Y, 100
+        Delay 1500
+        Call 强化单个武将装备()
+        Delay 1500
+    Next
+
+End Sub
+
+Sub 强化单个武将装备()
+    Dim 装备坐标X, 装备坐标Y, 偏移量, intX, intY
+    容错参数 = 0
+    Rem 进强化界面
+    TracePrint "选择装备"
+    Touch 125, 660, 100
+    Delay 500
+    TracePrint "进强化界面"
+    Touch 125 + 140, 660 + 55, 100
+    Delay 1000
+    FindPic 80,911,159,1143,"Attachment:一键强化.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then 
+        TracePrint "进入强化界面"
+    Else 
+        FindPic 80,911,159,1143,"Attachment:不可一键强化.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "等级或者铜币不足不能强化"
+        Else 
+            FindPic 137,785,214,981,"Attachment:满级.png","000000",4,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "满级不能强化"
+            Else 
+                If 容错参数 < 5 Then 
+                    容错参数 = 容错参数 + 1
+                    Goto 进强化界面
+                End If
+            End If
+        End If
+    End If
+    装备坐标X = 660 : 装备坐标Y = 200 : 偏移量 = 125
+    For 4
+        装备坐标X = 装备坐标X - 偏移量
+        //选择装备
+        Touch 装备坐标X, 装备坐标Y, 100
+        Delay 1000
+        容错参数 = 0
+        Rem 点击一键强化
+        Touch 120, 1025, 100
+        Delay 1000
+        FindPic 80,911,159,1143,"Attachment:一键强化.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 And 容错参数 < 5 Then 
+            容错参数 = 容错参数 + 1
+            TracePrint "点击一键强化失败,重试"
+            Goto 点击一键强化
+        Else 
+            FindPic 80,911,159,1143,"Attachment:不可一键强化.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "等级或者铜币不足不能强化"
+            Else 
+                FindPic 137,785,214,981,"Attachment:满级.png","000000",4,0.9,intX,intY
+                If intX > -1 And intY > -1 Then
+                    TracePrint "满级不能强化"
+                Else 
+                    TracePrint "异常状况"
+                    If 容错参数 < 5 Then 
+                        容错参数 = 容错参数 + 1
+                        Goto 进强化界面
+                    End If
+                End If
+            End If
+        End If
+    Next
+    //关闭强化界面
+    Touch 625, 1160, 100
+    Delay 1500
+    //关闭武将详情界面
+    Touch 680, 1230, 100
+End Sub
+
+//升级军械
 Sub 升级军械()
     容错参数 = 0
-    Dim intX, intY, 升级军械1, 升级军械2, 升级军械3, 是否继续
+    Dim intX, intY, 升级军械1, 升级军械2, 升级军械3
     Rem 点击军械所
     Call 回主城(2)
     Call 点击军械所()
@@ -4721,22 +5062,19 @@ Sub 升级军械()
             End If
             TracePrint "准备升级军械1"
             升级军械1 = ReadUIConfig("升级军械1")
-            是否继续 = 进行研发(升级军械1)
-            If 是否继续 = False Then 
+            Call 进行研发(升级军械1)
+            If 军械是否研发中() = True Then 
                 Exit Function
             End If
             TracePrint "准备升级军械2"
             升级军械2 = ReadUIConfig("升级军械2")
-            是否继续 = 进行研发(升级军械2)
-            If 是否继续 = False Then 
+            Call 进行研发(升级军械2)
+            If 军械是否研发中() = True Then 
                 Exit Function
             End If
             TracePrint "准备升级军械3"
             升级军械3 = ReadUIConfig("升级军械3")
-            是否继续 = 进行研发(升级军械3)
-            If 是否继续 = False Then 
-                Exit Function
-            End If
+            Call 进行研发(升级军械3)
         ElseIf 容错参数 < 5 Then
             容错参数 = 容错参数 + 1
             Goto 进军械所界面
@@ -4750,7 +5088,7 @@ Sub 升级军械()
     End If
 End Sub
 
-Function 进行研发(类型)
+Sub 进行研发(类型)
     //类型枚举:0 = "战鼓", 1 = "木牛流马", 2 = "井栏", 3 = "投石车", 4 = "盾车"
     Dim intX,intY
     If 类型 = 0 Then 
@@ -4761,11 +5099,6 @@ Function 进行研发(类型)
         FindPic 263,418,532,666,"Attachment:战鼓.png","000000",0,0.8,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了战鼓"
-            //判断是否在升级
-            If 军械是否研发中() = True Then 
-                进行研发 = False
-                Exit Function
-            End If
         ElseIf 容错参数 < 5 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中战鼓,重试"
@@ -4782,15 +5115,10 @@ Function 进行研发(类型)
         Delay 1500
         FindPic 263,418,532,666,"Attachment:木牛流马.png","000000",0,0.8,intX,intY
         If intX > -1 And intY > -1 Then
-            TracePrint "选中了选中木牛流马"
-            //判断是否在升级
-            If 军械是否研发中() = True Then 
-                进行研发 = False
-                Exit Function
-            End If
+            TracePrint "选中了木牛流马"
         ElseIf 容错参数 < 5 Then
             容错参数 = 容错参数 + 1
-            TracePrint "没有选中选中木牛流马,重试"
+            TracePrint "没有选中木牛流马,重试"
             Goto 选中木牛流马
         End If
         TouchDown 300, 310, 0
@@ -4804,11 +5132,6 @@ Function 进行研发(类型)
         FindPic 263,418,532,666,"Attachment:井栏.png","000000",0,0.8,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了井栏"
-            //判断是否在升级
-            If 军械是否研发中() = True Then 
-                进行研发 = False
-                Exit Function
-            End If
         ElseIf 容错参数 < 5 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中井栏,重试"
@@ -4822,11 +5145,6 @@ Function 进行研发(类型)
         FindPic 263,418,532,666,"Attachment:投石车.png","000000",0,0.8,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了投石车"
-            //判断是否在升级
-            If 军械是否研发中() = True Then 
-                进行研发 = False
-                Exit Function
-            End If
         ElseIf 容错参数 < 5 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中投石车,重试"
@@ -4840,11 +5158,6 @@ Function 进行研发(类型)
         FindPic 263,418,532,666,"Attachment:盾车.png","000000",0,0.8,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了盾车"
-            //判断是否在升级
-            If 军械是否研发中() = True Then 
-                进行研发 = False
-                Exit Function
-            End If
         ElseIf 容错参数 < 5 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中盾车,重试"
@@ -4853,7 +5166,12 @@ Function 进行研发(类型)
     Else 
         TracePrint "未知类型,可能数据有错误,检查配置"
         进行研发 = False
-        Exit Function
+        Exit Sub
+    End If
+    Delay 1000
+    //判断研发条件是否满足
+    If 军械研发条件是否满足() = False Or 军械是否研发中() = True Then 
+        Exit Sub
     End If
     容错参数 = 0
     Rem 点击研发
@@ -4862,11 +5180,8 @@ Function 进行研发(类型)
     If 军械是否研发中() = False And 容错参数 < 5 Then 
         容错参数 = 容错参数 + 1
         Goto 点击研发
-    Else 
-        进行研发 = False
     End If
-    
-End Function
+End Sub
 
 Function 军械是否研发中()
     Dim intX,intY
@@ -4879,6 +5194,538 @@ Function 军械是否研发中()
     End If
 End Function
 
+Function 军械研发条件是否满足()
+    Dim intX,intY
+    FindColor 198,698,386,1191,"4E4EFF",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "军械研发条件不满足"
+        军械研发条件是否满足 = False
+    Else 
+        军械研发条件是否满足 = True
+    End If
+End Function
+
+//升级计略
+Sub 点击计略府()
+    Dim intX,intY
+    容错参数 = 0
+    Rem 点击计略府
+    Touch 488, 475, 100
+    Delay 1500
+	
+    FindPic 192,507,375,898,"Attachment:计略.png","000000",0,0.8,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "点击计略府成功"
+    Else 
+        If 容错参数 < 5 Then 
+            容错参数 = 容错参数 + 1
+            TracePrint "点击军械所失败,重试"
+            Goto 点击计略府
+        End If
+    End If	
+End Sub
+
+Sub 进计略界面
+    容错参数 = 0
+    Dim intX, intY, 升级计略1, 升级计略2, 升级计略3
+    Rem 选中计略府
+    Call 回主城(2)
+    Call 点击军械所()
+    Touch 530, 500, 100
+    Delay 2000
+    FindPic 192,507,375,898,"Attachment:计略.png","000000",0,0.8,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "准备点击计略图标"
+        容错参数 = 0
+        Rem 进计略府界面
+        Touch intX, intY, 100
+        Delay 1500
+        所在场景 = 场景相关操作.所在场景()
+        If 所在场景 = 28 Then
+            If 计略是否升级中() = True Then 
+                Exit Sub
+            End If
+            TracePrint "准备升级计略1"
+            升级计略1 = ReadUIConfig("升级计略1")
+            Call 升级计略(升级计略1)
+            If 计略是否升级中() = True Then 
+                Exit Function
+            End If
+            TracePrint "准备升级计略2"
+            升级计略2 = ReadUIConfig("升级计略2")
+            Call 升级计略(升级计略2)
+            If 计略是否升级中() = True Then 
+                Exit Function
+            End If
+            TracePrint "准备升级计略3"
+            升级计略3 = ReadUIConfig("升级计略3")
+            Call 升级计略(升级计略3)
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            Goto 进计略府界面
+        End If
+    Else 
+        If 容错参数 < 5 Then 
+            容错参数 = 容错参数 + 1
+            TracePrint "没有找到计略图标,重试"
+            Goto 选中计略府
+        End If
+    End If
+End Sub
+
+Function 计略是否升级中()
+    Dim intX,intY
+    FindPic 72,165,194,642,"Attachment:元宝加速.png","000000",0,0.8,intX,intY
+    If intX > -1 And intY > -1 Then 
+        TracePrint "计略升级中"
+        计略是否升级中 = True
+    Else 
+        计略是否升级中 = False
+    End If
+End Function
+
+Function 计略升级条件是否满足()
+    Dim intX,intY
+    FindColor 195,166,425,640,"4E4EFF",0,0.8,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "计略升级条件不满足"
+        计略升级条件是否满足 = False
+    Else 
+        计略升级条件是否满足 = True
+    End If
+End Function
+
+Sub 升级计略(类型)
+    //类型枚举:0 = "背水一战", 1 = "乱石阵", 2 = "一鼓作气", 3 = "水淹七军", 4 = "援军令", 5 = "火牛阵", 6 = 巨石轰, 7 = 草木皆兵, 8 = 奋武扬威, 9 = 南蛮入侵, 10 = 万箭齐发, 11 = 八卦阵, 12 = 上兵伐谋
+    Dim intX,intY
+    If 类型 = 0 Then 
+        容错参数 = 0
+        Rem 背水一战
+        Touch 520, 745, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:背水一战.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了背水一战"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有背水一战,重试"
+            Goto 背水一战
+        End If
+    ElseIf 类型 = 1 Then
+        容错参数 = 0
+        Rem 乱石阵
+        Touch 520, 885, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:乱石阵.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了乱石阵"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中乱石阵,重试"
+            Goto 乱石阵
+        End If
+    ElseIf 类型 = 2 Then 
+        容错参数 = 0
+        Rem 一鼓作气
+        Touch 520, 1030, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:一鼓作气.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了一鼓作气"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中一鼓作气,重试"
+            Goto 一鼓作气
+        End If
+    ElseIf 类型 = 3 Then 
+        容错参数 = 0
+        Rem 水淹七军
+        Touch 360, 745, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:水淹七军.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了水淹七军"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中水淹七军,重试"
+            Goto 水淹七军
+        End If
+    ElseIf 类型 = 4 Then 
+        容错参数 = 0
+        Rem 援军令
+        Touch 360, 885, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:援军令.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了援军令"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中援军令,重试"
+            Goto 援军令
+        End If
+    ElseIf 类型 = 5 Then 
+        容错参数 = 0
+        Rem 火牛阵
+        Touch 360, 1030, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:火牛阵.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了火牛阵"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中火牛阵,重试"
+            Goto 火牛阵
+        End If
+    ElseIf 类型 = 6 Then 
+        容错参数 = 0
+        Rem 巨石轰
+        Touch 200, 745, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:巨石轰.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了巨石轰"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中巨石轰,重试"
+            Goto 巨石轰
+        End If
+    ElseIf 类型 = 7 Then 
+        容错参数 = 0
+        Rem 草木皆兵
+        Touch 200, 885, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:草木皆兵.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了草木皆兵"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中草木皆兵,重试"
+            Goto 草木皆兵
+        End If
+    ElseIf 类型 = 8 Then 
+        容错参数 = 0
+        Rem 奋武扬威
+        Touch 360, 1030, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:奋武扬威.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了奋武扬威"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中奋武扬威,重试"
+            Goto 奋武扬威
+        End If
+    ElseIf 类型 = 9 Then
+        TouchDown 150, 870, 0
+        TouchMove 600, 870, 0, 250
+        TouchUp 0
+        Delay 1500
+        容错参数 = 0
+        Rem 南蛮入侵
+        Touch 330, 745, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:南蛮入侵.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了南蛮入侵"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中南蛮入侵,重试"
+            Goto 南蛮入侵
+        End If
+        TouchDown 540, 870, 0
+        TouchMove 150, 870, 0, 250
+        TouchUp 0
+    ElseIf 类型 = 10 Then
+        TouchDown 150, 870, 0
+        TouchMove 600, 870, 0, 250
+        TouchUp 0
+        Delay 1500
+        容错参数 = 0
+        Rem 万箭齐发
+        Touch 330, 885, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:万箭齐发.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了万箭齐发"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中万箭齐发,重试"
+            Goto 万箭齐发
+        End If
+        TouchDown 540, 870, 0
+        TouchMove 150, 870, 0, 250
+        TouchUp 0
+    ElseIf 类型 = 11 Then
+        TouchDown 150, 870, 0
+        TouchMove 600, 870, 0, 250
+        TouchUp 0
+        Delay 1500
+        容错参数 = 0
+        Rem 八卦阵
+        Touch 330, 1030, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:八卦阵.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了八卦阵"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中八卦阵,重试"
+            Goto 八卦阵
+        End If
+        TouchDown 540, 870, 0
+        TouchMove 150, 870, 0, 250
+        TouchUp 0
+    ElseIf 类型 = 12 Then
+        TouchDown 150, 870, 0
+        TouchMove 600, 870, 0, 250
+        TouchUp 0
+        Delay 1500
+        容错参数 = 0
+        Rem 上兵伐谋
+        Touch 175, 745, 100
+        Delay 1000
+        FindPic 450,163,585,332,"Attachment:上兵伐谋.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了上兵伐谋"
+        ElseIf 容错参数 < 5 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "没有选中上兵伐谋,重试"
+            Goto 上兵伐谋
+        End If
+        TouchDown 540, 870, 0
+        TouchMove 150, 870, 0, 250
+        TouchUp 0
+    Else 
+        TracePrint "未知类型,可能数据有错误,检查配置"
+        Exit Sub
+    End If
+    Delay 2000
+    //判断升级条件是否满足
+    If 计略升级条件是否满足() = False Or 计略是否升级中() = True Then 
+        Exit Sub
+    End If
+    容错参数 = 0
+    Rem 点击升级
+    Touch 115, 505, 100
+    Delay 1500
+    If 计略是否升级中() = False And 容错参数 < 5 Then 
+        容错参数 = 容错参数 + 1
+        Goto 点击升级
+    End If
+End Sub
+
+//自动铸币
+Function 确认爆仓资源()
+    Call 回主城(1)
+    Dim intX,intY
+    确认爆仓资源 = 99
+    //判断粮食是否爆仓
+    FindColor 680,640,715,762,"4D4DF3",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "粮食爆仓"
+        确认爆仓资源 = 0
+    End If
+    //确认木材是否爆仓
+    FindColor 684,789,715,907,"4D4DF3",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "木材爆仓"
+        确认爆仓资源 = 1
+    End If
+    //确认石料是否爆仓
+    FindColor 684,918,717,1026,"4D4DF3",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "石料爆仓"
+        确认爆仓资源 = 2
+    End If
+    //确认铁矿是否爆仓
+    FindColor 680,1047,719,1143,"4D4DF3",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "铁矿爆仓"
+        确认爆仓资源 = 3
+    End If
+End Function
+
+Sub 进铸币所
+    Dim intX,intY
+    容错参数 = 0
+    Rem 选中铸币所
+    Call 回主城(2)
+    Call 界面收起展开(1)
+    zm.Swipe 465, 1000, 0, 0
+    Delay 1000
+    Touch 500, 775 ,100
+    Delay 2000
+    FindPic 178,531,351,900,"Attachment:铸币.png","000000",0,0.7,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "选中铸币所"
+    ElseIf 容错参数 < 5 Then
+        容错参数 = 容错参数 + 1
+        TracePrint "没有选中铸币所,重试"
+        Goto 选中铸币所
+    Else 
+        TracePrint "失败次数过多,放弃铸币"
+        Exit Sub
+    End If
+    Rem 点击铸币图标
+    Touch intX + 5, intY + 5, 100
+    Delay 1500
+    所在场景 = 场景相关操作.所在场景()
+    If 所在场景 = 66 Then 
+        TracePrint "成功进入铸币所"
+    ElseIf 容错参数 < 5 Then
+        TracePrint "点击铸币图标失败,重试"
+        容错参数 = 容错参数 + 1
+        Goto 点击铸币图标
+    End If
+End Sub
+
+Sub 铸币()
+    Dim intX,intY, 铸币原料类型, 铸币比例, 铸币比例对应点击偏移
+    铸币原料类型 = 确认爆仓资源()
+    铸币比例 = Int(ReadUIConfig("铸币比例"))
+    If 铸币比例 < 2 Then 
+        铸币比例 = 2
+    ElseIf 铸币比例 > 100 Then
+        铸币比例 = 100
+    End If
+    铸币比例对应点击偏移 = 5.18 
+    
+    If ReadUIConfig("每日铸币") = False Or ReadConfig("今日是否铸币") = 1 Then 
+        TracePrint "每日铸币",ReadUIConfig("每日铸币"),"今日是否铸币",ReadConfig("今日是否铸币")
+    Else
+        铸币原料类型 = 0
+        铸币比例 = 1
+    End If
+    
+    If 铸币原料类型 = 99 Or ReadUIConfig("是否自动铸币") = False Or ReadConfig("今日是否铸币") = 1 Then 
+        TracePrint "铸币原料类型",铸币原料类型,"是否自动铸币",ReadUIConfig("是否自动铸币")
+        Exit Sub
+    End If 
+
+    Call 进铸币所()
+    FindPic 71,513,201,786,"Attachment:铸币取消.png","000000",0,0.7,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "当前正在铸币"
+        Exit Sub
+    End If
+    FindPic 71,513,201,786,"Attachment:收取.png","000000",0,0.7,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "有之前铸币的结果,先收取"
+        Touch intX, intY, 100
+        Delay 1000
+    End If
+    FindPic 71,513,201,786,"Attachment:铸币按钮.png","000000",0,0.7,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "当前可以铸币"  
+    End If
+    
+    //选择原料
+    If 铸币原料类型 = 0 Then 
+        TracePrint "粮食铸币不用操作"
+    ElseIf 铸币原料类型 = 1 Then
+        TracePrint "木材铸币"
+        容错参数 = 0
+        Rem 勾选木材
+        Touch 490, 255, 100
+        Delay 1000
+        FindPic 458,226,522,301,"Attachment:筛选勾.png","000000",0,0.7,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了木材"
+        ElseIf 容错参数 < 5 Then
+            Goto 勾选木材
+        End If
+    ElseIf 铸币原料类型 = 2 Then
+        TracePrint "石料铸币"
+        容错参数 = 0
+        Rem 勾选石料
+        Touch 490, 255, 100
+        Delay 1000
+        FindPic 398,226,463,286,"Attachment:筛选勾.png","000000",0,0.7,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了石料"
+        ElseIf 容错参数 < 5 Then
+            Goto 勾选石料
+        End If
+    ElseIf 铸币原料类型 = 2 Then
+        TracePrint "铁矿铸币"
+        容错参数 = 0
+        Rem 勾选铁矿
+        Touch 490, 255, 100
+        Delay 1000
+        FindPic 342,226,403,293,"Attachment:筛选勾.png","000000",0,0.7,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "选中了铁矿"
+        ElseIf 容错参数 < 5 Then
+            Goto 勾选铁矿
+        End If
+    End If
+    
+    //设置铸币百分比
+    zm.Swipe 183, 375, 183, 375 + 铸币比例 * 铸币比例对应点击偏移
+    Delay 15000
+    Rem 点击铸币按钮
+    Touch 125, 640, 100
+    Delay 1000
+    FindPic 71,513,201,786,"Attachment:铸币取消.png","000000",0,0.7,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "开始铸币"
+        WriteConfig "今日是否铸币", True, True
+    End If
+End Sub
+
+//升级科技
+Sub 升级科技
+    zm.Swipe 90, 580, 520, 580
+
+    Delay 15000
+End Sub
+
+//领取季节奖励
+Sub 领取季节奖励
+
+    Call 去野外(2)
+    Call 界面收起展开(6)
+    
+    容错参数 = 0
+    Rem 进季节奖励界面
+    Dim intX,intY
+    FindPic 471,457,660,1098,"Attachment:冬.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "找到冬图标"
+        Touch intX + 5, intY + 5, 100
+        Delay 1500
+    End If
+    //确认是否进到奖励界面
+    FindPic 395,809,513,955,"Attachment:奖励图标.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "进入季节奖励界面"
+        Do
+            FindColor 81,264,198,985,"51FFFF-111111",0,0.99,intX,intY
+            If intX > -1 And intY > -1 Then 
+                TracePrint "有季节奖励"
+                Touch intX, intY, 100
+                Delay 3000
+            Else	
+                Exit Do
+            End If
+        Loop
+    ElseIf 容错参数 < 5 Then
+        容错参数 = 容错参数 + 1
+        TracePrint "进入季节奖励界面失败,重试"
+        Goto 进季节奖励界面
+    End If
+    容错参数 = 0
+    Rem 关闭界面
+    Touch 605, 1000, 100
+    Delay 1500
+    FindPic 395,809,513,955,"Attachment:奖励图标.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 And 容错参数 < 5 Then
+        容错参数 = 容错参数 + 1
+        TracePrint "关闭界面失败,重试"
+        Goto 关闭界面
+    End If
+    TracePrint "季节奖励执行完毕"
+End Sub
 
 //所有写入数据备忘
 //单条副本数据写入 	WriteConfig "副本数据&副本类型.章节数.编号", 副本数据
@@ -4894,3 +5741,4 @@ End Function
 //					WriteConfig "挑战名将副本次数", 1, True
 //					WriteConfig "是否已经祭祀", True, True		
 //					WriteConfig "已完成皇榜任务次数", 已完成皇榜任务次数, True
+//					WriteConfig "今日是否铸币", True, True

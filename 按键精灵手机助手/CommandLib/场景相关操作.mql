@@ -4,7 +4,8 @@ Function 所在场景()
     //13 = 皇榜任务, 14 = 武将, 15 = 阵容, 16 = 背包, 17 = 军团, 18 = 战斗中, 19 = 邮件, 20 = 资源, 21 = 公告, 22 = 登录界面, 23 = 酒肆, 24 = 官职, 25 = 祭坛, 
     //26 = 成就, 27 = 技法所, 28 = 计略府, 29 = 军械所, 30 = 城墙, 31 = 派遣 , 32 = VIP, 33 = 主公 , 34 = 开服基金 , 35 = 市场, 36 = 断线重连, 37 = 副本预览, 38 = 精英副本
     //39 = 名将副本, 40 = 选择队伍, 41 = 扫荡预览, 42 = 登录, 43 = 登录成功, 44 = 国家, 45 = 兵力, 46 = 附近界面, 47 = 筛选界面, 48 = 寻访界面, 49 = 错误, 50 = 仓库, 51 = 建筑升级, 52 = 军团帮助
-    //53 = 军团俸禄, 54 = 活动详情, 55 = 补领确认, 56 = 宴请结果, 57 = 繁荣度, 58 = 排行榜, 59 = 帮助界面, 60 = 设置, 61 = 读条等待, 62 = 获得武将, 63 = 白云, 64 = 充值提示, 65 = 武将详情页
+    //53 = 军团俸禄, 54 = 活动详情, 55 = 补领确认, 56 = 宴请结果, 57 = 繁荣度, 58 = 排行榜, 59 = 帮助界面, 60 = 设置, 61 = 读条等待, 62 = 获得武将, 63 = 白云, 64 = 充值提示, 65 = 武将详情页, 66 = 铸币所
+    //67 = 水镜先生, 68 = 引导手势
 
     Dim intX,intY
 	
@@ -202,7 +203,7 @@ Function 所在场景()
         Exit Function
     End If
 	
-    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:计略府.png","000000",0,0.9,intX,intY
+    FindPic 判定范围6(0), 判定范围6(1), 判定范围6(2), 判定范围6(3),"Attachment:计略府.png","000000",0,0.8,intX,intY
     If intX > -1 And intY > -1 Then
         所在场景 = 28
         Exit Function
@@ -422,6 +423,24 @@ Function 所在场景()
         所在场景 = 65
         Exit Function
     End If
+    
+    FindPic 582,552,647,738,"Attachment:铸币所.png","000000",0,0.7,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 66
+        Exit Function
+    End If
+    
+    FindPic 0,0,720,1280,"Attachment:水镜先生.png","000000",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 67
+        Exit Function
+    End If
+    
+    FindColor 208,614,338,865,"96DAEB",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 68
+        Exit Function
+    End If
 End Function
 
 Function 关闭界面()	
@@ -442,7 +461,7 @@ Function 关闭界面()
         Tap 640, 1020
     Case 22
         Tap 140, 640
-    Case 27, 31, 37
+    Case 27, 31, 37, 66
         Tap 640, 1060
     Case 5, 29
         Tap 630, 1200
@@ -498,7 +517,7 @@ Function 关闭界面()
         Touch 100, 640, 100
     Case 63
         TracePrint "在切换城内城外"
-        If 重启参数 = 5 Then 
+        If 重启参数 > 5 Then 
             KillApp "com.shouyou.sgzerq.hm"   
             Delay 5000
             RunApp "com.shouyou.sgzerq.hm"
@@ -508,9 +527,20 @@ Function 关闭界面()
         Goto 关闭界面
     Case 64
         Touch 250, 520, 100
+    Case 67, 68
+        Touch 320, 720, 100
     Case Else
         ShowMessage "这个界面不知道啊,无法关闭,请手动关闭,并告诉我", 1500, 50, 620
-        //        KeyPress "Back"
+        TracePrint "在切换城内城外"
+        If 重启参数 > 5 Then 
+            KillApp "com.shouyou.sgzerq.hm"   
+            Delay 5000
+            RunApp "com.shouyou.sgzerq.hm"
+            Delay 30000
+        End If
+        重启参数 = 重启参数 + 1
+        Delay 3000
+        Goto 关闭界面
     End Select
 End Function
 
@@ -537,7 +567,20 @@ Function 主城底部是否收起()
     Else 
         关闭界面()
     End If
+End Function
 
+Function 野外顶部是否收起()
+    Dim intX,intY
+    If 所在场景() = 2 Then 
+        FindPic 572,1095,625,1177,"Attachment:顶部收起.png","000000",0,0.7,intX,intY
+        If intX > -1 And intY > -1 Then 
+            野外顶部是否收起 = False
+        Else 
+            野外顶部是否收起 = True
+        End If
+    Else 
+        TracePrint "当前不在野外,无法判断"
+    End If
 End Function
 
 Function 找多图(起X, 起Y, 止X, 止Y, 图片, 横向拆分数量, 纵向拆分数量 )
