@@ -1,0 +1,44 @@
+
+{
+	"Description" : null,
+	"切换账号" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"当前所在登录步骤界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"渠道转换" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"登录" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"账号信息处理" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"账号登录" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"进个人中心" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"退出账号" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	}
+}

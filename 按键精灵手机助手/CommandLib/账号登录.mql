@@ -1,0 +1,241 @@
+//所在场景: 1 = 登录步骤1 ,2 = 登录步骤2, 3 = 登录步骤3 
+//客户端: 1 = 360 com.game.sgz.a360 , 2 = 遥点, 3 = 海马玩 com.shouyou.sgzerq.hm
+
+Import "zm.luae"
+Import "场景相关操作.mql"
+
+  
+Dim 当前步骤, 渠道编号, 容错参数, 所在场景
+
+Function 渠道转换()
+    Dim 包名
+    包名 = Sys.GetFront()
+    TracePrint 包名
+    If 包名 = "com.game.sgz.a360" Then 
+        渠道转换 = 0
+    ElseIf 包名 = "com.shouyou.sgzerq.hm" Then
+        渠道转换 = 1
+    ElseIf 包名 = "com.game.sgz.a360.yod" Then
+        渠道转换 = 2
+    Else 
+        渠道转换 = 99
+    End If
+    
+End Function
+
+
+Sub 登录(账号信息, 账号密码)
+    渠道编号 = 渠道转换()
+    If 渠道编号 = 0 Then 
+        Rem 进账号登录界面1
+        当前步骤 = 当前所在登录步骤界面(0)
+        If 当前步骤 = 1 Then 
+            Touch 130, 510, 100
+            Delay 1000
+            Goto 进账号登录界面1
+        ElseIf 当前步骤 = 2 Then  
+            //输入账号
+            Touch 470, 460, 100
+            Delay 500
+            //删除旧账号
+            Touch 470, 865, 100
+            TracePrint 账号信息
+            InputText 账号信息
+            Delay 1000
+            
+            //输入密码
+            Touch 395, 460, 100
+            Delay 500
+            //删除旧密码
+            Touch 395, 685, 100
+            TracePrint 账号密码
+            InputText 账号密码
+            Delay 1000
+            	
+            //点击登录
+            Touch 285, 610, 100
+            Delay 1500
+            Goto 进账号登录界面1
+        ElseIf 当前步骤 = 3 Then
+            Touch 545, 875, 100
+            Delay 1500
+        End If
+    ElseIf 渠道编号 = 1 Then
+    	容错参数 = 0
+        Rem 进账号登录界面2
+        所在场景 = 场景相关操作.所在场景()
+        当前步骤 = 当前所在登录步骤界面(1)
+        If 当前步骤 = 1 Then  
+            //输入账号
+            TracePrint "要点击账号栏了"
+            Touch 523, 880, 100
+            Delay 500
+            //删除旧账号
+            For 30
+                KeyPress "del"
+                Delay 10
+            Next
+            Delay 1000
+            TracePrint 账号信息
+            InputText 账号信息
+            Delay 1000
+            
+            //输入密码
+            Touch 449, 950, 100
+            Delay 500
+            //删除旧密码
+            For 30
+                KeyPress "del"
+                Delay 10
+            Next
+            TracePrint 账号密码
+            InputText 账号密码
+            Delay 1000
+            	
+            //点击登录
+            Touch 340, 625, 100
+            Delay 3000
+            Goto 进账号登录界面2
+        ElseIf 当前步骤 = 2 Then
+            TracePrint "应该要关闭啊"
+            Touch 660, 920, 100
+            Delay 1500
+            Goto 进账号登录界面2
+        ElseIf 所在场景 = 21 Or 所在场景 = 22 Then
+        	TracePrint "登录成功"
+        ElseIf 容错参数 < 3 Then
+        	容错参数 = 容错参数 + 1
+        	TracePrint "当前界面未知,等待"
+        	Delay 3000
+        	Goto 进账号登录界面2
+        End If
+        TracePrint "登录完毕"
+    End If
+End Sub
+
+
+Function 当前所在登录步骤界面(渠道编号)
+    Dim intX, intY
+    Select Case 渠道编号
+    Case 0
+        TracePrint "当前运行360客户端"
+        If CmpColorEx("585|535|333333-111111,586|569|333333-111111,590|595|333333-111111,589|608|333333-111111,592|625|333333-111111,591|677|333333-111111,600|721|333333-111111,577|726|333333-111111",0.9) = 1 Then
+            TracePrint "在360手机号登录界面"
+            当前所在登录步骤界面 = 1
+            Exit Function
+        End If
+        If CmpColorEx("564|524|333333-111111,565|545|333333-111111,568|569|333333-111111,561|593|333333-111111,551|599|333333-111111,567|622|333333-111111,567|649|333333-111111,557|699|333333-111111,567|733|333333-111111",0.9) = 1 Then
+            TracePrint "在360账号登录界面"
+            当前所在登录步骤界面 = 2
+            Exit Function
+        End If
+        If CmpColorEx("564|524|333333-111111,565|545|333333-111111,568|569|333333-111111,561|593|333333-111111,551|599|333333-111111,567|622|333333-111111,567|649|333333-111111,557|699|333333-111111,567|733|333333-111111",0.9) = 1 Then
+            TracePrint "提示密码升级"
+            当前所在登录步骤界面 = 3
+            Exit Function
+        End If
+    Case 1
+        TracePrint "当前运行海马玩客户端"
+        If CmpColorEx("641|298|666666-111111,646|308|666666-111111,646|334|666666-111111,637|349|666666-111111,624|365|666666-111111,618|384|666666-111111,637|381|666666-111111",0.9) = 1 Then
+            TracePrint "在海马玩登录界面"
+            当前所在登录步骤界面 = 1
+            Exit Function
+        End If
+        If CmpColorEx("675|328|3B40DD-111111,380|324|3B40DD-111111,385|945|3B40DD-111111,691|951|3B40DD-111111,552|646|3B40DD-111111,645|651|3B40DD-111111,388|640|3B40DD-111111",0.9) = 1 Then
+            TracePrint "在海马玩个人中心界面"
+            当前所在登录步骤界面 = 2
+            Exit Function
+        End If
+    Case 2
+        TracePrint "当前运行遥点客户端"
+        If CmpColorEx("608|514|E26700-111111,556|535|E26700-111111,568|555|E26700-111111,588|562|E96A00-111111,569|580|E26700-111111",0.9) = 1 Then
+            TracePrint "在登录界面"
+            当前所在登录步骤界面 = 1
+            Exit Function
+        End If
+    End Select
+    
+    当前所在登录步骤界面 = 0
+    TracePrint "当前渠道包不支持或者界面未知"
+End Function
+
+
+Sub 退出账号(渠道编号)
+    If 渠道编号 = 0 Then 
+        Rem 进账号登录界面0
+        当前步骤 = 当前所在登录步骤界面(0)
+        If 当前步骤 = 1 Then 
+            Touch 130, 510, 100
+            Delay 1000
+            Goto 进账号登录界面0
+        ElseIf 当前步骤 = 2 Then  
+
+            Goto 进账号登录界面0
+        ElseIf 当前步骤 = 3 Then
+            Touch 545, 875, 100
+            Delay 1500
+        End If
+    ElseIf 渠道编号 = 1 Then
+        TracePrint "准备注销账号"
+        容错参数 = 0
+        Rem 注销1
+        当前步骤 = 当前所在登录步骤界面(1)
+        If 当前步骤 = 2 And 容错参数 < 5 Then 
+            容错参数 = 容错参数 + 1
+            zm.Swipe 20, 639, 600, 639
+            Delay 1500
+            Touch 35, 639, 100
+            Delay 3000
+            Goto 注销1
+        ElseIf 当前步骤 = 1 Then
+            TracePrint "海马玩注销成功"
+        ElseIf 容错参数 < 5 Then
+            TracePrint "当前界面未知,重试"
+            容错参数 = 容错参数 + 1
+            Delay 3000
+            Goto 注销1
+        End If
+    End If    
+End Sub
+
+Sub 进个人中心(渠道编号)
+    If 渠道编号 = 0 Then 
+        Rem 进账号登录界面0
+        当前步骤 = 当前所在登录步骤界面(0)
+        If 当前步骤 = 1 Then 
+            Touch 130, 510, 100
+            Delay 1000
+            Goto 进账号登录界面0
+        ElseIf 当前步骤 = 2 Then  
+
+            Goto 进账号登录界面0
+        ElseIf 当前步骤 = 3 Then
+            Touch 545, 875, 100
+            Delay 1500
+        End If
+    ElseIf 渠道编号 = 1 Then
+        TracePrint "进海马玩这里了"
+        容错参数 = 0
+        Rem 进个人中心界面1
+        Touch 0, 5, 100
+        Delay 2000
+        Touch 45, 182, 100
+        Delay 2000
+        当前步骤 = 当前所在登录步骤界面(1)
+        If 当前步骤 = 2 Then
+            TracePrint "成功进入海马玩个人中心"
+        ElseIf 容错参数 < 5 Then
+            TracePrint "当前界面未知,重试"
+            容错参数 = 容错参数 + 1
+            Delay 3000
+            Goto 进个人中心界面1
+        End If
+    End If
+End Sub
+
+Sub 切换账号(账号信息, 账号密码)
+    渠道编号 = 渠道转换()
+    Call 进个人中心(渠道编号)
+    Call 退出账号(渠道编号)
+    Call 登录(账号信息, 账号密码)
+End Sub

@@ -4,6 +4,7 @@ Import "任务.mql"
 Import "小红点.mql"
 Import "类型转换.mql"
 Import "zm.luae"
+Import "账号登录.mql"
 
 //初始化全局信息 
 Rem 开始
@@ -12,25 +13,25 @@ TracePrint SetDictEx(0, "Attachment:皇榜.txt")
 TracePrint SetDictEx(1, "Attachment:皇榜奖励数字.txt")
 TracePrint UseDict(1)
 
-
 //登录部分
 
-Dim 账号输入框,账号信息,账号密码,区服,是否登录,是否有公告,所在场景
+Dim 所在场景, 账号信息, 账号密码, 登录成功次数
+登录成功次数 = 1
 Rem login
 ShowMessage "开始准备登陆", 2000, 50, 620
 
 所在场景 = 场景相关操作.所在场景()
 ShowMessage "所在场景"&所在场景, 2000, 50, 620
-
-If 所在场景 <> 1 Then 
-    ShowMessage "不在主城", 1000, 50, 620
-    If 所在场景 = 42 Then 
-        ShowMessage "在登录界面", 2000, 50, 620
-        Call 登录操作()
-    End If
+TracePrint "所在场景",所在场景
+If 所在场景 = Null Then 
+    Call 启动游戏()
+    Call 账号信息处理(登录成功次数)
+    账号登录.登录(账号信息, 账号密码)	
+    Goto login
+ElseIf 所在场景 <> 1 Then
     场景相关操作.关闭界面()
     Delay 1500
-    Goto login 	
+    Goto login
 End If
 
 ShowMessage "处理渠道图标", 1000, 50, 620
@@ -63,11 +64,11 @@ Dim 副本点击坐标偏移X, 副本点击坐标偏移Y
 副本点击坐标偏移X = -60 : 副本点击坐标偏移Y = 40
 Dim 上次推关结果, 体力消耗方式
 Dim 队伍状态数组, 现有士兵数量, 兵营上限, 现有伤兵数量, 伤兵上限, 野外主城坐标X, 野外主城坐标Y, 派遣出征次数, 采集次数, 实际出征次数, 寻访次数
-Dim 启动时间, 累计运行时长, 循环计时1, 循环计时2, 单次循环计时1, 单次循环计时2, 派遣循环时长, 循环时长1, 循环时长2
+Dim 启动时间, 累计运行时长, 循环计时1, 循环计时2, 单次循环计时1, 单次循环计时2, 派遣循环时长, 循环时长1, 循环时长2, 切换时间间隔
 派遣出征次数 = 0 : 采集次数 = 0
 //循环时长1 = CLng(ReadUIConfig("循环时间", 0)) * 60 * 1000
-循环时长1 = 10 * 60 * 1000
-循环时长2 = 3 * 60 * 1000
+循环时长1 = 3 * 60
+循环时长2 = 10 * 60
 派遣循环时长 = ReadUIConfig("派遣循环时间")
 ShowMessage "加载配置文件", 1000, 50, 620
 Call 加载配置文件()
@@ -78,6 +79,7 @@ Call 初始化杂项配置()
 WriteConfig "上次运行日期", Date(), True
 启动时间 = Time()
 Delay 1000
+Call 消耗体力()
 
 已完成皇榜任务次数 = 0
 Call 定位主城坐标()
@@ -98,7 +100,7 @@ Call 商城购买()
 Call 进市场界面()
 Call 升级军械()
 Call 进计略界面()
-Call 强化前6个人装备()
+Call 强化前几个人(1)
 Call 推关()
 Call 消耗体力()
 Call 完成皇榜任务()
@@ -106,11 +108,29 @@ Call 派遣队伍()
 Call 领取季节奖励()
 Call 铸币()
 
+
 循环计时1 = Time()
 循环计时2 = Time()
 单次循环计时1 = 0
 单次循环计时2 = 0
 Rem 循环
+
+If ReadUIConfig("是否自动切换账号") = True Then 
+    切换时间间隔 = ReadUIConfig("切换时间间隔", 15) * 60
+    If Time() - 启动时间 >= 切换时间间隔 Then 
+        TracePrint "准备切换账号"
+        登录成功次数 = 登录成功次数 + 1
+        Call 账号信息处理(登录成功次数)
+        账号登录.切换账号(账号信息, 账号密码)
+        TracePrint "切换账号完毕"
+        Goto login
+    Else
+        TracePrint "没有到切换时间,暂时不切换"
+    End If
+Else 
+    TracePrint "没有开启切换功能"
+End If
+
 
 If Date() <> ReadConfig("上次运行日期") Then 
     KillApp "com.shouyou.sgzerq.hm"   
@@ -125,8 +145,8 @@ Call 领取季节奖励()
 Call 军团小红点处理()
 
 累计运行时长 = Int((Time() - 启动时间) / 60)
-单次循环计时1 = Int(Time() - 循环计时1) * 1000
-单次循环计时2 = Int(Time() - 循环计时2) * 1000
+单次循环计时1 = Int(Time() - 循环计时1)
+单次循环计时2 = Int(Time() - 循环计时2)
 If 单次循环计时1 >= 循环时长1 Then 
     TracePrint "准备进入日常时间循环"
     Call 小红点处理()
@@ -143,7 +163,7 @@ If 单次循环计时2 >= 循环时长2 Then
     Call 进市场界面()
     Call 升级军械()
     Call 进计略界面()
-    Call 强化前6个人装备()
+    Call 强化前几个人(1)
     Call 铸币()
     循环计时2 = Time()
 End If
@@ -161,6 +181,39 @@ End If
 TracePrint "等待下次执行"
 Delay 派遣循环时长
 Goto 循环
+
+
+Sub 启动游戏()
+    Dim 平台
+    平台 = ReadUIConfig("平台")
+    If 平台 = 0 Then 
+        If Sys.AppIsFront("com.game.sgz.a360") = True Then 
+            TracePrint "当前游戏已经启动"
+        Else 
+            TracePrint "准备启动游戏"
+            RunApp "com.game.sgz.a360"
+        End If
+    ElseIf 平台 = 1 Then
+        If Sys.AppIsFront("com.game.sgz.a360.yod") = True Then 
+            TracePrint "当前游戏已经启动"
+        Else 
+            TracePrint "准备启动游戏"
+            RunApp "com.game.sgz.a360.yod"
+        End If
+    ElseIf 平台 = 2 Then
+        If Sys.AppIsFront("com.shouyou.sgzerq.hm") = True Then 
+            TracePrint "当前游戏已经启动"
+        Else 
+            TracePrint "准备启动游戏"
+            RunApp "com.shouyou.sgzerq.hm"
+            
+        End If	
+    End If
+    Delay 2000
+End Sub
+
+
+
 
 
 Sub 初始化杂项配置
@@ -193,15 +246,7 @@ Sub 初始化杂项配置
         //重置铸币
         WriteConfig "今日是否铸币", False, True
     End If
-
-    
 	
-End Sub
-
-Sub 账号信息处理()
-    账号信息 = ReadUIConfig("账号","text1")'获取账号输入框内容
-    账号密码 = ReadUIConfig("密码","text1")'获取密码输入框内容
-    区服 = ReadUIConfig("区服","text1")'获取区服输入框内容
 End Sub
 
 Sub 处理渠道图标()
@@ -216,34 +261,23 @@ Sub 处理渠道图标()
     End If
 End Sub
 
-Sub 登录操作()
-    //获取填写的账号信息
-    Call 账号信息处理()
-    Delay 2000
+Sub 账号信息处理(编号)
+    Rem 获取账号信息
+    If 编号 > 5 Then 
+        登录成功次数 = 1
+        编号 = 1
+    End If
 	
-    //输入账号
-    Tap 520, 890
-    For 50
-        KeyPress "del"
-        Delay 10
-    Next
-    TracePrint 账号信息
-    InputText 账号信息
-    Delay 2000
-	
-    //输入密码
-    Tap 420, 890
-    For 50
-        KeyPress "del"
-        Delay 10
-    Next
-    TracePrint 账号密码
-    InputText 账号密码
-    Delay 2000
-	
-    //点击登录
-    Tap 330, 480
+    账号信息 = ReadUIConfig("账号"&编号)
+    账号密码 = ReadUIConfig("密码" & 编号)
+    TracePrint "账号信息",账号信息,"账号密码",账号密码
+    If 账号信息 = "" Or 账号密码 = "" Then 
+        TracePrint "账号信息有误 重新获取"
+        登录成功次数 = 登录成功次数 + 1 : 编号 = 编号 + 1
+        Goto 获取账号信息
+    End If
 End Sub
+
 
 Sub 加载配置文件()
     Dim 固定主界面坐标内容, 固定军团坐标内容, 固定副本坐标内容, 固定战斗坐标内容
@@ -618,6 +652,7 @@ Sub 去野外(类型)
         If 所在场景 = 1 Then 
             Touch 地图坐标X, 地图坐标Y, 100
             Delay 3000
+            Goto 去野外1
         ElseIf 所在场景 = 2 Then
             TracePrint "在野外啦!"
         Else 
@@ -635,6 +670,7 @@ Sub 去野外(类型)
         If 所在场景 = 1 Then 
             Touch 地图坐标X, 地图坐标Y, 100
             Delay 3000
+            Goto 去野外2
         ElseIf 所在场景 = 2 Then
             移动大地图(Int(野外主城坐标X), Int(野外主城坐标Y))
         Else 
@@ -724,12 +760,13 @@ End Sub
 
 Sub 定位主城坐标()
     ShowMessage "定位主城坐标", 1000, 50, 620
-    野外主城坐标X = ReadUIConfig("主城X坐标") : 野外主城坐标Y = ReadUIConfig("主城Y坐标")
+    野外主城坐标X = Int(ReadUIConfig("主城X坐标")) : 野外主城坐标Y = Int(ReadUIConfig("主城Y坐标"))
     If 野外主城坐标X <> 0 And 野外主城坐标Y <> 0 Then 
         TracePrint "用户自己设置了主城坐标,不用定位了"
         Exit Sub 
     End If
-    Call 去野外(2)
+    Call 回主城(1)
+    Call 去野外(1)
     UseDict (1)
     容错参数 = 0
     Rem 定位坐标
@@ -738,10 +775,11 @@ Sub 定位主城坐标()
     Traceprint ocrchar
     temp = InStr(1, ocrchar, "Y")
     temp1 = Len(ocrchar)
-    野外主城坐标X = Mid(ocrchar, 3, temp - 3)
-    野外主城坐标Y = Right(ocrchar, temp1 - temp - 1)
+    野外主城坐标X = Int(Mid(ocrchar, 3, temp - 3))
+    野外主城坐标Y = Int(Right(ocrchar, temp1 - temp - 1))
     tempStr = "主城坐标" & 野外主城坐标X & "," & 野外主城坐标Y
-    If 野外主城坐标X = 0 And 野外主城坐标Y = 0 And 容错参数 < 5 Then 
+    TracePrint tempStr
+    If (野外主城坐标X = 0 Or 野外主城坐标Y = 0) And 容错参数 < 5 Then 
         容错参数 = 容错参数 + 1
         TracePrint "坐标定位有问题,重试"
         Goto 定位坐标
@@ -750,6 +788,7 @@ Sub 定位主城坐标()
     ShowMessage "如果主城坐标识别不正确,请停止运行脚本,在设置中手动输入", 1000, 50, 620
     Delay 1000
 End Sub
+
 
 Sub 小红点处理()
     TracePrint "开始小红点处理"
@@ -3812,7 +3851,7 @@ Sub 消耗体力()
     Case 2
         Call 副本准备(2, 2, 体力消耗方式)
     Case 4
-        Call 副本准备(1, 1, 体力消耗方式)
+        Call 强化前几个人(3)
     Case 5
         Call 副本准备(1, 10, 体力消耗方式)
     End Select
@@ -4165,7 +4204,7 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
     
     //预期打的次数是挑战次数,但是因为体力,副本剩余次数的影响,可能会调整打副本次数
     Dim 最终打副本次数
-
+    最终打副本次数 = 挑战次数
     If 副本剩余次数 > 0 Then
         TracePrint "预期挑战次数"&挑战次数, "副本剩余次数"&副本剩余次数, "副本星级"&挑战副本数据(4)
         If 副本类型 = 1 Then 
@@ -4175,18 +4214,16 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
         Else 
             体力换算次数 = 1
         End If
-        If 副本剩余次数 > 挑战次数 Then 
-            最终打副本次数 = 挑战次数
-        Else 
-            最终打副本次数 = 副本剩余次数
-        End If
+        
         //如果自动使用包子则跳过体力换算次数的检测
         If ReadUIConfig("是否自动使用包子") = False Then 
-            If 最终打副本次数 < 体力换算次数 Then 
+            If 最终打副本次数 > 体力换算次数 Then 
                 最终打副本次数 = 体力换算次数
             End If
         End If
-        
+        If 副本剩余次数 < 最终打副本次数 Then 
+            最终打副本次数 = 副本剩余次数
+        End If
         //如果是三星就进行扫荡,否则挑战
         TracePrint "最终打副本次数"&最终打副本次数
 		
@@ -4283,6 +4320,11 @@ Sub 打副本(类型, 次数)
                 If intX > -1 And intY > -1 Then 
                     TracePrint "尝试切换自动"
                     Touch 自动坐标X, 自动坐标Y, 100
+                    FindPic 588,1024,711,1270,"Attachment:跳过战斗.png","000000",0,0.9,intX,intY
+                    If intX > -1 And intY > -1 Then
+                        TracePrint "第三场战斗了,准备跳过"
+                        Touch 620, 1200, 100
+                    End If
                 End If
             End If
             //检测是否出现单挑
@@ -4332,8 +4374,12 @@ Sub 打副本(类型, 次数)
             FindPic 171,545,273,745,"Attachment:使用.png","000000",0,0.95,intX,intY
             If intX > -1 And intY > -1 Then 
                 TracePrint "体力不足,使用包子补充"
-                Touch 210, 645, 100
-                Delay 1000
+                If ReadUIConfig("是否自动使用包子") = True Then 
+                    Touch 210, 645, 100
+                    Delay 1000
+                Else 
+                    Exit Sub
+                End If
             End If
             场景相关操作.关闭界面()
             Goto 进战斗界面
@@ -4375,15 +4421,19 @@ Sub 打副本(类型, 次数)
             容错参数 = 0
             Rem 点击开始扫荡
             Touch 开始扫荡坐标X, 开始扫荡坐标Y, 250
-            Delay 2000
+            Delay 2000  
             FindPic 171,545,273,745,"Attachment:使用.png","000000",0,0.95,intX,intY
             If intX > -1 And intY > -1 Then 
                 TracePrint "体力不足,使用包子补充"
-                Touch 210, 645, 100
-                Delay 1000
+                If ReadUIConfig("是否自动使用包子") = True Then 
+                    Touch 210, 645, 100
+                    Delay 1000
+                Else 
+                    Exit Sub
+                End If
             End If
             所在场景 = 场景相关操作.所在场景()
-            If 所在场景 = 37 Then 
+            If 所在场景 = 37 Or 所在场景 = 69 Then 
                 TracePrint "扫荡结束"
             ElseIf 容错参数 < 5 Then
                 容错参数 = 容错参数 + 1
@@ -4912,7 +4962,7 @@ Sub 武将界面内部处理()
                 Delay 1500
                 //点击一键升阶
                 Do
-                    FindPic 68,945,140,1150,"Attachment:一键升阶.png","000000",4,0.9,intX,intY
+                    FindPic 68,945,140,1150,"Attachment:一键升阶可.png","000000",4,0.9,intX,intY
                     If intX > -1 And intY > -1 Then
                         Touch intX, intY, 100
                         Delay 1500
@@ -4920,7 +4970,6 @@ Sub 武将界面内部处理()
                         TracePrint "即将退出升阶"
                         Exit Do
                     End If
-                     
                 Loop
             End If
             //找升星
@@ -4955,24 +5004,41 @@ Sub 武将界面内部处理()
     Loop
 End Sub
 
-Sub 强化前6个人装备()
-    If ReadUIConfig("强化前6个人装备") = False Then 
-        TracePrint "设置不自动强化装备"
-        Exit Sub
-    End If
+
+Sub 强化前几个人( 类型)
+    //暂时最多支持9人
+    //类型枚举 : 1 = 装备 2 = 升星 3 = 升阶 4 = 升级
+    Dim 人数 = ReadUIConfig("强化人数", 6)
+    Select Case 类型
+    Case 1
+        If ReadUIConfig("强化装备") = False Then 
+            TracePrint "设置不自动强化装备"
+            Exit Sub
+        End If
+    End Select
+    
     Call 进武将界面()
     Dim 武将起始坐标X, 武将起始坐标Y, X偏移量, Y偏移量, 当前武将坐标X, 当前武将坐标Y
     武将起始坐标X = 485 : 武将起始坐标Y = 300 : X偏移量 = 150 : Y偏移量 = 340
-    For i = 0 To 5
+    For i = 0 To (人数 - 1)
         当前武将坐标X = 武将起始坐标X - Int(i / 3) * X偏移量
         当前武将坐标Y = 武将起始坐标Y + (i Mod 3) * Y偏移量
         TracePrint 当前武将坐标X,当前武将坐标Y
         Touch 当前武将坐标X, 当前武将坐标Y, 100
         Delay 1500
-        Call 强化单个武将装备()
-        Delay 1500
+        Select Case 类型
+        Case 1
+            Call 强化单个武将装备()
+            Delay 1500
+        Case 2
+        Case 3
+            Call 单个武将升阶()
+            If 当前体力 < 55 Then 
+                Exit Sub
+            End If
+        Case 4
+        End Select   
     Next
-
 End Sub
 
 Sub 强化单个武将装备()
@@ -5042,6 +5108,197 @@ Sub 强化单个武将装备()
     Delay 1500
     //关闭武将详情界面
     Touch 680, 1230, 100
+End Sub
+
+Sub 单个武将升阶()
+    Touch 490, 1205, 100
+    Delay 1500
+    Dim intX,intY
+    //判断位置右1是否为空
+    FindColor 379,920,431,978,"FFFF5F",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "该位置已经激活"
+    Else 
+        Touch 440, 1205, 100
+        Delay 1500
+        Call 寻找目标材料副本()
+        If 当前体力 < 55 Then 
+            Exit Sub
+        End If
+    End If
+    
+    //判断位置右2是否为空
+    FindColor 290,920,344,974,"FFFF5F",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "该位置已经激活"
+    Else 
+        Touch 275, 1205, 100
+        Delay 1500
+        Call 寻找目标材料副本()
+        If 当前体力 < 55 Then 
+            Exit Sub
+        End If
+    End If
+    //判断位置下1是否为空
+    FindColor 250,865,318,879,"FFFF5F",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "该位置已经激活"
+    Else 
+        Touch 200, 865, 100
+        Delay 1500
+        Call 寻找目标材料副本()
+        If 当前体力 < 55 Then 
+            Exit Sub
+        End If
+    End If
+    //判断位置左1是否为空
+    FindColor 293,759,342,820,"FFFF5F",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "该位置已经激活"
+    Else 
+        Touch 275, 710, 100
+        Delay 1500
+        Call 寻找目标材料副本()
+        If 当前体力 < 55 Then 
+            Exit Sub
+        End If
+    End If
+    //判断位置左2是否为空
+    FindColor 385,759,433,816,"FFFF5F",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "该位置已经激活"
+    Else 
+        Touch 440, 710, 100
+        Delay 1500
+        Call 寻找目标材料副本()
+        If 当前体力 < 55 Then 
+            Exit Sub
+        End If
+    End If
+    //判断位置上1是否为空
+    FindColor 419,850,469,889,"FFFF5F",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "该位置已经激活"
+    Else 
+        Touch 520, 865, 100
+        Delay 1500
+        Call 寻找目标材料副本()
+        If 当前体力 < 55 Then 
+            Exit Sub
+        End If
+    End If
+    
+    //关闭武将详情界面
+    Touch 680, 1230, 100
+    Delay 1500
+    TracePrint "单个武将检查完毕"
+End Sub
+
+Sub 寻找目标材料副本()
+    Do
+        If 当前体力 < 55 Then 
+            Exit Do
+        End If
+        FindColor 242,371,409,901,"0000EC",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "找到缺失材料"
+            容错参数 = 0
+            Rem 进出处界面
+            Touch intX, intY, 100
+            Delay 2000
+            所在场景 = 场景相关操作.所在场景()
+            If 所在场景 = 69 Then 
+                TracePrint "正常进入出处界面"
+                Dim 起始X1, 起始Y1, 起始X2, 起始Y2, X偏移,intX,intY, 空副本数据
+                起始X1 = 570 : 起始Y1 = 810 : 起始X2 = 680 : 起始Y2 = 960 : X偏移 = 120 : 空副本数据 = Array(0,0)
+                For i = 0 To 4
+                    起始X1 = 起始X1 - X偏移
+                    起始X2 = 起始X2 - X偏移
+                    FindPic 起始X1,起始Y1,起始X2,起始Y2,"Attachment:升阶升星前往.png","000000",2,0.9,intX,intY
+                    If intX > -1 And intY > -1 Then
+                        TracePrint "找到前往图标"
+                        Touch intX, intY, 100
+                        Delay 1500
+                        //确认剩余体力
+                        Dim ocrchar, temp
+                        ocrchar=Ocr(151,368,184,486,"64DEF7-111111|59C4DA-111111|458F9D-111111|438996-111111|4B9FAF-111111",0.9)
+                        Traceprint ocrchar
+                        temp = InStr(1, ocrchar, "/")
+                        当前体力 = Int(Right(ocrchar, Len(ocrchar) - temp))
+                        If 当前体力 < 55 Then 
+                            Exit Sub
+                        End If
+                        Call 获取单个副本数据(空副本数据)
+                        //副本数组数据结构为,0:X坐标,1:Y坐标,2:副本编号,3:剩余次数,4:副本星数
+                        If 空副本数据(3) > 0 Then 
+                            If 空副本数据(4) <= 2 Then 
+                                TracePrint "副本不能扫荡,不利于后边效率循环,放弃"
+                                //关闭界面
+                                容错参数 = 0
+                                Rem 关闭副本界面
+                                Touch 640, 1060, 100
+                                Delay 1000
+                                所在场景 = 场景相关操作.所在场景()
+                                If 所在场景 = 69 Then 
+                                    TracePrint "成功关闭副本界面"
+                                ElseIf 容错参数 < 5 Then
+                                    TracePrint "没有正常关闭,重试"
+                                    容错参数 = 容错参数 + 1
+                                    Goto 关闭副本界面
+                                End If
+                            ElseIf 空副本数据(4) = 3 Then
+                                Touch 160, 950, 100
+                                Delay 1500
+                                Call 打副本(2, 空副本数据(3))
+                                //关闭界面,检查是否足够
+                                容错参数 = 0
+                                Rem 关闭出处界面
+                                Touch 630, 980, 100
+                                Delay 1000
+                                所在场景 = 场景相关操作.所在场景()
+                                If 所在场景 = 70 Then 
+                                    TracePrint "成功关闭出处界面"
+                                ElseIf 容错参数 < 5 Then
+                                    TracePrint "没有正常关闭,重试"
+                                    容错参数 = 容错参数 + 1
+                                    Goto 关闭出处界面
+                                End If
+                                Exit For
+                            End If
+                        Else 
+                            TracePrint "副本剩余次数为0,重新选择"
+                        End If
+                    Else 
+                        FindPic 起始X1,起始Y1,起始X2,起始Y2,"Attachment:升阶升星不可前往.png","000000",2,0.9,intX,intY
+                        If intX > -1 And intY > -1 Then
+                            TracePrint "后边的途径都没达成条件,退出"
+                            Exit For
+                        End If
+                    End If
+                Next
+            ElseIf 容错参数 < 5 Then
+                TracePrint "没有正常进入界面,重试"
+                容错参数 = 容错参数 + 1
+                Goto 进出处界面
+            Else
+                TracePrint "没找到缺失材料,退出"
+                //关闭升阶详情界面
+                Touch 600, 920, 100
+                Delay 2000
+                Exit Do
+            End If
+        Else 
+            TracePrint "没找到缺失材料,退出"
+            FindPic 77,527,211,746,"Attachment:激活可.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                Touch intX, intY, 100
+            End If
+            //关闭升阶详情界面
+            Touch 600, 920, 100
+            Delay 2000
+            Exit Do
+        End If
+    Loop
 End Sub
 
 //升级军械

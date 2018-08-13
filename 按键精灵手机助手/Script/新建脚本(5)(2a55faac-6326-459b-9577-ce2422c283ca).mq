@@ -1,0 +1,35 @@
+   
+   //切换账号备份
+   
+   
+    If 渠道编号 = 0 Then 
+        Rem 进账号登录界面1
+        当前步骤 = 当前所在登录步骤界面(0)
+        If 当前步骤 = 1 Then 
+            Touch 130, 510, 100
+            Delay 1000
+            Goto 进账号登录界面1
+        ElseIf 当前步骤 = 2 Then  
+            Goto 进账号登录界面1
+        ElseIf 当前步骤 = 3 Then
+            Touch 545, 875, 100
+            Delay 1500
+        End If
+    ElseIf 渠道编号 = 1 Then
+        TracePrint "确认所在界面"
+        容错参数 = 0
+        Rem 切换账号1
+        当前步骤 = 当前所在登录步骤界面(1)
+        If 当前步骤 = 1 Then 
+            Call 登录(账号信息, 账号密码)
+            Goto 切换账号1
+        ElseIf 当前步骤 = 2 Then
+            Call 退出账号(渠道编号)
+            Goto 切换账号1
+        ElseIf 容错参数 < 5 Then
+            TracePrint "当前界面未知,可能在切换,等待"
+            容错参数 = 容错参数 + 1
+            Delay 3000
+            Goto 切换账号1
+        End If
+    End If
