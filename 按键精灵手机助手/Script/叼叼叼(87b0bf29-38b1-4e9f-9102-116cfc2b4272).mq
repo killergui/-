@@ -726,8 +726,8 @@ Sub 定位主城坐标()
     ShowMessage "定位主城坐标", 1000, 50, 620
     野外主城坐标X = ReadUIConfig("主城X坐标") : 野外主城坐标Y = ReadUIConfig("主城Y坐标")
     If 野外主城坐标X <> 0 And 野外主城坐标Y <> 0 Then 
-    	TracePrint "用户自己设置了主城坐标,不用定位了"
-    	Exit Sub 
+        TracePrint "用户自己设置了主城坐标,不用定位了"
+        Exit Sub 
     End If
     Call 去野外(2)
     UseDict (1)
@@ -742,9 +742,9 @@ Sub 定位主城坐标()
     野外主城坐标Y = Right(ocrchar, temp1 - temp - 1)
     tempStr = "主城坐标" & 野外主城坐标X & "," & 野外主城坐标Y
     If 野外主城坐标X = 0 And 野外主城坐标Y = 0 And 容错参数 < 5 Then 
-    	容错参数 = 容错参数 + 1
-    	TracePrint "坐标定位有问题,重试"
-    	Goto 定位坐标
+        容错参数 = 容错参数 + 1
+        TracePrint "坐标定位有问题,重试"
+        Goto 定位坐标
     End If
     ShowMessage tempStr, 1000, 50, 620
     ShowMessage "如果主城坐标识别不正确,请停止运行脚本,在设置中手动输入", 1000, 50, 620
@@ -1955,7 +1955,8 @@ End Function
 Sub 切换自动补兵(类型)
     //类型说明:1 = 自动补,2 = 取消自动补
     Dim intX,intY
-    Do
+    容错参数 = 0
+    Do Until 容错参数 >= 5
         Select Case 类型
         Case 1            
             FindPic 65,1221,112,1267,"Attachment:兵力勾.png","000000",0,0.9,intX,intY
@@ -1964,11 +1965,13 @@ Sub 切换自动补兵(类型)
                 Exit Sub
             Else 
                 Touch 80, 1240, 100
+                容错参数 = 容错参数 + 1
                 Delay 500
             End If
         Case 2
             FindPic 65,1221,112,1267,"Attachment:兵力勾.png","000000",0,0.9,intX,intY
-            If intX > -1 And intY > -1 Then
+            If intX > -1 And intY > -1 Then 
+                容错参数 = 容错参数 + 1
                 Touch 80, 1240, 100
                 Delay 500
             Else 

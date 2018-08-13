@@ -1,0 +1,95 @@
+
+Do
+    SetControlBarPos 1, 1
+    Call 检测()
+    Delay 600000
+Loop
+
+Sub 检测
+    TracePrint("开始检测")
+    While 脚本是否运行() = False
+        SetControlBarPos 1, 1
+        While 脚本是否启动() = False
+            If Sys.AppIsFront("com.mbmpmcmcmlnimnnlmp.ddd") = True Then 
+                TracePrint "当前在脚本界面"
+            Else 
+                TracePrint "启动脚本"
+                Call 启动脚本()
+            End If
+            While 脚本是否准备好了() = False
+                TracePrint "等待启动好"
+                Delay 2000
+            Wend
+            TracePrint "准备运行脚本"
+            Touch 350, 1205, 100
+            Delay 2000
+            Call 启动游戏()
+            SetControlBarPos 1, 1
+            Delay 10000
+        Wend
+        //展开脚本
+        TracePrint "展开脚本"
+        Touch 500, 1270, 100
+        delay 2000
+        //运行脚本
+        Touch 500, 920, 100
+        delay 10000
+    Wend
+    TracePrint "检测完毕"
+End Sub
+
+Function 脚本是否运行()
+    If CmpColorEx("474|1258|1E7F00,483|1275|1E7F00,506|1261|1E7E00,530|1252|1E7F00,531|1275|1E7F00",0.71) = 1 Then
+        TracePrint "正常运行中"
+        脚本是否运行 = True
+    Else
+        TracePrint "不正常"
+        Delay 2000
+        Sys.ClearMemory()
+        KillApp "com.mbmpmcmcmlnimnnlmp.ddd"
+        KillApp "com.shouyou.sgzerq.hm"
+        脚本是否运行 = False
+    End If
+End Function
+
+Function 脚本是否启动()
+    Dim intX,intY
+    If CmpColorEx("477|1257|C8BFB7,507|1261|D5CDC5,534|1252|F0E8E0,528|1273|E2D9D1,484|1275|CAC2B6",0.8) = 1 Then
+        TracePrint "横屏找到"
+        脚本是否启动 = True
+    Else
+        FindPic 0,0,720,1280,"Attachment:脚本图标竖.png","000000",0,0.8,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "在竖屏找到"
+            脚本是否启动 = True
+        Else 
+            TracePrint "横竖都没找到"
+            脚本是否启动 = False
+        End If
+    End If
+
+End Function
+
+Sub 启动脚本
+    While Sys.AppIsFront("com.mbmpmcmcmlnimnnlmp.ddd") = False
+        RunApp "com.mbmpmcmcmlnimnnlmp.ddd"
+        Delay 2000
+    Wend
+End Sub
+
+Function 脚本是否准备好了()
+    If CmpColorEx("159|1174|C57A3C,160|1214|C57A3C,359|1250|C57A3C,526|1205|C57A3C,358|1173|C57A3C",0.9) = 1 Then
+        TracePrint "脚本已经准备好了"
+        脚本是否准备好了 = True
+    Else
+        TracePrint "脚本还没有完全启动好"
+        脚本是否准备好了 = False
+    End If
+End Function
+
+Sub 启动游戏
+    While Sys.AppIsFront("com.shouyou.sgzerq.hm") = False
+        RunApp "com.shouyou.sgzerq.hm"
+        Delay 2000
+    Wend	
+End Sub
