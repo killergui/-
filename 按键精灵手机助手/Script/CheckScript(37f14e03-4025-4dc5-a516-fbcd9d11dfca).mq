@@ -39,21 +39,33 @@ Sub 检测
 End Sub
 
 Function 脚本是否运行()
-    If CmpColorEx("474|1258|1E7F00,483|1275|1E7F00,506|1261|1E7E00,530|1252|1E7F00,531|1275|1E7F00",0.71) = 1 Then
-        TracePrint "正常运行中"
+    If CmpColorEx("477|1258|38953E,505|1261|43B343,531|1252|48BA47,529|1274|47B846,483|1275|3EB03D",0.8) = 1 Then
+        TracePrint "正常运行中1"
         脚本是否运行 = True
-    Else
-        TracePrint "不正常"
-        Delay 2000
-        Sys.ClearMemory()
-        KillApp "com.mbmpmcmcmlnimnnlmp.ddd"
-        KillApp "com.shouyou.sgzerq.hm"
-        脚本是否运行 = False
+    Else 
+        If CmpColorEx("532|1252|94F576,505|1261|93F276,478|1257|94F576,483|1275|94F576,528|1272|94F576",0.8) = 1 Then
+            TracePrint "正常运行中2"
+            脚本是否运行 = True 
+        Else 
+            If CmpColorEx("477|1258|60A338-111111,504|1261|71C83F-111111,535|1253|8EE661-111111,483|1274|65B437-111111,527|1272|90E164-111111",0.7) = 1 Then
+                TracePrint "正常运行中3"
+                脚本是否运行 = True 
+            Else
+                TracePrint "不正常"
+                Delay 2000
+                Sys.ClearMemory()
+                KillApp "com.mbmpmcmcmlnimnnlmp.ddd"
+                KillApp "com.shouyou.sgzerq.hm"
+                脚本是否运行 = False
+            End If
+
+        End If
     End If
 End Function
 
 Function 脚本是否启动()
     Dim intX,intY
+    
     If CmpColorEx("477|1257|C8BFB7,507|1261|D5CDC5,534|1252|F0E8E0,528|1273|E2D9D1,484|1275|CAC2B6",0.8) = 1 Then
         TracePrint "横屏找到"
         脚本是否启动 = True

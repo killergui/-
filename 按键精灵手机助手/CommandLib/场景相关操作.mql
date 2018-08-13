@@ -537,9 +537,10 @@ Function 关闭界面()
             Delay 5000
             RunApp "com.shouyou.sgzerq.hm"
             Delay 30000
+            重启参数 = 0
         End If
         重启参数 = 重启参数 + 1
-        Delay 3000
+        Delay 10000
         Goto 关闭界面
     End Select
 End Function
