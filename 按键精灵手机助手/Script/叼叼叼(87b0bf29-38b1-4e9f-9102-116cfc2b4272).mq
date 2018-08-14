@@ -6,6 +6,7 @@ Import "类型转换.mql"
 Import "zm.luae"
 Import "账号登录.mql"
 
+
 //初始化全局信息 
 Rem 开始
 SetRowsNumber(0)
@@ -79,8 +80,7 @@ Call 初始化杂项配置()
 WriteConfig "上次运行日期", Date(), True
 启动时间 = Time()
 Delay 1000
-Call 消耗体力()
-
+Call 进行沙场论剑()
 已完成皇榜任务次数 = 0
 Call 定位主城坐标()
 Call 读取VIP等级()
@@ -5954,6 +5954,13 @@ Sub 领取季节奖励
         TracePrint "找到冬图标"
         Touch intX + 5, intY + 5, 100
         Delay 1500
+    Else 
+        FindPic 471,457,660,1098,"Attachment:春.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "找到春图标"
+            Touch intX + 5, intY + 5, 100
+            Delay 1500
+        End If
     End If
     //确认是否进到奖励界面
     FindPic 395,809,513,955,"Attachment:奖励图标.png","000000",0,0.9,intX,intY
@@ -5985,6 +5992,306 @@ Sub 领取季节奖励
         Goto 关闭界面
     End If
     TracePrint "季节奖励执行完毕"
+End Sub
+
+//沙场论剑
+Sub 进沙场论剑界面
+    ShowMessage "沙场论剑", 1000, 50, 620
+    Call 去野外(1)
+    Dim intX1,intY1,intX2,intY2
+    FindPic 471,457,660,1098,"Attachment:沙场论剑.png","000000",0,0.9,intX1,intY1
+    If intX1 > -1 And intY1 > -1 Then
+        容错参数 = 0
+        Rem 进界面
+        Touch intX1,intY1,100
+        Delay 1500
+        所在场景 = 场景相关操作.所在场景()
+        If 所在场景 = 72 Then 
+            TracePrint "进入沙场论剑界面"
+        ElseIf 容错参数 < 5 Then
+            TracePrint "进入沙场论剑界面失败,重试"
+            容错参数 = 容错参数 + 1
+            Goto 进界面
+        End If
+    End If
+End Sub
+
+Sub 进行沙场论剑()
+    Call 进沙场论剑界面()
+    容错参数 = 0
+    TracePrint "进行单人模式"
+    Rem 进单人模式
+    Touch 320, 250, 100
+    Delay 1500
+    所在场景 = 场景相关操作.所在场景()
+    If 所在场景 = 73 Then 
+        TracePrint "进入沙场论剑选择对手界面"
+        Call 沙场论剑找对手()
+    ElseIf 容错参数 < 5 Then
+        TracePrint "进入沙场论剑选择对手界面失败,重试"
+        容错参数 = 容错参数 + 1
+        Goto 进单人模式
+    End If
+    TracePrint "进行单人模式结束"
+    Touch 645, 1035, 100
+    Delay 1500
+    容错参数 = 0
+    Rem 进多人模式
+    Touch 320, 630, 100
+    Delay 1500
+    所在场景 = 场景相关操作.所在场景()
+    If 所在场景 = 73 Then 
+        TracePrint "进入沙场论剑选择对手界面"
+        Call 沙场论剑找对手()
+    ElseIf 容错参数 < 5 Then
+        TracePrint "进入沙场论剑选择对手界面失败,重试"
+        容错参数 = 容错参数 + 1
+        Goto 进多人模式
+    End If
+    TracePrint "进行多人模式结束"
+    Touch 645, 1035, 100
+    Delay 1500
+End Sub
+
+Sub 沙场论剑找对手()
+    Dim intX,intY,intX1,intY1,剩余挑战次数,剩余刷新次数
+    Call 沙场论剑胜场奖励()
+    剩余挑战次数 = 识别沙场论剑剩余次数()
+    Do Until 剩余挑战次数 < 1
+        For 2
+            If 剩余挑战次数 < 1 Then 
+                TracePrint "挑战次数不足,剩余挑战次数",剩余挑战次数
+                Exit Sub
+            Else  
+                //1号位筛选
+                FindPic 320,167,471,1004,"Attachment:沙场论剑挑战图标.png","000000",0,0.8,intX,intY
+                If intX > -1 And intY > -1 Then
+                    TracePrint "一号位找到目标"
+                    FindPic 320,167,471,1004,"Attachment:沙场论剑失败标签.png","000000",4,0.9,intX1,intY1
+                    If intX1 > -1 And intY1 > -1 Then
+                        TracePrint "已经挑战过该目标,但是失败了,寻找下一个"
+                    Else 
+                        TracePrint "准备挑战目标"
+                        Call 沙场论剑挑战(intX, intY)
+                    End If
+                Else 
+                    TracePrint "没找到挑战图标,这个目标已经打赢了"
+                End If
+                //2号位筛选
+                剩余挑战次数 = 识别沙场论剑剩余次数()
+                If 剩余挑战次数 < 1 Then 
+                    TracePrint "挑战次数不足,剩余挑战次数",剩余挑战次数
+                    Exit Sub
+                Else 
+                    FindPic 180,167,338,1004,"Attachment:沙场论剑挑战图标.png","000000",0,0.8,intX,intY
+                    If intX > -1 And intY > -1 Then
+                        TracePrint "一号位找到目标"
+                        FindPic 180,167,338,1004,"Attachment:沙场论剑失败标签.png","000000",4,0.9,intX1,intY1
+                        If intX1 > -1 And intY1 > -1 Then
+                            TracePrint "已经挑战过该目标,但是失败了,寻找下一个"
+                        Else 
+                            TracePrint "准备挑战目标"
+                            Call 沙场论剑挑战(intX, intY)
+                        End If
+                    Else 
+                        TracePrint "没找到挑战图标,这个目标已经打赢了"
+                    End If
+                End If
+                剩余挑战次数 = 识别沙场论剑剩余次数()
+                If 剩余挑战次数 < 1 Then 
+                    TracePrint "挑战次数不足,剩余挑战次数",剩余挑战次数
+                    Exit Sub
+                Else 
+                    //滑动屏幕继续
+                    zm.Swipe 145, 830, 435, 830
+                    Delay 1500
+                End If
+            End If
+        Next
+        //3号位筛选
+        剩余挑战次数 = 识别沙场论剑剩余次数()
+        If 剩余挑战次数 < 1 Then 
+            TracePrint "挑战次数不足,剩余挑战次数",剩余挑战次数
+            Exit Sub
+        Else  
+                
+            FindPic 130,167,290,1004,"Attachment:沙场论剑挑战图标.png","000000",0,0.8,intX,intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "一号位找到目标"
+                FindPic 130,167,290,1004,"Attachment:沙场论剑失败标签.png","000000",4,0.9,intX1,intY1
+                If intX1 > -1 And intY1 > -1 Then
+                    TracePrint "已经挑战过该目标,但是失败了,寻找下一个"
+                Else 
+                    TracePrint "准备挑战目标"
+                    Call 沙场论剑挑战(intX, intY)
+                End If
+            Else 
+                TracePrint "没找到挑战图标,这个目标已经打赢了"
+            End If
+        End If
+        Delay 1500
+		Call 沙场论剑胜场奖励()
+        //刷新
+        容错参数 = 0
+        Rem 识别剩余刷新次数
+        Dim ocrchar
+        ocrchar=Ocr(530,983,560,1021,"E2E2E2-111111|EDEEEE-111111|D0D1D2-111111|B9BABB-111111",0.9)
+        Traceprint ocrchar
+        剩余刷新次数 = Int(ocrchar)
+        If 剩余刷新次数 = Null And 容错参数 < 5 Then 
+            TracePrint "剩余刷新次数识别错误,重试"
+            容错参数 = 容错参数 + 1
+            Goto 识别剩余刷新次数
+        ElseIf 容错参数 >= 5 Then
+            剩余刷新次数 = 0
+        End If
+        If 剩余刷新次数 > 0 Then 
+            Touch 510, 945, 100
+            Delay 1500
+        Else 
+            TracePrint "剩余刷新次数为0退出"
+            Exit Do
+        End If
+        剩余挑战次数 = 识别沙场论剑剩余次数()	
+    Loop
+    TracePrint "沙场论剑挑战次数为0,退出"
+End Sub
+
+Function 识别沙场论剑剩余次数()
+    容错参数 = 0
+    Rem 识别剩余次数
+    Dim ocrchar, temp
+    ocrchar=Ocr(499,621,525,676,"F4F4F4-111111|E8E9E9-111111|8B8E90-111111|ACAEB0-111111|BFC0C2-111111",0.9)
+    Traceprint ocrchar
+    temp = Int(Left(ocrchar, 1))
+    If temp = Null And 容错参数 < 5 Then 
+        TracePrint "文本识别有误"
+        容错参数 = 容错参数 + 1
+        Goto 识别剩余次数
+    ElseIf 容错参数 >= 5 Then
+        TracePrint "错误次数过多,放弃"
+        识别沙场论剑剩余次数 = 0
+        Exit Function
+    End If
+    识别沙场论剑剩余次数 = temp
+End Function
+
+Sub 沙场论剑挑战(挑战坐标X, 挑战坐标Y)
+    Dim intX,intY,intX1, intY1
+    容错参数 = 0
+    Rem 点击挑战
+    Touch 挑战坐标X, 挑战坐标Y, 100
+    Delay 1500
+    FindPic 213,1017,439,1124,"Attachment:沙场论剑出击.png","000000",4,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "找到出击按钮"
+        容错参数 = 0
+        Rem 点击出击
+        Touch intX, intY, 100
+        Delay 1500
+        //检测是否战斗结束
+        FindPic 53,807,178,1038,"Attachment:沙场论剑离开.png","000000",4,0.9,intX1,intY1
+        If intX1 > -1 And intY1 > -1 Then 
+            //胜利和败北文字出现时有动画,会有一定延迟,所以要特殊处理
+            Do
+                FindPic 73,110,701,742,"Attachment:沙场论剑胜利.png","000000",0,0.9,intX,intY
+                If intX > -1 And intY > -1 Then 
+                    TracePrint "沙场论剑挑战胜利"
+                    Touch intX1, intY1, 100
+                    Delay 1500
+                    Exit Do
+                End If
+                FindPic 269,260,618,609,"Attachment:沙场论剑失败.png","000000",4,0.9,intX,intY
+                If intX > -1 And intY > -1 Then 
+                    TracePrint "沙场论剑挑战失败"
+                    Touch intX1, intY1, 100
+                    Delay 1500
+                    Exit Do
+                End If 
+            Loop
+        ElseIf 容错参数 < 5 Then
+            Delay 1000
+            TracePrint "等待沙场论剑结果"
+            Goto 点击出击
+        End If   
+    ElseIf 容错参数 < 5 Then
+        容错参数 = 容错参数 + 1
+        TracePrint "没有找到出击按钮,重试"
+        Goto 点击挑战
+    End If
+End Sub
+
+Function 沙场论剑小红点()
+    Call 去野外(1)
+    Dim intX1,intY1,intX2,intY2
+    FindPic 471,457,660,1098,"Attachment:沙场论剑.png","000000",0,0.9,intX1,intY1
+    If intX1 > -1 And intY1 > -1 Then
+        TracePrint "找到沙场论剑图标"
+        FindColor intX1,intY1,intX1 + 100,intY1 + 100,"2626AD",0,0.99,intX2,intY2
+        If intX2 > -1 And intY2 > -1 Then
+            TracePrint "沙场论剑有小红点"
+            沙场论剑小红点 = True
+        End If
+    End If
+End Function
+
+Sub 沙场论剑排名奖励()
+    容错参数 = 0
+    Rem 领奖前场景确认
+    所在场景 = 场景相关操作.所在场景()
+    If 所在场景 = 73 Then 
+        TracePrint "准备领奖励"
+    ElseIf 所在场景 = 72 Then
+        TracePrint "准备选择模式"
+    ElseIf 容错参数 < 5 Then
+        容错参数 = 容错参数 + 1
+        TracePrint "不在沙场论剑界面,准备进入"
+        Call 进沙场论剑界面()
+        Goto 领奖前场景确认
+    ElseIf 容错参数 >= 5 Then
+        TracePrint "沙场论剑领奖励进入场景错误次数太多,放弃"
+        Exit Sub
+    End If
+    Dim intX,intY
+    Do
+        FindColor 480,1078,593,1191,"2626AD",0,0.98,intX,intY
+        If intX > -1 And intY > -1 Then 
+            TracePrint "有排名奖励"
+            Touch intX - 5, intY - 5, 100
+            Delay 2000
+            Do
+                FindColor 585,725,634,862,"2626AD",0,0.98,intX,intY
+                If intX > -1 And intY > -1 Then 
+                    TracePrint "有排名奖励"
+                    Touch intX - 5, intY - 5, 100
+                    Delay 2000
+                    TracePrint "领奖励"
+                    Touch 210, 800, 100
+                    Delay 2000
+                Else 
+                    //关闭界面
+                    场景相关操作.通用界面关闭()
+                    Exit Sub
+                End If
+            Loop
+        Else 
+            Exit Sub
+        End If
+    Loop
+End Sub
+
+Sub 沙场论剑胜场奖励()
+    Dim intX,intY
+    Do
+        FindColor 56,362,128,817,"51FFFF-111111",0,0.98,intX,intY
+        If intX > -1 And intY > -1 Then 
+            TracePrint "有胜场奖励"
+            Touch intX, intY, 100
+            Delay 3000
+        Else	
+            Exit Do
+        End If
+    Loop
 End Sub
 
 //所有写入数据备忘

@@ -5,7 +5,7 @@ Function 所在场景()
     //26 = 成就, 27 = 技法所, 28 = 计略府, 29 = 军械所, 30 = 城墙, 31 = 派遣 , 32 = VIP, 33 = 主公 , 34 = 开服基金 , 35 = 市场, 36 = 断线重连, 37 = 副本预览, 38 = 精英副本
     //39 = 名将副本, 40 = 选择队伍, 41 = 扫荡预览, 42 = 登录, 43 = 登录成功, 44 = 国家, 45 = 兵力, 46 = 附近界面, 47 = 筛选界面, 48 = 寻访界面, 49 = 错误, 50 = 仓库, 51 = 建筑升级, 52 = 军团帮助
     //53 = 军团俸禄, 54 = 活动详情, 55 = 补领确认, 56 = 宴请结果, 57 = 繁荣度, 58 = 排行榜, 59 = 帮助界面, 60 = 设置, 61 = 读条等待, 62 = 获得武将, 63 = 白云, 64 = 充值提示, 65 = 武将详情页, 66 = 铸币所
-    //67 = 水镜先生, 68 = 引导手势, 69 = 出处, 70 = 升阶详情, 71 = 升阶
+    //67 = 水镜先生, 68 = 引导手势, 69 = 出处, 70 = 升阶详情, 71 = 升阶, 72 = 沙场论剑, 73 = 沙场论剑选择对手
 
     Dim intX,intY
 	
@@ -383,11 +383,6 @@ Function 所在场景()
         所在场景 = 60
         Exit Function
     End If
-    FindColor 51,300,69,452,"183D9A-111111",0,0.95,intX,intY
-    If intX > -1 And intY > -1 Then
-        所在场景 = 61
-        Exit Function
-    End If
     
     FindPic 484,442,645,856,"Attachment:恭喜获得1.png","000000",0,0.9,intX,intY
     If intX > -1 And intY > -1 Then
@@ -455,11 +450,29 @@ Function 所在场景()
         End If
     End If
     
-    FindColor 208,614,338,865,"96DAEB",0,0.95,intX,intY
+    FindPic 596,0,720,361,"Attachment:沙场论剑标题.png","000000",0,0.9,intX,intY
     If intX > -1 And intY > -1 Then
-        所在场景 = 68
+        所在场景 = 72
         Exit Function
     End If
+    
+    FindPic 610,413,714,809,"Attachment:沙场论剑标题2.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 73
+        Exit Function
+    End If
+    
+    FindColor 51,300,69,452,"183D9A-111111",0,0.95,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 61
+        Exit Function
+    End If
+    
+//    FindColor 208,614,338,865,"96DAEB",0,0.98,intX,intY
+//    If intX > -1 And intY > -1 Then
+//        所在场景 = 68
+//        Exit Function
+//    End If
     
 End Function
 
@@ -469,7 +482,7 @@ Function 关闭界面()
     Rem 关闭界面
     当前场景 = 所在场景()
     Select Case 当前场景
-    Case 3, 4, 6, 11, 14, 15, 16, 17, 23, 24, 38, 51, 65, 71
+    Case 3, 4, 6, 11, 14, 15, 16, 17, 23, 24, 38, 51, 65, 71, 72
         Tap 680,1230
     Case 8 ,9, 19, 21, 25, 28, 30, 32, 33, 53
         Tap 640,1140
@@ -477,7 +490,7 @@ Function 关闭界面()
         Tap 630, 1090
     Case 12
         Tap 525, 1110
-    Case 13, 52
+    Case 13, 52, 73
         Tap 640, 1020
     Case 22
         Tap 140, 640
@@ -550,6 +563,7 @@ Function 关闭界面()
     Case 67, 68
         Touch 320, 720, 100
     Case Else
+    	Call 通用界面关闭()
         ShowMessage "这个界面不知道啊,无法关闭,请手动关闭,并告诉我", 1500, 50, 620
         TracePrint "在切换城内城外"
         If 重启参数 > 5 Then 
@@ -564,6 +578,14 @@ Function 关闭界面()
         Goto 关闭界面
     End Select
 End Function
+
+Sub 通用界面关闭()
+	Dim intX,intY
+    FindPic 0,0,720,1280,"Attachment:关闭.png","000000",2,0.7,intX,intY
+    If intX > -1 And intY > -1 Then
+        Touch intX,intY,100
+    End If
+End Sub
 
 Function 主城顶部是否收起()
     Dim intX,intY

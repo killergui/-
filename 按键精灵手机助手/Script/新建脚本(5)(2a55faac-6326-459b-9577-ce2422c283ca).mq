@@ -33,3 +33,108 @@
             Goto 切换账号1
         End If
     End If
+    
+    
+    //关闭备份
+Function 关闭界面()	
+    Dim 当前场景, intX, intY, 重启参数
+    重启参数 = 0
+    Rem 关闭界面
+    当前场景 = 所在场景()
+    Select Case 当前场景
+    Case 3, 4, 6, 11, 14, 15, 16, 17, 23, 24, 38, 51, 65, 71, 72
+        Tap 680,1230
+    Case 8 ,9, 19, 21, 25, 28, 30, 32, 33, 53
+        Tap 640,1140
+    Case 10, 34, 35, 46
+        Tap 630, 1090
+    Case 12
+        Tap 525, 1110
+    Case 13, 52, 73
+        Tap 640, 1020
+    Case 22
+        Tap 140, 640
+    Case 27, 31, 37, 66
+        Tap 640, 1060
+    Case 5, 29
+        Tap 630, 1200
+    Case 26
+        Tap 660, 1200
+    Case 1
+        TracePrint "这个主界面要怎么关"&当前场景
+    Case 2
+        Touch 70, 1205, 100
+    Case 36
+        FindPic 209,390,304,899,"Attachment:重新登录.png","000000",0,0.99,intX,intY
+        If intX > -1 And intY > -1 Then
+            Touch 250, 640, 100
+        Else 
+            Touch 248, 520, 100
+        End If
+    Case 40
+        Touch 670, 1140, 100
+    Case 41
+        Touch 550, 910, 100
+    Case 18
+        TracePrint "战斗场景,暂时不支持关闭,请等待战斗结束"
+        ShowMessage "战斗场景,暂时不支持关闭,请等待战斗结束", 2000, 390, 640
+    Case 43
+        Touch 660, 920, 100
+    Case 44
+        Touch 590, 1070, 100
+    Case 7, 20, 45, 54
+        Touch 630, 1110, 100
+    Case 47
+        Touch 620, 940, 100
+    Case 48, 70
+        Touch 600, 920, 100
+    Case 49 
+        Touch 250, 640, 100
+    Case 50, 69
+        Touch 635, 1000, 100
+    Case 55
+        Touch 250, 750, 100
+    Case 56
+        Touch 55, 480, 100
+    Case 57
+        Touch 400, 600, 100
+    Case 58
+        Touch 660, 1110, 100
+    Case 59
+        Touch 660, 1080, 100
+    Case 60
+        Touch 545, 910, 100
+    Case 61
+        ShowMessage "等待加载", 1000, 50, 620
+    Case 62
+        Touch 100, 640, 100
+    Case 63
+        TracePrint "在切换城内城外"
+        If 重启参数 > 5 Then 
+            KillApp "com.shouyou.sgzerq.hm"   
+            Delay 5000
+            RunApp "com.shouyou.sgzerq.hm"
+        End If
+        重启参数 = 重启参数 + 1
+        Delay 3000
+        Goto 关闭界面
+    Case 64
+        Touch 250, 520, 100
+    Case 67, 68
+        Touch 320, 720, 100
+    Case Else
+    	Call 通用界面关闭()
+        ShowMessage "这个界面不知道啊,无法关闭,请手动关闭,并告诉我", 1500, 50, 620
+        TracePrint "在切换城内城外"
+        If 重启参数 > 5 Then 
+            KillApp "com.shouyou.sgzerq.hm"   
+            Delay 5000
+            RunApp "com.shouyou.sgzerq.hm"
+            Delay 30000
+            重启参数 = 0
+        End If
+        重启参数 = 重启参数 + 1
+        Delay 10000
+        Goto 关闭界面
+    End Select
+End Function
