@@ -279,6 +279,12 @@ Function 所在场景()
         Exit Function
     End If
     
+    FindPic 357,6,472,139,"Attachment:名将副本.png","000000",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        所在场景 = 39
+        Exit Function
+    End If
+    
     FindPic 判定范围5(0), 判定范围5(1), 判定范围5(2), 判定范围5(3),"Attachment:选择队伍.png","000000",0,0.9,intX,intY
     If intX > -1 And intY > -1 Then
         所在场景 = 40
@@ -468,11 +474,11 @@ Function 所在场景()
         Exit Function
     End If
     
-//    FindColor 208,614,338,865,"96DAEB",0,0.98,intX,intY
-//    If intX > -1 And intY > -1 Then
-//        所在场景 = 68
-//        Exit Function
-//    End If
+    //    FindColor 208,614,338,865,"96DAEB",0,0.98,intX,intY
+    //    If intX > -1 And intY > -1 Then
+    //        所在场景 = 68
+    //        Exit Function
+    //    End If
     
 End Function
 
@@ -550,23 +556,7 @@ Function 关闭界面()
         Touch 100, 640, 100
     Case 63
         TracePrint "在切换城内城外"
-        If 重启参数 > 5 Then 
-            KillApp "com.shouyou.sgzerq.hm"   
-            Delay 5000
-            RunApp "com.shouyou.sgzerq.hm"
-        End If
-        重启参数 = 重启参数 + 1
-        Delay 3000
-        Goto 关闭界面
-    Case 64
-        Touch 250, 520, 100
-    Case 67, 68
-        Touch 320, 720, 100
-    Case Else
-    	Call 通用界面关闭()
-        ShowMessage "这个界面不知道啊,无法关闭,请手动关闭,并告诉我", 1500, 50, 620
-        TracePrint "在切换城内城外"
-        If 重启参数 > 5 Then 
+        If 重启参数 > 15 Then 
             KillApp "com.shouyou.sgzerq.hm"   
             Delay 5000
             RunApp "com.shouyou.sgzerq.hm"
@@ -574,13 +564,31 @@ Function 关闭界面()
             重启参数 = 0
         End If
         重启参数 = 重启参数 + 1
-        Delay 10000
+        Delay 2000
+        Goto 关闭界面
+    Case 64
+        Touch 250, 520, 100
+    Case 67, 68
+        Touch 320, 720, 100
+    Case Else
+        Call 通用界面关闭()
+        ShowMessage "这个界面不知道啊,无法关闭,请手动关闭,并告诉我", 1500, 50, 620
+        TracePrint "在切换城内城外"
+        If 重启参数 > 15 Then 
+            KillApp "com.shouyou.sgzerq.hm"   
+            Delay 5000
+            RunApp "com.shouyou.sgzerq.hm"
+            Delay 30000
+            重启参数 = 0
+        End If
+        重启参数 = 重启参数 + 1
+        Delay 2000
         Goto 关闭界面
     End Select
 End Function
 
 Sub 通用界面关闭()
-	Dim intX,intY
+    Dim intX,intY
     FindPic 0,0,720,1280,"Attachment:关闭.png","000000",2,0.7,intX,intY
     If intX > -1 And intY > -1 Then
         Touch intX,intY,100

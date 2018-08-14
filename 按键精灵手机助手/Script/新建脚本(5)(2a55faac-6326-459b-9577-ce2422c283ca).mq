@@ -138,3 +138,73 @@ Function 关闭界面()
         Goto 关闭界面
     End Select
 End Function
+
+
+//章节数备份
+Function 章节数(类型)
+
+    Dim 章节文字, 副本编号, 副本数组, 最大章节数
+    章节文字 = Ocr(663,502,698,607,"A1C7C7-111111|ABD4D4-111111|98BDBD-111111|AAD3D3-111111|A3C9CA-111111|A3CBCB-111111|ABD4D4-111111|8AABAB-111111|9ABFC0-111111|A5CDCD-111111",0.9)
+    Traceprint 章节文字
+		
+    Dim temp, 文字数量, 待转换文字
+    文字数量 = UTF8.Len(章节文字)
+    If 文字数量 = 3 Then 
+        待转换文字 = UTF8.Mid(章节文字, 2, 1)
+    ElseIf 文字数量 = 4 Then
+        待转换文字 = UTF8.Mid(章节文字, 2, 2)
+    ElseIf 文字数量 = 5 Then
+        待转换文字 = UTF8.Mid(章节文字, 2, 3)
+    Else 
+        TracePrint "文本过长或过短,可能识别错了"
+        ShowMessage "章节识别可能出错,请尝试重启",3000,390,640
+    End If
+        
+    temp = 类型转换.汉字转数字(待转换文字)
+    If temp = null Then 
+        ShowMessage "章节数识别有误",1000, 50, 260
+        temp = 6
+    End If
+    TracePrint "章节数", temp
+    最大章节数 = ReadConfig("最大章节" & 类型, 0)
+    If temp > 最大章节数 Then 
+        TracePrint "写入最大章节"&类型, temp
+        WriteConfig "最大章节"&类型, temp, True
+    End If
+    章节数 = temp
+End Function
+
+//副本信息备份
+Function 副本信息()
+    Delay 1500
+    Dim intX,intY, 副本数组
+    
+    Rem 找已通关副本
+    //找已通关小副本号
+    副本数组 = 场景相关操作.找多图(90, 360, 630, 1200, "Attachment:副本星数.png", 2, 2)
+
+    If UBOUND(副本数组) = -1 Then 
+        TracePrint "本章没有已通关副本,即将进入上一章"
+        Touch 上一页坐标X, 上一页坐标Y, 100
+        Delay 1500
+        Goto 找已通关副本
+    Else 
+        For m = 0 To UBOUND(副本数组)
+            TracePrint "将要进入副本"
+            For Each a In 副本数组(m)
+                TracePrint a
+            Next
+            Call 进副本预览(副本数组(m, 0), 副本数组(m, 1))
+            Call 获取单个副本数据(副本数组(m))
+            Rem 关闭副本预览界面
+            场景相关操作.关闭界面 
+            If 场景相关操作.所在场景() = 37 Then 
+                Delay 1000
+                Goto 关闭副本预览界面
+            End If
+        Next
+    End If
+    副本信息 = 副本数组
+End Function
+
+
