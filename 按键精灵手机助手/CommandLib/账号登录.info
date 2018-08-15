@@ -1,6 +1,21 @@
 
 {
 	"Description" : null,
+	"RkCreate" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"RkInfo" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"RkReport" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
 	"切换账号" : 
 	{
 		"Description" : null,
@@ -17,6 +32,11 @@
 		"TranslateTemplate" : null
 	},
 	"登录" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"识别验证码" : 
 	{
 		"Description" : null,
 		"TranslateTemplate" : null

@@ -1,0 +1,84 @@
+
+'####################################以下井号内的内容需要设为全局（放在代码最顶端）
+Import "ruokuai.lua"  //必须加载
+Dim RKHOST="10.0.2.2:81"  //必须声明
+'####################################以上井号内的内容需要设为全局（放在代码最顶端）
+
+
+'*********************************以下这是一个使用例子***********************************
+//查询用户名
+Dim Reply = ""
+Reply = RkInfo("用户名", "密码")
+TracePrint " 服务器返回：" & Reply
+
+//截图（测试的时候自己用抓抓选择区域,坐标为左上角与右下角）
+SnapShot "/sdcard/test.png",288,402,558,509 //区域截图
+TracePrint "截图完成"
+
+//把上传验证码	
+Reply = RkCreate("用户名","密码","3040", "60", "1", "b40ffbee5c1cf4e38028c197eb2fc751","/sdcard/test.png")//用户名，密码，验证码类型，超时时间，软件ID，软件Key，文件路径
+TracePrint " 服务器返回：" & Reply
+
+//服务器返回结果是JSON或者XML格式, 需要解析
+Dim result
+Dim id
+if (UTF8.InStr(1,Reply, "Error") = 0) then 
+	result = UTF8.Mid(Reply,UTF8.InStr(1,Reply, "Result")+9,UTF8.InStr(1,Reply, "Id")-UTF8.InStr(1,Reply, "Result")-12)
+	TracePrint result
+	id = UTF8.Mid(Reply,UTF8.InStr(1,Reply, "Id")+5,UTF8.InStr(1,Reply, "}")-UTF8.InStr(1,Reply, "Id")-6)
+	TracePrint id	
+Else                                     
+	Dim err
+	err = UTF8.Mid(Reply,UTF8.InStr(1,Reply, "Error")+8,UTF8.InStr(1,Reply, "Error_Code")-UTF8.InStr(1,Reply, "Error")-11)
+	TracePrint err
+End If
+
+//如果验证识别错误报错，其中的ID是
+//Reply = RkReport("用户名","密码", "1", "b40ffbee5c1cf4e38028c197eb2fc751",id) 
+//TracePrint " 服务器返回：" & Reply
+'*********************************以上这是一个使用例子***********************************
+
+
+
+'*********************************以下为若快封装好的代码（建议放在代码最后面）***********************************
+Function RkCreate(UserName, Password, Typeid,TimeOut, Softid, Softkey, FilePath)
+	Dim re
+	Dim data 
+    data = "username=" & UserName
+	data = data & "&password=" & Password
+	data = data & "&typeid=" & Typeid
+	data = data & "&timeout=" & TimeOut
+	data = data & "&softid=" & Softid
+	data = data & "&softkey=" & Softkey
+	Dim base=ruokuai.ReadFileBase(FilePath)
+	data = data & "&Img=" & replace(base,"+","%2b")
+	re = URL.Post("http://" & RKHOST & "/create.json", data, 60)
+	if re = null then re = ""
+	if instr(1,re , "<") <> 0 then re = "#网络错误"
+	
+	RkCreate = re
+End Function
+
+Function RkReport(UserName,Password,Softid,Softkey,Id)
+	Dim re
+	Dim data 
+    data = "username=" & UserName
+	data = data & "&password=" & Password
+	data = data & "&softid=" & Softid
+	data = data & "&softkey=" & Softkey
+	data = data & "&id=" & Id
+	re = URL.Post("http://" & RKHOST & "/reporterror.json", data, 20)
+	if re = null then re = ""
+	if instr(1,re , "<") <> 0 then re = "#网络错误"
+	RkReport = re
+End Function
+
+Function RkInfo(UserName, Password)
+	Dim re
+	re = URL.Post("http://" & RKHOST & "/info.json", "username=" & UserName &"&password=" & Password, 20)
+	if re = null then re = ""
+	if instr(1,re , "<") <> 0 then re = "#网络错误"
+	RkInfo = re
+End Function
+
+'*********************************以上为若快封装好的代码（建议放在代码最后面)***********************************

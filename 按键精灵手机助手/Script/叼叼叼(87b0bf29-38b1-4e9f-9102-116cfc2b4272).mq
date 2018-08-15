@@ -6,18 +6,23 @@ Import "类型转换.mql"
 Import "zm.luae"
 Import "账号登录.mql"
 
-
+TouchDown 70, 495
+Delay 100
+TouchMove 400, 495
+// 70, 495, 560, 495
+Delay 15000
 //初始化全局信息 
 Rem 开始
 SetRowsNumber(0)
-TracePrint SetDictEx(0, "Attachment:皇榜.txt")
 TracePrint SetDictEx(1, "Attachment:皇榜奖励数字.txt")
 TracePrint UseDict(1)
 
 //登录部分
 
-Dim 所在场景, 账号信息, 账号密码, 登录成功次数
+Dim 所在场景, 账号信息, 账号密码, 登录成功次数, 区服, 选服重试次数
 登录成功次数 = 1
+
+容错参数 = 0
 Rem login
 ShowMessage "开始准备登陆", 2000, 50, 620
 
@@ -29,6 +34,8 @@ If 所在场景 = Null Then
     Call 账号信息处理(登录成功次数)
     账号登录.登录(账号信息, 账号密码)	
     Goto login
+ElseIf 所在场景 = 22 Then
+    Call 选择区服()
 ElseIf 所在场景 <> 1 Then
     场景相关操作.关闭界面()
     Delay 1500
@@ -74,13 +81,13 @@ Dim 启动时间, 累计运行时长, 循环计时1, 循环计时2, 单次循环计时1, 单次循环计时2, 
 ShowMessage "加载配置文件", 1000, 50, 620
 Call 加载配置文件()
 
+
 Dim localDataDir
 ShowMessage "初始化部分数据", 1000, 50, 620
 Call 初始化杂项配置()
 WriteConfig "上次运行日期", Date(), True
 启动时间 = Time()
 Delay 1000
-
 
 已完成皇榜任务次数 = 0
 Call 定位主城坐标()
@@ -124,10 +131,9 @@ If ReadUIConfig("是否自动切换账号") = True Then
     切换时间间隔 = ReadUIConfig("切换时间间隔", 15) * 60
     If Time() - 启动时间 >= 切换时间间隔 Then 
         TracePrint "准备切换账号"
+        Call 回登录界面()
         登录成功次数 = 登录成功次数 + 1
-        Call 账号信息处理(登录成功次数)
-        账号登录.切换账号(账号信息, 账号密码)
-        TracePrint "切换账号完毕"
+        TracePrint "退出账号完毕"
         Goto login
     Else
         TracePrint "没有到切换时间,暂时不切换"
@@ -136,6 +142,37 @@ Else
     TracePrint "没有开启切换功能"
 End If
 
+Sub 回登录界面()
+    Call 回主城(1)
+    容错参数 = 0
+    Rem 进设置界面
+    Touch 624, 1233, 100
+    Delay 1500
+    If 场景相关操作.所在场景() = 60 Then 
+        TracePrint "进入设置界面"
+        Rem 退出游戏
+        Touch 225, 745, 100
+        Delay 5000
+        If 场景相关操作.所在场景() = 21 Then 
+            TracePrint "成功退出游戏"
+            场景相关操作.关闭界面 
+            Delay 1000
+            Touch 110, 140, 100
+            Delay 1500
+        ElseIf 容错参数 >= 5 Then
+            ShowMessage "无法正常退出", 5000, 50, 620
+            Delay 5000
+        End If
+    ElseIf 容错参数 < 5 Then
+        容错参数 = 容错参数 + 1
+        TracePrint "没有进入设置界面","当前界面编号"&所在场景
+        Delay 2000
+        Goto 进设置界面
+    ElseIf 容错参数 >= 5 Then
+        ShowMessage "无法正常退出,请确认设置按钮是否被遮挡了", 5000, 50, 620
+        Delay 5000
+    End If
+End Sub
 
 If Date() <> ReadConfig("上次运行日期") Then 
     KillApp "com.shouyou.sgzerq.hm"   
@@ -211,10 +248,93 @@ Sub 启动游戏()
         Else 
             TracePrint "准备启动游戏"
             RunApp "com.shouyou.sgzerq.hm"
-            
         End If	
     End If
-    Delay 2000
+    Delay 5000
+End Sub
+
+Sub 选择区服()
+    容错参数 = 0
+    Call 账号信息处理(登录成功次数)
+    //先判断当前默认区服是否和填写的区服一致
+    
+    Dim ocrchar
+    ocrchar=Ocr(229,588,270,681,"B6CAD5-111111|C0D5E1-111111",0.9)
+    Traceprint ocrchar, 区服
+    If ocrchar = 区服 Then 
+        TracePrint "选择一致,完成"
+        Exit Sub
+    End If
+    
+    Rem 进选服界面
+    Touch 245, 850, 100
+    Delay 1500
+    Dim intX,intY
+    FindPic 621,529,674,727,"Attachment:选择服务器.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "成功进入选服界面"
+        容错参数 = 0
+        Dim 初始X1, 初始Y1, 初始X2, 初始Y2, X偏移, Y偏移, 起始X1, 起始Y1, 起始X2, 起始Y2
+        初始X1 = 330 : 初始Y1 = 303 : 初始X2 = 430 : 初始Y2 = 380 : X偏移 = 90 : Y偏移 = 443
+        Rem 寻找区服
+        TracePrint "寻找区服"&区服&"第"&容错参数&"次"
+        For i = 0 To 7
+            起始Y1 = 初始Y1 + (i Mod 2) * Y偏移
+            起始X1 = 初始X1 - Int(i / 2) * X偏移
+            起始Y2 = 初始Y2 + (i Mod 2) * Y偏移
+            起始X2 = 初始X2 - Int(i / 2) * X偏移
+            ocrchar=Ocr(起始X1, 起始Y1, 起始X2, 起始Y2,"D0D0D0-111111|B6B5B5-111111",0.9)
+            Traceprint ocrchar
+            If ocrchar = 区服 Then
+                TracePrint "成功找到区服"
+                容错参数 = 0
+                Rem 点击区服
+                Touch (起始X1 + 起始X2) / 2, (起始Y1 + 起始Y2) / 2, 100
+                Delay 1000
+                Touch 105, 1090, 100
+                Delay 1500
+                If 场景相关操作.所在场景() = 22 Then 
+                    TracePrint "跳转成功,完成"
+                    Exit Sub
+                ElseIf 容错参数 < 5 Then
+                	TracePrint "跳转失败,重试"
+                    容错参数 = 容错参数 + 1
+                End If
+            End If
+            TracePrint "位置"&i&"完成"
+//            FindStr(起始X1, 起始Y1, 起始X2, 起始Y2,区服,"D0D0D0-111111|B6B5B5-111111",0.9,intX,intY)
+//            If intX > -1 And intY > -1 Then
+//                TracePrint "成功找到区服"
+//                容错参数 = 0
+//                Rem 点击区服
+//                Touch intX, intY, 100
+//                Delay 1500
+//                If 场景相关操作.所在场景() = 22 Then 
+//                    TracePrint "跳转成功,完成"
+//                    Exit Sub
+//                ElseIf 容错参数 < 5 Then
+//                    容错参数 = 容错参数 + 1
+//                End If
+//            End If
+//            TracePrint "位置"&i&"没找到"
+        Next
+        If 容错参数 < 选服重试次数 Then
+            TracePrint "滑动继续"
+            Delay 500
+            zm.Swipe 70, 495, 460, 495, 500
+            Delay 1500
+            容错参数 = 容错参数 + 1
+            Goto 寻找区服
+        ElseIf 容错参数 >= 选服重试次数 Then
+            TracePrint "错误次数太多,放弃"
+            场景相关操作.通用界面关闭()
+        End If
+    ElseIf 容错参数 < 5 Then
+        TracePrint "进入选服界面失败,重试"
+        容错参数 = 容错参数 + 1
+        Delay 1500
+        Goto 进选服界面
+    End If
 End Sub
 
 
@@ -277,7 +397,9 @@ Sub 账号信息处理(编号)
 	
     账号信息 = ReadUIConfig("账号"&编号)
     账号密码 = ReadUIConfig("密码" & 编号)
-    TracePrint "账号信息",账号信息,"账号密码",账号密码
+    区服 = ReadUIConfig("区服" & 编号)
+    选服重试次数 = Int(ReadUIConfig("选服重试次数" & 编号, 10))
+    TracePrint "账号信息",账号信息,"账号密码",账号密码, "区服",区服, "选服重试次数", 选服重试次数
     If 账号信息 = "" Or 账号密码 = "" Then 
         TracePrint "账号信息有误 重新获取"
         登录成功次数 = 登录成功次数 + 1 : 编号 = 编号 + 1
@@ -320,14 +442,21 @@ Sub 固定图标坐标处理(固定主界面坐标内容)
             邮件坐标X = (temp(1) + temp(3)) / 2 : 邮件坐标Y = (temp(2) + temp(4)) / 2
             //        	TracePrint 邮件坐标X, 邮件坐标Y
         ElseIf UTF8.InStr(1, temp(0), "兵事") > 0 Then
-            兵事坐标X = (temp(1) + temp(3)) / 2 : 兵事坐标Y = (temp(2) + temp(4)) / 2
+            //            兵事坐标X = (temp(1) + temp(3)) / 2 : 兵事坐标Y = (temp(2) + temp(4)) / 2
             //        	TracePrint 兵事坐标X, 兵事坐标Y
+            //为了防止渠道坐标遮挡,做了特殊处理
+            兵事坐标X = 274 : 兵事坐标Y = 91
         ElseIf UTF8.InStr(1, temp(0), "出征") > 0 Then
-            出征坐标X = (temp(1) + temp(3)) / 2 : 出征坐标Y = (temp(2) + temp(4)) / 2
+            //            出征坐标X = (temp(1) + temp(3)) / 2 : 出征坐标Y = (temp(2) + temp(4)) / 2
             //        	TracePrint 出征坐标X, 出征坐标Y
+            //为了防止渠道坐标遮挡,做了特殊处理
+            出征坐标X = 392 : 出征坐标Y = 91
         ElseIf UTF8.InStr(1, temp(0), "建筑") > 0 Then
-            建筑坐标X = (temp(1) + temp(3)) / 2 : 建筑坐标Y = (temp(2) + temp(4)) / 2
+            //            建筑坐标X = (temp(1) + temp(3)) / 2 : 建筑坐标Y = (temp(2) + temp(4)) / 2
             //        	TracePrint 建筑坐标X, 建筑坐标Y
+            
+            //为了防止渠道坐标遮挡,做了特殊处理
+            建筑坐标X = 510 : 建筑坐标Y = 91
         ElseIf UTF8.InStr(1, temp(0), "主公") > 0 Then
             主公坐标X = (temp(1) + temp(3)) / 2 : 主公坐标Y = (temp(2) + temp(4)) / 2
             //        	TracePrint 主公坐标X, 主公坐标Y
@@ -338,17 +467,25 @@ Sub 固定图标坐标处理(固定主界面坐标内容)
             资源坐标X = (temp(1) + temp(3)) / 2 : 资源坐标Y = (temp(2) + temp(4)) / 2
             //        	TracePrint 资源坐标X, 资源坐标Y
         ElseIf UTF8.InStr(1, temp(0), "商城") > 0 Then
-            商城坐标X = (temp(1) + temp(3)) / 2 : 商城坐标Y = (temp(2) + temp(4)) / 2
+            //            商城坐标X = (temp(1) + temp(3)) / 2 : 商城坐标Y = (temp(2) + temp(4)) / 2
             //        	TracePrint 商城坐标X, 商城坐标Y
+            //为了防止渠道坐标遮挡,做了特殊处理
+            商城坐标X = 520 : 商城坐标Y = 1182
         ElseIf UTF8.InStr(1, temp(0), "副本") > 0 Then
-            副本坐标X = (temp(1) + temp(3)) / 2 : 副本坐标Y = (temp(2) + temp(4)) / 2
+            //            副本坐标X = (temp(1) + temp(3)) / 2 : 副本坐标Y = (temp(2) + temp(4)) / 2
             //        	TracePrint 副本坐标X, 副本坐标Y
+            //为了防止渠道坐标遮挡,做了特殊处理
+            副本坐标X = 316 : 副本坐标Y = 1178
         ElseIf UTF8.InStr(1, temp(0), "任务") > 0 Then
-            任务坐标X = (temp(1) + temp(3)) / 2 : 任务坐标Y = (temp(2) + temp(4)) / 2
+            //            任务坐标X = (temp(1) + temp(3)) / 2 : 任务坐标Y = (temp(2) + temp(4)) / 2
             //            TracePrint 任务坐标X, 任务坐标Y
+            //为了防止渠道坐标遮挡,做了特殊处理
+            任务坐标X = 208 : 任务坐标Y = 1178
         ElseIf UTF8.InStr(1, temp(0), "地图") > 0 Then
-            地图坐标X = (temp(1) + temp(3)) / 2 : 地图坐标Y = (temp(2) + temp(4)) / 2
+            //            地图坐标X = (temp(1) + temp(3)) / 2 : 地图坐标Y = (temp(2) + temp(4)) / 2
             //            TracePrint 地图坐标X, 地图坐标Y
+            //为了防止渠道坐标遮挡,做了特殊处理
+            地图坐标X = 54 : 地图坐标Y = 1148
         ElseIf UTF8.InStr(1, temp(0), "国家") > 0 Then
             国家坐标X = (temp(1) + temp(3)) / 2 : 国家坐标Y = (temp(2) + temp(4)) / 2
             //            TracePrint 国家坐标X, 国家坐标Y
@@ -383,8 +520,10 @@ Sub 固定图标坐标处理(固定主界面坐标内容)
             开战坐标X = (temp(1) + temp(3)) / 2 : 开战坐标Y = (temp(2) + temp(4)) / 2
             //            TracePrint 开战坐标X, 开战坐标Y
         ElseIf UTF8.InStr(1, temp(0), "活动") > 0 Then
-            活动坐标X = (temp(1) + temp(3)) / 2 : 活动坐标Y = (temp(2) + temp(4)) / 2
+            //            活动坐标X = (temp(1) + temp(3)) / 2 : 活动坐标Y = (temp(2) + temp(4)) / 2
             //            TracePrint 活动坐标X, 活动坐标Y
+            //为了防止渠道坐标遮挡,做了特殊处理
+            活动坐标X = 420 : 活动坐标Y = 1178
         End If
         i = i + 1
     Next
@@ -1607,7 +1746,12 @@ Sub 铜币宴请(次数)
         Call 进酒肆界面()
     End If
     For 次数
-        Touch 100, 350, 100
+        If VIP等级 >= 8 Then 
+            Touch 100, 625, 100
+        Else 
+            Touch 100, 350, 100
+        End If
+        
         Delay 2000
         TracePrint "执行铜币宴请"
         Rem 等待结果
@@ -3370,16 +3514,19 @@ End Function
 
 //军团相关
 Sub 进军团界面()
+    容错参数 = 0
     Rem 进军团界面
     所在场景 = 场景相关操作.所在场景()
-    If 所在场景 = 1 Or 所在场景 = 2 Then 
+    If 所在场景 = 1 Or 所在场景 = 2 And 容错参数 < 8 Then 
+        容错参数 = 容错参数 + 1
         Call 界面收起展开(5)
         Touch 军团坐标X, 军团坐标Y, 100
         Delay 1000
         Goto 进军团界面
     ElseIf 所在场景 = 17
         TracePrint "已在军团界面中"
-    Else 
+    ElseIf 容错参数 < 8 Then
+        容错参数 = 容错参数 + 1
         Call 回主城(1)
         Goto 进军团界面
     End If
@@ -4333,8 +4480,6 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
         Call 扫荡前装备(最终打副本次数)
     Case 3
         Rem 获取副本信息1
-        //副本数组数据结构为,0:X坐标,1:Y坐标,2:副本编号,3:剩余次数,4:副本星数
-        副本列表 = 找副本(副本类型)
         挑战副本数据 = 待挑战副本()
         If 挑战副本数据 = Null And 容错参数 < 3 Then 
             TracePrint "本章没有未通关的副本"
@@ -4356,7 +4501,7 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
         Call 正常打副本前准备()
     Case 6
         If ReadConfig("今日已打名将") = 1 Then 
-        	TracePrint "今日已打过了放弃"
+            TracePrint "今日已打过了放弃"
         End If
         For 5
             //判断是否偶剩余次数
@@ -4367,6 +4512,8 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
             End If
             容错参数 = 0
             Rem 筛选名将副本
+            //副本数组数据结构为,0:X坐标,1:Y坐标,2:副本编号,3:剩余次数,4:副本星数
+            副本列表 = 找副本(副本类型)
             目标副本编号 = ReadUIConfig("名将副本") + 1 - 容错参数
             If 目标副本编号 = 0 And 容错参数 < 3 Then 
                 TracePrint "已经无法再容错了,尝试打当前能找到的"
@@ -4672,7 +4819,7 @@ Sub 打副本(类型, 次数)
             End If
             
             //检测是否战斗结束
-            FindPic 36,940,137,1139,"Attachment:离开.png","000000",0,0.9,intX,intY
+            FindPic 36,900,350,1200,"Attachment:离开.png","000000",0,0.8,intX,intY
             If intX > -1 And intY > -1 Then 
             	
                 //胜利和败北文字出现时有动画,会有一定延迟,所以要特殊处理
@@ -4815,20 +4962,29 @@ Sub 领取星级奖励()
     Delay 1000
     Dim intX, intY
     //上一页
-    FindColor 295,138,433,231,"2626AD",0,0.99,intX,intY
-    If intX > -1 And intY > -1 Then
-        Touch 上一页坐标X, 上一页坐标Y, 100
-        Delay 2000
-        Call 领副本宝箱()
-    End If
-    Delay 1000
+    Do
+        FindColor 295,138,433,231,"2626AD",0,0.99,intX,intY
+        If intX > -1 And intY > -1 Then
+            Touch 上一页坐标X, 上一页坐标Y, 100
+            Delay 2000
+            Call 领副本宝箱()
+        Else 
+            Exit Do
+        End If
+        Delay 1000
+    Loop
+    
     //下一页
-    FindColor 292,1160,429,1270,"2626AD",0,0.99,intX,intY
-    If intX > -1 And intY > -1 Then
-        Touch 上一页坐标X, 上一页坐标Y, 100
-        Delay 2000
-        Call 领副本宝箱()
-    End If
+    Do
+        FindColor 292,1160,429,1270,"2626AD",0,0.99,intX,intY
+        If intX > -1 And intY > -1 Then
+            Touch 上一页坐标X, 上一页坐标Y, 100
+            Delay 2000
+            Call 领副本宝箱()
+        Else 
+            Exit Do
+        End If
+    Loop
     场景相关操作.通用界面关闭()
 End Sub
 
@@ -5852,13 +6008,14 @@ Sub 点击计略府()
     End If	
 End Sub
 
-Sub 进计略界面
+Sub 进计略界面()
     容错参数 = 0
     Dim intX, intY, 升级计略1, 升级计略2, 升级计略3
     Rem 选中计略府
     Call 回主城(2)
     Call 点击军械所()
-    Touch 530, 500, 100
+    //如果开放了兵器这里会有问题
+    Touch 533, 470, 100
     Delay 2000
     FindPic 192,507,375,898,"Attachment:计略.png","000000",0,0.8,intX,intY
     If intX > -1 And intY > -1 Then
