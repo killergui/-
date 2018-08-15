@@ -1,0 +1,39 @@
+
+{
+	"Description" : null,
+	"回主城" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"固定按钮进界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"城内外通用进界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"城内进界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"容错判定" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"进VIP界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"进界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	}
+}

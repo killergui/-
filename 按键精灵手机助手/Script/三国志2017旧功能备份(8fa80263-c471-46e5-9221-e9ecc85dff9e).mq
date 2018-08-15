@@ -1,4 +1,391 @@
-//体力相关,副本相关
+//暂时无用
+
+Call 重启脚本()
+
+Sub 重启脚本()
+
+//循环数量达到50次，即自动重启脚本
+If K = 50 Then
+RestartScript //重新启动脚本运行
+Else
+Call 数字0()
+End If 
+End Sub
+
+
+//找多图功能备份
+
+Function 找多图(起X, 起Y, 止X, 止Y, 图片, 横向拆分数量, 纵向拆分数量 )
+	
+    Dim tx, ty, areaX1, areaY1, areaX2, areaY2,总区块, tempX, tempY, temp1, temp2, temp3, 坐标数组(), 单个坐标(), 数据有效性
+    tx = (止X - 起X) / 横向拆分数量 : ty = (止Y - 起Y) / 纵向拆分数量
+    总区块 = 横向拆分数量 * 纵向拆分数量
+	
+    Dim t = 0
+	
+    //先横向,再纵向
+    For i = 1 To 总区块
+        //横向时,Y值不需要每次都变动,只在循环次数等于横向拆分数量满足条件后才变化
+        数据有效性 = True
+        temp1 = int(i / 横向拆分数量)
+        temp2 =  i Mod 横向拆分数量
+        If temp2 > 0 Then 
+            tempY = temp1 + 1
+        End If
+        temp3 = i Mod 横向拆分数量
+        If temp3 > 0 Then 
+            tempX = temp3
+        Else 
+            tempX = 横向拆分数量
+        End If
+		
+        areaX1 = 起X  + tx * (tempX -1) : areaY1 = 起Y + ty * (tempY - 1)
+        areaX2 = 起X + tx * tempX : areaY2 = 起Y + ty * tempY
+        TracePrint "开始准备第"&i&"个区域"
+        Do
+            TracePrint "开始找图"
+            Dim intX,intY
+            //TracePrint "areaX1",areaX1,"areaY1",areaY1,"areaX2",areaX2,"areaY2" ,areaY2
+            FindPic areaX1,areaY1,areaX2,areaY2,图片,"000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then 
+                TracePrint intX, intY 
+                If UBOUND(坐标数组) > -1 Then 
+                    For x = 0 To UBOUND(坐标数组)
+                        单个坐标 = 坐标数组(x)
+                        //						TracePrint UBOUND(坐标数组)
+                        //						TracePrint "第"&x&"个X坐标"&单个坐标(0),"第"&x&"个Y坐标"&单个坐标(1)
+                        If Abs(单个坐标(0) - intX) < 100 And Abs(单个坐标(1) - intY) < 100 Then 
+                            数据有效性 = False
+                            TracePrint "此组数据是旧"
+                            Exit For
+                        End If
+                    Next
+                End If
+                If 数据有效性 = True Then 
+                    单个坐标 = Array(intX, intY)
+                    坐标数组(t) = 单个坐标
+                    t = t + 1
+                End If
+                If (intY + 100) >= areaY2 Then 
+					
+                    If (intX + 30) >= areaX1 Then
+                        Exit Do
+                    Else 
+                        areaX1 = intX + 30
+                    End If
+                Else 
+                    areaY1 = intY + 100
+                End If
+            Else 
+                Exit Do
+            End If
+        Loop
+    Next
+    找多图 = 坐标数组
+	
+End Function
+
+
+   
+   //切换账号备份
+   
+   
+    If 渠道编号 = 0 Then 
+        Rem 进账号登录界面1
+        当前步骤 = 当前所在登录步骤界面(0)
+        If 当前步骤 = 1 Then 
+            Touch 130, 510, 100
+            Delay 1000
+            Goto 进账号登录界面1
+        ElseIf 当前步骤 = 2 Then  
+            Goto 进账号登录界面1
+        ElseIf 当前步骤 = 3 Then
+            Touch 545, 875, 100
+            Delay 1500
+        End If
+    ElseIf 渠道编号 = 1 Then
+        TracePrint "确认所在界面"
+        容错参数 = 0
+        Rem 切换账号1
+        当前步骤 = 当前所在登录步骤界面(1)
+        If 当前步骤 = 1 Then 
+            Call 登录(账号信息, 账号密码)
+            Goto 切换账号1
+        ElseIf 当前步骤 = 2 Then
+            Call 退出账号(渠道编号)
+            Goto 切换账号1
+        ElseIf 容错参数 < 5 Then
+            TracePrint "当前界面未知,可能在切换,等待"
+            容错参数 = 容错参数 + 1
+            Delay 3000
+            Goto 切换账号1
+        End If
+    End If
+    
+    
+    //关闭备份
+Function 关闭界面()	
+    Dim 当前场景, intX, intY, 重启参数
+    重启参数 = 0
+    Rem 关闭界面
+    当前场景 = 所在场景()
+    Select Case 当前场景
+    Case 3, 4, 6, 11, 14, 15, 16, 17, 23, 24, 38, 51, 65, 71, 72
+        Tap 680,1230
+    Case 8 ,9, 19, 21, 25, 28, 30, 32, 33, 53
+        Tap 640,1140
+    Case 10, 34, 35, 46
+        Tap 630, 1090
+    Case 12
+        Tap 525, 1110
+    Case 13, 52, 73
+        Tap 640, 1020
+    Case 22
+        Tap 140, 640
+    Case 27, 31, 37, 66
+        Tap 640, 1060
+    Case 5, 29
+        Tap 630, 1200
+    Case 26
+        Tap 660, 1200
+    Case 1
+        TracePrint "这个主界面要怎么关"&当前场景
+    Case 2
+        Touch 70, 1205, 100
+    Case 36
+        FindPic 209,390,304,899,"Attachment:重新登录.png","000000",0,0.99,intX,intY
+        If intX > -1 And intY > -1 Then
+            Touch 250, 640, 100
+        Else 
+            Touch 248, 520, 100
+        End If
+    Case 40
+        Touch 670, 1140, 100
+    Case 41
+        Touch 550, 910, 100
+    Case 18
+        TracePrint "战斗场景,暂时不支持关闭,请等待战斗结束"
+        ShowMessage "战斗场景,暂时不支持关闭,请等待战斗结束", 2000, 390, 640
+    Case 43
+        Touch 660, 920, 100
+    Case 44
+        Touch 590, 1070, 100
+    Case 7, 20, 45, 54
+        Touch 630, 1110, 100
+    Case 47
+        Touch 620, 940, 100
+    Case 48, 70
+        Touch 600, 920, 100
+    Case 49 
+        Touch 250, 640, 100
+    Case 50, 69
+        Touch 635, 1000, 100
+    Case 55
+        Touch 250, 750, 100
+    Case 56
+        Touch 55, 480, 100
+    Case 57
+        Touch 400, 600, 100
+    Case 58
+        Touch 660, 1110, 100
+    Case 59
+        Touch 660, 1080, 100
+    Case 60
+        Touch 545, 910, 100
+    Case 61
+        ShowMessage "等待加载", 1000, 50, 620
+    Case 62
+        Touch 100, 640, 100
+    Case 63
+        TracePrint "在切换城内城外"
+        If 重启参数 > 5 Then 
+            KillApp "com.shouyou.sgzerq.hm"   
+            Delay 5000
+            RunApp "com.shouyou.sgzerq.hm"
+        End If
+        重启参数 = 重启参数 + 1
+        Delay 3000
+        Goto 关闭界面
+    Case 64
+        Touch 250, 520, 100
+    Case 67, 68
+        Touch 320, 720, 100
+    Case Else
+    	Call 通用界面关闭()
+        ShowMessage "这个界面不知道啊,无法关闭,请手动关闭,并告诉我", 1500, 50, 620
+        TracePrint "在切换城内城外"
+        If 重启参数 > 5 Then 
+            KillApp "com.shouyou.sgzerq.hm"   
+            Delay 5000
+            RunApp "com.shouyou.sgzerq.hm"
+            Delay 30000
+            重启参数 = 0
+        End If
+        重启参数 = 重启参数 + 1
+        Delay 10000
+        Goto 关闭界面
+    End Select
+End Function
+
+
+//章节数备份
+Function 章节数(类型)
+
+    Dim 章节文字, 副本编号, 副本数组, 最大章节数
+    章节文字 = Ocr(663,502,698,607,"A1C7C7-111111|ABD4D4-111111|98BDBD-111111|AAD3D3-111111|A3C9CA-111111|A3CBCB-111111|ABD4D4-111111|8AABAB-111111|9ABFC0-111111|A5CDCD-111111",0.9)
+    Traceprint 章节文字
+		
+    Dim temp, 文字数量, 待转换文字
+    文字数量 = UTF8.Len(章节文字)
+    If 文字数量 = 3 Then 
+        待转换文字 = UTF8.Mid(章节文字, 2, 1)
+    ElseIf 文字数量 = 4 Then
+        待转换文字 = UTF8.Mid(章节文字, 2, 2)
+    ElseIf 文字数量 = 5 Then
+        待转换文字 = UTF8.Mid(章节文字, 2, 3)
+    Else 
+        TracePrint "文本过长或过短,可能识别错了"
+        ShowMessage "章节识别可能出错,请尝试重启",3000,390,640
+    End If
+        
+    temp = 类型转换.汉字转数字(待转换文字)
+    If temp = null Then 
+        ShowMessage "章节数识别有误",1000, 50, 260
+        temp = 6
+    End If
+    TracePrint "章节数", temp
+    最大章节数 = ReadConfig("最大章节" & 类型, 0)
+    If temp > 最大章节数 Then 
+        TracePrint "写入最大章节"&类型, temp
+        WriteConfig "最大章节"&类型, temp, True
+    End If
+    章节数 = temp
+End Function
+
+//副本信息备份
+Function 副本信息()
+    Delay 1500
+    Dim intX,intY, 副本数组
+    
+    Rem 找已通关副本
+    //找已通关小副本号
+    副本数组 = 场景相关操作.找多图(90, 360, 630, 1200, "Attachment:副本星数.png", 2, 2)
+
+    If UBOUND(副本数组) = -1 Then 
+        TracePrint "本章没有已通关副本,即将进入上一章"
+        Touch 上一页坐标X, 上一页坐标Y, 100
+        Delay 1500
+        Goto 找已通关副本
+    Else 
+        For m = 0 To UBOUND(副本数组)
+            TracePrint "将要进入副本"
+            For Each a In 副本数组(m)
+                TracePrint a
+            Next
+            Call 进副本预览(副本数组(m, 0), 副本数组(m, 1))
+            Call 获取单个副本数据(副本数组(m))
+            Rem 关闭副本预览界面
+            场景相关操作.关闭界面 
+            If 场景相关操作.所在场景() = 37 Then 
+                Delay 1000
+                Goto 关闭副本预览界面
+            End If
+        Next
+    End If
+    副本信息 = 副本数组
+End Function
+
+//接皇榜任务备份
+If UTF8.InStr(1, ocrchar, "3/3") = 0 Then 
+    起始区域X1 = 415 : 起始区域Y1 = 475 : 起始区域X2 = 440 : 起始区域Y2 = 637 : 循环增量X = 60
+    For i = 0 To 3
+        Rem 接皇榜任务
+        容错参数 = 0
+        起始区域X1 = 起始区域X1 - 循环增量X : 起始区域X2 = 起始区域X2 - 循环增量X
+        点击坐标X = (起始区域X1 + 起始区域X2) / 2 : 点击坐标Y = (起始区域Y1 + 起始区域Y2) / 2
+        Touch 点击坐标X, 点击坐标Y, 100
+                
+        Delay 1000
+        //判断任务是否已接
+        FindPic 145,940,200,1050,"Attachment:揭榜.png","000000",0,0.95,intX,intY
+        If intX > -1 And intY > -1 Then 
+            //识别任务内容
+            ocrchar1=Ocr(起始区域X1,起始区域Y1,起始区域X2,起始区域Y2,"44698C-111111|558BC2-111111|66AAEF-111111|578FC8-111111|3B5E81-111111|5991C9-111111|4E7DAA-111111",0.9)
+            Traceprint ocrchar1
+            ocrchar2=Ocr(269,477,299,627,"595753-111111|73736F-111111|6E6D6B-111111|8E8E8C-111111|9D9C9A-111111",0.9)
+            Traceprint ocrchar2
+            If ocrchar1 = "攻城掠地" Then 
+                TracePrint "攻城掠地任务不接"
+            ElseIf UTF8.InStr(1, ocrchar1, "寇") > 0 Then
+                temp1 = UTF8.InStr(1, ocrchar2, "级")
+                temp2 = UTF8.Len(ocrchar2)
+                For i = 0 To 9
+                    TracePrint "读取配置",ReadUIConfig("普通" & i),"任务等级",(Int(UTF8.Mid(ocrchar2, 3, temp1 - 3)) - 1)
+                    If ReadUIConfig("普通" & i) = True And i >= Int(UTF8.Mid(ocrchar2, 3, temp1 - 3)) - 1 Then
+                        已接任务数量 = UBOUND(皇榜任务)
+                        皇榜任务(已接任务数量 + 1, 0) = 1
+                        皇榜任务(已接任务数量 + 1, 1) = Int(UTF8.Mid(ocrchar2, 3, temp1 - 3))
+                        If UTF8.Mid(ocrchar2, temp1 + 1, 2) = "黄巾" Then
+                            皇榜任务(已接任务数量 + 1, 2) = UTF8.Mid(ocrchar2, temp1 + 1, 3)
+                            皇榜任务(已接任务数量 + 1, 3) = UTF8.Mid(ocrchar2, temp1 + 4, temp2 - temp1 - 4)
+                        Else 
+                            皇榜任务(已接任务数量 + 1, 2) = UTF8.Mid(ocrchar2, temp1 + 1, 2)
+                            皇榜任务(已接任务数量 + 1, 3) = UTF8.Mid(ocrchar2, temp1 + 3, temp2 - temp1 - 3)
+                        End If
+                    End If
+                Next
+            ElseIf ocrchar1 = "采集资源" Then
+                temp1 = UTF8.Len(ocrchar2)
+                已接任务数量 = UBOUND(皇榜任务)
+                皇榜任务(已接任务数量 + 1, 0) = 3
+                皇榜任务(已接任务数量 + 1, 1) = UTF8.Mid(ocrchar2, 3, temp1 - 4)
+                皇榜任务(已接任务数量 + 1, 2) = UTF8.Right(ocrchar2, 2)
+                //                ElseIf ocrchar = "城池寻访" Then
+                //                    皇榜任务(已接任务数量 + 1, 0) = 6
+                //                    皇榜任务(已接任务数量 + 1, 1) = UTF8.Mid(ocrchar2, 3, 1)
+                //暂时不做这类任务
+                //                ElseIf ocrchar = "精打细算" Then
+                //                    皇榜任务(已接任务数量 + 1, 0) = 5
+                //                    temp1 = UTF8.Len(ocrchar2)
+                //                    皇榜任务(已接任务数量 + 1, 1) = UTF8.Mid(ocrchar2, 7, temp1 - 7 - 2)
+            ElseIf ocrchar1 = "南征北战" Then
+                皇榜任务(已接任务数量 + 1, 0) = 2
+                temp1 = UTF8.Len(ocrchar2)
+                皇榜任务(已接任务数量 + 1, 1) = UTF8.Mid(ocrchar2, 7, temp1 - 7)
+            ElseIf ocrchar1 = "身经百战" Then
+                皇榜任务(已接任务数量 + 1, 0) = 8
+                temp1 = UTF8.Len(ocrchar2)
+                皇榜任务(已接任务数量 + 1, 1) = UTF8.Mid(ocrchar2, 7, temp1 - 7)
+            ElseIf ocrchar1 = "收取资源" Then
+                皇榜任务(已接任务数量 + 1, 0) = 4
+                temp1 = UTF8.Len(ocrchar2)
+                皇榜任务(已接任务数量 + 1, 1) = UTF8.Mid(ocrchar2, 5, temp1 - 6)
+            End If
+            Touch 捐献坐标X, 捐献坐标Y, 100
+            TracePrint "点击揭榜图标"
+            TracePrint 皇榜任务(已接任务数量 + 1, 0),皇榜任务(已接任务数量 + 1, 1),皇榜任务(已接任务数量 + 1, 2),皇榜任务(已接任务数量 + 1, 3)
+            Delay 1500
+        Else 
+            FindPic 145,940,200,1050,"Attachment:放弃.png","000000",0,0.95,intX,intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "这个任务已经领取了,进行下一个"
+            Else 
+                If 容错参数 < 5 Then 
+                    容错参数 = 容错参数 + 1
+                    TracePrint "没有找到揭榜和放弃,是不是网卡了,再从新尝试一遍"
+                    Delay 1500
+                    Goto 接皇榜任务
+                End If
+            End If
+        End If
+    Next
+            
+End If
+
+
+
+
+//体力和副本相关备份
 
 Sub 推关()
     Dim 推关状态
@@ -809,3 +1196,215 @@ Function 读取当前体力()
         Goto 识别体力文字
     End If
 End Function
+
+
+
+
+//读取文件备份
+
+Sub 军团固定坐标处理(固定军团坐标内容)
+    Dim 图标坐标临时,固定坐标数组()
+    图标坐标临时 = Split(固定军团坐标内容, ";")
+    Dim i, temp, myArray
+    i = 0
+
+    For Each a In 图标坐标临时 
+        固定坐标数组(i) = Split(a, "|")	
+        temp = 固定坐标数组(i)
+        
+        If UTF8.InStr(1, temp(0), "军团捐献") > 0 Then 
+            军团捐献坐标X = temp(1) : 军团捐献坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "帮助") > 0 Then
+            军团帮助坐标X = temp(1) : 军团帮助坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "俸禄") > 0 Then
+            俸禄坐标X = temp(1) : 俸禄坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "chengchi") > 0 Then
+            城池坐标X = temp(1) : 城池坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "商店") > 0 Then
+            商店坐标X = temp(1) : 商店坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "huangbang") > 0 Then
+            皇榜坐标X = temp(1) : 皇榜坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "寻访") > 0 Then
+            寻访坐标X = temp(1) : 寻访坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "城池捐献") > 0 Then
+            城池捐献坐标X = temp(1) : 城池捐献坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "第一城") > 0 Then
+            第一城坐标X = temp(1) : 第一城坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "第二城") > 0 Then
+            第二城坐标X = temp(1) : 第二城坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "第三城") > 0 Then
+            第三城坐标X = temp(1) : 第三城坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "juanxian") > 0 Then
+            捐献坐标X = temp(1) : 捐献坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "铜币捐献") > 0 Then
+            铜币捐献坐标X = temp(1) : 铜币捐献坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "元宝捐献") > 0 Then
+            元宝捐献坐标X = temp(1) : 元宝捐献坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "皇榜任务一") > 0 Then
+            皇榜任务一坐标X = temp(1) : 皇榜任务一坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "皇榜任务二") > 0 Then
+            皇榜任务二坐标X = temp(1) : 皇榜任务二坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "皇榜任务三") > 0 Then
+            皇榜任务三坐标X = temp(1) : 皇榜任务三坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "皇榜任务四") > 0 Then
+            皇榜任务四坐标X = temp(1) : 皇榜任务四坐标Y = temp(2)
+        End If
+        i = i + 1
+    Next
+    TracePrint "军团固定坐标加载完成"
+End Sub
+
+Sub 副本固定坐标处理(固定副本坐标内容)
+    Dim 图标坐标临时,固定坐标数组()
+    图标坐标临时 = Split(固定副本坐标内容, ";")
+    Dim i, temp, myArray
+    i = 0
+    For Each a In 图标坐标临时 
+        固定坐标数组(i) = Split(a, "|")	
+        temp = 固定坐标数组(i)
+        
+        If UTF8.InStr(1, temp(0), "普通副本") > 0 Then 
+            普通副本坐标X = temp(1) : 普通副本坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "精英副本") > 0 Then
+            精英副本坐标X = temp(1) : 精英副本坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "名将副本") > 0 Then
+            名将副本坐标X = temp(1) : 名将副本坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "章节选择") > 0 Then
+            章节选择坐标X = temp(1) : 章节选择坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "宝箱1") > 0 Then
+            宝箱1坐标X = temp(1) : 宝箱1坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "宝箱2") > 0 Then
+            宝箱2坐标X = temp(1) : 宝箱2坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "宝箱3") > 0 Then
+            宝箱3坐标X = temp(1) : 宝箱3坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "上一页") > 0 Then
+            上一页坐标X = temp(1) : 上一页坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "下一页") > 0 Then
+            下一页坐标X = temp(1) : 下一页坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "挑战") > 0 Then
+            挑战坐标X = temp(1) : 挑战坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "进入扫荡") > 0 Then
+            进入扫荡坐标X = temp(1) : 进入扫荡坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "开始扫荡") > 0 Then
+            开始扫荡坐标X = temp(1) : 开始扫荡坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "加号") > 0 Then
+            加号坐标X = temp(1) : 加号坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "章节位置1") > 0 Then
+            章节位置1坐标X = temp(1) : 章节位置1坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "章节位置2") > 0 Then
+            章节位置2坐标X = temp(1) : 章节位置2坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "章节位置3") > 0 Then
+            章节位置3坐标X = temp(1) : 章节位置3坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "章节位置4") > 0 Then
+            章节位置4坐标X = temp(1) : 章节位置4坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "章节位置5") > 0 Then
+            章节位置5坐标X = temp(1) : 章节位置5坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "减号") > 0 Then
+            减号坐标X = temp(1) : 减号坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "章节位置6") > 0 Then
+            章节位置6坐标X = temp(1) : 章节位置6坐标Y = temp(2)
+        End If
+        i = i + 1
+    Next
+    TracePrint "副本固定坐标加载完成"
+End Sub
+
+Sub 战斗固定坐标处理(固定战斗坐标内容)
+    Dim 图标坐标临时,固定坐标数组()
+    图标坐标临时 = Split(固定战斗坐标内容, ";")
+    Dim i, temp, myArray
+    i = 0
+
+    For Each a In 图标坐标临时 
+        固定坐标数组(i) = Split(a, "|")	
+        temp = 固定坐标数组(i)
+        If UTF8.InStr(1, temp(0), "自动") > 0 Then 
+            自动坐标X = temp(1) : 自动坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "速度") > 0 Then
+            速度坐标X = temp(1) : 速度坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "暂停") > 0 Then
+            暂停坐标X = temp(1) : 暂停坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "战斗跳过") > 0 Then
+            战斗跳过坐标X = temp(1) : 战斗跳过坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "离开") > 0 Then
+            离开坐标X = temp(1) : 离开坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "单挑跳过") > 0 Then
+            单挑跳过坐标X = temp(1) : 单挑跳过坐标Y = temp(2)
+        ElseIf UTF8.InStr(1, temp(0), "剧情跳过") > 0 Then
+            剧情跳过坐标X = temp(1) : 剧情跳过坐标Y = temp(2)
+        End If
+        i = i + 1
+    Next
+    TracePrint "战斗固定坐标加载完成"
+End Sub
+
+
+Sub 固定图标坐标处理(固定主界面坐标内容)
+    Dim 图标坐标临时,固定坐标数组()
+    图标坐标临时 = Split(固定主界面坐标内容, ";")
+    Dim i, temp, myArray
+    i = 0
+
+    For Each a In 图标坐标临时 
+        固定坐标数组(i) = Split(a, "|")	
+        temp = 固定坐标数组(i)
+        
+        If UTF8.InStr(1, temp(0), "邮件") > 0 Then 
+            邮件坐标X = (temp(1) + temp(3)) / 2 : 邮件坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "兵事") > 0 Then
+            //为了防止渠道坐标遮挡,做了特殊处理
+            兵事坐标X = 274 : 兵事坐标Y = 91
+        ElseIf UTF8.InStr(1, temp(0), "出征") > 0 Then
+            //为了防止渠道坐标遮挡,做了特殊处理
+            出征坐标X = 392 : 出征坐标Y = 91
+        ElseIf UTF8.InStr(1, temp(0), "建筑") > 0 Then 
+            //为了防止渠道坐标遮挡,做了特殊处理
+            建筑坐标X = 510 : 建筑坐标Y = 91
+        ElseIf UTF8.InStr(1, temp(0), "主公") > 0 Then
+            主公坐标X = (temp(1) + temp(3)) / 2 : 主公坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "VIP") > 0 Then
+            VIP坐标X = (temp(1) + temp(3)) / 2 : VIP坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "资源") > 0 Then
+            资源坐标X = (temp(1) + temp(3)) / 2 : 资源坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "商城") > 0 Then
+            //为了防止渠道坐标遮挡,做了特殊处理
+            商城坐标X = 520 : 商城坐标Y = 1182
+        ElseIf UTF8.InStr(1, temp(0), "副本") > 0 Then
+            //为了防止渠道坐标遮挡,做了特殊处理
+            副本坐标X = 316 : 副本坐标Y = 1178
+        ElseIf UTF8.InStr(1, temp(0), "任务") > 0 Then
+            //为了防止渠道坐标遮挡,做了特殊处理
+            任务坐标X = 208 : 任务坐标Y = 1178
+        ElseIf UTF8.InStr(1, temp(0), "地图") > 0 Then
+            //为了防止渠道坐标遮挡,做了特殊处理
+            地图坐标X = 54 : 地图坐标Y = 1148
+        ElseIf UTF8.InStr(1, temp(0), "国家") > 0 Then
+            国家坐标X = (temp(1) + temp(3)) / 2 : 国家坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "军团") > 0 Then
+            军团坐标X = (temp(1) + temp(3)) / 2 : 军团坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "背包") > 0 Then
+            背包坐标X = (temp(1) + temp(3)) / 2 : 背包坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "阵容") > 0 Then
+            阵容坐标X = (temp(1) + temp(3)) / 2 : 阵容坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "武将") > 0 Then
+            武将坐标X = (temp(1) + temp(3)) / 2 : 武将坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "收起") > 0 Then
+            收起坐标X = (temp(1) + temp(3)) / 2 : 收起坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "展开") > 0 Then
+            展开坐标X = (temp(1) + temp(3)) / 2 : 展开坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "兵力") > 0 Then
+            兵力坐标X = (temp(1) + temp(3)) / 2 : 兵力坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "帮助") > 0 Then
+            帮助坐标X = (temp(1) + temp(3)) / 2 : 帮助坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "shouqi") > 0 Then
+            顶部收起X = (temp(1) + temp(3)) / 2 : 顶部收起Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "开战") > 0 Then
+            开战坐标X = (temp(1) + temp(3)) / 2 : 开战坐标Y = (temp(2) + temp(4)) / 2
+        ElseIf UTF8.InStr(1, temp(0), "活动") > 0 Then
+            //为了防止渠道坐标遮挡,做了特殊处理
+            活动坐标X = 420 : 活动坐标Y = 1178
+        End If
+        i = i + 1
+    Next
+    TracePrint "固定主界面坐标加载完成"  
+End Sub

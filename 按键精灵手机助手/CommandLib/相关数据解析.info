@@ -1,0 +1,39 @@
+
+{
+	"Description" : null,
+	"军团固定坐标处理" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"副本固定坐标处理" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"加载配置文件" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"固定图标坐标处理" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"战斗固定坐标处理" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"读取VIP等级" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"读取主公等级" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	}
+}

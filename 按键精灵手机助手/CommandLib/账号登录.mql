@@ -167,6 +167,7 @@ Sub 登录(账号信息, 账号密码)
         当前步骤 = 当前所在登录步骤界面(1, 0)
         If 当前步骤 = 1 Then  
             //输入账号
+            ShowMessage "要点击账号栏了",1000, 50, 620
             TracePrint "要点击账号栏了"
             Touch 523, 880, 100
             Delay 500
@@ -179,7 +180,7 @@ Sub 登录(账号信息, 账号密码)
             TracePrint 账号信息
             InputText 账号信息
             Delay 1000
-            
+            ShowMessage "要点击密码栏了",1000, 50, 620
             //输入密码
             Touch 449, 950, 100
             Delay 500
@@ -191,7 +192,7 @@ Sub 登录(账号信息, 账号密码)
             TracePrint 账号密码
             InputText 账号密码
             Delay 1000
-            	
+            ShowMessage "要点登录了",1000, 50, 620	
             //点击登录
             Touch 340, 625, 100
         ElseIf 当前步骤 = 2 Then
@@ -306,13 +307,13 @@ Function 当前所在登录步骤界面(渠道编号,有无验证码)
         //            当前所在登录步骤界面 = 2
         //            Exit Function
         //        End If
-        ocrchar=Ocr(598,282,654,383,"666666-111111",0.9)
-        Traceprint ocrchar
+        ocrchar=Ocr(602,281,661,401,"666666-111111",0.95)
+		Traceprint ocrchar
         If ocrchar = "登录" Then 
             当前所在登录步骤界面 = 1
             Exit Function
         End If
-        ocrchar=Ocr(569,350,615,415,"FEFEFE-111111",0.9)
+        ocrchar=Ocr(524,326,634,456,"FFFFFF-111111",0.95)
         Traceprint ocrchar
         If ocrchar = "账号" Then 
             当前所在登录步骤界面 = 2

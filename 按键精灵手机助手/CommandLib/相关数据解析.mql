@@ -1,0 +1,71 @@
+//玩家自身相关信息
+Dim 主公等级, VIP等级, 当前体力, 当前军令
+
+//各种常用坐标
+Dim 邮件坐标X, 邮件坐标Y, 兵事坐标X, 兵事坐标Y, 出征坐标X, 出征坐标Y, 建筑坐标X, 建筑坐标Y, 主公坐标X, 主公坐标Y, VIP坐标X, VIP坐标Y, 资源坐标X, 资源坐标Y, 商城坐标X, 商城坐标Y
+Dim 副本坐标X, 副本坐标Y, 任务坐标X, 任务坐标Y, 地图坐标X, 地图坐标Y, 国家坐标X, 国家坐标Y, 军团坐标X, 军团坐标Y, 背包坐标X, 背包坐标Y, 阵容坐标X, 阵容坐标Y, 活动坐标X, 活动坐标Y
+Dim 武将坐标X, 武将坐标Y, 收起坐标X, 收起坐标Y, 展开坐标X, 展开坐标Y, 兵力坐标X, 兵力坐标Y, 帮助坐标X, 帮助坐标Y, 顶部收起X, 顶部收起Y
+
+
+function 读取主公等级()
+    Dim ocrchar
+    ocrchar=Ocr(616,84,649,123,"C9C8C8-111111|DFDFDE-111111|F2F2F2-111111|B2AFAE-111111",0.9)
+    Traceprint ocrchar
+    主公等级 = Int(ocrchar)
+End Function
+
+Sub 读取VIP等级()
+    Rem 进VIP界面
+    Delay 1500
+    所在场景 = 场景相关操作.所在场景()
+    If 所在场景 = 32 Then 
+        TracePrint "已经进入VIP界面"
+    ElseIf 所在场景 = 1 Then
+        Touch VIP坐标X, VIP坐标Y, 100
+        Goto 进VIP界面
+    Else 
+        Call 回主城(1)
+        Goto 进VIP界面
+    End If
+    Dim ocrchar
+    ocrchar=Ocr(460,632,498,730,"60DAEB-111111|387DCD-111111|4DB5EC-111111|3F92DF-111111|52BFE8-111111|4CA0BD-111111",0.9)
+    Traceprint ocrchar
+    读取VIP等级 = Int(ocrchar)
+End Sub
+
+Sub 加载配置文件()
+    Dim 固定主界面坐标内容, 固定军团坐标内容, 固定副本坐标内容, 固定战斗坐标内容
+    
+    localDataDir = GetTempDir()
+    TracePrint localDataDir
+    PutAttachment "localDataDir", "*.txt"
+	
+    固定主界面坐标内容 = File.Read("localDataDir/position.txt")
+    Call 固定图标坐标处理(固定主界面坐标内容)
+    
+    固定军团坐标内容 = File.Read("localDataDir/JTPosition.txt")
+    Call 军团固定坐标处理(固定军团坐标内容)
+    
+    固定副本坐标内容 = File.Read("localDataDir/FBPosition.txt")
+    Call 副本固定坐标处理(固定副本坐标内容)
+    
+    固定战斗坐标内容 = File.Read("localDataDir/ZDPosition.txt")
+    Call 战斗固定坐标处理(固定战斗坐标内容)
+End Sub
+
+Sub 固定图标坐标处理(固定主界面坐标内容)
+	
+    
+End Sub
+
+Sub 军团固定坐标处理(固定军团坐标内容)
+    
+End Sub
+
+Sub 副本固定坐标处理(固定副本坐标内容)
+    
+End Sub
+
+Sub 战斗固定坐标处理(固定战斗坐标内容)
+   
+End Sub
