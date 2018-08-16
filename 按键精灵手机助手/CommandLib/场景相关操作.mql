@@ -578,6 +578,7 @@ Function 关闭界面(当前场景)
         Rem 关闭未知界面
 		If 当前场景 = Null Then
             Call 通用界面关闭()
+            Touch 1,1280, 100
             ShowMessage "这个界面不知道啊,无法关闭,请手动关闭,并告诉我", 1500, 50, 620
             TracePrint "不知道的场景"
             If 重启参数 > 15 Then 
@@ -591,6 +592,8 @@ Function 关闭界面(当前场景)
             Delay 5000
             当前场景 = 所在场景()
             Goto 关闭未知界面
+		Else
+			Call 通用界面关闭()
         End If
     End Select
 End Function
