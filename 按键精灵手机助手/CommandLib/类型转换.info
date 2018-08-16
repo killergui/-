@@ -11,6 +11,16 @@
 		"Description" : null,
 		"TranslateTemplate" : null
 	},
+	"字符串解析" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"字符串解析带符号" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
 	"汉字转数字" : 
 	{
 		"Description" : null,

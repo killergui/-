@@ -1,23 +1,39 @@
 Import "场景相关操作.mql"
+Import "相关数据解析.mql"
+
+
 '#########################################################
-'	进界面统一试错8次, 如果试错次数过多放弃
+'	进界面统一试错5次, 如果试错次数过多放弃
 
 '#########################################################
 Dim 容错参数, 所在场景
 容错参数 = 0
 Function 容错判定
-	If 容错参数 < 16 Then 
-		容错判定 = True
-	Else 
-		容错判定 = False
-	End If
-	TracePrint "容错参数",容错参数
-	容错参数 = 容错参数 + 1
+    If 容错参数 < 5 Then 
+        容错判定 = True
+    Else 
+        容错判定 = False
+    End If
+    TracePrint "容错参数",容错参数
+    容错参数 = 容错参数 + 1
 End Function
 
-Function 城内进界面(目标界面, 点击坐标X, 点击坐标Y)
-	//兼容性说明: 1 = 主城, 2 = 野外, 3 = 主城野外均可, 4 = 来源界面
-	容错参数 = 0
+//    Rem 进VIP界面
+//    Delay 1500
+//    所在场景 = 场景相关操作.所在场景()
+//    If 所在场景 = 32 Then 
+//        TracePrint "已经进入VIP界面"
+//    ElseIf 所在场景 = 1 Then
+//        Touch VIP坐标X, VIP坐标Y, 100
+//        Goto 进VIP界面
+//    Else 
+//        Call 回主城(1)
+//        Goto 进VIP界面
+//    End If
+
+
+Function 城内进固定界面(目标界面, 点击坐标X, 点击坐标Y, 展开操作类型)
+    容错参数 = 0
     Rem 进界面
     Delay 1500
     所在场景 = 场景相关操作.所在场景()
@@ -25,21 +41,23 @@ Function 城内进界面(目标界面, 点击坐标X, 点击坐标Y)
     If 所在场景 = 目标界面 Then 
         TracePrint "已经进入目标界面"
     ElseIf 所在场景 = 1 And 容错判定() Then
+        If 展开操作类型 <> 0 Then
+			Call 界面收起展开(展开操作类型)
+		End If
         Touch 点击坐标X, 点击坐标Y, 100
         Goto 进界面
     ElseIf 容错判定() Then
-        Call 回主城(1)
+        Call 场景相关操作.关闭界面(所在场景)
         Goto 进界面
     ElseIf 容错判定() = False Then
-    	TracePrint "无法进入目标界面"
-    	ShowMessage "无法进入目标界面", 2000, 50, 620
-    	Delay 2000
+        TracePrint "无法进入目标界面"
+        ShowMessage "无法进入目标界面", 2000, 50, 620
+        Delay 2000
     End If
-	
 End Function
 
-Function 城内外通用进界面(目标界面, 点击坐标X, 点击坐标Y)
-	容错参数 = 0
+Function 城内外通用进界面(目标界面, 点击坐标X, 点击坐标Y, 展开操作类型)
+    容错参数 = 0
     Rem 进界面
     Delay 1500
     所在场景 = 场景相关操作.所在场景()
@@ -47,17 +65,117 @@ Function 城内外通用进界面(目标界面, 点击坐标X, 点击坐标Y)
     If 所在场景 = 目标界面 Then 
         TracePrint "已经进入目标界面"
     ElseIf 所在场景 = 1 Or 所在场景 = 2 And 容错判定() Then
-        Touch 点击坐标X, 点击坐标Y, 100
+        If 展开操作类型 <> 0 Then
+			Call 界面收起展开(展开操作类型)
+		End If
+		Touch 点击坐标X, 点击坐标Y, 100
         Goto 进界面
     ElseIf 容错判定() Then
-        Call 场景相关操作.关闭界面()
+        Call 场景相关操作.关闭界面(所在场景)
         Goto 进界面
     ElseIf 容错判定() = False Then
-    	TracePrint "无法进入目标界面"
-    	ShowMessage "无法进入目标界面", 2000, 50, 620
-    	Delay 2000
+        TracePrint "无法进入目标界面"
+        ShowMessage "无法进入目标界面", 2000, 50, 620
+        Delay 2000
     End If
 End Function
+
+Function 城内选中建筑(点击坐标X, 点击坐标Y, 附件名称, 是否点击, 目标界面, 展开操作类型)
+    //如果是否点击为True,则务必确认目标界面值
+	
+	Dim 建筑信息
+    容错参数 = 0
+    Rem 点建筑
+	TracePrint "点击",点击坐标X, 点击坐标Y
+    Touch 点击坐标X, 点击坐标Y, 100
+    Delay 2000
+    建筑信息 = 选中建筑判定(附件名称)
+    TracePrint "容错判定", 容错判定()
+    If 建筑信息(0) = True Then 
+        TracePrint "选中目标建筑"
+        If 是否点击 = True Then
+            Call 城内进固定界面(目标界面, 建筑信息(1), 建筑信息(2), 展开操作类型)
+        End IF
+    ElseIf 容错判定() Then
+        Goto 点建筑
+    ElseIf 容错判定() = False Then
+        TracePrint "无法选中目标建筑"
+        ShowMessage "无法选中目标建筑", 2000, 50, 620
+        Delay 2000
+    End If
+End Function
+
+Function 选中建筑判定(附件名称)
+    Dim 是否选中, intX, intY
+    FindPic 150,500,400,900,附件名称,"000000",0,0.7,intX,intY
+    If intX > -1 And intY > -1 Then
+        是否选中 = True
+    Else
+        是否选中 = False
+    End If
+    选中建筑判定 = Array(是否选中, intX, intY)
+End Function
+
+//用于有固定坐标但没有明确编号的界面
+Function 进无编号子界面(区域0, 区域1, 区域2, 区域3, 附件, 相似度, 点击坐标X, 点击坐标Y)
+    容错参数 = 0
+    Dim intX, intY
+	Rem 进子界面1
+    Touch 点击坐标X, 点击坐标Y, 100
+
+	FindPic 区域0, 区域1, 区域2, 区域3, 附件, "000000", 0, 相似度, intX, intY
+	If intX > -1 And intY > -1 Then 
+        TracePrint "已经进入目标界面"
+    ElseIf 容错判定() Then
+        Call 场景相关操作.关闭界面(所在场景)
+		Delay 1500
+        Goto 进子界面1
+    ElseIf 容错判定() = False Then
+        TracePrint "无法进入目标界面"
+        ShowMessage "无法进入目标界面", 2000, 50, 620
+        Delay 2000
+    End If
+End Function
+
+//用于有明确编号但没有固定坐标的界面
+Function 进无坐标子界面(目标界面, 来源界面, 区域0, 区域1, 区域2, 区域3, 附件, 相似度)
+    容错参数 = 0
+    Dim intX, intY
+	Rem 进界面
+	
+	所在场景 = 场景相关操作.所在场景()
+	
+	If 所在场景 = 目标界面 Then 
+		TracePrint "已经进入目标界面"
+	Elseif 所在场景 = 来源界面 Then
+		FindPic 区域0, 区域1, 区域2, 区域3, 附件, "000000", 0, 相似度, intX, intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "准备进入签到界面"
+            Touch intX + 10, intY + 10, 100
+            Delay 1500
+            Goto 进界面
+        End If
+	Else
+		
+	End If
+	
+	FindPic 区域0, 区域1, 区域2, 区域3, 附件, "000000", 0, 相似度, intX, intY
+	If intX > -1 And intY > -1 Then 
+        TracePrint "找到目标图标"
+		Touch intX + 10, intY + 10, 100
+		Delay 1500
+		Goto 进界面
+    ElseIf 容错判定() Then
+        Call 场景相关操作.关闭界面(所在场景)
+		Delay 1500
+        Goto 进界面
+    ElseIf 容错判定() = False Then
+        TracePrint "无法进入目标界面"
+        ShowMessage "无法进入目标界面", 2000, 50, 620
+        Delay 2000
+    End If
+End Function
+
 
 Sub 回主城(类型)
     //回主城类型:1 = 不关心初始位置, 2 = 必须回到登录时的初始位置
@@ -67,14 +185,15 @@ Sub 回主城(类型)
         Rem 回主城1
         Delay 2000
         所在场景 = 场景相关操作.所在场景()
-        If 所在场景 <> 1 And 容错参数 < 5 Then
-            容错参数 = 容错参数 + 1
-            场景相关操作.关闭界面
+        If 所在场景 <> 1 And 容错判定() Then
+            场景相关操作.关闭界面(所在场景)
             Goto 回主城1
         End If
     Case 2
         容错参数 = 0
+        
         Rem 回主城2
+        TracePrint "尝试回主城"&容错参数
         Delay 2000
         所在场景 = 场景相关操作.所在场景()
         If 所在场景 = 1 Then
@@ -86,21 +205,73 @@ Sub 回主城(类型)
                 FindPic 264,917,311,1057,"Attachment:中间城墙贴图2.png","000000",0,0.96,intX,intY
                 If intX > -1 And intY > -1 Then 
                     TracePrint "在主城初始位置"
-                Else 
-                    If 容错参数 < 5 Then
-                        容错参数 = 容错参数 + 1
-//                        Touch 地图坐标X, 地图坐标Y, 100
-                        Goto 回主城2
-                    End If
+                ElseIf 容错判定() Then
+                    城内进固定界面(2, 相关数据解析.去野外坐标X, 相关数据解析.去野外坐标Y, 0)
+                    Goto 回主城2
                 End If
             End If
-        Else 
-            If 容错参数 < 5 Then
-                容错参数 = 容错参数 + 1
-                场景相关操作.关闭界面 
-                Goto 回主城2
+        ElseIf 容错判定() Then
+            场景相关操作.关闭界面(所在场景)
+            Goto 回主城2
+        End If
+    End If
+End Select
+TracePrint "当前在主城中"
+End Sub
+
+Sub 界面收起展开(类型)
+    //类型枚举 1 = 主城顶部收起, 2 = 主城底部收起, 3 = 野外顶部收起, 4 = 主城顶部展开, 5 = 主城底部展开, 6 = 野外顶部展开
+    Dim 所在场景
+    Select Case 类型
+    Case 1, 4
+        容错参数 = 0
+        Rem 主城顶部操作
+        Delay 2000
+        If 场景相关操作.主城顶部是否收起() = False Then 
+            If 类型 = 1 And 容错判定() Then 
+                Touch 相关数据解析.顶部收起坐标X , 相关数据解析.顶部收起坐标Y, 100
+                Goto 主城顶部操作
+            End If
+        Else
+            If 类型 = 4 And 容错判定() Then 
+                Touch 相关数据解析.顶部收起坐标X , 相关数据解析.顶部收起坐标Y, 100
+                Goto 主城顶部操作 
             End If
         End If
+    Case 2, 5
+        容错参数 = 0
+        Rem 底部操作
+        Delay 2000
+        所在场景 = 场景相关操作.所在场景()
+
+        If 场景相关操作.主城底部是否收起() = False Then 
+            If 类型 = 2 And 容错判定() Then 
+                Touch 相关数据解析.底部收起按钮坐标X, 相关数据解析.底部收起按钮坐标Y, 100
+                Goto 底部操作
+            End If
+        Else 
+            If 类型 = 5 And 容错判定() Then 
+                Touch 相关数据解析.底部展开按钮坐标X, 相关数据解析.底部展开按钮坐标Y,100
+                Goto 底部操作
+            End If
+        End If
+    Case 3, 6
+        容错参数 = 0
+        Rem 野外顶部操作
+        If 场景相关操作.野外顶部是否收起() = False Then 
+            If 类型 = 3 And 容错判定() Then 
+                Touch 相关数据解析.野外顶部展开坐标X , 相关数据解析.野外顶部展开坐标Y, 50
+                Goto 野外顶部操作
+            End If
+        Else 
+            If 类型 = 6 And 容错判定() Then 
+                Touch 相关数据解析.野外顶部展开坐标X , 相关数据解析.野外顶部展开坐标Y, 50
+                Goto 野外顶部操作
+            End If
+        End If
+    Case Else
+        TracePrint "没有该类型"
     End Select
-    TracePrint "当前在主城中"
 End Sub
+
+

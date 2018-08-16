@@ -35,5 +35,10 @@
 	{
 		"Description" : null,
 		"TranslateTemplate" : null
+	},
+	"读取当前体力" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
 	}
 }

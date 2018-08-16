@@ -16,7 +16,22 @@
 		"Description" : null,
 		"TranslateTemplate" : null
 	},
+	"城内进功能建筑" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"城内进固定界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
 	"城内进界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"城内选中建筑" : 
 	{
 		"Description" : null,
 		"TranslateTemplate" : null
@@ -26,12 +41,37 @@
 		"Description" : null,
 		"TranslateTemplate" : null
 	},
+	"界面收起展开" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
 	"进VIP界面" : 
 	{
 		"Description" : null,
 		"TranslateTemplate" : null
 	},
+	"进子界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"进无坐标子界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"进无编号子界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
 	"进界面" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"选中建筑判定" : 
 	{
 		"Description" : null,
 		"TranslateTemplate" : null

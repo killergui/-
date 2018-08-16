@@ -387,6 +387,48 @@ End If
 
 //体力和副本相关备份
 
+Sub 读取当前体力()
+    Dim ocrchar, 字符长度
+    UseDict (1)
+    容错参数 = 0
+    Rem 识别体力文字
+    所在场景 = 场景相关操作.所在场景()
+    If 所在场景 = 1 Then 
+        ocrchar=Ocr(639,291,676,402,"9FB1BC-111111|8E9EA8-111111|819099-111111|AEC2CE-111111|A0B2BD-111111|85959E-111111|90A0AA-111111|636D73-111111|BCBCBB-111111|838382-111111",0.9)
+    ElseIf 所在场景 = 2 Then
+        ocrchar=Ocr(644,232,675,321,"9FB1BC-111111|8E9EA8-111111|819099-111111|AEC2CE-111111|A0B2BD-111111|85959E-111111|90A0AA-111111|636D73-111111|BCBCBB-111111|838382-111111",0.9)
+    ElseIf 所在场景 = 3 Or 所在场景 = 38 Then
+        ocrchar=Ocr(670,860,693,975,"8AADAC-111111|8DB1B0-111111|8EB2B1-111111|96BDBD-111111|8CB0AF-111111|98C0C0-111111|94BBBB-111111|8BAFAE-111111|6A827F-111111|82A3A2-111111",0.9)
+    ElseIf 容错参数 < 5 Then
+        容错参数 = 容错参数 + 1 
+        Call 回主城(1)
+        Goto 识别体力文字
+    End If
+
+    Traceprint ocrchar
+    字符长度 = UTF8.Len(ocrchar)
+    TracePrint "容错参数",容错参数,"字符长度",字符长度
+    If 字符长度 = 7 Then 
+        读取当前体力 = Int(UTF8.Left(ocrchar, 3))
+    ElseIf 字符长度 = 6 Then
+        读取当前体力 = Int(UTF8.Left(ocrchar, 2))
+    ElseIf 字符长度 = 5 Then
+        读取当前体力 = Int(UTF8.Left(ocrchar, 1))
+    Else 
+        If 容错参数 < 8 Then 
+            容错参数 = 容错参数 + 1
+            TracePrint "读取体力文字异常,重试"
+            Goto 识别体力文字
+        Else 
+            TracePrint "错误次数太多,放弃,设置体力为0"
+            读取当前体力 = 0
+        End If
+    End If
+End Sub
+
+
+
+
 Sub 推关()
     Dim 推关状态
     If ReadUIConfig("副本推关设置") = True Then 
@@ -1407,4 +1449,24 @@ Sub 固定图标坐标处理(固定主界面坐标内容)
         i = i + 1
     Next
     TracePrint "固定主界面坐标加载完成"  
+End Sub
+
+Sub 加载配置文件()
+    Dim 固定主界面坐标内容, 固定军团坐标内容, 固定副本坐标内容, 固定战斗坐标内容
+    
+    localDataDir = GetTempDir()
+    TracePrint localDataDir
+    PutAttachment "localDataDir", "*.txt"
+	
+    固定主界面坐标内容 = File.Read("localDataDir/position.txt")
+    Call 固定图标坐标处理(固定主界面坐标内容)
+    
+    固定军团坐标内容 = File.Read("localDataDir/JTPosition.txt")
+    Call 军团固定坐标处理(固定军团坐标内容)
+    
+    固定副本坐标内容 = File.Read("localDataDir/FBPosition.txt")
+    Call 副本固定坐标处理(固定副本坐标内容)
+    
+    固定战斗坐标内容 = File.Read("localDataDir/ZDPosition.txt")
+    Call 战斗固定坐标处理(固定战斗坐标内容)
 End Sub
