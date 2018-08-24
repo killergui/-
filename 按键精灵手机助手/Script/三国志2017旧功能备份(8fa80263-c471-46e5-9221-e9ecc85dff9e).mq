@@ -4,12 +4,12 @@ Call 重启脚本()
 
 Sub 重启脚本()
 
-//循环数量达到50次，即自动重启脚本
-If K = 50 Then
-RestartScript //重新启动脚本运行
-Else
-Call 数字0()
-End If 
+    //循环数量达到50次，即自动重启脚本
+    If K = 50 Then
+        RestartScript //重新启动脚本运行
+    Else
+        Call 数字0()
+    End If 
 End Sub
 
 
@@ -87,43 +87,43 @@ End Function
 
 
    
-   //切换账号备份
+//切换账号备份
    
    
-    If 渠道编号 = 0 Then 
-        Rem 进账号登录界面1
-        当前步骤 = 当前所在登录步骤界面(0)
-        If 当前步骤 = 1 Then 
-            Touch 130, 510, 100
-            Delay 1000
-            Goto 进账号登录界面1
-        ElseIf 当前步骤 = 2 Then  
-            Goto 进账号登录界面1
-        ElseIf 当前步骤 = 3 Then
-            Touch 545, 875, 100
-            Delay 1500
-        End If
-    ElseIf 渠道编号 = 1 Then
-        TracePrint "确认所在界面"
-        容错参数 = 0
-        Rem 切换账号1
-        当前步骤 = 当前所在登录步骤界面(1)
-        If 当前步骤 = 1 Then 
-            Call 登录(账号信息, 账号密码)
-            Goto 切换账号1
-        ElseIf 当前步骤 = 2 Then
-            Call 退出账号(渠道编号)
-            Goto 切换账号1
-        ElseIf 容错参数 < 5 Then
-            TracePrint "当前界面未知,可能在切换,等待"
-            容错参数 = 容错参数 + 1
-            Delay 3000
-            Goto 切换账号1
-        End If
+If 渠道编号 = 0 Then 
+    Rem 进账号登录界面1
+    当前步骤 = 当前所在登录步骤界面(0)
+    If 当前步骤 = 1 Then 
+        Touch 130, 510, 100
+        Delay 1000
+        Goto 进账号登录界面1
+    ElseIf 当前步骤 = 2 Then  
+        Goto 进账号登录界面1
+    ElseIf 当前步骤 = 3 Then
+        Touch 545, 875, 100
+        Delay 1500
     End If
+ElseIf 渠道编号 = 1 Then
+    TracePrint "确认所在界面"
+    容错参数 = 0
+    Rem 切换账号1
+    当前步骤 = 当前所在登录步骤界面(1)
+    If 当前步骤 = 1 Then 
+        Call 登录(账号信息, 账号密码)
+        Goto 切换账号1
+    ElseIf 当前步骤 = 2 Then
+        Call 退出账号(渠道编号)
+        Goto 切换账号1
+    ElseIf 容错参数 < 5 Then
+        TracePrint "当前界面未知,可能在切换,等待"
+        容错参数 = 容错参数 + 1
+        Delay 3000
+        Goto 切换账号1
+    End If
+End If
     
     
-    //关闭备份
+//关闭备份
 Function 关闭界面()	
     Dim 当前场景, intX, intY, 重启参数
     重启参数 = 0
@@ -211,7 +211,7 @@ Function 关闭界面()
     Case 67, 68
         Touch 320, 720, 100
     Case Else
-    	Call 通用界面关闭()
+        Call 通用界面关闭()
         ShowMessage "这个界面不知道啊,无法关闭,请手动关闭,并告诉我", 1500, 50, 620
         TracePrint "在切换城内城外"
         If 重启参数 > 5 Then 
@@ -1470,3 +1470,119 @@ Sub 加载配置文件()
     固定战斗坐标内容 = File.Read("localDataDir/ZDPosition.txt")
     Call 战斗固定坐标处理(固定战斗坐标内容)
 End Sub
+
+
+
+///登录相关
+
+
+
+//Sub 退出账号(渠道编号)
+//    If 渠道编号 = 0 Then 
+//        Rem 进账号登录界面0
+//        当前步骤 = 当前所在登录步骤界面(0)
+//        If 当前步骤 = 1 Then 
+//            Touch 130, 510, 100
+//            Delay 1000
+//            Goto 进账号登录界面0
+//        ElseIf 当前步骤 = 2 Then  
+//
+//            Goto 进账号登录界面0
+//        ElseIf 当前步骤 = 3 Then
+//            Touch 545, 875, 100
+//            Delay 1500
+//        End If
+//    ElseIf 渠道编号 = 1 Then
+//        TracePrint "准备注销账号"
+//        容错参数 = 0
+//        Rem 注销1
+//        当前步骤 = 当前所在登录步骤界面(1)
+//        If 当前步骤 = 2 And 容错参数 < 5 Then 
+//            容错参数 = 容错参数 + 1
+//            zm.Swipe 20, 639, 600, 639
+//            Delay 1500
+//            Touch 35, 639, 100
+//            Delay 3000
+//            Goto 注销1
+//        ElseIf 当前步骤 = 1 Then
+//            TracePrint "海马玩注销成功"
+//        ElseIf 容错参数 < 5 Then
+//            TracePrint "当前界面未知,重试"
+//            容错参数 = 容错参数 + 1
+//            Delay 3000
+//            Goto 注销1
+//        End If
+//    End If
+//End Sub
+
+//Sub 进个人中心(渠道编号)
+//    If 渠道编号 = 0 Then 
+//        Rem 进账号登录界面0
+//        当前步骤 = 当前所在登录步骤界面(0, 0)
+//        If 当前步骤 = 1 Then 
+//            Touch 130, 510, 100
+//            Delay 1000
+//            Goto 进账号登录界面0
+//        ElseIf 当前步骤 = 2 Then  
+//
+//            Goto 进账号登录界面0
+//        ElseIf 当前步骤 = 3 Then
+//            Touch 545, 875, 100
+//            Delay 1500
+//        End If
+//    ElseIf 渠道编号 = 1 Then
+//        TracePrint "进海马玩这里了"
+//        容错参数 = 0
+//        Rem 进个人中心界面1
+//        Touch 0, 5, 100
+//        Delay 2000
+//        Touch 45, 182, 100
+//        Delay 2000
+//        当前步骤 = 当前所在登录步骤界面(1)
+//        If 当前步骤 = 2 Then
+//            TracePrint "成功进入海马玩个人中心"
+//        ElseIf 容错参数 < 5 Then
+//            TracePrint "当前界面未知,重试"
+//            容错参数 = 容错参数 + 1
+//            Delay 3000
+//            Goto 进个人中心界面1
+//        End If
+//    End If
+//End Sub
+//
+//Sub 切换账号(账号信息, 账号密码)
+//    渠道编号 = 渠道转换()
+//    Call 进个人中心(渠道编号)
+//    Call 退出账号(渠道编号)
+//    Call 登录(账号信息, 账号密码)
+//End Sub
+
+
+//设置次数
+
+Rem 设置次数1
+ocrchar=Ocr(287,786,328,909,"BFD5E2-111111|8897A0-111111|AEC2CE-111111|9AACB6-111111|ABBECA-111111|9BADB7-111111",0.9)
+TracePrint ocrchar
+temp1 = 类型转换.字符串解析带符号(ocrchar, "/", 3, 5)
+准备购买次数 = temp1(0)
+可购买次数 = temp1(1)
+                
+If (可购买次数 = Null Or 准备购买次数 = Null) And 容错参数 < 20 Then 
+    容错参数 = 容错参数 + 1
+    TracePrint "次数识别异常,重试"
+    Goto 设置次数1
+ElseIf 容错参数 >= 20 Then
+    TracePrint "购买次数识别错误次数过多,放弃"
+    Exit Sub
+End If
+If 准备购买次数 > 预期购买次数 And 容错参数 < 20 Then 
+    容错参数 = 容错参数 + 1
+    Touch 305, 420, 100
+    Delay 500
+    Goto 设置次数1
+ElseIf 准备购买次数 < 预期购买次数 And 容错参数 < 20 Then
+    容错参数 = 容错参数 + 1
+    Touch 305, 755, 100
+    Delay 500
+    Goto 设置次数1
+End If

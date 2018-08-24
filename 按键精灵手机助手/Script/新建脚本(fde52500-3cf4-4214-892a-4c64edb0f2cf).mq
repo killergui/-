@@ -1,0 +1,27 @@
+Import "场景相关操作.mql"
+Import "类型转换.mql"
+
+SetRowsNumber(0)
+TracePrint SetDictEx(0, "Attachment:三国志2017字库.txt")
+TracePrint SetDictEx(1, "Attachment:三国志2017字库1080.txt")
+
+If GetScreenX() = 1080 Then 
+    TracePrint UseDict(1)
+ElseIf GetScreenX() = 900 Then
+ElseIf GetScreenX() = 720 Then
+    TracePrint UseDict(0)
+End If
+
+Do
+	Dim temp
+//	temp = 场景相关操作.所在场景()
+//	TracePrint temp
+//	TracePrint 场景相关操作.进入场景是否正确(temp)
+	Dim ocrchar1, ocrchar2, ocrchar
+    ocrchar = 类型转换.SuperOcr(105,903,145,1040,"ECECEC-111111|A4A4A3-111111|C3C3C2-111111|9D9C9B-111111|FFFFFF-111111|94A499-111111|B0B9B3-111111|74907D-111111",0.85)
+	Traceprint ocrchar
+
+    ocrchar = 类型转换.SuperOcr(527,801,557,876,"69AFF6-111111|47719A-111111|405F80-111111|5181B1-111111|3A5875-111111|609FDE-111111",0.95)
+    TracePrint ocrchar
+    Delay 2000
+Loop

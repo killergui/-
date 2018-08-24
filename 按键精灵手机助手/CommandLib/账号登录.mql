@@ -1,7 +1,6 @@
 //所在场景: 1 = 登录步骤1 ,2 = 登录步骤2, 3 = 登录步骤3 
 //客户端: 1 = 360 com.game.sgz.a360 , 2 = 遥点, 3 = 海马玩 com.shouyou.sgzerq.hm
 
-Import "zm.luae"
 Import "场景相关操作.mql"
 
 //以下是若快打码的内容
@@ -10,226 +9,25 @@ Import "ruokuai.lua"  //必须加载
 Dim RKHOST="103.45.7.212:81"  //必须声明
 '####################################以上井号内的内容需要设为全局（放在代码最顶端）
 
-TracePrint SetDictEx(1, "Attachment:皇榜奖励数字.txt")
-TracePrint UseDict(1)
   
-Dim 当前步骤, 渠道编号, 容错参数, 所在场景
+Dim 当前步骤, 容错参数, 所在场景
 
-Function 渠道转换()
-    Dim 包名
-    包名 = Sys.GetFront()
-    TracePrint 包名
-    If 包名 = "com.game.sgz.a360" Then 
-        渠道转换 = 0
-    ElseIf 包名 = "com.shouyou.sgzerq.hm" Then
-        渠道转换 = 1
-    ElseIf 包名 = "com.game.sgz.a360.yod" Then
-        渠道转换 = 2
-    Else 
-        渠道转换 = 99
-    End If
-End Function
+Sub 登录(渠道编号, 账号信息, 账号密码)
 
-
-Sub 登录(账号信息, 账号密码)
-    Dim 验证码,有没有验证码
-    
-    渠道编号 = 渠道转换()
     If 渠道编号 = 0 Then 
-        容错参数 = 0
-        Rem 进账号登录界面1
-        所在场景 = 场景相关操作.所在场景()
-        If 所在场景 = 21 Or 所在场景 = 22 Or 所在场景 = 1 Then
-            TracePrint "登录成功"
-            Exit Sub
-        End If
-        //判断有没有验证码
-        Dim ocrchar
-        ocrchar=Ocr(348,447,384,647,"CCCCCC-111111",0.95)
-        Traceprint ocrchar
-        If ocrchar = "请输入右侧的验" Then 
-            有没有验证码 = 1
-        Else 
-            Dim intX,intY
-            FindPic 292,370,424,452,"Attachment:360验证码标识.png","000000",0,0.9,intX,intY
-            If intX > -1 And intY > -1 Then
-                有没有验证码 = 1
-            Else 
-                FindPic 292,370,424,452,"Attachment:360验证码标识1.png","000000",0,0.9,intX,intY
-                If intX > -1 And intY > -1 Then
-                    有没有验证码 = 1
-                Else 
-                    有没有验证码 = 0
-                End If
-            End If
-        End If
-        
-        当前步骤 = 当前所在登录步骤界面(0, 有没有验证码)
-        
-        If 当前步骤 = 1 Then 
-            //切换账号登录
-            Touch 130, 510, 100
-            Delay 1000
-        ElseIf 当前步骤 = 2 Then  
-            If 有没有验证码 = 1 Then 
-                //点击账号框
-                Touch 520, 460, 100
-                Delay 500
-                //删除旧账号
-                Touch 520, 865, 100
-                Delay 500
-                Touch 520, 765, 100
-                Delay 500
-                //输入账号
-                TracePrint 账号信息
-                InputText 账号信息
-                Delay 1000
-            
-                //点击密码框
-                Touch 445, 460, 100
-                Delay 500
-                //删除旧密码
-                Touch 445, 685, 100
-                Delay 500
-                Touch 445, 715, 100
-                Delay 500
-                //输入密码
-                TracePrint 账号密码
-                InputText 账号密码
-                Delay 1000
-            	
-                //点击验证码框
-                Touch 360, 660, 100
-                Delay 1000
-                //删除旧验证码
-                For 30
-                    KeyPress "del"
-                    Delay 10
-                Next
-                //输入验证码
-                InputText 识别验证码(渠道编号)
-                //点击登录
-                Touch 255, 610, 100
-            Else 
-                //点击账号框
-                Touch 470, 460, 100
-                Delay 500
-            
-                //删除旧账号
-                Touch 480, 865, 100
-                Delay 500
-                Touch 480, 765, 100
-                Delay 500
-                //输入账号
-                TracePrint 账号信息
-                InputText 账号信息
-                Delay 1000
-            
-                //点击密码框
-                Touch 395, 460, 100
-                Delay 500
-                //删除旧密码
-                Touch 395, 685, 100
-                Delay 500
-                Touch 405, 715, 100
-                Delay 500
-                //输入密码
-                TracePrint 账号密码
-                InputText 账号密码
-                Delay 1000
-                
-                //点击登录
-                Touch 285, 610, 100
-            End If   
-        ElseIf 当前步骤 = 3 Then
-            //点击关闭
-            Touch 545, 875, 100
-        ElseIf 当前步骤 = 4 Then
-            //点击关闭
-            Touch 600, 865, 100
-        ElseIf 当前步骤 = 5 Then
-            //点击确定
-            Touch 260, 780, 100
-        End If
-        If 容错参数 < 5 Then 
-            容错参数 = 容错参数 + 1
-            Delay 3000
-            Goto 进账号登录界面1
-        End If
-    ElseIf 渠道编号 = 1 Then
-        容错参数 = 0
-        Rem 进账号登录界面2
-        所在场景 = 场景相关操作.所在场景()
-        If 所在场景 = 21 Or 所在场景 = 22 Or 所在场景 = 1 Then
-            TracePrint "登录成功"
-            Exit Sub
-        End If
-        当前步骤 = 当前所在登录步骤界面(1, 0)
-        If 当前步骤 = 1 Then  
-            //输入账号
-            ShowMessage "要点击账号栏了",1000, 50, 620
-            TracePrint "要点击账号栏了"
-            Touch 523, 880, 100
-            Delay 500
-            //删除旧账号
-            For 30
-                KeyPress "del"
-                Delay 10
-            Next
-            Delay 1000
-            TracePrint 账号信息
-            InputText 账号信息
-            Delay 1000
-            ShowMessage "要点击密码栏了",1000, 50, 620
-            //输入密码
-            Touch 449, 950, 100
-            Delay 500
-            //删除旧密码
-            For 30
-                KeyPress "del"
-                Delay 10
-            Next
-            TracePrint 账号密码
-            InputText 账号密码
-            Delay 1000
-            ShowMessage "要点登录了",1000, 50, 620	
-            //点击登录
-            Touch 340, 625, 100
-        ElseIf 当前步骤 = 2 Then
-            TracePrint "应该要关闭啊"
-            Touch 660, 920, 100
-        End If
-        If 容错参数 < 3 Then 
-            容错参数 = 容错参数 + 1
-            Delay 3000
-            Goto 进账号登录界面2
-        End If
-        TracePrint "登录完毕"
+        Call 登录360(账号信息, 账号密码)
+    ElseIf 渠道编号 = 2 Then
+        Call 登录海马玩(账号信息, 账号密码)
+	ElseIf 渠道编号 = 3 Then
+        Call 登录游戏工厂(账号信息, 账号密码)
     End If
 End Sub
-
 
 Function 当前所在登录步骤界面(渠道编号,有无验证码)
     Dim intX, intY, ocrchar
     Select Case 渠道编号
     Case 0
-        TracePrint "当前运行360客户端"
-        //        If CmpColorEx("585|535|333333-111111,586|569|333333-111111,590|595|333333-111111,589|608|333333-111111,592|625|333333-111111,591|677|333333-111111,600|721|333333-111111,577|726|333333-111111",0.9) = 1 Then
-        //            TracePrint "在360手机号登录界面"
-        //            当前所在登录步骤界面 = 1
-        //            Exit Function
-        //        End If
-        //        If CmpColorEx("564|524|333333-111111,565|545|333333-111111,568|569|333333-111111,561|593|333333-111111,551|599|333333-111111,567|622|333333-111111,567|649|333333-111111,557|699|333333-111111,567|733|333333-111111",0.9) = 1 Then
-        //            TracePrint "在360账号登录界面"
-        //            当前所在登录步骤界面 = 2
-        //            Exit Function
-        //        End If
-        //        If CmpColorEx("564|524|333333-111111,565|545|333333-111111,568|569|333333-111111,561|593|333333-111111,551|599|333333-111111,567|622|333333-111111,567|649|333333-111111,557|699|333333-111111,567|733|333333-111111",0.9) = 1 Then
-        //            TracePrint "提示密码升级"
-        //            当前所在登录步骤界面 = 3
-        //            Exit Function
-        //        End If
- 		
+        TracePrint "当前运行360客户端"	
         If 有无验证码 = 1 Then 
             ocrchar=Ocr(562,553,607,732,"333333-111111",0.9)
             Traceprint ocrchar
@@ -293,22 +91,17 @@ Function 当前所在登录步骤界面(渠道编号,有无验证码)
                 Exit Function
             End If
         End If
-        
-        
     Case 1
+        TracePrint "当前运行遥点客户端"
+        If CmpColorEx("608|514|E26700-111111,556|535|E26700-111111,568|555|E26700-111111,588|562|E96A00-111111,569|580|E26700-111111",0.9) = 1 Then
+            TracePrint "在登录界面"
+            当前所在登录步骤界面 = 1
+            Exit Function
+        End If
+	Case 2
         TracePrint "当前运行海马玩客户端"
-        //        If CmpColorEx("641|298|666666-111111,646|308|666666-111111,646|334|666666-111111,637|349|666666-111111,624|365|666666-111111,618|384|666666-111111,637|381|666666-111111",0.9) = 1 Then
-        //            TracePrint "在海马玩登录界面"
-        //            当前所在登录步骤界面 = 1
-        //            Exit Function
-        //        End If
-        //        If CmpColorEx("675|328|3B40DD-111111,380|324|3B40DD-111111,385|945|3B40DD-111111,691|951|3B40DD-111111,552|646|3B40DD-111111,645|651|3B40DD-111111,388|640|3B40DD-111111",0.9) = 1 Then
-        //            TracePrint "在海马玩个人中心界面"
-        //            当前所在登录步骤界面 = 2
-        //            Exit Function
-        //        End If
         ocrchar=Ocr(602,281,661,401,"666666-111111",0.95)
-		Traceprint ocrchar
+        Traceprint ocrchar
         If ocrchar = "登录" Then 
             当前所在登录步骤界面 = 1
             Exit Function
@@ -319,11 +112,11 @@ Function 当前所在登录步骤界面(渠道编号,有无验证码)
             当前所在登录步骤界面 = 2
             Exit Function
         End If
-        
-    Case 2
-        TracePrint "当前运行遥点客户端"
-        If CmpColorEx("608|514|E26700-111111,556|535|E26700-111111,568|555|E26700-111111,588|562|E96A00-111111,569|580|E26700-111111",0.9) = 1 Then
-            TracePrint "在登录界面"
+    Case 3
+        TracePrint "当前运行游戏工厂客户端"
+        ocrchar=Ocr(619,559,662,710,"000000-111111",0.9)
+        Traceprint ocrchar
+        If ocrchar = "账号登录" Then 
             当前所在登录步骤界面 = 1
             Exit Function
         End If
@@ -333,88 +126,221 @@ Function 当前所在登录步骤界面(渠道编号,有无验证码)
     TracePrint "当前渠道包不支持或者界面未知"
 End Function
 
+Sub 登录360(账号信息, 账号密码)
+    Dim 有没有验证码
+    容错参数 = 0
+    Rem 进账号登录界面1
+    所在场景 = 场景相关操作.所在场景()
+    If 所在场景 <> Null Then
+        TracePrint "登录成功"
+        Exit Sub
+    End If
+    //判断有没有验证码
+    Dim ocrchar
+    ocrchar=Ocr(348,447,384,647,"CCCCCC-111111",0.95)
+    Traceprint ocrchar
+    If ocrchar = "请输入右侧的验" Then 
+        有没有验证码 = 1
+    Else 
+        Dim intX,intY
+        FindPic 292,370,424,452,"Attachment:360验证码标识.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then
+            有没有验证码 = 1
+        Else 
+            FindPic 292,370,424,452,"Attachment:360验证码标识1.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                有没有验证码 = 1
+            Else 
+                有没有验证码 = 0
+            End If
+        End If
+    End If
+        
+    当前步骤 = 当前所在登录步骤界面(0, 有没有验证码)
+        
+    If 当前步骤 = 1 Then 
+        //切换账号登录
+        Touch 130, 510, 100
+        Delay 1000
+    ElseIf 当前步骤 = 2 Then  
+        If 有没有验证码 = 1 Then 
+            //点击账号框
+            Touch 520, 460, 100
+            Delay 500
+            //删除旧账号
+            Touch 520, 865, 100
+            Delay 500
+            Touch 520, 765, 100
+            Delay 500
+            //输入账号
+            TracePrint 账号信息
+            InputText 账号信息
+            Delay 1000
+            
+            //点击密码框
+            Touch 445, 460, 100
+            Delay 500
+            //删除旧密码
+            Touch 445, 685, 100
+            Delay 500
+            Touch 445, 715, 100
+            Delay 500
+            //输入密码
+            TracePrint 账号密码
+            InputText 账号密码
+            Delay 1000
+            	
+            //点击验证码框
+            Touch 360, 660, 100
+            Delay 1000
+            //删除旧验证码
+            For 30
+                KeyPress "del"
+                Delay 10
+            Next
+            //输入验证码
+            InputText 识别验证码(0)
+            //点击登录
+            Touch 255, 610, 100
+        Else 
+            //点击账号框
+            Touch 470, 460, 100
+            Delay 500
+            //删除旧账号
+            Touch 480, 865, 100
+            Delay 500
+            Touch 480, 765, 100
+            Delay 500
+            //输入账号
+            TracePrint 账号信息
+            InputText 账号信息
+            Delay 1000
+            
+            //点击密码框
+            Touch 395, 460, 100
+            Delay 500
+            //删除旧密码
+            Touch 395, 685, 100
+            Delay 500
+            Touch 405, 715, 100
+            Delay 500
+            //输入密码
+            TracePrint 账号密码
+            InputText 账号密码
+            Delay 1000
+            //点击登录
+            Touch 285, 610, 100
+        End If   
+    ElseIf 当前步骤 = 3 Then
+        //点击关闭
+        Touch 545, 875, 100
+    ElseIf 当前步骤 = 4 Then
+        //点击关闭
+        Touch 600, 865, 100
+    ElseIf 当前步骤 = 5 Then
+        //点击确定
+        Touch 260, 780, 100
+    End If
+    If 容错参数 < 5 Then 
+        容错参数 = 容错参数 + 1
+        Delay 3000
+        Goto 进账号登录界面1
+    End If
+End sub
 
-//Sub 退出账号(渠道编号)
-//    If 渠道编号 = 0 Then 
-//        Rem 进账号登录界面0
-//        当前步骤 = 当前所在登录步骤界面(0)
-//        If 当前步骤 = 1 Then 
-//            Touch 130, 510, 100
-//            Delay 1000
-//            Goto 进账号登录界面0
-//        ElseIf 当前步骤 = 2 Then  
-//
-//            Goto 进账号登录界面0
-//        ElseIf 当前步骤 = 3 Then
-//            Touch 545, 875, 100
-//            Delay 1500
-//        End If
-//    ElseIf 渠道编号 = 1 Then
-//        TracePrint "准备注销账号"
-//        容错参数 = 0
-//        Rem 注销1
-//        当前步骤 = 当前所在登录步骤界面(1)
-//        If 当前步骤 = 2 And 容错参数 < 5 Then 
-//            容错参数 = 容错参数 + 1
-//            zm.Swipe 20, 639, 600, 639
-//            Delay 1500
-//            Touch 35, 639, 100
-//            Delay 3000
-//            Goto 注销1
-//        ElseIf 当前步骤 = 1 Then
-//            TracePrint "海马玩注销成功"
-//        ElseIf 容错参数 < 5 Then
-//            TracePrint "当前界面未知,重试"
-//            容错参数 = 容错参数 + 1
-//            Delay 3000
-//            Goto 注销1
-//        End If
-//    End If
-//End Sub
+Sub 登录海马玩(账号信息, 账号密码)
+    容错参数 = 0
+    Rem 进账号登录界面2
+    所在场景 = 场景相关操作.所在场景()
+    If 所在场景 <> Null Then
+        TracePrint "登录成功"
+        Exit Sub
+    End If
+    当前步骤 = 当前所在登录步骤界面(2, 0)
+    If 当前步骤 = 1 Then  
+        //输入账号
+        ShowMessage "要点击账号栏了",1000, 50, 620
+        TracePrint "要点击账号栏了"
+        Touch 523, 880, 100
+        Delay 500
+        //删除旧账号
+        For 30
+            KeyPress "del"
+            Delay 10
+        Next
+        Delay 1000
+        TracePrint 账号信息
+        InputText 账号信息
+        Delay 1000
+        ShowMessage "要点击密码栏了",1000, 50, 620
+        //输入密码
+        Touch 449, 950, 100
+        Delay 500
+        //删除旧密码
+        For 30
+            KeyPress "del"
+            Delay 10
+        Next
+        TracePrint 账号密码
+        InputText 账号密码
+        Delay 1000
+        ShowMessage "要点登录了",1000, 50, 620	
+        //点击登录
+        Touch 340, 625, 100
+    ElseIf 当前步骤 = 2 Then
+        TracePrint "应该要关闭啊"
+        Touch 660, 920, 100
+    End If
+    If 容错参数 < 3 Then 
+        容错参数 = 容错参数 + 1
+        Delay 3000
+        Goto 进账号登录界面2
+    End If
+    TracePrint "登录完毕"
+End Sub
 
-//Sub 进个人中心(渠道编号)
-//    If 渠道编号 = 0 Then 
-//        Rem 进账号登录界面0
-//        当前步骤 = 当前所在登录步骤界面(0, 0)
-//        If 当前步骤 = 1 Then 
-//            Touch 130, 510, 100
-//            Delay 1000
-//            Goto 进账号登录界面0
-//        ElseIf 当前步骤 = 2 Then  
-//
-//            Goto 进账号登录界面0
-//        ElseIf 当前步骤 = 3 Then
-//            Touch 545, 875, 100
-//            Delay 1500
-//        End If
-//    ElseIf 渠道编号 = 1 Then
-//        TracePrint "进海马玩这里了"
-//        容错参数 = 0
-//        Rem 进个人中心界面1
-//        Touch 0, 5, 100
-//        Delay 2000
-//        Touch 45, 182, 100
-//        Delay 2000
-//        当前步骤 = 当前所在登录步骤界面(1)
-//        If 当前步骤 = 2 Then
-//            TracePrint "成功进入海马玩个人中心"
-//        ElseIf 容错参数 < 5 Then
-//            TracePrint "当前界面未知,重试"
-//            容错参数 = 容错参数 + 1
-//            Delay 3000
-//            Goto 进个人中心界面1
-//        End If
-//    End If
-//End Sub
-//
-//Sub 切换账号(账号信息, 账号密码)
-//    渠道编号 = 渠道转换()
-//    Call 进个人中心(渠道编号)
-//    Call 退出账号(渠道编号)
-//    Call 登录(账号信息, 账号密码)
-//End Sub
-
-
+Sub 登录游戏工厂(账号信息, 账号密码)
+    容错参数 = 0
+    Rem 进账号登录界面
+    所在场景 = 场景相关操作.所在场景()
+    If 所在场景 <> Null Then
+        TracePrint "登录成功"
+        Exit Sub
+    End If
+    当前步骤 = 当前所在登录步骤界面(3, 0)
+    If 当前步骤 = 1 Then  
+        //输入账号
+        ShowMessage "要点击账号栏了",1000, 50, 620
+        TracePrint "要点击账号栏了"
+        Touch 545, 470, 100
+        Delay 500
+        //删除旧账号
+        Touch 545, 825, 100
+        Delay 1000
+        TracePrint 账号信息
+        InputText 账号信息
+        Delay 1000
+        //输入密码
+        ShowMessage "要点击密码栏了",1000, 50, 620
+        Touch 450, 470, 100
+        Delay 500
+        //删除旧密码
+        Touch 450, 825, 100
+        Delay 1000
+        TracePrint 账号密码
+        InputText 账号密码
+        Delay 1000
+        ShowMessage "要点登录了",1000, 50, 620	
+        //点击登录
+        Touch 270, 640, 100
+    End If
+    If 容错参数 < 3 Then 
+        容错参数 = 容错参数 + 1
+        Delay 3000
+        Goto 进账号登录界面
+    End If
+    TracePrint "登录完毕"
+End Sub
 
 Function 识别验证码(渠道编号)
     //查询用户名
@@ -448,8 +374,7 @@ Function 识别验证码(渠道编号)
             TracePrint 快豆余额
             ShowMessage "快豆余额"&快豆余额, 2000, 50, 620
         End If
-    Next
-    
+    Next 
 
     //服务器返回结果是JSON或者XML格式, 需要解析
     Dim result

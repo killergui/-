@@ -25,7 +25,7 @@ End Function
 
 Function 新武将()
     Dim intX,intY,新武将信息
-    FindColor 3,464,116,602,"2626AD",0,0.99,intX,intY
+    FindColor 75,562,121,611,"2626AD",0,0.99,intX,intY
     If intX > -1 And intY > -1 Then
         新武将信息 = True
         TracePrint "有新背包信息"
@@ -35,7 +35,7 @@ End Function
 
 Function 新背包()
     Dim intX,intY,新背包信息
-    FindColor 4,737,116,868,"2626AD",0,0.99,intX,intY
+    FindColor 81,832,109,874,"2626AD",0,0.99,intX,intY
     If intX > -1 And intY > -1 Then
         新背包信息 = True
         TracePrint "有新背包信息"
@@ -55,7 +55,7 @@ End Function
 
 Function 新邮件()
     Dim intX,intY,新邮件信息
-    FindColor 86,0,170,120,"2626AD",0,0.99,intX,intY
+    FindColor 130,52,168,105,"2626AD",0,0.99,intX,intY
     If intX > -1 And intY > -1 Then
         新邮件信息 = True
         TracePrint "有新邮件"
@@ -144,7 +144,7 @@ End Function
 
 Function 俸禄()
     Dim intX,intY, 俸禄信息
-    FindColor 625,9,712,128,"2626AD",0,0.95,intX,intY
+    FindColor 669,66,718,126,"2626AD",0,0.95,intX,intY
     If intX > -1 And intY > -1 Then
         俸禄信息 = True
         TracePrint "有俸禄"
@@ -154,7 +154,7 @@ End Function
 
 Function 新军团()
     Dim intX,intY,新军团信息
-    FindColor 3,870,117,1003,"2626AD",0,0.99,intX,intY
+    FindColor 83,969,106,1007,"2626AD",0,0.99,intX,intY
     If intX > -1 And intY > -1 Then
         新军团信息 = True
         TracePrint "有新军团事件"

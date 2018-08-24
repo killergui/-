@@ -1,12 +1,27 @@
 
 {
 	"Description" : null,
+	"Print" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"SuperOcr" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
 	"两位汉字转数字" : 
 	{
 		"Description" : null,
 		"TranslateTemplate" : null
 	},
 	"十以内汉字转数字" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"坐标转换" : 
 	{
 		"Description" : null,
 		"TranslateTemplate" : null
@@ -22,6 +37,11 @@
 		"TranslateTemplate" : null
 	},
 	"汉字转数字" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"输出" : 
 	{
 		"Description" : null,
 		"TranslateTemplate" : null

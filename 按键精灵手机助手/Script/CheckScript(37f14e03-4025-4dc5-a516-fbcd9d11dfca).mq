@@ -1,89 +1,72 @@
 
+Log.Open 
+Dim 容错参数, 平台
+容错参数 = 0 : 平台 = ReadUIConfig("平台")
 Do
     SetControlBarPos 1, 1
     Call 检测()
     Delay 600000
 Loop
 
+Function 运行包名()
+    If 平台 = 0 Then 
+        运行包名 = "com.game.sgz.a360"
+    ElseIf 平台 = 1 Then
+        运行包名 = "com.game.sgz.a360.yod"
+    ElseIf 平台 = 2 Then
+        运行包名 = "com.shouyou.sgzerq.hm"
+    ElseIf 平台 = 3 Then
+        运行包名 = "com.kkl.xsg2018.tf"
+    End If
+End Function
+
 Sub 检测
     TracePrint("开始检测")
-    While 脚本是否运行() = False
-        SetControlBarPos 1, 1
-        While 脚本是否启动() = False
-            If Sys.AppIsFront("com.mbmpmcmcmlnimnnlmp.ddd") = True Then 
-                TracePrint "当前在脚本界面"
-            Else 
-                TracePrint "启动脚本"
-                Call 启动脚本()
-            End If
-            While 脚本是否准备好了() = False
-                TracePrint "等待启动好"
-                Delay 2000
-            Wend
-            TracePrint "准备运行脚本"
-            Touch 350, 1205, 100
-            Delay 2000
-            Call 启动游戏()
-            SetControlBarPos 1, 1
-            Delay 10000
-        Wend
-        //展开脚本
+
+    SetControlBarPos 1, 1
+	
+    If Sys.IsRunning("com.mbmpmcmcmlnimnnlmp.ddd") Then 
+        TracePrint "小精灵运行中"
+    Else 
+        TracePrint "小精灵停止运行了"
+        Call 小精灵启动流程()
+    End If
+    
+    Rem 检测状态
+    容错参数 = 0 
+    //运行脚本
+    While Not 脚本是否启动了() And 容错参数 < 10
         TracePrint "展开脚本"
         Touch 500, 1270, 100
-        delay 2000
-        //运行脚本
-        Touch 500, 920, 100
-        delay 10000
+        Delay 1000
+        容错参数 = 容错参数 + 1
     Wend
+    If 容错参数 >= 10 Then 
+        Call 小精灵启动流程()
+        Goto 检测状态
+    End If
     TracePrint "检测完毕"
 End Sub
 
-Function 脚本是否运行()
-    If CmpColorEx("477|1258|38953E,505|1261|43B343,531|1252|48BA47,529|1274|47B846,483|1275|3EB03D",0.8) = 1 Then
-        TracePrint "正常运行中1"
-        脚本是否运行 = True
-    Else 
-        If CmpColorEx("532|1252|94F576,505|1261|93F276,478|1257|94F576,483|1275|94F576,528|1272|94F576",0.8) = 1 Then
-            TracePrint "正常运行中2"
-            脚本是否运行 = True 
-        Else 
-            If CmpColorEx("477|1258|60A338-111111,504|1261|71C83F-111111,535|1253|8EE661-111111,483|1274|65B437-111111,527|1272|90E164-111111",0.7) = 1 Then
-                TracePrint "正常运行中3"
-                脚本是否运行 = True 
-            Else
-                TracePrint "不正常"
-                Delay 2000
-                Sys.ClearMemory()
-                KillApp "com.mbmpmcmcmlnimnnlmp.ddd"
-                KillApp "com.shouyou.sgzerq.hm"
-                脚本是否运行 = False
-            End If
+Sub 小精灵启动流程
+    Call 启动脚本()
+		
+    While Not 脚本是否准备好了()
+        TracePrint "等待启动好"
+        Delay 2000
+    Wend
+		
+    TracePrint "准备运行脚本"
+    Touch 350, 1205, 100
+    Delay 2000
+    Call 启动游戏()
+    SetControlBarPos 1, 1
+    Delay 7500
+End Sub
 
-        End If
-    End If
-End Function
-
-Function 脚本是否启动()
-    Dim intX,intY
-    
-    If CmpColorEx("477|1257|C8BFB7,507|1261|D5CDC5,534|1252|F0E8E0,528|1273|E2D9D1,484|1275|CAC2B6",0.8) = 1 Then
-        TracePrint "横屏找到"
-        脚本是否启动 = True
-    Else
-        FindPic 0,0,720,1280,"Attachment:脚本图标竖.png","000000",0,0.8,intX,intY
-        If intX > -1 And intY > -1 Then
-            TracePrint "在竖屏找到"
-            脚本是否启动 = True
-        Else 
-            TracePrint "横竖都没找到"
-            脚本是否启动 = False
-        End If
-    End If
-
-End Function
 
 Sub 启动脚本
-    While Sys.AppIsFront("com.mbmpmcmcmlnimnnlmp.ddd") = False
+    While Not Sys.AppIsFront("com.mbmpmcmcmlnimnnlmp.ddd")
         RunApp "com.mbmpmcmcmlnimnnlmp.ddd"
         Delay 2000
     Wend
@@ -99,9 +82,27 @@ Function 脚本是否准备好了()
     End If
 End Function
 
-Sub 启动游戏
-    While Sys.AppIsFront("com.shouyou.sgzerq.hm") = False
-        RunApp "com.shouyou.sgzerq.hm"
+Sub 启动游戏()
+    Dim 包名 = 运行包名()
+    While Not Sys.AppIsFront(包名)
+        RunApp 包名
         Delay 2000
     Wend	
 End Sub
+
+Function 脚本是否启动了()
+    If CmpColorEx("487|920|FFFFFF-111111,518|922|FFFFFF-111111,503|943|FFFFFF-111111,503|932|FFFFFF-111111",0.9) = 1 Then
+        TracePrint "脚本停止运行了"
+        脚本是否启动了 = False
+        TracePrint "启动脚本"
+        Touch 500, 920, 100
+    Else
+        If CmpColorEx("491|918|FFFFFF-111111,491|941|FFFFFF-111111,514|941|FFFFFF-111111,514|918|FFFFFF-111111,502|928|FFFFFF-111111",0.9) = 1 Then
+            TracePrint "脚本运行中"
+            脚本是否启动了 = True
+        Else
+            TracePrint "检测脚本是否启动异常,建议重试"
+        End If
+    End If
+End Function
+ 

@@ -6,40 +6,37 @@ Dim 容错参数
 容错参数 = 0 
 
 Function 读取主公等级()
-    Dim ocrchar
-    ocrchar=Ocr(616,84,649,123,"C9C8C8-111111|DFDFDE-111111|F2F2F2-111111|B2AFAE-111111",0.9)
-    Traceprint ocrchar
-    读取主公等级 = Int(ocrchar)
+    Dim ocrchar, temp
+//    ocrchar=Ocr(616,84,649,123,"C9C8C8-111111|DFDFDE-111111|F2F2F2-111111|B2AFAE-111111",0.9)
+    
+	ocrchar = 类型转换.SuperOcr(460,541,489,619,"B7CBD7-111111|8F9EA7-111111|606A6F-111111|B0C3CE-111111|7B888F-111111|9FB0BA-111111",0.9)
+	temp = UTF8.Len(ocrchar)
+	读取主公等级 = Int(UTF8.Left(ocrchar, temp - 1))
 End Function
 
 Function 读取VIP等级()
     Dim ocrchar
-    ocrchar=Ocr(460,632,498,730,"60DAEB-111111|387DCD-111111|4DB5EC-111111|3F92DF-111111|52BFE8-111111|4CA0BD-111111",0.9)
-    Traceprint ocrchar
+    ocrchar = 类型转换.SuperOcr(462,640,496,713,"60DAEB-111111|387DCD-111111|4DB5EC-111111|3F92DF-111111|52BFE8-111111|4CA0BD-111111",0.9)
     读取VIP等级 = Int(ocrchar)
 End Function
 
 Function 读取当前体力()
     Dim ocrchar, temp
-    UseDict (1)
-    
-    ocrchar=Ocr(639,291,676,402,"9FB1BC-111111|8E9EA8-111111|819099-111111|AEC2CE-111111|A0B2BD-111111|85959E-111111|90A0AA-111111|636D73-111111|BCBCBB-111111|838382-111111",0.9)
+    ocrchar = 类型转换.SuperOcr(639,291,676,402,"A5A5A5-111111|C0C0C0-111111|8E8E8D-111111|807F7E-111111",0.9)
     temp = 类型转换.字符串解析带符号(ocrchar, "/", 7, 5)
-    Traceprint "temp(0)",temp(0)
     读取当前体力 = temp(0)
     If temp(0) = Null Then
-        ocrchar=Ocr(644,232,675,321,"9FB1BC-111111|8E9EA8-111111|819099-111111|AEC2CE-111111|A0B2BD-111111|85959E-111111|90A0AA-111111|636D73-111111|BCBCBB-111111|838382-111111",0.9)
-        Traceprint ocrchar
+        ocrchar = 类型转换.SuperOcr(644,232,675,321,"A5A5A5-111111|C0C0C0-111111|8E8E8D-111111|807F7E-111111",0.9)
         temp = 类型转换.字符串解析带符号(ocrchar, "/", 7, 5)
-        Traceprint "temp(0)",temp(0)
         读取当前体力 = temp(0)
     End If
     If temp(0) = Null Then
-        ocrchar=Ocr(670,860,693,975,"8AADAC-111111|8DB1B0-111111|8EB2B1-111111|96BDBD-111111|8CB0AF-111111|98C0C0-111111|94BBBB-111111|8BAFAE-111111|6A827F-111111|82A3A2-111111",0.9)
-        Traceprint ocrchar
+        ocrchar = 类型转换.SuperOcr(665,865,705,956,"586D6B-111111|97BFBE-111111|86A9A8-111111|6D8786-111111",0.95)
         temp = 类型转换.字符串解析带符号(ocrchar, "/", 7, 5)
-        Traceprint "temp(0)",temp(0)
         读取当前体力 = temp(0)
+    End If
+	If temp(0) = Null Then
+        读取当前体力 = 0
     End If
 End Function
 

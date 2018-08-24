@@ -1,3 +1,14 @@
+Dim 是否调试模式
+
+是否调试模式 = True
+
+
+Function 输出(内容)
+	If 是否调试模式 Then
+		TracePrint 内容
+	End If
+End Function
+
 Function 汉字转数字(汉字)
 	//设置默认值为-1,如果转换失败返回-1
 	汉字转数字 = -1
@@ -88,3 +99,25 @@ Function 字符串解析带符号(字符串, 特殊符号, 字符串长度最大值, 字符串长度最小值)
     右侧数据 = Int(Right(字符串, 字符串长度 - 特殊符号位置))
     字符串解析带符号 = Array(左侧数据, 右侧数据)
 End Function
+
+Function 坐标转换(区域坐标数组)
+	Dim 当前分辨率, x, y, 开发分辨率, scrX, scrY, 缩放比例, temp
+	x = GetScreenX() : y = GetScreenY() : temp = Array()
+	当前分辨率 = x & y
+	scrX = 720 : scrY = 1280
+	开发分辨率 = scrX & scrY
+	当前分辨率 = x & y
+	缩放比例 = x / scrX
+	For i = 0 To UBound(区域坐标数组)
+		temp(i) = 区域坐标数组(i) * 缩放比例
+	Next
+	
+	坐标转换 = temp
+End Function
+
+Function SuperOcr(坐标0, 坐标1, 坐标2, 坐标3, 颜色描述, 相似度)
+	Dim temp
+	temp = 坐标转换(Array(坐标0, 坐标1, 坐标2, 坐标3))
+	SuperOcr=Ocr(temp(0), temp(1), temp(2), temp(3), 颜色描述, 相似度)
+End Function
+

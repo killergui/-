@@ -1,0 +1,53 @@
+Dim 当前分辨率,x,y,开发分辨率
+x = GetScreenX()
+y = GetScreenY()
+当前分辨率 = x & y
+
+Dim 特征1,特征2,特征3
+
+Call 屏幕缩放()
+Call 主数据()
+Call 兼容数据() '把无法兼容的新的图色数据进行覆盖
+
+TracePrint 多点找色(特征1, 0)
+TracePrint 多点找色(特征1, 480800) '能够兼容480*854以及480*800两种分辨率图色数据
+TracePrint 多点找色(特征2, 0)
+TracePrint 多点找色(特征3, 0)
+
+Function 主数据
+    特征1 = Array(349, 241, 450, 337, "FAFAFA", "17|-11|201C1C,-7|-48|201C1C,-17|-15|1733EC,-20|-5|1430E9")
+    特征2 = Array(149, 231, 235, 321, "CBB41E", "-33|-43|E4DEA3,1|-44|E0E06B,-30|7|B9A971,-56|12|AE690A")
+    特征3 = Array(343, 525, 458, 625, "0DD100", "-15|40|FFFFFF,-33|55|0CBB00,-40|22|FFFFFF,-105|12|00C3FF")
+End Function
+
+Function 兼容数据
+    If 当前分辨率 = 480800 Then '分辨率480*800 下的数据
+        特征1 = Array(249,239,342,323,"05B802","-20|17|FFFFFF,-48|25|D69C00,-19|41|272BDD,-33|-7|00D0EA")
+    End If
+End Function
+
+Function 屏幕缩放
+    Dim scrX,scrY
+    '这里设置成开发的分辨率
+    scrX = 480
+    scrY = 854
+    SetScreenScale scrX, scrY
+    开发分辨率 = scrX & scrY
+End Function
+
+Function 多点找色(颜色特征, 兼容分辨率)
+    '当当前的分辨率和兼容分辨率参数一致时，就取消缩放，直接用兼容分辨率下的特征来进行找色
+    If InStr(1, 兼容分辨率, 当前分辨率) > 0 and 当前分辩率 <> 开发分辩率 Then 
+        ResetScreenScale 
+    End If
+    FindMultiColor 颜色特征(0), 颜色特征(1), 颜色特征(2), 颜色特征(3), 颜色特征(4), 颜色特征(5), 2, 0.9, intX, intY
+    If intX > -1 Then 
+        多点找色 = True
+    Else 
+        多点找色 = False
+    End If
+    '找色完成后重新缩放屏幕
+    If InStr(1, 兼容分辨率, 当前分辨率) > 0 and 当前分辩率 <> 开发分辩率 Then 
+        Call 屏幕缩放()
+    End If
+End Function

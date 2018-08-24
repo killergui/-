@@ -6,7 +6,7 @@ Import "Ïà¹ØÊý¾Ý½âÎö.mql"
 '	½ø½çÃæÍ³Ò»ÊÔ´í8´Î, Èç¹ûÊÔ´í´ÎÊý¹ý¶à·ÅÆú
 
 '#########################################################
-Dim ÈÝ´í²ÎÊý, ËùÔÚ³¡¾°
+Dim ÈÝ´í²ÎÊý
 ÈÝ´í²ÎÊý = 0
 Function ÈÝ´íÅÐ¶¨
     If ÈÝ´í²ÎÊý < 8 Then 
@@ -21,76 +21,79 @@ End Function
 Function ³ÇÄÚ½ø¹Ì¶¨½çÃæ(Ä¿±ê½çÃæ, µã»÷×ø±êX, µã»÷×ø±êY, Õ¹¿ª²Ù×÷ÀàÐÍ)
     ÈÝ´í²ÎÊý = 0
     Rem ½ø½çÃæ
-    ËùÔÚ³¡¾° = ³¡¾°Ïà¹Ø²Ù×÷.ËùÔÚ³¡¾°()
+    //showmessage "³¢ÊÔ½øÈë½çÃæ"&Ä¿±ê½çÃæ, 1000, 50, 620
  
-    If ËùÔÚ³¡¾° = Ä¿±ê½çÃæ Then 
-        TracePrint "ÒÑ¾­½øÈëÄ¿±ê½çÃæ"
-    ElseIf ËùÔÚ³¡¾° = 1 And ÈÝ´íÅÐ¶¨() Then
+    If ³¡¾°Ïà¹Ø²Ù×÷.½øÈë³¡¾°ÊÇ·ñÕýÈ·(Ä¿±ê½çÃæ)Then 
+        TracePrint "ÒÑ¾­½øÈëÄ¿±ê½çÃæ"&Ä¿±ê½çÃæ
+        ³ÇÄÚ½ø¹Ì¶¨½çÃæ = True
+    ElseIf ³¡¾°Ïà¹Ø²Ù×÷.½øÈë³¡¾°ÊÇ·ñÕýÈ·(1) And ÈÝ´íÅÐ¶¨() Then
         If Õ¹¿ª²Ù×÷ÀàÐÍ <> 0 Then
             Call ½çÃæÊÕÆðÕ¹¿ª(Õ¹¿ª²Ù×÷ÀàÐÍ)
         End If
         Touch µã»÷×ø±êX, µã»÷×ø±êY, 100
-		Delay 3000
+		TracePrint "µã»÷ÁË"
+        Delay 3000
         Goto ½ø½çÃæ
     ElseIf ÈÝ´íÅÐ¶¨() Then
-        Call ³¡¾°Ïà¹Ø²Ù×÷.¹Ø±Õ½çÃæ(ËùÔÚ³¡¾°)
-		Delay 3000
+        Call ³¡¾°Ïà¹Ø²Ù×÷.Í¨ÓÃ½çÃæ¹Ø±Õ()
+        Delay 3000
         Goto ½ø½çÃæ
     ElseIf Not ÈÝ´íÅÐ¶¨() Then
-        TracePrint "ÎÞ·¨½øÈëÄ¿±ê½çÃæ"
-        ShowMessage "ÎÞ·¨½øÈëÄ¿±ê½çÃæ", 2000, 50, 620
+        TracePrint "ÎÞ·¨½øÈëÄ¿±ê½çÃæ"&Ä¿±ê½çÃæ
+        //showmessage "ÎÞ·¨½øÈëÄ¿±ê½çÃæ", 2000, 50, 620
         Delay 2000
     End If
-    TracePrint "½øÈë½çÃæÍê±Ï"
 End Function
 
 Function ³ÇÄÚÍâÍ¨ÓÃ½ø½çÃæ(Ä¿±ê½çÃæ, µã»÷×ø±êX, µã»÷×ø±êY, Õ¹¿ª²Ù×÷ÀàÐÍ)
     ÈÝ´í²ÎÊý = 0
     Rem ½ø½çÃæ
-    TracePrint "×¼±¸½øÈëÄ¿±ê½çÃæ",Ä¿±ê½çÃæ
-    ËùÔÚ³¡¾° = ³¡¾°Ïà¹Ø²Ù×÷.ËùÔÚ³¡¾°()
-    If ËùÔÚ³¡¾° = Ä¿±ê½çÃæ Then 
-        TracePrint "ÒÑ¾­½øÈëÄ¿±ê½çÃæ"
-    ElseIf ËùÔÚ³¡¾° = 1 Or ËùÔÚ³¡¾° = 2 And ÈÝ´íÅÐ¶¨() Then
+    //showmessage "³¢ÊÔ½øÈë½çÃæ"&Ä¿±ê½çÃæ, 1000, 50, 620
+    If ³¡¾°Ïà¹Ø²Ù×÷.½øÈë³¡¾°ÊÇ·ñÕýÈ·(Ä¿±ê½çÃæ) Then 
+        TracePrint "ÒÑ¾­½øÈëÄ¿±ê½çÃæ"&Ä¿±ê½çÃæ
+        ³ÇÄÚÍâÍ¨ÓÃ½ø½çÃæ = True
+    ElseIf (³¡¾°Ïà¹Ø²Ù×÷.½øÈë³¡¾°ÊÇ·ñÕýÈ·(1) Or ³¡¾°Ïà¹Ø²Ù×÷.½øÈë³¡¾°ÊÇ·ñÕýÈ·(2)) And ÈÝ´íÅÐ¶¨() Then
         If Õ¹¿ª²Ù×÷ÀàÐÍ <> 0 Then
             Call ½çÃæÊÕÆðÕ¹¿ª(Õ¹¿ª²Ù×÷ÀàÐÍ)
         End If
         Touch µã»÷×ø±êX, µã»÷×ø±êY, 100
-		Delay 3000
+		TracePrint "µã»÷ÁË"
+        Delay 3000
         Goto ½ø½çÃæ
     ElseIf ÈÝ´íÅÐ¶¨() Then
         TracePrint "Ê§°ÜÖØÊÔ"
-        Call ³¡¾°Ïà¹Ø²Ù×÷.¹Ø±Õ½çÃæ(ËùÔÚ³¡¾°)
+        Call ³¡¾°Ïà¹Ø²Ù×÷.Í¨ÓÃ½çÃæ¹Ø±Õ()
+        Delay 3000
         Goto ½ø½çÃæ
     ElseIf Not ÈÝ´íÅÐ¶¨() Then
-        TracePrint "ÎÞ·¨½øÈëÄ¿±ê½çÃæ"
-        ShowMessage "ÎÞ·¨½øÈëÄ¿±ê½çÃæ", 2000, 50, 620
+        TracePrint "ÎÞ·¨½øÈëÄ¿±ê½çÃæ"&Ä¿±ê½çÃæ
+        //showmessage "ÎÞ·¨½øÈëÄ¿±ê½çÃæ", 2000, 50, 620
         Delay 2000
     End If
-    TracePrint "½øÈë½çÃæÍê±Ï"
 End Function
 
 Function ³ÇÄÚÑ¡ÖÐ½¨Öþ(µã»÷×ø±êX, µã»÷×ø±êY, ¸½¼þÃû³Æ, ÊÇ·ñµã»÷, Ä¿±ê½çÃæ, Õ¹¿ª²Ù×÷ÀàÐÍ)
     //Èç¹ûÊÇ·ñµã»÷ÎªTrue,ÔòÎñ±ØÈ·ÈÏÄ¿±ê½çÃæÖµ
 	
-    Dim ½¨ÖþÐÅÏ¢
+    Dim ½¨ÖþÐÅÏ¢, ½øÈë½çÃæÊÇ·ñ³É¹¦, Ñ¡ÖÐ½¨ÖþÊÇ·ñ³É¹¦
     ÈÝ´í²ÎÊý = 0
     Rem µã½¨Öþ
-    TracePrint "µã»÷",µã»÷×ø±êX, µã»÷×ø±êY
+    //showmessage "³¢ÊÔµã»÷"&¸½¼þÃû³Æ, 1000, 50, 620
     Touch µã»÷×ø±êX, µã»÷×ø±êY, 100
-	Delay 3000
+    Delay 4000
     ½¨ÖþÐÅÏ¢ = Ñ¡ÖÐ½¨ÖþÅÐ¶¨(¸½¼þÃû³Æ)
-    TracePrint "ÈÝ´íÅÐ¶¨", ÈÝ´íÅÐ¶¨()
+    //showmessage "ÖØÊÔ´ÎÊý"&ÈÝ´í²ÎÊý
     If ½¨ÖþÐÅÏ¢(0) = True Then 
-        TracePrint "Ñ¡ÖÐÄ¿±ê½¨Öþ"
         If ÊÇ·ñµã»÷ = True Then
-            Call ³ÇÄÚ½ø¹Ì¶¨½çÃæ(Ä¿±ê½çÃæ, ½¨ÖþÐÅÏ¢(1), ½¨ÖþÐÅÏ¢(2), Õ¹¿ª²Ù×÷ÀàÐÍ)
+            ½øÈë½çÃæÊÇ·ñ³É¹¦ = ³ÇÄÚ½ø¹Ì¶¨½çÃæ(Ä¿±ê½çÃæ, ½¨ÖþÐÅÏ¢(1), ½¨ÖþÐÅÏ¢(2), Õ¹¿ª²Ù×÷ÀàÐÍ)
         End IF
+        Ñ¡ÖÐ½¨ÖþÊÇ·ñ³É¹¦ = True
+        ³ÇÄÚÑ¡ÖÐ½¨Öþ = Array(Ñ¡ÖÐ½¨ÖþÊÇ·ñ³É¹¦, ½øÈë½çÃæÊÇ·ñ³É¹¦)
     ElseIf ÈÝ´íÅÐ¶¨() Then
         Goto µã½¨Öþ
     ElseIf Not ÈÝ´íÅÐ¶¨() Then
-        TracePrint "ÎÞ·¨Ñ¡ÖÐÄ¿±ê½¨Öþ"
-        ShowMessage "ÎÞ·¨Ñ¡ÖÐÄ¿±ê½¨Öþ", 2000, 50, 620
+        TracePrint "ÎÞ·¨Ñ¡ÖÐÄ¿±ê½¨Öþ"&¸½¼þÃû³Æ
+        //showmessage "ÎÞ·¨Ñ¡ÖÐÄ¿±ê½¨Öþ", 2000, 50, 620
         Delay 2000
     End If
 End Function
@@ -111,17 +114,19 @@ Function ½øÎÞ±àºÅ×Ó½çÃæ(ÇøÓò0, ÇøÓò1, ÇøÓò2, ÇøÓò3, ¸½¼þ, ÏàËÆ¶È, µã»÷×ø±êX, µã»
     ÈÝ´í²ÎÊý = 0
     Dim intX, intY
     Rem ½ø×Ó½çÃæ1
+    //showmessage "³¢ÊÔÑ°ÕÒ"&¸½¼þ, 1000, 50, 620
     Touch µã»÷×ø±êX, µã»÷×ø±êY, 100
-	Delay 3000
+    Delay 3000
     FindPic ÇøÓò0, ÇøÓò1, ÇøÓò2, ÇøÓò3, ¸½¼þ, "000000", 0, ÏàËÆ¶È, intX, intY
     If intX > -1 And intY > -1 And ÈÝ´íÅÐ¶¨() Then 
-        TracePrint "ÒÑ¾­½øÈëÄ¿±ê½çÃæ"
+        TracePrint "ÒÑ¾­½øÈëÄ¿±ê½çÃæ"&¸½¼þ
+        ½øÎÞ±àºÅ×Ó½çÃæ = True
     ElseIf ÈÝ´íÅÐ¶¨() Then
-        Call ³¡¾°Ïà¹Ø²Ù×÷.¹Ø±Õ½çÃæ(ËùÔÚ³¡¾°)
+        Call ³¡¾°Ïà¹Ø²Ù×÷.Í¨ÓÃ½çÃæ¹Ø±Õ()
         Goto ½ø×Ó½çÃæ1
     ElseIf Not ÈÝ´íÅÐ¶¨() Then
         TracePrint "ÎÞ·¨½øÈëÄ¿±ê½çÃæ"&¸½¼þ
-        ShowMessage "ÎÞ·¨½øÈëÄ¿±ê½çÃæ", 2000, 50, 620
+        //showmessage "ÎÞ·¨½øÈëÄ¿±ê½çÃæ", 2000, 50, 620
     End If
 End Function
 
@@ -130,27 +135,28 @@ Function ½øÎÞ×ø±ê×Ó½çÃæ(Ä¿±ê½çÃæ, À´Ô´½çÃæ, ÇøÓò0, ÇøÓò1, ÇøÓò2, ÇøÓò3, ¸½¼þ, Ïà
     ÈÝ´í²ÎÊý = 0
     Dim intX, intY
     Rem ½ø½çÃæ
-    ËùÔÚ³¡¾° = ³¡¾°Ïà¹Ø²Ù×÷.ËùÔÚ³¡¾°()
+    //showmessage "³¢ÊÔ½øÈë½çÃæ"&Ä¿±ê½çÃæ, 1000, 50, 620
 	
-    If ËùÔÚ³¡¾° = Ä¿±ê½çÃæ Then 
+    If ³¡¾°Ïà¹Ø²Ù×÷.½øÈë³¡¾°ÊÇ·ñÕýÈ·(Ä¿±ê½çÃæ) Then 
         TracePrint "ÒÑ¾­½øÈëÄ¿±ê½çÃæ"
-    Elseif ËùÔÚ³¡¾° = À´Ô´½çÃæ And ÈÝ´íÅÐ¶¨() Then
+        ½øÎÞ×ø±ê×Ó½çÃæ = True
+    Elseif ³¡¾°Ïà¹Ø²Ù×÷.½øÈë³¡¾°ÊÇ·ñÕýÈ·(À´Ô´½çÃæ) And ÈÝ´íÅÐ¶¨() Then
         FindPic ÇøÓò0, ÇøÓò1, ÇøÓò2, ÇøÓò3, ¸½¼þ, "000000", 0, ÏàËÆ¶È, intX, intY
         If intX > -1 And intY > -1 Then
-            TracePrint "×¼±¸Ä¿±ê½çÃæ"
+            TracePrint "×¼±¸Ä¿±ê½çÃæ"&Ä¿±ê½çÃæ
             Touch intX + 10, intY + 10, 100
-			Delay 3000
+            Delay 3000
         Else
             TracePrint "Ã»ÓÐÕÒµ½Ä¿±êÍ¼±ê,ÖØÊÔ"&¸½¼þ
-			Delay 3000
+            Delay 3000
         End If
         Goto ½ø½çÃæ
     ElseIf ÈÝ´íÅÐ¶¨() Then
-        ³¡¾°Ïà¹Ø²Ù×÷.¹Ø±Õ½çÃæ(ËùÔÚ³¡¾°)
+        ³¡¾°Ïà¹Ø²Ù×÷.Í¨ÓÃ½çÃæ¹Ø±Õ
         Goto ½ø½çÃæ
     ElseIf Not ÈÝ´íÅÐ¶¨() Then
-        TracePrint "ÎÞ·¨½øÈëÄ¿±ê½çÃæ"
-        ShowMessage "ÎÞ·¨½øÈëÄ¿±ê½çÃæ", 2000, 50, 620
+        TracePrint "ÎÞ·¨½øÈëÄ¿±ê½çÃæ"&Ä¿±ê½çÃæ
+        //showmessage "ÎÞ·¨½øÈëÄ¿±ê½çÃæ", 2000, 50, 620
     End If
 End Function
 
@@ -158,19 +164,21 @@ End Function
 Function ½øÈë×Ó½çÃæ(À´Ô´½çÃæ, Ä¿±ê½çÃæ, µã»÷×ø±êX, µã»÷×ø±êY)
     ÈÝ´í²ÎÊý = 0
     Rem ½ø½çÃæ
-    Delay 2000
-    ËùÔÚ³¡¾° = ³¡¾°Ïà¹Ø²Ù×÷.ËùÔÚ³¡¾°()
-    If ËùÔÚ³¡¾° = Ä¿±ê½çÃæ Then 
-        TracePrint "ÒÑ¾­½øÈëÄ¿±ê½çÃæ"
-    Elseif ËùÔÚ³¡¾° = À´Ô´½çÃæ And ÈÝ´íÅÐ¶¨() Then
+    //showmessage "³¢ÊÔ½øÈë½çÃæ"&Ä¿±ê½çÃæ, 1000, 50, 620
+    If ³¡¾°Ïà¹Ø²Ù×÷.½øÈë³¡¾°ÊÇ·ñÕýÈ·(Ä¿±ê½çÃæ) Then 
+        TracePrint "ÒÑ¾­½øÈëÄ¿±ê½çÃæ"&Ä¿±ê½çÃæ
+        ½øÈë×Ó½çÃæ = True
+    Elseif ³¡¾°Ïà¹Ø²Ù×÷.½øÈë³¡¾°ÊÇ·ñÕýÈ·(À´Ô´½çÃæ) And ÈÝ´íÅÐ¶¨() Then
         Touch µã»÷×ø±êX, µã»÷×ø±êY, 100
+        Delay 3000
         Goto ½ø½çÃæ
     ElseIf ÈÝ´íÅÐ¶¨() Then
-        ³¡¾°Ïà¹Ø²Ù×÷.¹Ø±Õ½çÃæ(ËùÔÚ³¡¾°)
+        ³¡¾°Ïà¹Ø²Ù×÷.Í¨ÓÃ½çÃæ¹Ø±Õ
+        Delay 3000
         Goto ½ø½çÃæ
     ElseIf Not ÈÝ´íÅÐ¶¨() Then
-        TracePrint "ÎÞ·¨½øÈëÄ¿±ê½çÃæ"
-        ShowMessage "ÎÞ·¨½øÈëÄ¿±ê½çÃæ", 2000, 50, 620
+        TracePrint "ÎÞ·¨½øÈëÄ¿±ê½çÃæ"&Ä¿±ê½çÃæ
+        //showmessage "ÎÞ·¨½øÈëÄ¿±ê½çÃæ", 2000, 50, 620
     End If
 End Function
 
@@ -181,19 +189,20 @@ Sub »ØÖ÷³Ç(ÀàÐÍ)
     Case 1
         ÈÝ´í²ÎÊý = 0
         Rem »ØÖ÷³Ç1
-        ËùÔÚ³¡¾° = ³¡¾°Ïà¹Ø²Ù×÷.ËùÔÚ³¡¾°()
-        If ËùÔÚ³¡¾° <> 1 And ÈÝ´íÅÐ¶¨() Then
-            ³¡¾°Ïà¹Ø²Ù×÷.¹Ø±Õ½çÃæ(ËùÔÚ³¡¾°)
-            Delay 2000
+        //showmessage "³¢ÊÔ»ØÖ÷³Ç1", 1000, 50, 620
+
+        If Not ³¡¾°Ïà¹Ø²Ù×÷.½øÈë³¡¾°ÊÇ·ñÕýÈ·(1) And ÈÝ´íÅÐ¶¨() Then
+            ³¡¾°Ïà¹Ø²Ù×÷.Í¨ÓÃ½çÃæ¹Ø±Õ
+            Delay 3000
             Goto »ØÖ÷³Ç1
         End If
     Case 2
         ÈÝ´í²ÎÊý = 0
         
         Rem »ØÖ÷³Ç2
+        //showmessage "³¢ÊÔ»ØÖ÷³Ç2", 1000, 50, 620
         TracePrint "³¢ÊÔ»ØÖ÷³Ç"&ÈÝ´í²ÎÊý
-        ËùÔÚ³¡¾° = ³¡¾°Ïà¹Ø²Ù×÷.ËùÔÚ³¡¾°()
-        If ËùÔÚ³¡¾° = 1 Then
+        If ³¡¾°Ïà¹Ø²Ù×÷.½øÈë³¡¾°ÊÇ·ñÕýÈ·(1) Then
             Dim intX,intY
             FindPic 219,263,321,407,"Attachment:ÖÐ¼ä³ÇÇ½ÌùÍ¼1.png","000000",0,0.9,intX,intY
             If intX > -1 And intY > -1 Then
@@ -209,7 +218,7 @@ Sub »ØÖ÷³Ç(ÀàÐÍ)
                 End If
             End If
         ElseIf ÈÝ´íÅÐ¶¨() Then
-            ³¡¾°Ïà¹Ø²Ù×÷.¹Ø±Õ½çÃæ(ËùÔÚ³¡¾°)
+            ³¡¾°Ïà¹Ø²Ù×÷.Í¨ÓÃ½çÃæ¹Ø±Õ
             Delay 3000
             Goto »ØÖ÷³Ç2
         End If
@@ -224,51 +233,53 @@ Sub ½çÃæÊÕÆðÕ¹¿ª(ÀàÐÍ)
     Case 1, 4
         ÈÝ´í²ÎÊý = 0
         Rem Ö÷³Ç¶¥²¿²Ù×÷
-        If ³¡¾°Ïà¹Ø²Ù×÷.Ö÷³Ç¶¥²¿ÊÇ·ñÊÕÆð() = False Then 
+        //showmessage "Ö÷³Ç¶¥²¿²Ù×÷"&ÀàÐÍ, 1000, 50, 620
+        If Not ³¡¾°Ïà¹Ø²Ù×÷.Ö÷³Ç¶¥²¿ÊÇ·ñÊÕÆð()Then 
             If ÀàÐÍ = 1 And ÈÝ´íÅÐ¶¨() Then 
                 TracePrint "¼´½«ÊÕÆð"
                 Touch Ïà¹ØÊý¾Ý½âÎö.¶¥²¿ÊÕÆð×ø±êX , Ïà¹ØÊý¾Ý½âÎö.¶¥²¿ÊÕÆð×ø±êY, 100
-				Delay 3000
+                Delay 3000
                 Goto Ö÷³Ç¶¥²¿²Ù×÷
             End If
-        Else
+        ElseIf ³¡¾°Ïà¹Ø²Ù×÷.Ö÷³Ç¶¥²¿ÊÇ·ñÊÕÆð() Then
             If ÀàÐÍ = 4 And ÈÝ´íÅÐ¶¨() Then 
                 TracePrint "¼´½«Õ¹¿ª"
                 Touch Ïà¹ØÊý¾Ý½âÎö.¶¥²¿ÊÕÆð×ø±êX , Ïà¹ØÊý¾Ý½âÎö.¶¥²¿ÊÕÆð×ø±êY, 100
-				Delay 3000
+                Delay 3000
                 Goto Ö÷³Ç¶¥²¿²Ù×÷ 
             End If
         End If
     Case 2, 5
         ÈÝ´í²ÎÊý = 0
         Rem µ×²¿²Ù×÷
-
-        If ³¡¾°Ïà¹Ø²Ù×÷.Ö÷³Çµ×²¿ÊÇ·ñÊÕÆð() = False Then 
+        //showmessage "µ×²¿²Ù×÷"&ÀàÐÍ, 1000, 50, 620
+        If Not ³¡¾°Ïà¹Ø²Ù×÷.Ö÷³Çµ×²¿ÊÇ·ñÊÕÆð() Then 
             If ÀàÐÍ = 2 And ÈÝ´íÅÐ¶¨() Then 
                 Touch Ïà¹ØÊý¾Ý½âÎö.µ×²¿ÊÕÆð°´Å¥×ø±êX, Ïà¹ØÊý¾Ý½âÎö.µ×²¿ÊÕÆð°´Å¥×ø±êY, 100
-				Delay 3000
+                Delay 3000
                 Goto µ×²¿²Ù×÷
             End If
-        Else 
+        ElseIf ³¡¾°Ïà¹Ø²Ù×÷.Ö÷³Çµ×²¿ÊÇ·ñÊÕÆð() Then
             If ÀàÐÍ = 5 And ÈÝ´íÅÐ¶¨() Then 
                 Touch Ïà¹ØÊý¾Ý½âÎö.µ×²¿Õ¹¿ª°´Å¥×ø±êX, Ïà¹ØÊý¾Ý½âÎö.µ×²¿Õ¹¿ª°´Å¥×ø±êY,100
-				Delay 3000
+                Delay 3000
                 Goto µ×²¿²Ù×÷
             End If
         End If
     Case 3, 6
         ÈÝ´í²ÎÊý = 0
         Rem Ò°Íâ¶¥²¿²Ù×÷
-        If ³¡¾°Ïà¹Ø²Ù×÷.Ò°Íâ¶¥²¿ÊÇ·ñÊÕÆð() = False Then 
+        //showmessage "Ò°Íâ¶¥²¿²Ù×÷"&ÀàÐÍ, 1000, 50, 620
+        If Not ³¡¾°Ïà¹Ø²Ù×÷.Ò°Íâ¶¥²¿ÊÇ·ñÊÕÆð() Then 
             If ÀàÐÍ = 3 And ÈÝ´íÅÐ¶¨() Then 
                 Touch Ïà¹ØÊý¾Ý½âÎö.Ò°Íâ¶¥²¿Õ¹¿ª×ø±êX , Ïà¹ØÊý¾Ý½âÎö.Ò°Íâ¶¥²¿Õ¹¿ª×ø±êY, 50
-				Delay 3000
+                Delay 3000
                 Goto Ò°Íâ¶¥²¿²Ù×÷
             End If
-        Else 
+        ElseIf ³¡¾°Ïà¹Ø²Ù×÷.Ò°Íâ¶¥²¿ÊÇ·ñÊÕÆð() Then 
             If ÀàÐÍ = 6 And ÈÝ´íÅÐ¶¨() Then 
                 Touch Ïà¹ØÊý¾Ý½âÎö.Ò°Íâ¶¥²¿Õ¹¿ª×ø±êX , Ïà¹ØÊý¾Ý½âÎö.Ò°Íâ¶¥²¿Õ¹¿ª×ø±êY, 50
-				Delay 3000
+                Delay 3000
                 Goto Ò°Íâ¶¥²¿²Ù×÷
             End If
         End If
@@ -276,5 +287,3 @@ Sub ½çÃæÊÕÆðÕ¹¿ª(ÀàÐÍ)
         TracePrint "Ã»ÓÐ¸ÃÀàÐÍ"
     End Select
 End Sub
-
-

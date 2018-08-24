@@ -2,6 +2,18 @@
 //Delay 100
 //TouchMove 460, 495
 
+TracePrint Sys.GetFront()
+
+Delay 15000
+
+
+
+Function OnScriptExit()
+    TracePrint "脚本停止事件触发！"
+End Function
+
+
+
 Import "相关数据解析.mql"
 Import "场景相关操作.mql"
 Import "进出界面.mql"

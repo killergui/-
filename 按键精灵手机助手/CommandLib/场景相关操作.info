@@ -31,6 +31,16 @@
 		"Description" : null,
 		"TranslateTemplate" : null
 	},
+	"进入场景是否正确" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"选择区服" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
 	"通用界面关闭" : 
 	{
 		"Description" : null,

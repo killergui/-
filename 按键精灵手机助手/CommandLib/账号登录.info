@@ -26,12 +26,32 @@
 		"Description" : null,
 		"TranslateTemplate" : null
 	},
+	"海马玩登录" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
 	"渠道转换" : 
 	{
 		"Description" : null,
 		"TranslateTemplate" : null
 	},
 	"登录" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"登录360" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"登录海马玩" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"登录游戏工厂" : 
 	{
 		"Description" : null,
 		"TranslateTemplate" : null
