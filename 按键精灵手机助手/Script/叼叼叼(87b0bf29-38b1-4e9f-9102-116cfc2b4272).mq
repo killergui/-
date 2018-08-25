@@ -77,8 +77,8 @@ If 派遣出征数组 = Null Then
     派遣出征数组 = Array(派遣出征次数, Time(), 0)
     WriteConfig "派遣出征数组"&账号信息, 派遣出征数组, True
 End If
-
-If (派遣出征数组(1) - Time()) >= 3600000 Then
+TracePrint "派遣出征记录时间",派遣出征数组(1)
+If (Time() - 派遣出征数组(1)) >= 3600 Then
     派遣出征次数 = 0
 Else 
     派遣出征次数 = 派遣出征数组(2)
@@ -117,9 +117,15 @@ WriteConfig "上次运行日期", Date(), True
 启动时间 = Time()
 Delay 1000
 
-Call 商城购买()
+
 已完成皇榜任务次数 = 0
 Call 定位主城坐标()
+
+Do
+
+Call 派遣队伍()
+Delay 5000
+Loop
 Call 进VIP界面()
 Rem 每日
 
@@ -153,8 +159,11 @@ Call 推关()
 Call 消耗体力()
 Call 完成皇榜任务()
 Call 派遣队伍()
-Call 沙场论剑排名奖励()
-Call 进行沙场论剑()
+If ReadConfig("今日是否已执行沙场论剑") <> 1 Then 
+    Call 沙场论剑排名奖励()
+    Call 进行沙场论剑()
+End If
+
 Call 领取季节奖励()
 Call 铸币()
 
@@ -317,7 +326,6 @@ Sub 初始化杂项配置
         //重置商城购买状态
         WriteConfig "今日商城已购买" & 账号信息, False, True
         //重置VIP等级
-        //重置商城购买状态
         WriteConfig "VIP等级"&账号信息, 99, True
     End If
 End Sub
@@ -456,19 +464,16 @@ End Sub
 
 Sub 进VIP界面()
     TracePrint "开始进VIP界面"
-    If ReadConfig("VIP等级"&账号信息) = 99 Then 
+    VIP等级 = ReadConfig("VIP等级"&账号信息)
+    If VIP等级 = 99 Or VIP等级 =Null Then 
         进出界面.回主城(1)
         进出界面.城内进固定界面 32, 相关数据解析.VIP坐标X, 相关数据解析.VIP坐标Y, 0
         VIP等级 = 相关数据解析.读取VIP等级()
         场景相关操作.通用界面关闭 
         Delay 2000
         WriteConfig "VIP等级"&账号信息, VIP等级, True
-        TracePrint "读取VIP等级结束"
-    Else 
-        VIP等级 = ReadConfig("VIP等级"&账号信息)
-        TracePrint VIP等级
     End If
-    
+    TracePrint "读取VIP等级结束,VIP等级="&VIP等级
 End Sub
 
 Sub 进主公界面()
@@ -708,7 +713,7 @@ Sub 领任务奖励()
         Call 任务界面领奖()
         Goto 处理日常任务奖励
     End If
-	容错参数 = 0
+    容错参数 = 0
     Rem 处理周常任务奖励
     FindColor 395,1188,445,1242,"2626AD",0,0.99,intX,intY
     If intX > -1 And intY > -1 And 容错参数 < 4 Then 
@@ -991,6 +996,11 @@ Sub 背包小红点处理
 End Sub
 
 Sub 检查成就()
+    If ReadUIConfig("检查成就") = False Then 
+    	TracePrint "设置不检查成就"
+    	Delay 1000
+    	Exit Sub
+    End If
     TracePrint "开始检查成就"
     Call 进出界面.回主城(2)
     Call 进出界面.界面收起展开(1)
@@ -1618,7 +1628,7 @@ Function 武将兵力数组(区域数组)
     Dim ocrchar, 当前士兵数量, 最大士兵数量, 临时数组
     容错参数 = 0
     Rem 兵力识别
-    ocrchar = 类型转换.SuperOcr(区域数组(0),区域数组(1),区域数组(2),区域数组(3),"B7CCD8-111111|A3B6C1-111111|8A9AA4-111111|79868E-111111",0.95)
+    ocrchar = 类型转换.SuperOcr(区域数组(0),区域数组(1),区域数组(2),区域数组(3),"9EB0BB-111111|BBD1DE-111111|7B8991-111111|68747A-111111|8D9EA7-111111",0.9)
     临时数组 = 类型转换.字符串解析带符号(ocrchar, "/", 17, 6)
     当前士兵数量 = CLng(临时数组(0))
     最大士兵数量 = CLng(临时数组(1))
@@ -1841,20 +1851,6 @@ Sub 进附近界面(筛选类型)
         End If
     End If
     TracePrint "进附近界面结束"    
-End Sub
-
-Sub 进筛选界面(筛选类型)
-    Rem 打开筛选界面  
-    If 场景相关操作.进入场景是否正确(46) Then 
-        Touch 600, 860, 100
-        Delay 500
-        Goto 打开筛选界面 
-    ElseIf 场景相关操作.进入场景是否正确(47) Then
-        TracePrint "已经筛选界面"
-    Else 
-        Call 进附近界面(筛选类型)
-        Goto 打开筛选界面
-    End If
 End Sub
 
 Sub 筛选设置(筛选类型, 目标种类, 目标等级)
@@ -2261,17 +2257,34 @@ End Sub
 
 Sub 搜索目标(寻找类型, 目标种类, 目标等级)
     //寻找类型,1 = 怪, 2 = 资源
-    Dim 坐标增量, 新坐标X, 新坐标Y
+    Dim 坐标增量, 新坐标X, 新坐标Y, 目标坐标信息
+    目标坐标信息 = ReadConfig("目标坐标信息" & 账号信息 & 寻找类型)
+    TracePrint "目标坐标信息",目标坐标信息(0),目标坐标信息(1),目标坐标信息(2)
     Call 进附近界面(寻找类型)
     //进筛选界面
     进出界面.进入子界面(46, 47, 相关数据解析.筛选界面坐标X, 相关数据解析.筛选界面坐标Y)
     Call 筛选设置(寻找类型, 目标种类, 目标等级)
-
+    
+    //目标坐标信息是为了搜索怪物从上次找到目标的地方继续,避免每次都从主城开始,浪费时间
+    
     If 确认目标(寻找类型, 目标种类, 目标等级) = True Then 
+        目标坐标信息 = Array(野外主城坐标X, 野外主城坐标Y, Time())
+        WriteConfig "目标坐标信息"&账号信息&寻找类型, 目标坐标信息, True
         Exit Sub
     End If
     
-    新坐标X = Int(野外主城坐标X) : 新坐标Y = Int(野外主城坐标Y) : 坐标增量 = 20
+    If 目标坐标信息 = Null Then 
+        目标坐标信息 = Array(野外主城坐标X, 野外主城坐标Y, Time())
+    ElseIf (Time() - 目标坐标信息(2)) < 3600 Then 
+        目标坐标信息(0) = 野外主城坐标X : 目标坐标信息(1) = 野外主城坐标Y
+    End If
+    WriteConfig "目标坐标信息" & 账号信息 & 寻找类型, 目标坐标信息, True
+    //同时,考虑到搜索资源时不需要,但是目前已经耦合到一起了,所以在最开始的时候加一个判断
+    If 寻找类型 = 2 Then 
+    	目标坐标信息(0) = 野外主城坐标X : 目标坐标信息(1) = 野外主城坐标Y
+    End If
+    
+    新坐标X = Int(目标坐标信息(0)) : 新坐标Y = Int(目标坐标信息(1)) : 坐标增量 = 15
     For i = 1 To 50
         TracePrint "开始第"&i&"轮找怪"
         新坐标X = 新坐标X - 坐标增量
@@ -2281,7 +2294,9 @@ Sub 搜索目标(寻找类型, 目标种类, 目标等级)
             新坐标X = 新坐标X + 坐标增量
             If 确认坐标有效性(新坐标X, 新坐标Y) = True Then 
                 Call 移动大地图(新坐标X, 新坐标Y)
-                If 确认目标(寻找类型, 目标种类, 目标等级) = True Then 
+                If 确认目标(寻找类型, 目标种类, 目标等级) = True Then
+                    目标坐标信息(0) = 新坐标X : 目标坐标信息(1) = 新坐标Y
+                    WriteConfig "目标坐标信息"&账号信息&寻找类型, 目标坐标信息, True
                     Exit Sub
                 End If
             End If
@@ -2292,6 +2307,8 @@ Sub 搜索目标(寻找类型, 目标种类, 目标等级)
             If 确认坐标有效性(新坐标X, 新坐标Y) = True Then 
                 Call 移动大地图(新坐标X, 新坐标Y)
                 If 确认目标(寻找类型, 目标种类, 目标等级) = True Then 
+                    目标坐标信息(0) = 新坐标X : 目标坐标信息(1) = 新坐标Y
+                    WriteConfig "目标坐标信息"&账号信息&寻找类型, 目标坐标信息, True
                     Exit Sub
                 End If
             End If
@@ -2302,6 +2319,8 @@ Sub 搜索目标(寻找类型, 目标种类, 目标等级)
             If 确认坐标有效性(新坐标X, 新坐标Y) = True Then 
                 Call 移动大地图(新坐标X, 新坐标Y)
                 If 确认目标(寻找类型, 目标种类, 目标等级) = True Then 
+                    目标坐标信息(0) = 新坐标X : 目标坐标信息(1) = 新坐标Y
+                    WriteConfig "目标坐标信息"&账号信息&寻找类型, 目标坐标信息, True
                     Exit Sub
                 End If
             End If
@@ -2312,6 +2331,8 @@ Sub 搜索目标(寻找类型, 目标种类, 目标等级)
             If 确认坐标有效性(新坐标X, 新坐标Y) = True Then 
                 Call 移动大地图(新坐标X, 新坐标Y)
                 If 确认目标(寻找类型, 目标种类, 目标等级) = True Then 
+                    目标坐标信息(0) = 新坐标X : 目标坐标信息(1) = 新坐标Y
+                    WriteConfig "目标坐标信息"&账号信息&寻找类型, 目标坐标信息, True
                     Exit Sub
                 End If
             End If
@@ -2345,8 +2366,9 @@ Sub 移动大地图(坐标X, 坐标Y)
     //点击搜索
     Touch 690, 800, 100
     Delay 1000
-    ocrchar1 = 类型转换.SuperOcr(678, 597, 706, 648, "B3C6C8-111111|D5EEF2-111111|BDF1F8-111111|ACD8DE-111111|000000-111111", 0.9)
+   	ocrchar1 = 类型转换.SuperOcr(678, 597, 706, 648, "BFF3FB-111111|AFDCE2-111111|8FB0B3-111111|7F9A9C-111111|9FC6CB-111111", 0.9)
     临时坐标X = Int(ocrchar1)
+    TracePrint 临时坐标X
     If 坐标X = 临时坐标X Then 
         TracePrint "X正确"
     Else 
@@ -2370,8 +2392,9 @@ Sub 移动大地图(坐标X, 坐标Y)
     //点击搜索
     Touch 690, 800, 100
     Delay 1000
-    ocrchar2 = 类型转换.SuperOcr(678, 712, 706, 765, "B3C6C8-111111|D5EEF2-111111|BDF1F8-111111|ACD8DE-111111|000000-111111", 0.9)
+    ocrchar2 = 类型转换.SuperOcr(678, 712, 706, 765, "BFF3FB-111111|AFDCE2-111111|8FB0B3-111111|7F9A9C-111111|9FC6CB-111111", 0.9)
     临时坐标Y = Int(ocrchar2)
+    TracePrint 临时坐标Y
     If 坐标Y = 临时坐标Y Then 
         TracePrint "Y正确"
     Else 
@@ -2500,7 +2523,8 @@ Function 确认目标(寻找类型, 目标种类, 目标等级)
     End If
     Rem 关闭界面
     If 场景相关操作.进入场景是否正确(46) Then 
-        场景相关操作.通用界面关闭
+        场景相关操作.通用界面关闭 
+        Delay 1500
         Goto 关闭界面
     End If
 End Function
@@ -2601,7 +2625,7 @@ Sub 前往目标(出征类型, 队伍)
             If ocrchar = "确定" Then 
                 TracePrint "不是自己军团的城"
                 Touch 250, 760, 100
-                Delay 1500
+                Delay 2500
             End If
         End If
         容错参数 = 容错参数 + 1
@@ -2763,7 +2787,7 @@ End Sub
 Sub 祭祀等待(类型)
     Dim ocrchar
     Rem 识别文字
-    ocrchar = 类型转换.SuperOcr(373,956,535,1017,"F4FFFF-111111|FDFFFF-111111|D6DEEA-111111",0.9)
+    ocrchar = 类型转换.SuperOcr(373,956,535,1017,"F4FFFF-111111|FDFFFF-111111|D6DEEA-111111",1)
     TracePrint ocrchar
     祭祀切换 = False
     Select Case 类型
@@ -3566,9 +3590,9 @@ Sub 获取单个副本数据(副本数据)
         ocrchar = 类型转换.SuperOcr(459,864,483,934,"B3C7D1-111111|7B868B-111111|8B989E-111111|91A0A8-111111|A0B1BA-111111",1)
         Traceprint ocrchar
         字符长度 = UTF8.Len(ocrchar)
-        If 字符长度 = 4 Or 字符长度 = 3 Then  
+        If 字符长度 = 2 Or 字符长度 = 3 Then  
             副本数据(3) = Int(UTF8.Left(ocrchar, 1))
-        ElseIf 字符长度 = 5 Then
+        ElseIf 字符长度 = 4 Then
             副本数据(3) = Int(UTF8.Left(ocrchar, 2))
         ElseIf 容错参数 < 5 Then
             容错参数 = 容错参数 + 1
@@ -4259,6 +4283,10 @@ End Sub
 
 //建筑相关
 Sub 建筑()
+    If ReadUIConfig("是否升级建筑") = False Then 
+    	TracePrint "设置不升级建筑"
+    	Exit Sub
+    End If
     TracePrint "开始建筑"
     ShowMessage "建筑", 1000, 50, 620
     Dim 建筑顺序
@@ -5662,7 +5690,7 @@ Sub 进沙场论剑界面
     //去野外
     进出界面.城内进固定界面(2, 相关数据解析.去野外坐标X, 相关数据解析.去野外坐标Y, 5)
     Call 进出界面.界面收起展开(6)
-    进出界面.进无坐标子界面(72, 2, 425,417,660,1102,"Attachment:沙场论剑.png", 0.69)
+    进出界面.进无坐标子界面(72, 2, 425,417,660,1102,"Attachment:沙场论剑.png", 0.9)
 End Sub
 
 Sub 进行沙场论剑()
@@ -5695,6 +5723,7 @@ Sub 进行沙场论剑()
         容错参数 = 容错参数 + 1
         Goto 进多人模式
     End If
+    WriteConfig "今日是否已执行沙场论剑"&账号信息, True, True
     TracePrint "进行多人模式结束"
     场景相关操作.通用界面关闭 
     Delay 2000
@@ -5962,3 +5991,4 @@ End Sub
 //					WriteConfig "今日已补星"&副本类型, True, True
 //					WriteConfig "今日已打名将", True, True
 //					WriteConfig "今日商城已购买", True, True
+//					WriteConfig "今日是否已执行沙场论剑", True, True

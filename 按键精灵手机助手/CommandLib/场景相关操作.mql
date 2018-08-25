@@ -512,9 +512,8 @@ Function 主城顶部是否收起()
 End Function
 
 Function 主城底部是否收起()
-    Dim intX,intY,当前场景
-    当前场景 = 所在场景()
-    If 当前场景 = 1 Or 当前场景 = 2 Then 
+    Dim intX,intY
+    If 进入场景是否正确(1) Or 进入场景是否正确(2) Then 
         FindPic 14,405,72,478,"Attachment:底部收起.png","000000",0,0.9,intX,intY
         If intX > -1 And intY > -1 Then 
             主城底部是否收起 = False
@@ -524,10 +523,6 @@ Function 主城底部是否收起()
 				主城底部是否收起 = True
 			Else
 				TracePrint "右边的图标也没找到,可能左边被挡住,尝试设置为False"
-				If 当前场景 = 2 Then
-					Touch 42, 1113, 100
-					Delay 1000
-				End If
 				主城底部是否收起 = False
 			End If
         End If
@@ -537,9 +532,8 @@ Function 主城底部是否收起()
 End Function
 
 Function 野外顶部是否收起()
-    Dim intX,intY,当前场景
-	当前场景 = 所在场景()
-    If 当前场景 = 2 Then 
+    Dim intX,intY
+    If 进入场景是否正确(2) Then 
         FindPic 572,1095,625,1177,"Attachment:顶部收起.png","000000",0,0.7,intX,intY
         If intX > -1 And intY > -1 Then 
             野外顶部是否收起 = False
@@ -566,7 +560,6 @@ Function 选择区服()
 	//进选服界面
 	容错参数 = 0
 	Rem 进子界面1
-	//showmessage "尝试寻找"&"Attachment:选择服务器.png", 1000, 50, 620
 	Touch 245, 850, 100
 	Delay 3000
 	If 进入场景是否正确(74) Then

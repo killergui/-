@@ -38,6 +38,7 @@ Function 读取当前体力()
 	If temp(0) = Null Then
         读取当前体力 = 0
     End If
+    TracePrint "读取体力结束"
 End Function
 
 
