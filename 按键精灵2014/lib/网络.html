@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>按键精灵命令库帮助</title>
+<style>
+body{font-size:12px; font-family:Verdana,"宋体"}
+.ts{ background:#fff; margin:0 0 40px 0;}
+.ts th{ color:#7B797B; background:#DEDFDE; line-height:24px;}
+.ts td {padding:6px 0;}
+.name { font-size:16px; font-weight:bold; border-top:1px dashed #9C9A9C; border-bottom:1px dashed #9C9A9C; color:#006939;}
+.canshu { background:#E7E7EF;}
+.red{ color:#d60000;}
+.green{ color:#006939;}
+.fanhui{ border-bottom:1px dashed #9C9A9C;}
+.lizi{ border-bottom:1px dashed #9C9A9C;}
+</style></head><body>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="获得网页源文件"></a>获得网页源文件
+</td></tr><tr><th>命令功能：</th><td>
+获得网页源文件
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，网页地址
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，网页源文件内容
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+<span class="green">//说明：支持远程获取文本内容，如：</span>
+<span class="green">//MsgBox lib.网络.获得网页源文件("http://www.anjian.com/test.txt")</span>
+MsgBox lib.网络.获得网页源文件("http://www.anjian.com")
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="获得外网IP地址"></a>获得外网IP地址
+</td></tr><tr><th>命令功能：</th><td>
+获得外网IP地址
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，外网IP地址
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox lib.网络.获得外网IP地址()
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="发送邮件"></a>发送邮件
+</td></tr><tr><th>命令功能：</th><td>
+发送邮件
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，你的邮箱帐号 
+参数2 字符串型，你的邮箱密码
+参数3 字符串型，发送邮件地址
+参数4 字符串型，邮件主题
+参数5 字符串型，邮件内容
+参数6 字符串型，邮件附件
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox lib.网络.发送邮件("ceshi0000001@163.com","ceshi000001", _
+"ceshi0000001@163.com","邮件主题","邮件内容","")
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="获取网络时间"></a>获取网络时间
+</td></tr><tr><th>命令功能：</th><td>
+获取网络时间
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，网络时间
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox "当前标准时间为：" & lib.网络.获取网络时间()
+</td></tr></table>
+
+
+
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="获得网页源文件_增强版"></a>获得网页源文件_增强版
+</td></tr><tr><th>命令功能：</th><td>
+获得网页源文件
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，网页地址
+参数2 字符串型，网页编码("utf-8"、"gbk")
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，网页源文件内容
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+<span class="green">//说明：支持远程获取文本内容，如：</span>
+<span class="green">//MsgBox lib.网络.获得网页源文件_增强版("http://www.anjian.com/test.txt","utf-8")</span>
+MsgBox lib.网络.获得网页源文件_增强版("http://www.anjian.com","utf-8")
+</td></tr></table>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="获取网络时间_增强版"></a>获取网络时间_增强版
+</td></tr><tr><th>命令功能：</th><td>
+获取网络时间
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，网站地址
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，网络时间
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox "当前标准时间为：" & lib.网络.获取网络时间_增强版("www.anjian.com")
+<span class="green">//TracePrint lib.网络.获取网络时间_增强版("msdn.microsoft.com") //去微软取时间玩
+//TracePrint lib.网络.获取网络时间_增强版("www.taobao.com") //看看淘宝服务器时间
+//TracePrint lib.网络.获取网络时间_增强版("www.qq.com") //看看qq网站时间</span>
+</td></tr></table>
+
+
+
+</body>
+</html>

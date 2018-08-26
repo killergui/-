@@ -1,0 +1,219 @@
+[General]
+SyntaxVersion=2
+BeginHotkey=121
+BeginHotkeyMod=0
+PauseHotkey=0
+PauseHotkeyMod=0
+StopHotkey=123
+StopHotkeyMod=0
+RunOnce=1
+EnableWindow=
+MacroID=dccddf90-2413-4c0e-8969-d50d91e58ee8
+Description=我的脚本2
+Enable=1
+AutoRun=0
+[Repeat]
+Type=0
+Number=1
+[SetupUI]
+Type=2
+QUI=
+[Relative]
+SetupOCXFile=
+[Comment]
+
+[Script]
+Import "e:\obj.vbs"
+set dm = new dmsoft   '创建对象
+set dm = createobject("dm.dmsoft")
+base_path = dm.GetBasePath()
+TracePrint base_path
+dm_ret = dm.Reg("killergui2147a5bb90ae5085c0ea30d6968e7657","")
+TracePrint dm_ret
+dm_ret = dm.SetPath(base_path)
+dm_ret = dm.SetDict(0, "dm_soft.txt")
+Dim 开发宽度, 开发高度, 缩放比例, 是否横屏
+开发宽度 = 1104 : 开发高度 = 621
+Dim 容错参数, 安卓小精灵初始坐标,初始识别区域,安卓小精灵初始启动坐标X
+//772,223,836,254,宽高(64,31)
+安卓小精灵初始坐标 = Array(1095, 185)
+安卓小精灵初始启动坐标X = 804
+初始识别区域 = Array(772,223,836,254)
+Dim 安卓小精灵X坐标, 安卓小精灵Y坐标, 安卓小精灵启动坐标X, 安卓小精灵启动坐标Y
+Dim 文字识别区域X1, 文字识别区域Y1, 文字识别区域X2, 文字识别区域Y2
+容错参数 = 0
+Do
+    //遍历符合窗口标题("海马玩模拟器")的句柄保存到数组(HwndEx)里
+    HwndEx = Plugin.Window.Search("海马玩模拟器")
+    //下面这句用于分割字符串,将获得的句柄组分割   
+    dim MyArray   
+    MyArray = Split(HwndEx, "|")   
+    If UBound(MyArray)>=0 Then  
+        i=0   
+        For UBound(MyArray)   
+            //下面这句将字符串转换成数值   
+            Hwnd = MyArray(i)
+            //获取游戏窗口的宽高
+            dm_ret = dm.GetClientSize(Hwnd,w1,h1) 
+            TracePrint "宽度:"& w1 &",高度:"& h1
+            //先判断是横屏还是竖屏 
+            If w1 > h1 Then 
+                TracePrint "横屏"
+                dm_ret = dm.SetWindowSize(Hwnd, 1104, 621)
+                是否横屏 = True
+            Else 
+                dm_ret = dm.SetWindowSize(Hwnd, 628, 1041)
+                TracePrint "竖屏"
+                是否横屏 = False
+            End If
+            Delay 2000
+            //模拟器游戏显示窗口
+            hwnd1 = dm.FindWindowSuper("screenWindow",0,0,Hwnd,7,0)
+            //获取游戏窗口的宽高
+            dm_ret = dm.GetClientSize(hwnd1,w,h) 
+            TracePrint "宽度:" & w & ",高度:" & h
+
+            //小精灵驻留位置坐标
+            安卓小精灵X坐标 = w - (开发宽度 - 安卓小精灵初始坐标(0))
+            //小精灵图标在右侧与高度是等比变化的
+            //竖屏时海马玩模拟器有一部分刘海,所以需要减去
+            Dim 海马玩刘海
+            海马玩刘海 = 87/1280
+            If 是否横屏 Then 
+                安卓小精灵Y坐标 = 安卓小精灵初始坐标(1)
+            Else 
+                安卓小精灵Y坐标 = Round(安卓小精灵初始坐标(1) / 开发高度 * h * (1 - 海马玩刘海), 0)
+            End If
+            TracePrint "小精灵驻留位置坐标"&安卓小精灵X坐标&","&安卓小精灵Y坐标
+            //小精灵启动图标与小精灵驻留时的高度一致,所以Y值不变
+            安卓小精灵启动坐标X = 安卓小精灵初始启动坐标X
+            安卓小精灵启动坐标Y = 安卓小精灵Y坐标
+            TracePrint "安卓小精灵启动坐标"&安卓小精灵启动坐标X&","&安卓小精灵启动坐标Y
+            //启动\停止文字识别区域的范围换算
+            文字识别区域X1 = w - (开发宽度 - 初始识别区域(0))
+            文字识别区域X2 = w - (开发宽度 - 初始识别区域(2))
+            If 是否横屏 Then 
+                文字识别区域Y1 = 初始识别区域(1)
+                文字识别区域Y2 = 初始识别区域(3)
+            Else 
+                文字识别区域Y1 = Round(初始识别区域(1) / 开发高度 * h * (1 - 海马玩刘海), 0)
+                文字识别区域Y2 = Round(初始识别区域(3) / 开发高度 * h * (1 - 海马玩刘海), 0)
+            End If
+            TracePrint "文字识别区域"&","&文字识别区域X1&","&文字识别区域Y1&","&文字识别区域X2&","&文字识别区域Y2
+            Call 检测()
+            Delay 10000
+            i=i+1  
+        Next  
+    End If
+    Delay 300000
+Loop
+Set dm = nothing'释放对象
+Sub 检测
+    TracePrint("开始检测")
+    Rem 检测状态
+    容错参数 = 0 
+    //运行脚本
+    While Not 脚本是否启动了() And 容错参数 < 1
+        TracePrint "展开脚本"
+        //绑定游戏窗口
+        dm_ret = dm.BindWindowEx(hwnd1, "dx2", "dx", "normal", "", 0)
+        Delay 1500
+        dm.MoveTo 安卓小精灵X坐标, 安卓小精灵Y坐标
+        Delay 500
+        dm.LeftClick 
+        Delay 1500
+        容错参数 = 容错参数 + 1
+        dm_ret = dm.UnBindWindow()
+    Wend
+    If 容错参数 >= 1 Then 
+        Call 小精灵启动流程()
+        Goto 检测状态
+    End If
+    TracePrint "检测完毕"
+End Sub
+Sub 小精灵启动流程
+    Call 启动脚本()
+    While Not 脚本是否准备好了()
+        TracePrint "等待启动好"
+        Delay 2000
+    Wend
+    TracePrint "准备运行脚本"
+    //绑定模拟器大窗口
+    dm_ret = dm.BindWindowEx(Hwnd, "dx2", "dx", "normal", "", 0)
+    Delay 1500
+    dm.MoveTo 350, 1205
+    Delay 500
+    dm.LeftClick 
+    Delay 2000
+    dm_ret = dm.UnBindWindow()
+End Sub
+Sub 启动脚本
+    //绑定模拟器大窗口
+    dm_ret = dm.BindWindowEx(Hwnd, "dx2", "dx", "normal", "", 0)
+    Delay 1500
+    TracePrint "绑定大窗口"
+    dm_ret = dm.GetClientSize(Hwnd,w1,h1) 
+    If 是否横屏 Then 
+        TracePrint "横屏点击Home"
+        dm.MoveTo 118, 1020
+        Delay 500
+        dm.LeftClick 
+        Delay 1500
+    Else 
+        TracePrint "竖屏点击Home"
+        dm.MoveTo 33, 951
+        Delay 500
+        dm.LeftClick 
+        Delay 1500
+    End If
+    dm_ret = dm.FindStr(0, 0, 628, 1041, "叼叼叼", "0e0e0e-101010|2d2d2d-101010|595959-101010",1, intX, intY)
+    TracePrint "坐标" & intX & "," & intY
+    dm.MoveTo intX, intY
+    Delay 500
+    dm.LeftClick 
+    Delay 1500
+    dm_ret = dm.UnBindWindow()
+End Sub
+Function 脚本是否准备好了()
+    //绑定游戏窗口
+    dm_ret = dm.BindWindowEx(hwnd1, "dx2", "dx", "normal", "", 0)
+    Delay 1500
+    TracePrint hwnd1
+    s = dm.Ocr(205,926,356,967,"ffffff-101010",1)
+    TracePrint s
+    If s = "启动功能" Then
+        TracePrint "脚本已经准备好了"
+        脚本是否准备好了 = True
+    Else
+        TracePrint "脚本还没有完全启动好"
+        脚本是否准备好了 = False
+    End If
+    dm_ret = dm.UnBindWindow()
+End Function
+Function 脚本是否启动了()
+    //绑定游戏窗口
+    dm_ret = dm.BindWindowEx(hwnd1, "dx2", "dx", "normal", "", 0)
+    Delay 1500
+    dm_ret = dm.SetDict(0, "dm_soft.txt")
+    s = dm.Ocr(文字识别区域X1,文字识别区域Y1,文字识别区域X2,文字识别区域Y2,"ffffff-101010|ececec-101010",0.95)
+    TracePrint s
+    If s = "启动" Then 
+        TracePrint "脚本停止运行了"
+        脚本是否启动了 = False
+        TracePrint "启动脚本"
+        dm.MoveTo 安卓小精灵启动坐标X, 安卓小精灵启动坐标Y
+        Delay 500
+        dm.LeftClick 
+    ElseIf s = "停止" Then
+        TracePrint "脚本运行中"
+        脚本是否启动了 = True
+    Else 
+        TracePrint "检测脚本是否启动异常,建议重试"
+    End If
+    dm_ret = dm.UnBindWindow()
+End Function
+
+Sub OnScriptExit()
+	TracePrint "解除绑定"
+    dm_ret = dm.UnBindWindow() 
+End Sub

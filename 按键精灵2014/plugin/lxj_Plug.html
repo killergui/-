@@ -1,0 +1,4576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>按键精灵插件帮助</title>
+<style>
+body{font-size:12px; font-family:Verdana,"宋体"}
+.ts{ background:#fff; margin:0 0 40px 0;}
+.ts th{ color:#7B797B; background:#DEDFDE; line-height:24px;}
+.ts td {padding:6px 0;}
+.name { font-size:16px; font-weight:bold; border-bottom:1px dashed #9C9A9C; color:#006939;}
+.canshu { background:#E7E7EF;}
+.red{ color:#d60000;}
+.fanhui{ border-bottom:1px dashed #9C9A9C;}
+.lizi{ border-bottom:1px dashed #9C9A9C;}
+.STYLE2 {font-size: 14px; font-weight: bold; color: #990000; }
+</style></head><body>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr width="100%" align="center"><font color=#FF00FF size=5><B>懒人的相关插件及工具</B></font></tr><tr><th width="100px"><font color=#FF0000 size=4>懒人插件：</font></th><td class="name">
+<A 
+href="http://bbs.vrbrothers.com/viewthread.php?tid=102197" target=_blank>http://bbs.vrbrothers.com/viewthread.php?tid=102197</A>
+</td></tr><tr><th width="100px"><font color=#FF0000 size=4>懒人<br>办公插件：</font></th><td class="name">
+<A 
+href="http://bbs.vrbrothers.com/viewthread.php?tid=111231" target=_blank>http://bbs.vrbrothers.com/viewthread.php?tid=111231</A>
+</td></tr><tr><th width="100px"><font color=#FF0000 size=4>懒人<br>托盘插件：</font></th><td class="name">
+<A 
+href="http://bbs.vrbrothers.com/viewthread.php?tid=123599" target=_blank>http://bbs.vrbrothers.com/viewthread.php?tid=123599</A>
+</td></tr><tr><th width="100px"><font color=#FF0000 size=4>懒人窗口<br>遍历工具：</font></th><td class="name">
+<A 
+href="http://bbs.vrbrothers.com/viewthread.php?tid=114549" target=_blank>http://bbs.vrbrothers.com/viewthread.php?tid=114549</A>
+</td></tr></table><br><br><br>
+
+<tr width="100%" align="center"><font color=#FF00FF size=5><B>★★★★★测试代码★★★★★</B></font></tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_MessageD"></a>lxj_MessageD 弹窗延时自动关闭
+</td></tr><tr><th>命令功能：</th><td>
+弹窗延时自动关闭，支持显示变化的时间
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】 延时时间(单位:秒),整数型
+【参数2】 提示内容(使用'TIME'可转换为变化的数字)，字符串型
+【参数3】 提示标题，字符串型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Plugin.lxj_Plug.lxj_MessageD 5,"距离本窗口关闭还剩TIME秒","自动关闭的弹窗"
+
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin lxj_Plug.lxj_MessageD(5,"距离本窗口关闭还剩TIME秒","自动关闭的弹窗")
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetCap"></a>lxj_GetCap 使用摄像头拍照
+</td></tr><tr><th>命令功能：</th><td>
+使用摄像头拍照
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】 图像完整保存路径，字符串型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Plugin.lxj_Plug.lxj_GetCap "C:\Pic.bmp"
+
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin lxj_Plug.lxj_GetCap("C:\Pic.bmp")
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_DelteMe"></a>lxj_DelteMe 小精灵自删除
+</td></tr><tr><th>命令功能：</th><td>
+小精灵自删除。危险命令！请务必生成小精灵后运行
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】删除类型，填1为彻底删除,不填或填其他为删除调用本命令的程序及插件]
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+call Plugin.lxj_Plug.lxj_DelteMe()
+
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin lxj_Plug.lxj_DelteMe()
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_RestartMe"></a>lxj_RestartMe 小精灵重启
+</td></tr><tr><th>命令功能：</th><td>
+小精灵重启
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+call Plugin.lxj_Plug.lxj_RestartMe()
+
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin lxj_Plug.lxj_RestartMe()
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_RunExe"></a>lxj_RunExe 从内存启动程序
+</td></tr><tr><th>命令功能：</th><td>
+从内存启动程序，也可用作伪装进程
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】 伪装程序路径,字符串型
+【参数2】 对象程序路径，字符串型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+出错返回0，其他返回1
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+path1="C:\windows\system32\cmd.exe"
+path2="C:\windows\system32\calc.exe"
+R=Plugin.lxj_Plug.lxj_RunExe(path1,path2)
+MessageBox "计算器启动完毕，此时任务管理其中显示为cmd进程"
+
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+path1="C:\windows\system32\cmd.exe"
+path2="C:\windows\system32\calc.exe"
+Plugin R=lxj_Plug.lxj_RunExe(path1,path2)
+MessageBox "计算器启动完毕，此时任务管理其中显示为cmd进程"
+</td></tr></table>
+
+
+<tr width="100%" align="center"><font color=#FF00FF size=5><B>★★★★★托盘图标类★★★★★</B></font></tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_MessageTip"></a>lxj_MessageTip 托盘气泡提示
+</td></tr><tr><th>命令功能：</th><td>
+在托盘现有图标上产生气泡提示
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】 提示内容，字符串型
+【参数2（可选）】 提示标题，字符串型，默认为""
+【参数3（可选）】 气泡显示时间（单位：毫秒），整数型，默认为10000
+【参数4（可选）】 气泡提示框类型，整数型，默认为0（可选值为0-4）
+【参数5（可选）】 欲显示气泡提示的托盘图标的进程PID，整数型，默认为当前调用程序的PID
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+//获取QQ进程PID
+PID=Plugin.Web.Bind("QQ.exe")
+//在QQ图标上显示气泡提示
+Plugin.lxj_Plug.lxj_MessageTip "这是一个QQ的气泡提示","气泡提示的标题",2000,2,PID
+//在按键精灵图标上显示气泡提示
+Plugin.lxj_Plug.lxj_MessageTip "这是未填写可选参数的一个气泡提示"
+
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+//获取QQ进程PID
+Plugin PID=Web.Bind("QQ.exe")
+//在QQ图标上显示气泡提示
+Plugin lxj_Plug.lxj_MessageTip("这是一个QQ的气泡提示","气泡提示的标题",2000,2,PID)
+//在按键精灵图标上显示气泡提示
+Plugin lxj_Plug.lxj_MessageTip("这是未填写可选参数的一个气泡提示")
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_RefreshIcon"></a>lxj_RefreshIcon 刷新图标缓存
+</td></tr><tr><th>命令功能：</th><td>
+建立或刷新图标缓存(注意，本命令是针对其他托盘操作命令的缓存进行刷新，而不是刷新任务栏右侧托盘图标！)
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+MessageBox "刷新图标缓存，后面的隐藏/显示图标及鼠标点击操作均针对此图标缓存进行操作"
+MessageBox "如果是刷新图标缓存以后出现的图标则无法操作，需要重新刷新"
+Plugin.lxj_Plug.lxj_RefreshIcon()
+MessageBox "下面将隐藏QQ图标，如只有一个QQ进程，则PID可由Bind命令直接获得"
+PID=Plugin.Web.Bind("QQ.exe")
+Plugin.lxj_Plug.lxj_HideIcon PID
+MessageBox "下面将显示QQ图标"
+Plugin.lxj_Plug.lxj_ShowIcon PID
+MessageBox "为了防止图标丢失，在隐藏图标后使用刷新图标缓存的命令将显示所有图标"
+Plugin.lxj_Plug.lxj_HideIcon PID
+MessageBox "QQ图标已隐藏，下面将通过刷新图标缓存使其显示"
+Plugin.lxj_Plug.lxj_RefreshIcon()
+MessageBox "QQ图标被显示出来了"
+MessageBox "下面对托盘图标进行点击，三个操作均有两个可选参数，可选择合适的方法定位图标"
+MessageBox "首先演示通过PID定位QQ图标，并左键单击"
+Plugin.lxj_Plug.lxj_PlugLeftClcik PID
+MessageBox "下面演示通过图标标题定位音量图标，并左键双击"
+Plugin.lxj_Plug.lxj_PlugDbLeftClcik 0,"音量"
+MessageBox "下面演示右键单击QQ图标"
+Plugin.lxj_Plug.lxj_PlugRightClcik PID
+
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+MessageBox "刷新图标缓存，后面的隐藏/显示图标及鼠标点击操作均针对此图标缓存进行操作"
+MessageBox "如果是刷新图标缓存以后出现的图标则无法操作，需要重新刷新"
+Plugin lxj_Plug.lxj_RefreshIcon()
+MessageBox "下面将隐藏QQ图标，如只有一个QQ进程，则PID可由Bind命令直接获得"
+Plugin PID=Web.Bind("QQ.exe")
+Plugin lxj_Plug.lxj_HideIcon(PID)
+MessageBox "下面将显示QQ图标"
+Plugin lxj_Plug.lxj_ShowIcon(PID)
+MessageBox "为了防止图标丢失，在隐藏图标后使用刷新图标缓存的命令将显示所有图标"
+Plugin lxj_Plug.lxj_HideIcon(PID)
+MessageBox "QQ图标已隐藏，下面将通过刷新图标缓存使其显示"
+Plugin lxj_Plug.lxj_RefreshIcon()
+MessageBox "QQ图标被显示出来了"
+MessageBox "下面对托盘图标进行点击，三个操作均有两个可选参数，可选择合适的方法定位图标"
+MessageBox "首先演示通过PID定位QQ图标，并左键单击"
+Plugin lxj_Plug.lxj_PlugLeftClcik(PID)
+MessageBox "下面演示通过图标标题定位音量图标，并左键双击"
+Plugin lxj_Plug.lxj_PlugDbLeftClcik( ,"音量")
+MessageBox "下面演示右键单击QQ图标"
+Plugin lxj_Plug.lxj_PlugRightClcik(PID)
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetIconHwnd"></a>lxj_GetIconHwnd 获取图标对应窗口句柄
+</td></tr><tr><th>命令功能：</th><td>
+获取图标对应窗口句柄
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】图标标题（即鼠标移至图标上后显示的提示），支持模糊匹配，命令将只获取匹配成功的第一个图标
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+整数型窗口句柄
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+call Plugin.lxj_Plug.lxj_RefreshIcon()
+Hwnd=Plugin.lxj_Plug.lxj_GetIconHwnd("QQ.exe")
+msgbox "QQ窗口句柄为："&Hwnd
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin lxj_Plug.lxj_RefreshIcon()
+Plugin Hwnd=lxj_Plug.lxj_GetIconHwnd("QQ.exe")
+msgbox "QQ窗口句柄为："&Hwnd
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_HideIcon"></a>lxj_HideIcon 隐藏图标
+</td></tr><tr><th>命令功能：</th><td>
+隐藏托盘图标
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】 待隐藏图标对应的进程PID，整数型，默认为0（表示隐藏所有图标）
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /></th><td><pre>
+详例见lxj_RefreshIcon命令
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_ShowIcon"></a>lxj_ShowIcon 显示图标
+</td></tr><tr><th>命令功能：</th><td>
+显示被隐藏的托盘图标
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】 待显示的图标对应的进程PID，整数型，默认为0（表示显示所有图标）
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /></th><td><pre>
+详例见lxj_RefreshIcon命令
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_IconLeftClcik"></a>lxj_IconLeftClcik 左键单击图标
+</td></tr><tr><th>命令功能：</th><td>
+左键单击图标
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】 图标对应的进程PID，整数型，默认为0（表示忽略）
+【参数2（可选）】 图标对应的标题（支持模糊搜索，可将鼠标放至图标上获取），字符串型，默认为""（表示忽略）
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /></th><td><pre>
+详例见lxj_RefreshIcon命令
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_IconDbLeftClcik"></a>lxj_IconDbLeftClcik 左键双击图标
+</td></tr><tr><th>命令功能：</th><td>
+左键双击图标
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】 图标对应的进程PID，整数型，默认为0（表示忽略）
+【参数2（可选）】 图标对应的标题（支持模糊搜索，可将鼠标放至图标上获取），字符串型，默认为""（表示忽略）
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /></th><td><pre>
+详例见lxj_RefreshIcon命令
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_IconRightClcik"></a>lxj_IconRightClcik 右键单击图标
+</td></tr><tr><th>命令功能：</th><td>
+右键单击图标
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】 图标对应的进程PID，整数型，默认为0（表示忽略）
+【参数2（可选）】 图标对应的标题（支持模糊搜索，可将鼠标放至图标上获取），字符串型，默认为""（表示忽略）
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /></th><td><pre>
+详例见lxj_RefreshIcon命令
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_RefreshTrayIcon"></a>lxj_RefreshTrayIcon 刷新托盘图标
+</td></tr><tr><th>命令功能：</th><td>
+刷新托盘图标，此命令针对任务栏右侧托盘进行刷新，关闭无效图标
+</td></tr><tr><th>命令参数：</th><td class="canshu">无
+</td>
+</tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+call Plugin.lxj_Plug.lxj_RefreshTrayIcon()
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin lxj_Plug.lxj_RefreshTrayIcon()
+</td></tr></table>
+
+<tr width="100%" align="center"><font color=#FF00FF size=5><B>★★★★★文件/文件夹操作类★★★★★</B></font></tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SetFold" id="lxj_SetFold"></a>lxj_SetFold 设置文件/文件夹属性 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 设置文件/文件夹属性，可设置的属性包括'常规'、'只读'、'隐藏'、'系统'</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 路径
+【参数2（可选）】 操作类型，可设参数包括'常规'、'只读'、'隐藏'、'系统'，用英文半角逗号隔开</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+path="C:\WINDOWS"
+call Plugin.lxj_Plug.lxj_SetFold(path,"隐藏","系统") 
+msgbox "已将C:\WINDOWS文件夹设置为系统隐藏属性"
+call Plugin.lxj_Plug.lxj_SetFold(path,"常规") 
+msgbox "已将C:\WINDOWS文件夹设置为常规属性"</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+path="C:\WINDOWS"
+Plugin lxj_Plug.lxj_SetFold(path,"隐藏","系统") 
+msgbox "已将C:\WINDOWS文件夹设置为系统隐藏属性"
+Plugin lxj_Plug.lxj_SetFold(path,"常规") 
+msgbox "已将C:\WINDOWS文件夹设置为常规属性"</td>
+</tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_CreatShortcut" id="lxj_CreatShortcut"></a>lxj_CreatShortcut 创建快捷方式 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 创建快捷方式</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】源文件路径
+【参数2（可选）】快捷方式存放路径路径，路径结尾为“\”时仅指定文件夹，快捷方式名称采用源文件名称</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 成功返回1,源文件不存在或创建失败返回0 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+path = "C:\WINDOWS\system32\taskmgr.exe"
+R=Plugin.lxj_Plug.lxj_CreatShortcut(path,"C:\任务")
+If R = 1 Then 
+MsgBox "已在C盘根目录创建快捷名为""任务""的任务管理器快捷方式"
+Else 
+MsgBox "快捷方式创建失败，请检查源文件路径"
+End If
+R=Plugin.lxj_Plug.lxj_CreatShortcut(path,"C:\任务\")
+If R = 1 Then 
+MsgBox "已在""C:\任务""文件夹内创建任务管理器快捷方式"
+Else 
+MsgBox "快捷方式创建失败，请检查源文件路径"
+End If</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+path = "C:\WINDOWS\system32\taskmgr.exe"
+Plugin R=lxj_Plug.lxj_CreatShortcut(path,"C:\任务")
+If R = 1  
+MsgBox "已在C盘根目录创建快捷名为""任务""的任务管理器快捷方式"
+Else 
+MsgBox "快捷方式创建失败，请检查源文件路径"
+EndIf
+Plugin R=lxj_Plug.lxj_CreatShortcut(path,"C:\任务\")
+If R = 1
+MsgBox "已在""C:\任务""文件夹内创建任务管理器快捷方式"
+Else 
+MsgBox "快捷方式创建失败，请检查源文件路径"
+EndIf</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_CreatFoldEX" id="lxj_CreatFoldEX"></a>lxj_CreatFoldEX 创建文件夹加强版 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 官方自带的创建文件夹命令只能在已存在的文件夹中创建一级子文件夹，本命令可创建任意路径的文件夹</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】欲创建文件夹的路径</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi">call Plugin.lxj_Plug.lxj_CreatFoldEX("C:\1\1\1\1\1")</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi">Plugin lxj_Plug.lxj_CreatFoldEX(&quot;C:\1\1\1\1\1&quot;)</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ProtectFold" id="lxj_ProtectFold"></a>lxj_ProtectFold 伪装文件夹 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 将指定文件夹伪装为‘控制面板’‘打印机’‘回收站’‘网上邻居’‘拨号网络’‘计划任务’‘临时文件’</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】欲伪装的文件夹路径
+【参数2】伪装类型，可填"控制面板""打印机""回收站""网上邻居""拨号网络""计划任务""临时文件"
+【参数3】操作类型,1为伪装，0为解除</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 整数型，1为伪装成功，0为伪装失败 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+Call Plugin.lxj_Plug.lxj_CreatFoldEX("C:\1\1\1\1\1")
+Call Plugin.lxj_Plug.lxj_ProtectFold("C:\1\", "回收站", 1)
+msgbox "已将新建的""C:\1""文件夹伪装为控制面板，请查看！"
+R= Plugin.lxj_Plug.lxj_ProtectFold("C:\1\", "回收站", 0)
+If R=1 Then
+msgbox "已解除伪装"
+Else 
+msgbox "解除伪装失败，可重新运行一遍试试"
+END IF</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin lxj_Plug.lxj_CreatFoldEX("C:\1\1\1\1\1")
+Plugin lxj_Plug.lxj_ProtectFold("C:\1\", "回收站", 1)
+msgbox "已将新建的""C:\1""文件夹伪装为控制面板，请查看！"
+Plugin R= lxj_Plug.lxj_ProtectFold("C:\1\", "回收站", 0)
+If R=1 
+msgbox "已解除伪装"
+Else 
+msgbox "解除伪装失败，可重新运行一遍试试"
+ENDIF</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_CopyFold" id="lxj_CopyFold"></a>lxj_CopyFold 复制文件夹 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 复制文件夹</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】源文件夹路径
+【参数2】目标文件夹路径</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+Call Plugin.lxj_Plug.lxj_CreatFoldEX(&quot;C:\1&quot;)
+Call Plugin.lxj_Plug.lxj_CopyFold(&quot;C:\1&quot;,&quot;D:\2&quot;)</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin lxj_Plug.lxj_CreatFoldEX(&quot;C:\1&quot;)
+Plugin lxj_Plug.lxj_CopyFold(&quot;C:\1&quot;,&quot;D:\2&quot;)</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_Recycle" id="lxj_Recycle"></a>lxj_Recycle 删除文件/文件夹 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 删除文件/文件夹，可选择彻底删除或删除到回收站</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】完整路径
+【参数2（可选）】整数型，操作类型，0为删除到回收站,1为彻底删除。默认为删除到回收站</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+Call Plugin.lxj_Plug.lxj_CreatFoldEX(&quot;C:\1&quot;)
+Call Plugin.lxj_Plug.lxj_Recycle(&quot;C:\1&quot;)</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin lxj_Plug.lxj_CreatFoldEX(&quot;C:\1&quot;)
+Plugin lxj_Plug.lxj_Recycle(&quot;C:\1&quot;)</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_LookFile" id="lxj_LookFile"></a>lxj_LookFile 查找文件 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 遍历文件夹查找文件</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】文件夹完整路径
+【参数2（可选）】被查找文件名，支持"*"号匹配，默认为"*.*"
+【参数3（可选）】整数型，搜索的子文件夹级数，如，0表示只搜索本级目录，1表示搜索到1级子目录...，默认为-2表示遍历所有子目录</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回数组,第1个元素为数量,其后各元素为满足查找到的文件完整路径 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+path="c:\Program Files"
+R=Plugin.lxj_Plug.lxj_LookFile(path,"*.EXE",1)
+MSGBOX """c:\Program Files""文件夹及其一级子目录中搜索exe文件，共找到文件数："&R(0)
+msgbox "下面显示找到的文件路径"
+For i=1 to R(0)
+msgbox R(i)
+Next</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+path="c:\Program Files"
+Plugin R=lxj_Plug.lxj_LookFile(path,"*.EXE",1)
+MSGBOX """c:\Program Files""文件夹及其一级子目录中搜索exe文件，共找到文件数："&R(0)
+msgbox "下面显示找到的文件路径"
+i=1
+For R(0)
+msgbox R(i)
+i=i+1
+EndFor </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SerchFolds" id="lxj_SerchFolds"></a>lxj_SerchFolds 枚举子文件夹 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 枚举子文件夹</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】文件夹路径</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回数组,第1个元素为数量,其后各子文件夹完整路径 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+path=&quot;c:\Program Files&quot;
+R=Plugin.lxj_Plug.lxj_SerchFolds(path)
+MSGBOX &quot;文件夹&quot;&quot;c:\Program Files&quot;&quot;中共找到子文件夹数：&quot;&amp;R(0)
+msgbox &quot;下面显示找到的子文件夹路径&quot;
+For i=1 to R(0)
+msgbox R(i)
+Next</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+path=&quot;c:\Program Files&quot;
+Plugin R=lxj_Plug.lxj_SerchFolds(path)
+MSGBOX &quot;文件夹&quot;&quot;c:\Program Files&quot;&quot;中共找到子文件夹数：&quot;&amp;R(0)
+msgbox &quot;下面显示找到的子文件夹路径&quot;
+i=1
+For R(0)
+msgbox R(i)
+i=i+1
+EndFor </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_GetSpecialPath" id="lxj_GetSpecialPath"></a>lxj_GetSpecialPath 获取系统特殊文件夹路径 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 获取系统特殊文件夹路径</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】1到256的整数型数值，具体对应关系自己百度或者一个个试吧。常用的有16为桌面路径,33为cookies文件夹</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回字符串型完整路径 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+path=Plugin.lxj_Plug.lxj_GetSpecialPath(16)
+MSGBOX &quot;系统桌面路径为：&quot;&amp;path</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin path=lxj_Plug.lxj_GetSpecialPath(16)
+MSGBOX &quot;系统桌面路径为：&quot;&amp;path</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_GetShortPathName" id="lxj_GetShortPathName"></a>lxj_GetShortPathName 通过完整路径获取短文件名 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 通过完整路径获取短文件名，适用于某些不能在路径中存在空格的情况，通过转化后效果一般不变</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】完整路径</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回字符串型短文件名 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+path=Plugin.lxj_Plug.lxj_GetSpecialPath(16)
+path=Plugin.lxj_Plug.lxj_GetShortPathName(path)
+MSGBOX &quot;系统桌面路径为：&quot;&amp;path</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin path=lxj_Plug.lxj_GetSpecialPath(16)
+Plugin path=lxj_Plug.lxj_GetShortPathName(path)
+MSGBOX &quot;系统桌面路径为：&quot;&amp;path</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SetFileTime" id="lxj_SetFileTime"></a>lxj_SetFileTime 修改文件的时间信息 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 修改文件的时间信息</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】文件完整路径
+【参数2】目标时间，格式按"年-月-日 时:分:秒"
+【参数3（可选）】整数型操作类型，0为更改所有信息,1为更改建立时间,2为更改存放时间,3为更改修改时间。默认为0"</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回字符串型短文件名 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+Call Plugin.File.WriteFileEx("C:\1.txt", "本文本用来测试")
+path=Plugin.lxj_Plug.lxj_SetFileTime("C:\1.txt","2222-2-22 2:22:22")</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin File.WriteFileEx("C:\1.txt", "本文本用来测试")
+Plugin path=lxj_Plug.lxj_SetFileTime("C:\1.txt","2222-2-22 2:22:22")</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ReadTXT" id="lxj_ReadTXT"></a>lxj_ReadTXT 按编码读取文本 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>按编码读取文本&nbsp;</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】文本完整路径
+【参数2（可选）】字符串型编码格式，留空则自动选择编码，目前仅支持ANSI、UTF-8、Unicode、GB2312等编码</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回文本内容，字符串型 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+call Plugin.File.WriteFileEx(&quot;C:\1.txt&quot;, &quot;本文本用来测试&quot;)
+text=Plugin.lxj_Plug.lxj_ReadTXT(&quot;C:\1.txt&quot;,"GB2312")
+msgbox text</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin File.WriteFileEx(&quot;C:\1.txt&quot;, &quot;本文本用来测试&quot;)
+Plugin text=lxj_Plug.lxj_ReadTXT(&quot;C:\1.txt&quot;,"GB2312")
+msgbox text</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_Txtline" id="lxj_Txtline"></a>lxj_Txtline 按段落读取文本 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>按段落读取文本</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】文本完整路径</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回数组,第1个元素为整数型段落总数,其后各元素为字符串型各段内容 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+call Plugin.File.WriteFileEx(&quot;C:\1.txt&quot;, &quot;本文本用来测试1&quot;&chr(10)&"本文本用来测试2")
+text=Plugin.lxj_Plug.lxj_Txtline(&quot;C:\1.txt&quot;)
+msgbox "文本共有"&text(0)&"段"
+msgbox "第一段内容为："&chr(10)&text(1)
+msgbox "最后一段内容为："&chr(10)&text(text(0))</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin File.WriteFileEx(&quot;C:\1.txt&quot;, &quot;本文本用来测试1&quot;&chr(10)&"本文本用来测试2")
+Plugin text=lxj_Plug.lxj_Txtline(&quot;C:\1.txt&quot;)
+msgbox "文本共有"&text(0)&"段"
+msgbox "第一段内容为："&chr(10)&text(1)
+msgbox "最后一段内容为："&chr(10)&text(text(0))</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ComPicRar" id="lxj_ComPicRar"></a>lxj_ComPicRar 合并图片和压缩文件 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>合并图片和压缩文件，合并后可通过修改后缀名查看各自的内容</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】图片路径
+【参数2】压缩文件路径
+【参数3】保存路径</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+ImgPath = "C:\1.jpg"
+RarPath = "C:\2.rar"
+Call Plugin.lxj_Plug.lxj_ComPicRa（ImgPath,RarPath,"C:\3.JPG")
+MsgBox "合并完成，修改3.jpg的后缀名为rar可查看原2.rar中内容"</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+ImgPath = "C:\1.jpg"
+RarPath = "C:\2.rar"
+Plugin lxj_Plug.lxj_ComPicRa（ImgPath,RarPath,"C:\3.JPG")
+MsgBox "合并完成，修改3.jpg的后缀名为rar可查看原2.rar中内容"</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_Rar" id="lxj_Rar"></a>lxj_Rar 使用WINRAR压缩文件 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>使用WINRAR压缩文件，需要WINRAR支持</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】压缩文件存放路径
+【参数2】参数2以后为待压缩文件路径，可无限扩充，具体见脚本例子</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+Call Plugin.lxj_Plug.lxj_CreatFoldEX(&quot;C:\1&quot;)
+Call Plugin.lxj_Plug.lxj_CreatFoldEX(&quot;C:\2&quot;)
+call Plugin.File.WriteFileEx(&quot;C:\3.txt&quot;, &quot;本文本用来测试&quot;)
+call Plugin.lxj_Plug.lxj_Rar("c:\4.rar","c:\1","c:\2","c:\3.txt")</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin lxj_Plug.lxj_CreatFoldEX(&quot;C:\1&quot;)
+Plugin lxj_Plug.lxj_CreatFoldEX(&quot;C:\2&quot;)
+Plugin File.WriteFileEx(&quot;C:\3.txt&quot;, &quot;本文本用来测试&quot;)
+Plugin lxj_Plug.lxj_Rar("c:\4.rar","c:\1","c:\2","c:\3.txt")</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_UnRar" id="lxj_UnRar"></a>lxj_UnRar 使用WINRAR解压缩文件 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>使用WINRAR解压缩文件，需要WINRAR支持</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】压缩文件路径
+【参数2（可选）】释放到的文件夹路径,默认为压缩包所在文件夹内的同名文件夹</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+Call Plugin.lxj_Plug.lxj_CreatFoldEX(&quot;C:\1&quot;)
+Call Plugin.lxj_Plug.lxj_CreatFoldEX(&quot;C:\2&quot;)
+call Plugin.File.WriteFileEx(&quot;C:\3.txt&quot;, &quot;本文本用来测试&quot;)
+call Plugin.lxj_Plug.lxj_Rar(&quot;c:\4.rar&quot;,&quot;c:\1&quot;,&quot;c:\2&quot;,&quot;c:\3.txt&quot;)
+call Plugin.lxj_Plug.lxj_UnRar(&quot;c:\4.rar&quot;)</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin lxj_Plug.lxj_CreatFoldEX(&quot;C:\1&quot;)
+Plugin lxj_Plug.lxj_CreatFoldEX(&quot;C:\2&quot;)
+Plugin File.WriteFileEx(&quot;C:\3.txt&quot;, &quot;本文本用来测试&quot;)
+Plugin lxj_Plug.lxj_Rar(&quot;c:\4.rar&quot;,&quot;c:\1&quot;,&quot;c:\2&quot;,&quot;c:\3.txt&quot;)
+Plugin lxj_Plug.lxj_UnRar(&quot;c:\4.rar&quot;)</td>
+</tr>
+</table>
+
+<tr width="100%" align="center"><font color=#FF00FF size=5><B>★★★★★字符串算法类★★★★★</B></font></tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_Instr" id="lxj_Instr"></a>lxj_Instr 搜索字符串加强版1 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>搜索字符串加强版1，搜索字符串中所有符合条件的位置</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】被搜索字符串
+【参数2】字符串
+【参数3（可选）】搜索起始位置
+【参数4（可选）】搜索结束位置]
+【参数5（可选）】比较类型，详见官方所带的instr命令说明</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回数组,第1个元素为数量,其后各元素为搜索到的位置 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+a="按键和精灵按键精灵as按键精灵dfghjk按键精灵lqwerty按键精灵"
+b="按键精灵"
+string_return=Plugin.lxj_Plug.lxj_instr(a,b,1, len(a)-5)
+If string_return(0)<>0 then
+For i=1 to string_return(0)
+MessageBox "第"&i&"次出现的位置为："&string_return(i)
+next
+Else 
+MessageBox "搜索的字符串不存在"
+End If</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+a="按键和精灵按键精灵as按键精灵dfghjk按键精灵lqwerty按键精灵"
+b="按键精灵"
+Plugin string_return=lxj_Plug.lxj_instr(a,b,1, len(a)-5)
+If string_return(0)<>0
+i=1
+For string_return(0)
+MessageBox "第"&i&"次出现的位置为："&string_return(i)
+i=i+1
+EndFor 
+Else 
+MessageBox "搜索的字符串不存在"
+EndIf </td>
+</tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_FindStr" id="lxj_FindStr"></a>lxj_FindStr 搜索字符串加强版2 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>搜索字符串加强版2，搜索字符串中两个特定字符串之间的内容</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】被搜索字符串
+【参数2】字符串A
+【参数3】字符串B
+【参数4（可选）】搜索起始位置
+【参数5（可选）】搜索结束位置]
+【参数6（可选）】比较类型，详见官方所带的instr命令说明</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回数组,第1个元素为数量,其后各元素为搜索到的字符串 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+a=&quot;按键和精灵按键精灵as按键精灵dfghjk按键精灵lqwerty按键精灵&quot;
+b=&quot;按键精灵&quot;
+string_return=Plugin.lxj_Plug.lxj_FindStr(a,b,1)
+If string_return(0)&lt;&gt;0 then
+For i=1 to string_return(0)
+MessageBox &quot;第&quot;&amp;i&amp;&quot;次出现为：&quot;&amp;string_return(i)
+next
+Else 
+MessageBox &quot;搜索的字符串不存在&quot;
+End If</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+a=&quot;按键和精灵按键精灵as按键精灵dfghjk按键精灵lqwerty按键精灵&quot;
+b=&quot;按键精灵&quot;
+Plugin string_return=lxj_Plug.lxj_FindStr(a,b,c,1)
+If string_return(0)<>0
+i=1
+For string_return(0)
+MessageBox "第"&i&"次出现为："&string_return(i)
+i=i+1
+EndFor 
+Else 
+MessageBox "搜索的字符串不存在"
+EndIf  </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_CheckChar" id="lxj_CheckChar"></a>lxj_CheckChar 判断字符类型 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>判断字符类型</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】长度为1的字符</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 整数型的字符类型，1为汉字，2为字母，3为数字，4为中文标点，5为英文标点，0为失败{可能由于字符长度不为1造成} </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+str = "按a键./。精n灵1"
+For i = 1 To len(str)
+s=mid(str,i,1)
+n=Plugin.lxj_Plug.lxj_CheckChar(s)
+r=r&n
+Next
+MsgBox "设定的字符串类型判断为"&r</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+str = "按a键./。精n灵1"
+i=1
+For len(str)
+s=mid(str,i,1)
+Plugin n=lxj_Plug.lxj_CheckChar(s)
+r=r&n
+i=i+1
+EndFor
+MsgBox "设定的字符串类型判断为"&r</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ReLine" id="lxj_ReLine"></a>lxj_ReLine 顺序排列数组 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>顺序排列数组</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】数组名</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回数组,分别为从小到大排序后各元素在原数组中的下标</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+//生成随机数组
+dim x(10)
+atp=""
+For i=0 to 9
+Randomize
+x(i)= Int(100 * Rnd)
+atp=atp&"|"&x(i)
+next
+//按从小到大的顺序重排数组，返回新数组各元素值在原数组中的下标
+q=Plugin.lxj_Plug.lxj_ReLine(x)
+//显示结果
+tmp="":new_x_left=""
+For i=0 to ubound(q)
+tmp=tmp&"|"&q(i)
+new_x_left=new_x_left&"|"&x(q(i))
+next
+MessageBox "原随机数组为："&atp&chr(10)&"排序后下标为："&tmp&chr(10)&"从小到大排序："&new_x_left</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+//生成随机数组
+dim x(10)
+i=0:atp=""
+For 10
+Randomize
+x(i)= Int(100 * Rnd)
+atp=atp&"|"&x(i)
+i=i+1
+EndFor 
+//按从小到大的顺序重排数组，返回新数组各元素值在原数组中的下标
+Plugin q=lxj_Plug.lxj_ReLine(x)
+//显示结果
+i=0:tmp="":new_x_left=""
+For ubound(q)+1
+tmp=tmp&"|"&q(i)
+new_x_left=new_x_left&"|"&x(q(i))
+i=i+1
+EndFor 
+MessageBox "原随机数组为："&atp&chr(10)&"排序后下标为："&tmp&chr(10)&"从小到大排序："&new_x_left</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_RndLine" id="lxj_RndLine"></a>lxj_RndLine 随机重排数组 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>随机重排数组</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】数组名</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回数组,分别为随机排序后各元素在原数组中的下标</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+//----下面以22选5为例----
+//生成数组
+dim arr1(22)
+For i=1 to 22
+arr1(i-1)=i
+next
+b=Plugin.lxj_Plug.lxj_Rndline(Arr1,5)
+result=join(b,",")
+MessageBox result</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+//----下面以22选5为例----
+//生成数组
+dim arr1(22)
+i=1
+For 22
+arr1(i-1)=i
+i=i+1
+EndFor 
+Plugin b=lxj_Plug.lxj_Rndline(Arr1,5)
+result=join(b,",")
+MessageBox result</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SearchArr" id="lxj_SearchArr"></a>lxj_SearchArr 搜索数组 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>搜索数组</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】被搜索数组名
+【参数2】被搜索字符串
+【参数3（可选）】匹配方式,0为完全匹配,1为模糊搜索。默认为0</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回数组,第1个元素为数量,其后为满足条件的字符串在原数组中的下标</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+str = "a,b,ad,wd"
+a = split(str, ",")
+b = Plugin.lxj_Plug.lxj_SearchArr(a, "d", 1)
+MsgBox "数组a中找到含有字符串d的元素个数为：" & b(0)
+for i=1 to b(0)
+MsgBox a(b(i))
+Next </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+str = "a,b,ad,wd"
+a = split(str, ",")
+Plugin b =lxj_Plug.lxj_SearchArr(a, "d", 1)
+MsgBox "数组a中找到含有字符串d的元素个数为：" & b(0)
+i=1
+for b(0)
+MsgBox a(b(i))
+i=i+1
+EndFor </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_Convert" id="lxj_Convert"></a>lxj_Convert 简繁转换 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>简繁转换</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】字符串
+【参数2】转换类型,0为繁转简,1为简转繁</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 字符串</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+x="按键精灵简繁转换"
+y=Plugin.lxj_Plug.lxj_Convert(x,1)
+msgbox y
+z=Plugin.lxj_Plug.lxj_Convert(y,0)
+msgbox z</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+x="按键精灵简繁转换"
+Plugin y=lxj_Plug.lxj_Convert(x,1)
+msgbox y
+Plugin z=lxj_Plug.lxj_Convert(y,0)
+msgbox z</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_TransformH" id="lxj_TransformH"></a>lxj_TransformH 2/8/10/16进制互换 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>2/8/10/16进制互换</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】字符串
+【参数2】原进制
+【参数3】目标进制</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 字符串</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+x=Plugin.lxj_Plug.lxj_TransformH("ff00ff",16,10)
+msgbox x
+y=Plugin.lxj_Plug.lxj_TransformH(x,10,16)
+msgbox y</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin x=lxj_Plug.lxj_TransformH("ff00ff",16,10)
+msgbox x
+Plugin y=lxj_Plug.lxj_TransformH(x,10,16)
+msgbox y</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_NongliDayStr" id="lxj_NongliDayStr"></a>lxj_NongliDayStr 转换农历日期</td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>转换农历日期</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】日期</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 字符串型农历日期</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+d=Plugin.lxj_Plug.lxj_NongliDayStr(now)
+MessageBox "今天是："&d</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+Plugin d=lxj_Plug.lxj_NongliDayStr(now)
+MessageBox "今天是："&d</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_Encipher" id="lxj_Encipher"></a>lxj_Encipher 加密字符串</td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>加密字符串</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】字符串
+【参数2】密码,密码只能是英文字符及数字</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 字符串</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+str="按键精灵 8"
+key="http://bbs.ajjl.cn"
+temp=Plugin.lxj_Plug.lxj_Encipher(str,key)
+MessageBox temp
+newstr=Plugin.lxj_Plug.lxj_Decrypt(temp,key)
+MessageBox newstr</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+str="按键精灵 7"
+key="http://bbs.ajjl.cn"
+Plugin temp=lxj_Plug.lxj_Encipher(str,key)
+MessageBox temp
+Plugin newstr=lxj_Plug.lxj_Decrypt(temp,key)
+MessageBox newstr</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_Decrypt" id="lxj_Decrypt"></a>lxj_Decrypt 解密字符串</td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>解密字符串</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】字符串
+【参数2】密码,密码只能是英文字符及数字</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 字符串</td>
+</tr>
+<tr><th>脚本例子：<br /></th><td><pre>
+详例见lxj_Encipher命令
+</td></tr></table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_LockFile" id="lxj_LockFile"></a>lxj_LockFile 加密文本文件</td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>加密文本文件</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】文件路径
+【参数2】密码,密码只能是英文字符及数字
+【参数3（可选）】是否备份,0为备份,1为不备份。默认为0</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 成功返回1，否则返回0</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+path="c:\lxj_tmp.txt"
+call Plugin.File.WriteFileEx(path, "内容and测试")
+call Plugin.lxj_Plug.lxj_LockFile(path,"ajjl",1)
+MessageBox "加密完成"
+call Plugin.lxj_Plug.lxj_LockFile(path,"ajjl",1)
+MessageBox "解密完成"</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+path="c:\lxj_tmp.txt"
+Plugin File.WriteFileEx(path, "内容and测试")
+Plugin lxj_Plug.lxj_LockFile(path,"ajjl",1)
+MessageBox "加密完成"
+Plugin lxj_Plug.lxj_LockFile(path,"ajjl",1)
+MessageBox "解密完成"</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_HtmlCode" id="lxj_HtmlCode"></a>lxj_HtmlCode URL解码/编码</td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td>URL解码/编码</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】字符串
+【参数2（可选）】转换类型,0表示解码,1表示编码。默认为0</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 转换后的字符串</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+url="http://bbs.ajjl.cn"
+url=Plugin.lxj_Plug.lxj_HtmlCode(url,1)
+MessageBox url
+url=Plugin.lxj_Plug.lxj_HtmlCode(url,0)
+MessageBox url</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td class="lizi"><pre>
+url="http://bbs.ajjl.cn"
+Plugin url=lxj_Plug.lxj_HtmlCode(url,1)
+MessageBox url
+Plugin url=lxj_Plug.lxj_HtmlCode(url,0)
+MessageBox url</td>
+</tr>
+</table>
+
+<tr width="100%" align="center"><font color=#FF00FF size=5><B>★★★★★网络操作类★★★★★</B></font></tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetIP"></a>lxj_GetIP 获取本机IP
+</td>
+</tr><tr><th>命令功能：</th><td>
+获取内网IP
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，内网IP
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+IP=Plugin.lxj_Plug.lxj_GetIP()
+msgbox IP
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin IP=lxj_Plug.lxj_GetIP()
+msgbox IP
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetMAC"></a>lxj_GetMAC 获取本机所有网卡MAC地址
+</td>
+</tr><tr><th>命令功能：</th><td>
+获取本机所有网卡MAC地址
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+所有网卡MAC地址,多个地址用'|'隔开,失败返回空字符串
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+MAC=Plugin.lxj_Plug.lxj_GetMAC()
+msgbox MAC
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin MAC=lxj_Plug.lxj_GetMAC()
+msgbox MAC
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SetSurrogate"></a>lxj_SetSurrogate 设置代理
+</td>
+</tr><tr><th>命令功能：</th><td>
+设置IE代理
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+（非共享版命令）
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>
+（非共享版命令）
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetHtml"></a>lxj_GetHtml 获取网站内容
+</td>
+</tr><tr><th>命令功能：</th><td>
+获取网站源码
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】字符串型，网址
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，网站源码
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+url="http://bbs.ajjl.cn"
+html=Plugin.lxj_Plug.lxj_GetHtml(url)
+MessageBox html
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+url="http://bbs.ajjl.cn"
+Plugin html=lxj_Plug.lxj_GetHtml(url)
+MessageBox html
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetCache"></a>lxj_GetCache 获取指定URL的缓存地址
+</td>
+</tr><tr><th>命令功能：</th><td>
+获取指定URL的缓存地址
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】字符串型，网址
+【参数2（可选）】匹配类型，为0表示完全匹配，为1则表示模糊查找。默认为0
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+返回数组形式路径，第一个元素为数量，其后各元素分别为路径
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+URL="http://bbs.vrbrothers.com"
+localpath=Plugin.lxj_Plug.lxj_GetCache(URL,1)
+MessageBox "缓存中共找到含"&chr(10)&URL&chr(10)&"的路径"&localpath(0)&"个"
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+URL="http://bbs.vrbrothers.com"
+Plugin localpath=lxj_Plug.lxj_GetCache(URL,1)
+MessageBox "缓存中共找到含"&chr(10)&URL&chr(10)&"的路径"&localpath(0)&"个"
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_IEClear"></a>lxj_IEClear 清除上网垃圾
+</td>
+</tr><tr><th>命令功能：</th><td>
+清除上网垃圾
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】操作项目，可填内容包括：浏览历史,COOKIES,临时文件,表单记录,用户密码,所有。默认为“所有”
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Call Plugin.lxj_Plug.lxj_IEClear("COOKIES")
+MessageBox "COOKIES清理完毕"
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin lxj_Plug.lxj_IEClear("COOKIES")
+MessageBox "COOKIES清理完毕"
+</td></tr></table>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ClearCache" id="lxj_ClearCache"></a>lxj_ClearCache 清除缓存 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 清除缓存 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+无 </td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+Call Plugin.lxj_Plug.lxj_ClearCache()</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td><pre>
+Plugin lxj_Plug.lxj_ClearCache()</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ClearCookie" id="lxj_ClearCookie"></a>lxj_ClearCookie 清除指定网址的COOKIE </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 清除指定网址的COOKIE </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1（可选）】网址，默认为"",表示清除所有COOKIE
+</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+url="http://bbs.ajjl.cn"
+Call Plugin.lxj_Plug.lxj_ClearCookie(url)</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td><pre>
+url="http://bbs.ajjl.cn"
+Plugin lxj_Plug.lxj_ClearCookie(url)</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ClearVisited" id="lxj_ClearVisited"></a>lxj_ClearVisited 清除浏览历史 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 清除指定网址的浏览历史 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1（可选）】网址，默认为&quot;&quot;,表示清除所有浏览历史 </td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+url=&quot;http://bbs.ajjl.cn&quot;
+Call Plugin.lxj_Plug.lxj_ClearVisited(url)</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td><pre>
+url=&quot;http://bbs.ajjl.cn&quot;
+Plugin lxj_Plug.lxj_ClearVisited(url)</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SendMail" id="lxj_SendMail"></a>lxj_SendMail 发送邮件 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 发送邮件 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+（非共享版命令）
+</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</th>
+<td class="lizi"><pre>
+（非共享版命令）
+</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_FTPUpAndDown" id="lxj_FTPUpAndDown"></a>lxj_FTPUpAndDown FTP上传/下载 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> FTP上传/下载 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+（非共享版命令） </td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</th>
+<td class="lizi"><pre>
+（非共享版命令） </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_FTPrename" id="lxj_FTPrename"></a>lxj_FTPrename 重命名FTP上指定文件 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 重命名FTP上指定文件 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+（非共享版命令） </td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</th>
+<td class="lizi"><pre>
+（非共享版命令） </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_FtpDelete" id="lxj_FtpDelete"></a>lxj_FtpDelete 删除FTP上指定文件 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 删除FTP上指定文件 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+（非共享版命令） </td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</th>
+<td class="lizi"><pre>
+（非共享版命令） </td>
+</tr>
+</table>
+
+<tr width="100%" align="center"><font color=#FF00FF size=5><B>★★★★★办公文档类★★★★★</B></font></tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_ExcelOpen"></a>lxj_ExcelOpen 打开EXCEL文档
+</td></tr><tr><th>命令功能：</th><td>
+打开EXCEL文档
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】 EXCEL完整路径
+【参数2（可选）】 打开方法，0不可见,1为可见。默认为0
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+索引值，本插件对多个EXCEL进行操作时需要。索引值为从1开始计数的正整数
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+path="C:\测试.xls"
+index=Plugin.lxj_Plug.lxj_ExcelOpen(path,1)
+//统计EXCEL共有多少标签页,无参数
+i=Plugin.lxj_Plug.lxj_SheetCount(index)
+MessageBox "本EXCEL共有标签页数: "&i
+//在所有标签页后新增一个标签页，无参数，返回新标签的页码
+x=Plugin.lxj_Plug.lxj_SheetAdd(index)
+MessageBox "新建标签页码为: "&x
+name=Plugin.lxj_Plug.lxj_SheetName(x,index)
+MessageBox name
+//重命名指定的标签页
+Call Plugin.lxj_Plug.lxj_SheetRename(x,"测试",index)
+MessageBox "已将第"&x&"个标签页更名为“测试”"
+//删除指定标签页。参数为指定标签页的页码数或者标签名
+Call Plugin.lxj_Plug.lxj_SheetDel(i,index)
+MessageBox "已删除第"&i&"个标签页"
+MessageBox "标签部分演示完毕，下面进行页面内容的设置"
+Call Plugin.lxj_Plug.lxj_SheetRename(2,"EXCEL中颜色数值查看表",index)
+Call Plugin.lxj_Plug.lxj_ExcelCells("EXCEL中颜色数值查看表","垂直对齐","居中",index)
+Call Plugin.lxj_Plug.lxj_ExcelCells(2,"水平对齐","居中",index)
+Call Plugin.lxj_Plug.lxj_ExcelCells(2,"字形","加粗",index)
+//设置并生成表头
+Call Plugin.lxj_Plug.lxj_ExcelRange(2,"A1:H1","合并单元格",index)
+Call Plugin.lxj_Plug.lxj_ExcelWrite(2, 1, 1, "EXCEL中颜色数值查看表",index)
+Call Plugin.lxj_Plug.lxj_ExcelRange(2,"A1","背景颜色",1,index)
+Call Plugin.lxj_Plug.lxj_ExcelRange(2,"A1","字体颜色",33,index)
+Call Plugin.lxj_Plug.lxj_ExcelRange(2,"A1","字体","楷体_GB2132",index)
+Call Plugin.lxj_Plug.lxj_ExcelRange(2,"A1","字号",26,index)
+//输出表格正文
+Call Plugin.lxj_Plug.lxj_ExcelRows(2,"2:8","行高",30,index)
+Call Plugin.lxj_Plug.lxj_ExcelColumns(2,"A:H","列宽",12,index)
+for n=2 to 8
+for m=1 to 8
+color=8*(n-2)+m
+rang=cstr(chr(64+m))&cstr(n)
+Call Plugin.lxj_Plug.lxj_ExcelRange(2,rang,"背景颜色",color,index)
+If color=1 then
+Call Plugin.lxj_Plug.lxj_ExcelRange(2,rang,"字体颜色",2,index)
+EndIf 
+Call Plugin.lxj_Plug.lxj_ExcelWrite(2, n, m, "颜色值："&color,index)
+next
+next
+txtArr=Plugin.lxj_Plug.lxj_ExcelReadEX(2,"A1:H8",index)
+MessageBox "第2行第4列内容为："&txtArr(2,4)
+txt=Plugin.lxj_Plug.lxj_ExcelRead(2,5,8,index)
+MessageBox "第5行第8列内容为："&txt
+MessageBox "下面演示清除，如需保留本表格内容，请删除脚本中下面的清除部分重新生成。"
+Call Plugin.lxj_Plug.lxj_ExcelRange(2,"B2","清除",index)
+MessageBox "已清除单元格B2处内容"
+//注意，当此行或列包含与其他行或列和并的单元格时“清除”命令无效
+Call Plugin.lxj_Plug.lxj_ExcelRows(2,3,"清除",index)
+MessageBox "已清除第3行内容"
+Call Plugin.lxj_Plug.lxj_ExcelCells(2,"清除",index)
+MessageBox "已清除标签页全部内容"
+//加密
+Call Plugin.lxj_Plug.lxj_ExcelProtect("打开","123",index)
+MessageBox "已设置打开密码为123"
+Call Plugin.lxj_Plug.lxj_ExcelProtect("修改","456",index)
+MessageBox "已设置修改密码为456"
+//命令演示完毕，关闭EXCEL文件
+Call Plugin.lxj_Plug.lxj_ExcelClose(index)
+MessageBox "演示结束，请查看"
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+path="C:\测试.xls"
+Plugin index=lxj_Plug.lxj_ExcelOpen(path,1)
+//统计EXCEL共有多少标签页,无参数
+Plugin i=lxj_Plug.lxj_SheetCount(index)
+MessageBox "本EXCEL共有标签页数: "&i
+//在所有标签页后新增一个标签页，无参数，返回新标签的页码
+Plugin x=lxj_Plug.lxj_SheetAdd(index)
+MessageBox "新建标签页码为: "&x
+Plugin name=lxj_Plug.lxj_SheetName(x,index)
+MessageBox name
+//重命名指定的标签页
+Plugin lxj_Plug.lxj_SheetRename(x,"测试",index)
+MessageBox "已将第"&x&"个标签页更名为“测试”"
+//删除指定标签页。参数为指定标签页的页码数或者标签名
+Plugin lxj_Plug.lxj_SheetDel(i,index)
+MessageBox "已删除第"&i&"个标签页"
+MessageBox "标签部分演示完毕，下面进行页面内容的设置"
+Plugin lxj_Plug.lxj_SheetRename(2,"EXCEL中颜色数值查看表",index)
+Plugin lxj_Plug.lxj_ExcelCells("EXCEL中颜色数值查看表","垂直对齐","居中",index)
+Plugin lxj_Plug.lxj_ExcelCells(2,"水平对齐","居中",index)
+Plugin lxj_Plug.lxj_ExcelCells(2,"字形","加粗",index)
+//设置并生成表头
+Plugin lxj_Plug.lxj_ExcelRange(2,"A1:H1","合并单元格",index)
+Plugin lxj_Plug.lxj_ExcelWrite(2, 1, 1, "EXCEL中颜色数值查看表",index)
+Plugin lxj_Plug.lxj_ExcelRange(2,"A1","背景颜色",1,index)
+Plugin lxj_Plug.lxj_ExcelRange(2,"A1","字体颜色",33,index)
+Plugin lxj_Plug.lxj_ExcelRange(2,"A1","字体","楷体_GB2132",index)
+Plugin lxj_Plug.lxj_ExcelRange(2,"A1","字号",26,index)
+//输出表格正文
+Plugin lxj_Plug.lxj_ExcelRows(2,"2:8","行高",30,index)
+Plugin lxj_Plug.lxj_ExcelColumns(2,"A:H","列宽",12,index)
+color=1:n=2
+While n<9
+m=1
+While m<9
+rang=cstr(chr(64+m))&cstr(n)
+Plugin lxj_Plug.lxj_ExcelRange(2,rang,"背景颜色",color,index)
+If color=1
+Plugin lxj_Plug.lxj_ExcelRange(2,rang,"字体颜色",2,index)
+EndIf 
+Plugin lxj_Plug.lxj_ExcelWrite(2, n, m, "颜色值："&color,index)
+color=color+1:m=m+1
+EndWhile 
+n=n+1
+EndWhile 
+Plugin txtArr=lxj_Plug.lxj_ExcelReadEX(2,"A1:H8",index)
+MessageBox "第2行第4列内容为："&txtArr(2,4)
+Plugin txt=lxj_Plug.lxj_ExcelRead(2,5,8,index)
+MessageBox "第5行第8列内容为："&txt
+MessageBox "下面演示清除，如需保留本表格内容，请删除脚本中下面的清除部分重新生成。"
+Plugin lxj_Plug.lxj_ExcelRange(2,"B2","清除",index)
+MessageBox "已清除单元格B2处内容"
+//注意，当此行或列包含与其他行或列和并的单元格时“清除”命令无效
+Plugin lxj_Plug.lxj_ExcelRows(2,3,"清除",index)
+MessageBox "已清除第3行内容"
+Plugin lxj_Plug.lxj_ExcelCells(2,"清除",index)
+MessageBox "已清除标签页全部内容"
+//加密
+Plugin lxj_Plug.lxj_ExcelProtect("打开","123",index)
+MessageBox "已设置打开密码为123"
+Plugin lxj_Plug.lxj_ExcelProtect("修改","456",index)
+MessageBox "已设置修改密码为456"
+//命令演示完毕，关闭EXCEL文件
+Plugin lxj_Plug.lxj_ExcelClose(index)
+MessageBox "演示结束，请查看"
+</td></tr></table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelHwnd" id="lxj_ExcelHwnd"></a>lxj_ExcelHwnd 获取EXCEL窗口句柄 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 获取EXCEL窗口句柄 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空，直接获取EXCEL窗口的句柄</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 
+该索引号对应的EXCEL的窗口句柄
+</td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令
+</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelLastR" id="lxj_ExcelLastR"></a>lxj_ExcelLastR 获取EXCEL总行数 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 获取EXCEL总行数 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 工作表页，可用整数型数值表示是第几个工作表标签，也可用字符串型的标签名称
+【参数2（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> EXCEL中某标签页的表格总行数，整数型 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelLastC" id="lxj_ExcelLastC"></a>lxj_ExcelLastC 获取EXCEL总列数 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 获取EXCEL总列数 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 工作表页，可用整数型数值表示是第几个工作表标签，也可用字符串型的标签名称
+【参数2（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> EXCEL中某标签页的表格总列数，整数型 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelRead" id="lxj_ExcelRead"></a>lxj_ExcelRead 读取单元格内容 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 读取单元格内容 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 工作表页，可用整数型数值表示是第几个工作表标签，也可用字符串型的标签名称
+【参数2】 行，整数型
+【参数3】 列，可用整数型数值表示是第几列，也可用EXCEL上方自带的列编号
+【参数4（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 单元格内容，字符串型 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelWrite" id="lxj_ExcelWrite"></a>lxj_ExcelWrite 写入单元格内容 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 写入单元格内容 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 工作表页，可用整数型数值表示是第几个工作表标签，也可用字符串型的标签名称
+【参数2】 行，整数型
+【参数3】 列，可用整数型数值表示是第几列，也可用EXCEL上方自带的列编号
+【参数4】 内容
+【参数5（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelReadEX" id="lxj_ExcelReadEX"></a>lxj_ExcelReadEX 读取区域内容 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 读取区域内容 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 工作表页，可用整数型数值表示是第几个工作表标签，也可用字符串型的标签名称
+【参数2】 区域范围，如"A2:D6",表示从A2单元格到D6单元格的区域
+【参数3（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 返回二维数组，分别存放各单元格的内容，如 返回值(1,2)表示第一行第二列数据 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelWriteEX" id="lxj_ExcelWriteEX"></a>lxj_ExcelWriteEX 写入区域内容 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 写入区域内容 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 工作表页，可用整数型数值表示是第几个工作表标签，也可用字符串型的标签名称
+【参数2】 区域范围，如&quot;A2:D6&quot;,表示从A2单元格到D6单元格的区域，请确保此区域大于需要写入的二维数组区域
+【参数3】 二维数组名
+【参数4（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SheetIndex" id="lxj_SheetIndex"></a>lxj_SheetIndex 获取当前标签索引号 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 获取当前标签索引号 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 当前标签的序号，整数型 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SheetCount" id="lxj_SheetCount"></a>lxj_SheetCount 统计工作表标签总数 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 统计工作表标签总数 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 标签总数，整数型 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SheetAdd" id="lxj_SheetAdd"></a>lxj_SheetAdd 增加一个工作标签 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 在表格所有标签页后面增加一个新的工作标签 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SheetName" id="lxj_SheetName"></a>lxj_SheetName 获取标签名称 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 获取标签名称 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 标签索引号，即第几个标签页，整数型
+【参数2（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 标签名称，字符串型 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SheetRename" id="lxj_SheetRename"></a>lxj_SheetRename 重命名标签 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 重命名标签 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 整数型的标签索引号或者字符串型旧的标签名称
+【参数2】 新名称
+【参数3（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SheetDel" id="lxj_SheetDel"></a>lxj_SheetDel 删除一个工作标签 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 删除一个工作标签 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 整数型的标签索引号或者字符串型旧的标签名称
+【参数2（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelCells" id="lxj_ExcelCells"></a>lxj_ExcelCells EXCEL全表操作 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> EXCEL全表操作 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 整数型的标签索引号或者字符串型旧的标签名称
+【参数2】 操作对象，可填的项目包括 "水平对齐"，"垂直对齐"，"自动换行"，"合并单元格"，"拆分单元格"，"字体"，"字形"，"字号" ，
+"字体颜色"， "背景颜色"， "行高" ， "列宽" ， "清除"，"精确查找" ，"模糊查找" ，"复制" ，"数字格式" 
+【参数3（可选）】 操作内容，对应不同的操作对象，本处可填写的内容各不相同，详见下面参数说明中的对照表
+【参数4（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<th>参数说明：</th>    
+<td class="canshu"><table width="100%" border="1">
+<tr>
+<td width="10%"><div align="center" class="STYLE2">参数2</div></td>
+<td width="60%"><div align="center" class="STYLE2">参数3</div></td>
+<td width="10%"><div align="center" class="STYLE2">参数2</div></td>
+<td width="20%"><div align="center" class="STYLE2">参数3</div></td>
+</tr>
+<tr>
+<td>&quot;水平对齐&quot;</td>
+<td>&quot;靠左&quot;，&quot;居中&quot;，&quot;靠右&quot;</td>
+<td>&quot;自动换行&quot;</td>
+<td>无需参数3</td>
+</tr>
+<tr>
+<td>&quot;垂直对齐&quot;</td>
+<td>&quot;靠上&quot;，&quot;居中&quot;，&quot;靠下&quot;</td>
+<td>&quot;合并单元格&quot;</td>
+<td>无需参数3</td>
+</tr>
+<tr>
+<td>&quot;字体&quot;</td>
+<td>系统字体，字符串型，如&quot;楷体&quot;，&quot;宋体&quot;</td>
+<td>&quot;拆分单元格&quot;</td>
+<td>无需参数3</td>
+</tr>
+<tr>
+<td>&quot;字形&quot;</td>
+<td>&quot;加粗&quot;，&quot;倾斜&quot;， &quot;加粗 倾斜&quot;</td>
+<td>&quot;清除&quot;</td>
+<td>无需参数3</td>
+</tr>
+<tr>
+<td>&quot;字体颜色&quot;</td>
+<td>此颜色值非RGB颜色，而是EXCEL本身规定的颜色，为1至56的整数型数值，具体对应关系可通过运行<span class="lizi">lxj_ExcelOpen</span>命令中的脚本例子进行查看</td>
+<td>&quot;复制&quot; </td>
+<td>无需参数3</td>
+</tr>
+<tr>
+<td>&quot;背景颜色&quot;</td>
+<td>此颜色值非RGB颜色，而是EXCEL本身规定的颜色，为1至56的整数型数值，具体对应关系可通过运行<span class="lizi">lxj_ExcelOpen</span>命令中的脚本例子进行查看</td>
+<td>&quot;字号&quot; </td>
+<td>整数型数值</td>
+</tr>
+<tr>
+<td>&quot;数字格式&quot; </td>
+<td>本参数格式为&quot;[格式],[格式代码],[中文类型]&quot;，具体填法参照EXCEL单元格格式设置中的数字设置，如：&quot;常规&quot;，&quot;常规,中文小写&quot;，&quot;文本&quot;，&quot;数值,#,##0.000;-#,##0.00&quot;，&quot;数值,￥#,##0.000;-#,##0.00,中文大写&quot;，&quot;数值,yyyy年m月d日&quot;</td>
+<td>&quot;精确查找&quot;</td>
+<td>字符串型需要查找的内容</td>
+</tr>
+<tr>
+<td>&quot;行高&quot;</td>
+<td>整数型数值</td>
+<td>&quot;模糊查找&quot;</td>
+<td>字符串型需要查找的内容</td>
+</tr>
+<tr>
+<td>&quot;列宽&quot;</td>
+<td>整数型数值</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+
+
+</table>	  </td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui">仅操作对象为“精确查找”或“模糊查找”时有返回值，返回数组，第一个元素为找到的个数，其后为位置 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelRange" id="lxj_ExcelRange"></a>lxj_ExcelRange EXCEL区域操作 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> EXCEL区域操作 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 整数型的标签索引号或者字符串型旧的标签名称
+【参数2】 操作范围
+【参数3】 操作对象，可填的项目包括 "水平对齐"，"垂直对齐"，"自动换行"，"合并单元格"，"拆分单元格"，"字体"，"字形"，"字号" ，
+"字体颜色"， "背景颜色"， "行高" ， "列宽" ， "清除"，"精确查找" ，"模糊查找" ，"复制" ，"数字格式" 
+【参数4（可选）】 操作内容，对应不同的操作对象，本处可填写的内容各不相同，详见lxj_ExcelCells命令中的参数对照表
+【参数5（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui">仅操作对象为“精确查找”或“模糊查找”时有返回值，返回数组，第一个元素为找到的个数，其后为位置 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelRows" id="lxj_ExcelRows"></a>lxj_ExcelRows EXCEL行操作 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> EXCEL行操作 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 整数型的标签索引号或者字符串型旧的标签名称
+【参数2】 操作范围
+【参数3】 操作对象，可填的项目包括 &quot;水平对齐&quot;，&quot;垂直对齐&quot;，&quot;自动换行&quot;，&quot;合并单元格&quot;，&quot;拆分单元格&quot;，&quot;字体&quot;，&quot;字形&quot;，&quot;字号&quot; ，
+&quot;字体颜色&quot;， &quot;背景颜色&quot;， &quot;行高&quot; ， &quot;列宽&quot; ， &quot;清除&quot;，&quot;精确查找&quot; ，&quot;模糊查找&quot; ，&quot;复制&quot; ，&quot;数字格式&quot; 
+【参数4（可选）】 操作内容，对应不同的操作对象，本处可填写的内容各不相同，详见lxj_ExcelCells命令中的参数对照表
+【参数5（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 仅操作对象为“精确查找”或“模糊查找”时有返回值，返回数组，第一个元素为找到的个数，其后为列数 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelColumns" id="lxj_ExcelColumns"></a>lxj_ExcelColumns EXCEL列操作 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> EXCEL列操作 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 整数型的标签索引号或者字符串型旧的标签名称
+【参数2】 操作范围
+【参数3】 操作对象，可填的项目包括 &quot;水平对齐&quot;，&quot;垂直对齐&quot;，&quot;自动换行&quot;，&quot;合并单元格&quot;，&quot;拆分单元格&quot;，&quot;字体&quot;，&quot;字形&quot;，&quot;字号&quot; ，
+&quot;字体颜色&quot;， &quot;背景颜色&quot;， &quot;行高&quot; ， &quot;列宽&quot; ， &quot;清除&quot;，&quot;精确查找&quot; ，&quot;模糊查找&quot; ，&quot;复制&quot; ，&quot;数字格式&quot; 
+【参数4（可选）】 操作内容，对应不同的操作对象，本处可填写的内容各不相同，详见lxj_ExcelCells命令中的参数对照表
+【参数5（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 仅操作对象为“精确查找”或“模糊查找”时有返回值，返回数组，第一个元素为找到的个数，其后为行数 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelLinks" id="lxj_ExcelLinks"></a>lxj_ExcelLinks 添加超级链接 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 添加超级链接 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 整数型的标签索引号或者字符串型旧的标签名称
+【参数2】 添加链接的位置
+【参数3（可选）】 超级链接地址，留空则清除超级链接，默认为""
+【参数4（可选）】 超级链接名称
+【参数5（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_CopyTo" id="lxj_CopyTo"></a>lxj_CopyTo EXCEL数据复制至 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> EXCEL数据复制至 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】来源标签页，整数型的标签索引号或者字符串型旧的标签名称
+【参数2】复制区域，格式为“区域,EXCEL索引号”
+【参数3】去向标签页，整数型的标签索引号或者字符串型旧的标签名称,为0时仅复制
+【参数4（可选）】粘贴区域，格式为同复制区域,默认为“A1:A1”
+【参数5（可选）】复制方式，默认普通复制,填1相当于格式刷</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelProtect" id="lxj_ExcelProtect"></a>lxj_ExcelProtect 设置EXCEL文档密码 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 设置EXCEL文档密码 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】设置的密码类型，可设置"打开"或"修改"
+【参数2】字符串型密码
+【参数3（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelSaveAs" id="lxj_ExcelSaveAs"></a>lxj_ExcelSaveAs EXCEL文档另存为 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> EXCEL文档另存为 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】存放路径，后缀可为.xls.xlt.html.htm.mht.mhtml.xml.txt.csv.xlsx
+【参数2（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelSave" id="lxj_ExcelSave"></a>lxj_ExcelSave 保存EXCEL文档 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 保存EXCEL文档 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ExcelClose" id="lxj_ExcelClose"></a>lxj_ExcelClose 关闭EXCEL文档 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 关闭EXCEL文档 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1（可选）】 索引值 ，如果只用本插件打开了一个EXCEL，则可以留空</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_ExcelOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordOpen" id="lxj_WordOpen"></a>lxj_WordOpen 打开Word文档 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 打开Word文档 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】 Word完整路径 
+【参数2（可选）】 打开方法，0不可见,1为可见。默认为0</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(8.x语法)</span> </th>
+<td class="lizi"><pre>
+path="C:\a.doc"
+//打开Word文档，为了演示，将第二个参数(可选参数)设为1使其可见，默认为不可见
+Call Plugin.lxj_Office.lxj_WordOpen(path,1)
+word=Plugin.lxj_Office.lxj_WordReadEX()
+Call Plugin.File.WriteFileEx("C:\b.txt", word)
+MessageBox "Word全文为："&word
+Text = Plugin.File.ReadFileEx(".\QMScript\插件命令\命令例子：办公文档Office插件.Q")
+Text=replace(Text,"|",chr(10))
+Text=left(Text,len(Text)-1)
+Call Plugin.lxj_Office.lxj_WordWriteEX(Text)
+MessageBox "全文重写完毕"
+Call Plugin.lxj_Office.lxj_WordSet("段",0)
+MessageBox "已跳转至开头"
+Call Plugin.lxj_Office.lxj_WordSet("段",8,"下")
+MessageBox "已跳转至第9段开头"
+Call Plugin.lxj_Office.lxj_WordSet("字",8,"右",1)
+Call Plugin.lxj_Office.lxj_WordBackspace()
+MessageBox "已删除开头8个字符"
+Call Plugin.lxj_Office.lxj_WordSet("字",-1,"", 1)
+word=Plugin.lxj_Office.lxj_WordRead()
+MessageBox "选中文字为:"&word
+Call Plugin.lxj_Office.lxj_WordWrite("测试")
+MessageBox "已写入新文字"
+Call Plugin.lxj_Office.lxj_WordInsertPage()
+MessageBox "已插入新页"
+Call Plugin.lxj_Office.lxj_WordInsertPic("C:\图片.jpg")
+MessageBox "已插入图片"
+Call Plugin.lxj_Office.lxj_WordSet("段",-1)
+MessageBox "已到达到最后一段的开头"
+Call Plugin.lxj_Office.lxj_WordSet("字",-1)
+MessageBox "已到达最后"
+//加密
+Call Plugin.lxj_Office.lxj_WordProtect("打开","123")
+MessageBox "已设置打开密码为123"
+Call Plugin.lxj_Office.lxj_WordProtect("修改","456")
+MessageBox "已设置修改密码为456"
+//操作结束关闭Word文档
+Call Plugin.lxj_Office.lxj_WordClose()
+MessageBox "演示结束"</td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+<span class="red">(7.x语法)</span> </th>
+<td><pre>
+path="C:\a.doc"
+//打开Word文档，为了演示，将第二个参数(可选参数)设为1使其可见，默认为不可见
+Plugin lxj_Office.lxj_WordOpen(path,1)
+Plugin word=lxj_Office.lxj_WordReadEX()
+Plugin File.WriteFileEx("C:\b.txt", word)
+MessageBox "Word全文为："&word
+Plugin Text = File.ReadFileEx(".\插件命令\命令例子：办公文档Office插件.txt")
+Text=replace(Text,"|",chr(10))
+Text=left(Text,len(Text)-1)
+Plugin lxj_Office.lxj_WordWriteEX(Text)
+MessageBox "全文重写完毕"
+Plugin lxj_Office.lxj_WordSet("段",0)
+MessageBox "已跳转至开头"
+Plugin lxj_Office.lxj_WordSet("段",8,"下")
+MessageBox "已跳转至第9段开头"
+Plugin lxj_Office.lxj_WordSet("字",8,"右",1)
+Plugin lxj_Office.lxj_WordBackspace()
+MessageBox "已删除开头8个字符"
+Plugin lxj_Office.lxj_WordSet("字",-1, , 1)
+Plugin word=lxj_Office.lxj_WordRead()
+MessageBox "选中文字为:"&word
+Plugin lxj_Office.lxj_WordWrite("测试")
+MessageBox "已写入新文字"
+Plugin lxj_Office.lxj_WordInsertPage()
+MessageBox "已插入新页"
+Plugin lxj_Office.lxj_WordInsertPic("C:\图片.jpg")
+MessageBox "已插入图片"
+Plugin lxj_Office.lxj_WordSet("段",-1)
+MessageBox "已到达到最后一段的开头"
+Plugin lxj_Office.lxj_WordSet("字",-1)
+MessageBox "已到达最后"
+//加密
+Plugin lxj_Office.lxj_WordProtect("打开","123")
+MessageBox "已设置打开密码为123"
+Plugin lxj_Office.lxj_WordProtect("修改","456")
+MessageBox "已设置修改密码为456"
+//操作结束关闭Word文档
+Plugin lxj_Office.lxj_WordClose()
+MessageBox "演示结束"</td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordReadEX" id="lxj_WordReadEX"></a>lxj_WordReadEX 读取Word文档全文 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 读取Word文档全文 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+无</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 文档内容，字符串型 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordWriteEX" id="lxj_WordWriteEX"></a>lxj_WordWriteEX 重写Word文档 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 重写Word文档，替换原有内容</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】内容</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordSet" id="lxj_WordSet"></a>lxj_WordSet 设置光标位置 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 设置光标位置，用来确定其他命令需要操作的位置</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】操作对象，可填"段"或"字"
+【参数2】移动数量,，整数型, 
+【参数3（可选）】移动方向，可填"上"、"下"、"左"、"右",与操作对象对应
+【参数4（可选）】附带操作,设置移动时是否按下Shift,0为不按，1为按下。默认为0</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordBackspace" id="lxj_WordBackspace"></a>lxj_WordBackspace 当前光标处按下 Backspace 键删除</td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 当前光标处按下 Backspace 键删除</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+无</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordInsertPage" id="lxj_WordInsertPage"></a>lxj_WordInsertPage 当前位置插入分页符
+</td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 当前位置插入分页符
+</td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+无</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordInsertPic" id="lxj_WordInsertPic"></a>lxj_WordInsertPic 当前位置插入图片 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 当前位置插入图片 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】图片路径</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordRead" id="lxj_WordRead"></a>lxj_WordRead 读取当前选中文字 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 读取当前选中文字 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+无</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 文字内容，字符串型 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordWrite" id="lxj_WordWrite"></a>lxj_WordWrite 从当前位置写入内容 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 从当前位置写入内容 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】内容</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordProtect" id="lxj_WordProtect"></a>lxj_WordProtect 设置Word文档密码 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 设置Word文档密码 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】类型，可设置为&quot;打开&quot;或&quot;修改&quot;
+【参数2】密码</p></td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordSaveAs" id="lxj_WordSaveAs"></a>lxj_WordSaveAs Word文档另存为 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> Word文档另存为 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】存放路径,后缀可为.doc.dot.html.htm.mht.mhtml.xml.txt
+</p></td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordSave" id="lxj_WordSave"></a>lxj_WordSave 保存Word文档 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 保存Word文档 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+无
+</p></td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WordClose" id="lxj_WordClose"></a>lxj_WordClose 关闭Word文档 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 关闭Word文档 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+无
+</p></td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br /></th>
+<td class="lizi"><pre>
+详例见lxj_WordOpen命令 </td>
+</tr>
+</table>
+
+
+<tr width="100%" align="center"><font color=#FF00FF size=5><B>★★★★★注册表操作类★★★★★</B></font></tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SetDWORDValue"></a>lxj_SetDWORDValue 新建DWORD值
+</td></tr><tr><th>命令功能：</th><td>
+新建DWORD值
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】项全名
+【参数2】值名称
+【参数3】DWORD值，数值型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /></span>
+</th><td class="lizi">无
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_GetDWORDValue" id="lxj_GetDWORDValue"></a>lxj_GetDWORDValue 读取DWORD值 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 读取DWORD值 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】项全名
+【参数2】值名称 </td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> DWORD值 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td>
+</tr>
+</table>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SetBinaryValue"></a>lxj_SetBinaryValue 新建二进制值
+</td></tr><tr><th>命令功能：</th><td>
+新建二进制值
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】项全名
+【参数2】值名称
+【参数3】二进制值，数值型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /></span>
+</th><td class="lizi">无
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_GetBinaryValue" id="lxj_GetBinaryValue"></a>lxj_GetBinaryValue 读取二进制值 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 读取二进制值 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】项全名
+【参数2】值名称 </td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 二进制值 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td>
+</tr>
+</table>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SetStringValue"></a>lxj_SetStringValue 新建串值
+</td></tr><tr><th>命令功能：</th><td>
+新建串值
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】项全名
+【参数2】值名称
+【参数3】字符串内容
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /></span>
+</th><td class="lizi">无
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_GetStringValue" id="lxj_GetStringValue"></a>lxj_GetStringValue 读取串值 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 读取串值 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】项全名
+【参数2】值名称 </td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui"> 字符串内容 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td>
+</tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_CreateKey" id="lxj_CreateKey"></a>lxj_CreateKey 新建项 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 新建项 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】项全名
+</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui">无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td>
+</tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_DeleteKey" id="lxj_DeleteKey"></a>lxj_DeleteKey 删除项 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 删除项 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】项全名
+【参数2（可选）】操作类型，整数型，0为删除当前键，1为删除包括其下所有分支。默认为0，如有分支则删除失败
+</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui">无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_DelValue" id="lxj_DelValue"></a>lxj_DelValue 删除键值 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 删除键值 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】项全名
+【参数2】值名称
+</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui">无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_EnumKey" id="lxj_EnumKey"></a>lxj_EnumKey 枚举指定项下的子项 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 枚举指定项下的子项 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】项全名
+</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui">返回数组，第一个元素为数量，其后为各子项名 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_EnumValue" id="lxj_EnumValue"></a>lxj_EnumValue 枚举指定项的值项 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 枚举指定项的值项 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】项全名
+</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui">返回数组，第一个元素为数量，其后为各值项名 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_WriteAppINI" id="lxj_WriteAppINI"></a>lxj_WriteAppINI 向程序注册表写入配置文件 </td>
+</tr>
+<tr>
+<th>命令功能：</th>
+<td> 向程序注册表写入配置文件 </td>
+</tr>
+<tr>
+<th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】小节名
+【参数2】键值名
+【参数3】内容
+</td>
+</tr>
+<tr>
+<th>返回值：</th>
+<td class="fanhui">无 </td>
+</tr>
+<tr>
+<th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td>
+</tr>
+</table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ReadAppINI" id="lxj_ReadAppINI"></a>lxj_ReadAppINI 读取程序注册表配置文件 </td>
+</tr>
+<tr><th>命令功能：</th>
+<td> 读取程序注册表配置文件 </td></tr>
+<tr><th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】小节名
+【参数2】键值名
+</td></tr>
+<tr><th>返回值：</th>
+<td class="fanhui">内容，字符串型 </td></tr>
+<tr><th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td></tr>
+</table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_ReadAllSeting" id="lxj_ReadAllSeting"></a>lxj_ReadAllSeting 读取程序注册表配置某小节名内所有设置 </td>
+</tr>
+<tr><th>命令功能：</th>
+<td> 读取程序注册表配置某小节名内所有设置 </td></tr>
+<tr><th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】小节名
+</td></tr>
+<tr><th>返回值：</th>
+<td class="fanhui">返回数组形式的内容，格式为“键值名=内容”</td></tr>
+<tr><th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_DelAppINI" id="lxj_DelAppINI"></a>lxj_DelAppINI 清空程序注册表配置文件 </td>
+</tr>
+<tr><th>命令功能：</th>
+<td> 清空程序注册表配置文件 </td></tr>
+<tr><th>命令参数：</th>
+<td class="canshu"><pre>
+无
+</td></tr>
+<tr><th>返回值：</th>
+<td class="fanhui">无</td></tr>
+<tr><th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td></tr>
+</table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr>
+<th width="100px">命令名称：</th>
+<td class="name"><a name="lxj_SetIEStartPage" id="lxj_SetIEStartPage"></a>lxj_DelAppINI 设置IE主页 </td>
+</tr>
+<tr><th>命令功能：</th>
+<td> 设置IE主页 </td></tr>
+<tr><th>命令参数：</th>
+<td class="canshu"><pre>
+【参数1】网址，字符串型
+</td></tr>
+<tr><th>返回值：</th>
+<td class="fanhui">无</td></tr>
+<tr><th>脚本例子：<br />
+</span> </th>
+<td class="lizi">无 </td></tr>
+</table>
+
+
+<tr width="100%" align="center"><font color=#FF00FF size=5><B>★★★★★系统操作类★★★★★</B></font></tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetDrive"></a>lxj_GetDrive 获取系统分区/光驱盘符
+</td></tr><tr><th>命令功能：</th><td>
+获取系统分区/光驱盘符
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】待提取对象类型，整数型,为0表示获取分区盘符，为1则获取光驱盘符。默认为0
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+返回数组，第一个元素为数量，其后各元素为盘符
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+FQ = Plugin.lxj_Plug.lxj_GetDrive()
+MsgBox join(FQ,CHR(10))
+GQ = Plugin.lxj_Plug.lxj_GetDrive(1)
+MsgBox join(GQ,CHR(10))
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin FQ = lxj_Plug.lxj_GetDrive()
+MsgBox join(FQ,CHR(10))
+Plugin GQ = lxj_Plug.lxj_GetDrive(1)
+MsgBox join(GQ,CHR(10))
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetDiskSN"></a>lxj_GetDiskSN 获取硬盘分区序列号
+</td></tr><tr><th>命令功能：</th><td>
+获取硬盘分区序列号
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】整数型分区号，默认为第1分区
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+返回长整型序列号
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+CSN = Plugin.lxj_Plug.lxj_GetDiskSN()
+DSN = Plugin.lxj_Plug.lxj_GetDiskSN(2)
+MsgBox "C盘序列号为："&CSN&chr(10)&"D盘序列号为："&DSN
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin CSN = lxj_Plug.lxj_GetDiskSN()
+Plugin DSN = lxj_Plug.lxj_GetDiskSN(2)
+MsgBox "C盘序列号为："&CSN&chr(10)&"D盘序列号为："&DSN
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetCPUSN"></a>lxj_GetCPUSN 获取CPU序列号
+</td></tr><tr><th>命令功能：</th><td>
+获取CPU序列号
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+返回字符串型序列号
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+CPU=Plugin.lxj_Plug.lxj_GetCPUSN()
+MsgBox CPU
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin CPU=lxj_Plug.lxj_GetCPUSN()
+MsgBox CPU
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_LimitMouse"></a>lxj_LimitMouse 限制鼠标活动范围
+</td></tr><tr><th>命令功能：</th><td>
+限制鼠标活动范围，能否使用请自行测试
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】操作类型，0为锁定,1为解锁
+【参数2（可选）】左上角x，默认为0
+【参数3（可选）】左上角y，默认为0
+【参数4（可选）】右下角x，默认为0
+【参数5（可选）】右下角y，默认为0
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+MessageBox "下面将限制你的鼠标在屏幕中间某区域内。"
+call Plugin.lxj_Plug.lxj_LimitMouse(0,400,400,500,500)
+MessageBox "试着动动鼠标看看。能点到我不？直接按下回车以便关闭本窗口下一项演示。"
+call Plugin.lxj_Plug.lxj_LimitMouse(0,600,550)
+MessageBox "现在鼠标动不了了吧？直接按下回车以便关闭本窗口恢复控制。"
+call Plugin.lxj_Plug.lxj_LimitMouse(1)
+MessageBox "演示结束"
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+MessageBox "下面将限制你的鼠标在屏幕中间某区域内。"
+Plugin lxj_Plug.lxj_LimitMouse(0,400,400,500,500)
+MessageBox "试着动动鼠标看看。能点到我不？直接按下回车以便关闭本窗口下一项演示。"
+Plugin lxj_Plug.lxj_LimitMouse(0,600,550)
+MessageBox "现在鼠标动不了了吧？直接按下回车以便关闭本窗口恢复控制。"
+Plugin lxj_Plug.lxj_LimitMouse(1)
+MessageBox "演示结束"
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_HideMouse"></a>lxj_HideMouse 隐藏鼠标
+</td></tr><tr><th>命令功能：</th><td>
+隐藏鼠标，能否使用请自行测试
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】操作类型，0为隐藏，1为显示
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi">无
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetKeyState"></a>lxj_GetKeyState 获取键盘状态
+</td></tr><tr><th>命令功能：</th><td>
+获取键盘状态
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】按键码
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+整数型数值，-2为获取失败，-1表示按下状态，0或1表示弹起状态，对于Num、Caps、Scroll三个状态键，1表示灯亮，0表示灯灭
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+KeyState=Plugin.lxj_Plug.lxj_GetKeyState(20)
+If KeyState = 1 Then 
+MsgBox "Caps Lock灯亮，字母大写"
+Else 
+MsgBox "Caps Lock灯灭，字母小写"
+End If
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin KeyState=lxj_Plug.lxj_GetKeyState(20)
+If KeyState = 1
+MsgBox "Caps Lock灯亮，字母大写"
+Else 
+MsgBox "Caps Lock灯灭，字母小写"
+EndIf
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SetTime"></a>lxj_SetTime 设置系统时间
+</td></tr><tr><th>命令功能：</th><td>
+设置系统时间
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】日期，格式为“年-月-日”，默认为""
+【参数2（可选）】时间，格式为“时:分:秒”，默认为""
+【参数3（可选）】时区，默认为中国的+8
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+tmpd = date : tmpt = time
+Call Plugin.lxj_Plug.lxj_SetTime("2222-2-22","2:22:22",-10)
+MsgBox "已将系统时间设置为夏威夷时间2222年2月22日2点22分22秒，关闭本窗口后还原"
+Call Plugin.lxj_Plug.lxj_SetTime(tmpd,tmpt)
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+tmpd = date : tmpt = time
+Plugin lxj_Plug.lxj_SetTime("2222-2-22","2:22:22",-10)
+MsgBox "已将系统时间设置为夏威夷时间2222年2月22日2点22分22秒，关闭本窗口后还原"
+Plugin lxj_Plug.lxj_SetTime(tmpd,tmpt)
+</td></tr></table>
+
+<tr width="100%" align="center"><font color=#FF00FF size=5><B>★★★★★电脑语音类★★★★★</B></font></tr>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_LoadVoice"></a>lxj_LoadVoice 加载语音库
+</td></tr><tr><th>命令功能：</th><td>
+加载语音库
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+//加载语音库
+Call Plugin.lxj_Plug.lxj_LoadVoice()
+//初始加载后默认声音类型为 英文 Sam 男音
+str="Welcome to China"
+//设置语速
+Call Plugin.lxj_Plug.lxj_VoiceRate(2)
+//设置音量
+Call Plugin.lxj_Plug.lxj_VoiceVolume(80)
+Call Plugin.lxj_Plug.lxj_SpeakVoice(str)
+//字符串转音频，音频格式必须为.wav
+Call Plugin.lxj_Plug.lxj_Txt2Wav(str,"f:\备份\桌面\a.wav")
+//设置声音类型
+Call Plugin.lxj_Plug.lxj_SetVoice(3)
+Call Plugin.lxj_Plug.lxj_SpeakVoice("【lxj1985】懒人插件")
+Call Plugin.lxj_Plug.lxj_SetVoice(2)
+Call Plugin.lxj_Plug.lxj_SpeakVoice(str)
+//使用完后卸载语音库
+Call Plugin.lxj_Plug.lxj_UnLoadVoice()
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+//加载语音库
+Plugin lxj_Plug.lxj_LoadVoice()
+//初始加载后默认声音类型为 英文 Sam 男音
+str="Welcome to China"
+//设置语速
+Plugin lxj_Plug.lxj_VoiceRate(2)
+//设置音量
+Plugin lxj_Plug.lxj_VoiceVolume(80)
+Plugin lxj_Plug.lxj_SpeakVoice(str)
+//字符串转音频，音频格式必须为.wav
+Plugin lxj_Plug.lxj_Txt2Wav(str,"C:\a.wav")
+//设置声音类型
+Plugin lxj_Plug.lxj_SetVoice(3)
+Plugin lxj_Plug.lxj_SpeakVoice("【lxj1985】懒人插件")
+Plugin lxj_Plug.lxj_SetVoice(2)
+Plugin lxj_Plug.lxj_SpeakVoice(str)
+//使用完后卸载语音库
+Plugin lxj_Plug.lxj_UnLoadVoice()
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SetVoice"></a>lxj_SetVoice 设置声音类型
+</td></tr><tr><th>命令功能：</th><td>
+设置声音类型
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】声音效果，初始默认为0(英文 Sam 男音)，如已安装语音库，也可设为1(英文 Mike 男音)、2(英文 Mary 女音)、3(中文 男音)
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+设置失败弹出下载语音库的对话框
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>
+详例见lxj_LoadVoice命令
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_VoiceRate"></a>lxj_VoiceRate 设置语速
+</td></tr><tr><th>命令功能：</th><td>
+设置语速
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】整数型语速值，建议2左右
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>
+详例见lxj_LoadVoice命令
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_VoiceVolume"></a>lxj_VoiceVolume 设置音量
+</td></tr><tr><th>命令功能：</th><td>
+设置音量
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】1至100的整数型音量值
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>
+详例见lxj_LoadVoice命令
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SpeakVoice"></a>lxj_SpeakVoice 电脑说话
+</td></tr><tr><th>命令功能：</th><td>
+电脑说话
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】内容，字符串型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+声音输出
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>
+详例见lxj_LoadVoice命令
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SpeakVoiceEX"></a>lxj_SpeakVoiceEX 电脑中英混读
+</td></tr><tr><th>命令功能：</th><td>
+电脑中英混读
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】内容，字符串型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+声音输出
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>
+详例见lxj_LoadVoice命令
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_Txt2Wav"></a>lxj_Txt2Wav 文字转音频
+</td></tr><tr><th>命令功能：</th><td>
+文字转音频
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】待转换文字
+【参数2】音频存放路径，音频必须为WAV格式
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>
+详例见lxj_LoadVoice命令
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_UnLoadVoice"></a>lxj_UnLoadVoice 卸载语音库
+</td></tr><tr><th>命令功能：</th><td>
+卸载语音库
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>
+详例见lxj_LoadVoice命令
+</td></tr></table>
+
+<tr width="100%" align="center"><font color=#FF00FF size=5><B>★★★★★窗口/进程类★★★★★</B></font></tr>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_ClickMenu"></a>lxj_ClickMenu 点击窗口菜单
+</td></tr><tr><th>命令功能：</th><td>
+直接点击窗口的菜单条目，使用前请通过懒人的窗口遍历工具确定该窗口能否探测到菜单
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】 窗口句柄，整数型
+【参数2】 菜单条目名称，字符串型，支持模糊搜索
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+//运行任务管理器
+RunApp("taskmgr.exe")
+Delay 1000
+//点击任务管理器的“新建任务”项
+Hwnd = Plugin.Window.Find(0, "Windows 任务管理器")
+Plugin.lxj_Plug.lxj_ClickMenu Hwnd,"任务"
+
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+//运行任务管理器
+VBSCall RunApp("taskmgr.exe")
+Delay 1000
+//点击任务管理器的“新建任务”项
+Plugin Hwnd = Window.Find(0, "Windows 任务管理器")
+Plugin lxj_Plug.lxj_ClickMenu(Hwnd,"任务")
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_RunApp"></a>lxj_RunApp 运行程序同时获取进程PID
+</td></tr><tr><th>命令功能：</th><td>
+运行程序同时获取进程PID
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】 程序完整路径，字符串型
+【参数2(可选)】 打开方式，字符串型，默认为""(表示使用默认的方式打开)
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+进程PID，整数型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+//运行任务管理器
+PID=Plugin.lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+Messagebox "任务管理器的PID为：" & PID
+
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+//运行任务管理器
+Plugin PID=lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+Messagebox "任务管理器的PID为：" & PID
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_RunAppEX"></a>lxj_RunAppEX 运行程序加强版
+</td></tr><tr><th>命令功能：</th><td>
+运行程序加强版
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】 程序完整路径，字符串型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+进程PID，整数型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+//运行任务管理器
+PID=Plugin.lxj_Plug.lxj_RunAppEX("C:\WINDOWS\system32\taskmgr.exe")
+Messagebox "任务管理器的PID为：" & PID
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+//运行任务管理器
+Plugin PID=lxj_Plug.lxj_RunAppEX("C:\WINDOWS\system32\taskmgr.exe")
+Messagebox "任务管理器的PID为：" & PID
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_TopWindow"></a>lxj_TopWindow 窗口置顶
+</td></tr><tr><th>命令功能：</th><td>
+窗口置顶
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】窗口句柄
+【参数2】操作类型,1置顶,0取消
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+RunApp("notepad.exe")
+Hwnd = Plugin.Window.Find(0, "无标题 - 记事本")
+call Plugin.lxj_Plug.lxj_TopWindow(Hwnd,1)
+MSGBOX "记事本已置顶"
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+VBSCall RunApp("notepad.exe")
+Plugin Hwnd = Window.Find(0, "无标题 - 记事本")
+Plugin lxj_Plug.lxj_TopWindow(Hwnd,1)
+MSGBOX "记事本已置顶"
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SetWindow"></a>lxj_SetWindow 设置窗口透明度
+</td></tr><tr><th>命令功能：</th><td>
+设置窗口透明度
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】窗口句柄
+【参数2】数值型透明度，-1为恢复,0为完全隐藏,1~255为设置透明度的数值
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+RunApp("notepad.exe")
+Hwnd = Plugin.Window.Find(0, "无标题 - 记事本")
+call Plugin.lxj_Plug.lxj_SetWindow(Hwnd,100)
+MSGBOX "记事本已设置透明度"
+call Plugin.lxj_Plug.lxj_SetWindow(Hwnd,-1)
+MSGBOX "记事本透明度已恢复"
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+VBSCall RunApp("notepad.exe")
+Plugin Hwnd = Window.Find(0, "无标题 - 记事本")
+Plugin lxj_Plug.lxj_SetWindow(Hwnd,100)
+MSGBOX "记事本已设置透明度"
+Plugin lxj_Plug.lxj_SetWindow(Hwnd,-1)
+MSGBOX "记事本透明度已恢复"
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetsProcessByPID"></a>lxj_GetsProcessByPID 获取进程名
+</td></tr><tr><th>命令功能：</th><td>
+获取进程名
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1(可选)】进程PID，留空则获取当前程序进程名.默认为-1
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+进程名，字符串型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Pro=Plugin.lxj_Plug.lxj_GetsProcessByPID()
+MSGBOX "当前进程为："&Pro
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin Pro=lxj_Plug.lxj_GetsProcessByPID()
+MSGBOX "当前进程为："&Pro
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetPidByPro"></a>lxj_GetPidByPro 获取进程PID
+</td></tr><tr><th>命令功能：</th><td>
+通过进程名获取进程PID
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1(可选)】进程名，留空则获取当前程序进程PID。默认为""
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+PID,整数型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+PID=Plugin.lxj_Plug.lxj_GetPidByPro()
+MSGBOX "当前进程PID为："&PID
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin PID=lxj_Plug.lxj_GetPidByPro()
+MSGBOX "当前进程为："&PID
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetPidByHwnd"></a>lxj_GetPidByHwnd 获取进程PID
+</td></tr><tr><th>命令功能：</th><td>
+通过窗口句柄获取进程PID
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】窗口句柄
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+PID,整数型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+RunApp("notepad.exe")
+Hwnd = Plugin.Window.Find(0, "无标题 - 记事本")
+PID=Plugin.lxj_Plug.lxj_GetPidByHwnd(Hwnd)
+MSGBOX "记事本进程PID为："&PID
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+VBSCall RunApp("notepad.exe")
+Plugin Hwnd = Window.Find(0, "无标题 - 记事本")
+Plugin PID=lxj_Plug.lxj_GetPidByHwnd(Hwnd)
+MSGBOX "记事本进程PID为："&PID
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetHwndByPID"></a>lxj_GetHwndByPID 获取窗口句柄
+</td></tr><tr><th>命令功能：</th><td>
+通过进程PID获取窗口句柄
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】进程PID
+【参数2（可选）】窗口标题，支持模糊搜索，默认为0
+【参数3（可选）】窗口类名，默认为0
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+满足条件的句柄数组，第一个元素为窗口数量，其后各元素为窗口句柄
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+PID=Plugin.lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+do 
+Hwnd = Plugin.lxj_Plug.lxj_GetHwndByPID(PID)
+Loop until Hwnd(0)>0
+MSGBOX "任务管理器窗口句柄为："&Hwnd(1)
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin PID=lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+tmp = 0
+while tmp = 0
+Plugin Hwnd = lxj_Plug.lxj_GetHwndByPID(PID)
+tmp=Hwnd(0)
+end while
+MSGBOX "任务管理器窗口句柄为："&Hwnd(1)
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_FindWindows"></a>lxj_FindWindows 遍历系统窗口
+</td></tr><tr><th>命令功能：</th><td>
+遍历系统窗口
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】进程PID
+【参数2】进程名
+【参数3】窗口句柄
+【参数4】程序路径
+【参数5】窗口标题
+【参数6】窗口类名
+【参数7（可选）】筛选类别,1显示可见窗口,2显示激活窗口,3显示可见且激活窗口,0显示全部窗口.默认为1
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+找到窗口返回1，未找到返回0；另，本函数6个参数均可以为返回数组的变量名
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Process="QQ.exe"
+Call Plugin.lxj_Plug.lxj_FindWindows(PID, Process, hwndex, path, Text_Name, Class_Name,3)
+hwnd=join(hwndex,chr(10))
+msgbox "共找到进程为QQ.exe的窗口"&(ubound(Process)+1)&"个,窗口句柄分别为："&chr(10)&hwnd
+//若前6个参数均未被赋值，则运行函数后分别对应返回的数组变量名。例：
+Call Plugin.lxj_Plug.lxj_FindWindows(PID, Process_name, hwndex, path, Text_Name, Class_Name,3)
+//下面显示返回值
+For i=0 to ubound(hwndex)
+msgbox (i+1)&chr(10)&"进程句柄:" &pid(i)&chr(10)&"进程名:" &Process_name(i)&chr(10)&"窗口句柄:" &hwndex(i)&chr(10)&"程序路径:" &path(i)&chr(10)&"窗口类名:"&Class_Name(i)&chr(10)&"窗口标题:" &Text_Name(i),4096
+Next 
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Process="QQ.exe"
+Plugin lxj_Plug.lxj_FindWindows(PID, Process, hwndex, path, Text_Name, Class_Name,3)
+hwnd=join(hwndex,chr(10))
+msgbox "共找到进程为QQ.exe的窗口"&ubound(Process)+1&"个,窗口句柄分别为："&chr(10)&hwnd
+//若前6个参数均未被赋值，则运行函数后分别对应返回的数组变量名。例：
+Plugin lxj_Plug.lxj_FindWindows(PID, Process_name, hwndex, path, Text_Name, Class_Name,3)
+//下面显示返回值
+i=0
+For ubound(hwndex)+1
+msgbox (i+1)&chr(10)&"进程句柄:" &pid(i)&chr(10)&"进程名:" &Process_name(i)&chr(10)&"窗口句柄:" &hwndex(i)&chr(10)&"程序路径:" &path(i)&chr(10)&"窗口类名:"&Class_Name(i)&chr(10)&"窗口标题:" &Text_Name(i),4096
+i=i+1
+EndFor 
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_FindChildHwnd"></a>lxj_FindChildHwnd 遍历查找子窗口句柄
+</td></tr><tr><th>命令功能：</th><td>
+遍历查找子窗口句柄
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】父窗口句柄
+【参数2（可选）】窗口标题,支持模糊查找,默认为0
+【参数3（可选）】窗口类名
+【参数4（可选）】索引号，即查找符合前面所设条件的第几个窗口，默认为1。本索引号可使用懒人的窗口遍历工具直接获取
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+满足条件的窗口句柄，长整型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+PID=Plugin.lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+do 
+Hwnd = Plugin.lxj_Plug.lxj_GetHwndByPID(PID)
+Loop  Until Hwnd(0) > 0
+CHwnd=Plugin.lxj_Plug.lxj_FindChildHwnd(Hwnd(1),"结束进程","Button")
+MsgBox "新打开的任务管理器中，结束进程按钮的句柄为"&CHwnd
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin PID=lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+tmp=0
+while tmp=0
+Plugin Hwnd = lxj_Plug.lxj_GetHwndByPID(PID)
+tmp=Hwnd(0)
+end while
+Plugin CHwnd=lxj_Plug.lxj_FindChildHwnd(Hwnd(1),"结束进程","Button")
+MsgBox "新打开的任务管理器中，结束进程按钮的句柄为"&CHwnd
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_FindParentHwnd"></a>lxj_FindParentHwnd 查找父窗口窗口句柄
+</td></tr><tr><th>命令功能：</th><td>
+查找父窗口窗口句柄
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】子窗口句柄
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+父窗口窗口句柄，长整型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Call RunApp("notepad.exe")
+msgbox "请用鼠标滚轮点击记事本标题栏"
+do
+click=WaitClick()
+Loop Until click=32777
+//下面这句是得到鼠标指向的窗口句柄
+Hwnd = Plugin.Window.MousePoint()
+Hwnd = Plugin.lxj_Plug.lxj_FindParentHwnd(Hwnd)
+msgbox "记事本的窗口句柄为"&Hwnd
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+VBSCall RunApp("notepad.exe")
+msgbox "请用鼠标滚轮点击记事本标题栏"
+click=0
+While click<>32777
+WaitClick click
+EndWhile 
+//下面这句是得到鼠标指向的窗口句柄
+Plugin Hwnd = Window.MousePoint()
+Plugin Hwnd = lxj_Plug.lxj_FindParentHwnd(Hwnd)
+msgbox "记事本的窗口句柄为"&Hwnd
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SendString"></a>lxj_SendString 文本框重新赋值
+</td></tr><tr><th>命令功能：</th><td>
+文本框重新赋值。若窗口为文本框，则对文本框重新赋值；若为一般窗口，则修改窗口标题
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】 窗口句柄，整数型
+【参数2】 发送内容，字符串型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>
+无
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetText"></a>lxj_GetText 获取窗口内文字
+</td></tr><tr><th>命令功能：</th><td>
+获取窗口内文字
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】窗口句柄,整数型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+内容，字符串型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Call RunApp("notepad.exe")
+msgbox "请在文本框随意输入内容后用鼠标滚轮点击记事本标题栏"
+do
+click=WaitClick()
+Loop Until click=32777
+//下面这句是得到鼠标指向的窗口句柄
+Hwnd = Plugin.Window.MousePoint()
+TEXT = Plugin.lxj_Plug.lxj_GetText(Hwnd)
+msgbox "文本框内的内容为"&TEXT
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+VBSCall RunApp("notepad.exe")
+msgbox "请在文本框随意输入内容后用鼠标滚轮点击记事本标题栏"
+click=0
+While click<>32777
+WaitClick click
+EndWhile 
+//下面这句是得到鼠标指向的窗口句柄
+Plugin Hwnd = Window.MousePoint()
+Plugin TEXT = lxj_Plug.lxj_GetText(Hwnd)
+msgbox "文本框内的内容为"&TEXT
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_CloseWindowEX"></a>lxj_CloseWindowEX 关闭窗口
+</td></tr><tr><th>命令功能：</th><td>
+关闭窗口，可单独关闭子窗口
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】窗口句柄,整数型,可以是子窗口句柄
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Call RunApp("notepad.exe")
+msgbox "请用鼠标滚轮点击记事本标题栏"
+do
+click=WaitClick()
+Loop Until click=32777
+//下面这句是得到鼠标指向的窗口句柄
+Hwnd = Plugin.Window.MousePoint()
+call Plugin.lxj_Plug.lxj_CloseWindowEX(Hwnd)
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+VBSCall RunApp("notepad.exe")
+msgbox "请用鼠标滚轮点击记事本标题栏"
+click=0
+While click<>32777
+WaitClick click
+EndWhile 
+//下面这句是得到鼠标指向的窗口句柄
+Plugin Hwnd = Window.MousePoint()
+Plugin lxj_Plug.lxj_CloseWindowEX(Hwnd)
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SecretEdit"></a>lxj_SecretEdit 加密文本框
+</td></tr><tr><th>命令功能：</th><td>
+加密文本框
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】文本框窗口句柄,整数型
+【参数2（可选）】操作类型，填1为解密,不填或填其他为加密（暂无用）
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+内容，字符串型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Call RunApp("notepad.exe")
+msgbox "请在文本框随意输入内容后用鼠标滚轮点击记事本标题栏"
+do
+click=WaitClick()
+Loop Until click=32777
+//下面这句是得到鼠标指向的窗口句柄
+Hwnd = Plugin.Window.MousePoint()
+call Plugin.lxj_Plug.lxj_SecretEdit(Hwnd)
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+VBSCall RunApp("notepad.exe")
+msgbox "请在文本框随意输入内容后用鼠标滚轮点击记事本标题栏"
+click=0
+While click<>32777
+WaitClick click
+EndWhile 
+//下面这句是得到鼠标指向的窗口句柄
+Plugin Hwnd = Window.MousePoint()
+Plugin lxj_Plug.lxj_SecretEdit(Hwnd)
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_CheckChoose"></a>lxj_CheckChoose 检查选择框是否被选中
+</td></tr><tr><th>命令功能：</th><td>
+检查选择框是否被选中
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】窗口句柄,整数型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+返回1表示被选中，0表示没有选中
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>无
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_CheckWindowEnabled"></a>lxj_CheckWindowEnabled 检查窗口是否被激活
+</td></tr><tr><th>命令功能：</th><td>
+检查窗口是否被激活
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】窗口句柄,整数型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+返回1表示激活状态，0表示未激活
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>无
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_CheckWindowVisible"></a>lxj_CheckWindowVisible 检查窗口是否可见
+</td></tr><tr><th>命令功能：</th><td>
+检查窗口是否可见
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】窗口句柄,整数型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+返回1表示可见状态，0表示隐藏状态
+</td></tr><tr><th>脚本例子：<br />
+</th><td class="lizi"><pre>无
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_EnableKM"></a>lxj_EnableKM 屏蔽窗口内的键盘和鼠标事件
+</td></tr><tr><th>命令功能：</th><td>
+屏蔽窗口内的键盘和鼠标事件
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】 窗口句柄，整数型
+【参数2（可选）】 操作类型，整数型，默认为0(0表示屏蔽，1表示恢复)
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+RunApp("notepad.exe")
+Hwnd = Plugin.Window.Find(0, "无标题 - 记事本")
+call Plugin.lxj_Plug.lxj_EnableKM(Hwnd)
+MessageBox "已屏蔽记事本窗口内的鼠标及键盘操作，按点击鼠标中键恢复"
+do
+click=WaitClick()
+Loop Until click=32777
+call Plugin.lxj_Plug.lxj_EnableKM(Hwnd,1)
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+VBSCall RunApp("notepad.exe")
+Plugin Hwnd = Window.Find(0, "无标题 - 记事本")
+Plugin lxj_Plug.lxj_EnableKM(Hwnd)
+MessageBox "已屏蔽记事本窗口内的鼠标及键盘操作，按点击鼠标中键恢复"
+click=0
+While click<>32777
+WaitClick click
+EndWhile 
+Plugin lxj_Plug.lxj_EnableKM(Hwnd,1)
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_TaskMgr"></a>lxj_TaskMgr 屏蔽/恢复任务管理器
+</td></tr><tr><th>命令功能：</th><td>
+屏蔽/恢复任务管理器
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】 操作类型,0为屏蔽,1为恢复，默认为0
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Call Plugin.lxj_Plug.lxj_TaskMgr()
+RunApp "taskmgr.exe"
+MsgBox "已屏蔽任务管理器，关闭本窗口后恢复"
+Call Plugin.lxj_Plug.lxj_TaskMgr(1)
+RunApp "taskmgr.exe"
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin lxj_Plug.lxj_TaskMgr()
+VBSCall RunApp "taskmgr.exe"
+MsgBox "已屏蔽任务管理器，关闭本窗口后恢复"
+Plugin lxj_Plug.lxj_TaskMgr(1)
+VBSCall RunApp "taskmgr.exe"
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_TaskSleep"></a>lxj_TaskSleep 暂停/恢复进程
+</td></tr><tr><th>命令功能：</th><td>
+暂停/恢复进程
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】进程PID
+【参数2（可选）】 操作类型,0为屏蔽,1为恢复，默认为0
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+PID=Plugin.lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+Call Plugin.lxj_Plug.lxj_TaskSleep(PID)
+msgbox "已暂停任务管理器，关闭本窗口后恢复"
+Call Plugin.lxj_Plug.lxj_TaskSleep(PID,1)
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin PID=lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+Plugin lxj_Plug.lxj_TaskSleep(PID)
+msgbox "已暂停任务管理器，关闭本窗口后恢复"
+Plugin lxj_Plug.lxj_TaskSleep(PID,1)
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_TaskSuspend"></a>lxj_TaskSuspend 暂停/恢复进程
+</td></tr><tr><th>命令功能：</th><td>
+暂停/恢复进程
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】进程PID
+【参数2（可选）】 操作类型,0为屏蔽,1为恢复，默认为0
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+PID=Plugin.lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+Call Plugin.lxj_Plug.lxj_TaskSuspend(PID)
+msgbox "已暂停任务管理器，关闭本窗口后恢复"
+Call Plugin.lxj_Plug.lxj_TaskSuspend(PID,1)
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin PID=lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+Plugin lxj_Plug.lxj_TaskSuspend(PID)
+msgbox "已暂停任务管理器，关闭本窗口后恢复"
+Plugin lxj_Plug.lxj_TaskSuspend(PID,1)
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_KillTask"></a>lxj_KillTask 关闭进程
+</td></tr><tr><th>命令功能：</th><td>
+关闭进程
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】进程PID
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+PID=Plugin.lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+msgbox "关闭本窗口后通过进程关闭任务管理器"
+Call Plugin.lxj_Plug.lxj_KillTask(PID)
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin PID=lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+msgbox "关闭本窗口后通过进程关闭任务管理器"
+Plugin lxj_Plug.lxj_KillTask(PID)
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_Pathfile"></a>lxj_Pathfile 获取进程路径
+</td></tr><tr><th>命令功能：</th><td>
+获取进程路径
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】进程名,不填则获取当前程序路径
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+程序所在文件夹，以"\"结尾，字符串型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+ProPath=Plugin.lxj_Plug.lxj_Pathfile()
+msgbox "本程序所在文件夹路径为："&ProPath
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin ProPath=lxj_Plug.lxj_Pathfile()
+msgbox "本程序所在文件夹路径为："&ProPath
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetPidTIME"></a>lxj_GetPidTIME 获取进程启动时间
+</td></tr><tr><th>命令功能：</th><td>
+获取进程启动时间
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】进程PID
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+进程启动时间，字符串型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+PID=Plugin.lxj_Plug.lxj_GetPidByPro()
+PTime = Plugin.lxj_Plug.lxj_GetPidTIME(PID)
+msgbox "本程序启动时间为："&PTime
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin PID=lxj_Plug.lxj_GetPidByPro()
+Plugin PTime = lxj_Plug.lxj_GetPidTIME(PID)
+msgbox "本程序启动时间为："&PTime
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetCPU"></a>lxj_GetCPU 获取指定进程的CPU占用率
+</td></tr><tr><th>命令功能：</th><td>
+获取指定进程的CPU占用率
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】进程PID，留空或为0时获取本进程CPU，为-1时获取系统CPU占用
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+整数型数值
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+PCPU = Plugin.lxj_Plug.lxj_GetCPU()
+CPU = Plugin.lxj_Plug.lxj_GetCPU(-1)
+msgbox "系统CPU占用率为："&CPU&chr(10)&"本程序CPU占用率为："&PCPU
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin PCPU =lxj_Plug.lxj_GetCPU()
+Plugin CPU =lxj_Plug.lxj_GetCPU(-1)
+msgbox "系统CPU占用率为："&CPU&chr(10)&"本程序CPU占用率为："&PCPU
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetMemory"></a>lxj_GetMemory 获取指定进程的内存占用量
+</td></tr><tr><th>命令功能：</th><td>
+获取指定进程的内存占用量
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】进程PID,不填则获取所有进程的内存占用总量
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+内存占用量，字符串型
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+PID=Plugin.lxj_Plug.lxj_GetPidByPro()
+PMemory = Plugin.lxj_Plug.lxj_GetMemory(PID)
+SMemory = Plugin.lxj_Plug.lxj_GetMemory()
+msgbox "系统内存占用量为：" & SMemory
+msgbox "本程序内存占用量为："&PMemory
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin PID=lxj_Plug.lxj_GetPidByPro()
+Plugin PMemory = lxj_Plug.lxj_GetMemory(PID)
+Plugin SMemory =lxj_Plug.lxj_GetMemory()
+msgbox "系统内存占用量为：" & SMemory
+msgbox "本程序内存占用量为："&PMemory
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_ReleaseMemory"></a>lxj_ReleaseMemory 释放指定进程的内存
+</td></tr><tr><th>命令功能：</th><td>
+释放指定进程的内存
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】进程PID,不填或填-1则释放所有进程内存,填0释放当前程序内存
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+call Plugin.lxj_Plug.lxj_ReleaseMemory()
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin lxj_Plug.lxj_ReleaseMemory()
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_WindowFromReBar"></a>lxj_WindowFromReBar 获取任务栏中程序的窗口句柄
+</td></tr><tr><th>命令功能：</th><td>
+获取任务栏中程序的窗口句柄
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】进程名，留空则获取所有任务栏程序的句柄
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+返回数组,第一个元素为找到的窗口数,其后各元素为找到的窗口句柄
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Hwnd=Plugin.lxj_Plug.lxj_WindowFromReBar()
+msgbox join(Hwnd,chr(10))
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin Hwnd=lxj_Plug.lxj_WindowFromReBar()
+msgbox join(Hwnd,chr(10))
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_GetFlashWindow"></a>lxj_GetFlashWindow 获取任务栏中闪烁窗口的句柄
+</td></tr><tr><th>命令功能：</th><td>
+获取任务栏中闪烁窗口的句柄,例如QQ聊天窗口最小化后来消息则开始闪烁
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1（可选）】进程名,留空则获取所有
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+返回数组,第一个元素为找到的窗口数,其后各元素为找到的窗口句柄
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+Hwnd=Plugin.lxj_Plug.lxj_GetFlashWindow()
+msgbox join(Hwnd,chr(10))
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+Plugin Hwnd=lxj_Plug.lxj_GetFlashWindow()
+msgbox join(Hwnd,chr(10))
+</td></tr></table>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="lxj_SetParent"></a>lxj_SetParent 设置父窗口
+</td></tr><tr><th>命令功能：</th><td>
+设置父窗口
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+【参数1】窗口句柄
+【参数2】新的父窗口句柄
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+原父窗口句柄
+</td></tr><tr><th>脚本例子：<br /><span class="red">(8.x语法)</span>
+</th><td class="lizi"><pre>
+PID = Plugin.lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+do
+Hwnd = Plugin.lxj_Plug.lxj_GetHwndByPID(PID)
+loop until Hwnd(0)>0
+Call RunApp("notepad.exe")
+msgbox "请用鼠标滚轮点击记事本编辑框"
+do
+click=WaitClick()
+Loop Until click=32777
+Hwnd0 = Plugin.Window.MousePoint()
+FHwnd=Plugin.lxj_Plug.lxj_SetParent(Hwnd(1),Hwnd0)
+MsgBox "已将任务管理器父窗口设置为记事本编辑框,可尝试拖动。"
+FHwnd=Plugin.lxj_Plug.lxj_SetParent(Hwnd(1),FHwnd)
+</td></tr><tr><th>脚本例子：<br /><span class="red">(7.x语法)</span>
+</th><td><pre>
+PID = Plugin.lxj_Plug.lxj_RunApp("C:\WINDOWS\system32\taskmgr.exe")
+tmp=0
+while tmp=0
+Hwnd = Plugin.lxj_Plug.lxj_GetHwndByPID(PID)
+tmp=Hwnd(0)
+end while 
+VBSCall RunApp("notepad.exe")
+msgbox "请用鼠标滚轮点击记事本编辑框"
+click=0
+while click<>32777
+WaitClick click
+end while 
+Plugin Hwnd0 = Window.MousePoint()
+Plugin FHwnd=lxj_Plug.lxj_SetParent(Hwnd(1),Hwnd0)
+MsgBox "已将任务管理器父窗口设置为记事本编辑框,可尝试拖动。"
+Plugin FHwnd=lxj_Plug.lxj_SetParent(Hwnd(1),FHwnd)
+</td></tr></table>
+
+
+<p>&nbsp;</p>
+</body>
+</html>

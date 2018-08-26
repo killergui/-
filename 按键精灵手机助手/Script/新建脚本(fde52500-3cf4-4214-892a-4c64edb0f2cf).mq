@@ -12,33 +12,43 @@ ElseIf GetScreenX() = 720 Then
     TracePrint UseDict(0)
 End If
 
-Do
-	Dim temp, ocrchar, ocrchar1, ocrchar2
-//	temp = 场景相关操作.所在场景()
-//	TracePrint temp
-//	TracePrint 场景相关操作.进入场景是否正确(temp)
-	//第一个武将
-    temp = 武将兵力数组(Array(485,430,515,635))
-    //第二个武将
-    temp = 武将兵力数组(Array(485,880,515,1085))
-    //第三个武将
-    temp = 武将兵力数组(Array(350,430,380,635))
-    //第四个武将
-    temp = 武将兵力数组(Array(350,880,380,1085))
-    //第五个武将
-    temp = 武将兵力数组(Array(215,430,245,635))
-    //第六个武将
-    temp = 武将兵力数组(Array(215,880,245,1085))
-//	ocrchar = 类型转换.SuperOcr (432,488,470,716,"7F7E7B-111111|CDCDCC-111111|DBDBDB-111111|B4B4B3-111111|AFAFAE-111111|CBCBCB-111111|969696-111111",0.95)
-//        Traceprint ocrchar
+Dim test
+If Not test Then 
+	TracePrint "补星"
+End If
 
-//    ocrchar2 = 类型转换.SuperOcr(678, 712, 706, 765, "BFF3FB-111111|AFDCE2-111111|8FB0B3-111111|7F9A9C-111111|9FC6CB-111111", 0.9)
-//    TracePrint ocrchar2
+
+Do
+    Dim temp, ocrchar, ocrchar1, ocrchar2
+    //	temp = 场景相关操作.所在场景()
+    //	TracePrint temp
+    //	TracePrint 场景相关操作.进入场景是否正确(temp)
+    //	//第一个武将
+    //    temp = 武将兵力数组(Array(485,430,515,635))
+    //    //第二个武将
+    //    temp = 武将兵力数组(Array(485,880,515,1085))
+    //    //第三个武将
+    //    temp = 武将兵力数组(Array(350,430,380,635))
+    //    //第四个武将
+    //    temp = 武将兵力数组(Array(350,880,380,1085))
+    //    //第五个武将
+    //    temp = 武将兵力数组(Array(215,430,245,635))
+    //    //第六个武将
+    //    temp = 武将兵力数组(Array(215,880,245,1085))
+    //	ocrchar = 类型转换.SuperOcr (432,488,470,716,"7F7E7B-111111|CDCDCC-111111|DBDBDB-111111|B4B4B3-111111|AFAFAE-111111|CBCBCB-111111|969696-111111",0.95)
+    //        Traceprint ocrchar
+
+    //    ocrchar2 = 类型转换.SuperOcr(678, 712, 706, 765, "BFF3FB-111111|AFDCE2-111111|8FB0B3-111111|7F9A9C-111111|9FC6CB-111111", 0.9)
+    //    TracePrint ocrchar2
+    
+    
+    
+	Traceprint ocrchar
     Delay 2000
 Loop
 
 Function 武将兵力数组(区域数组)
     Dim ocrchar, 当前士兵数量, 最大士兵数量, 临时数组
     ocrchar = 类型转换.SuperOcr(区域数组(0),区域数组(1),区域数组(2),区域数组(3),"9EB0BB-111111|BBD1DE-111111|7B8991-111111|68747A-111111|8D9EA7-111111",0.9)
-	Traceprint ocrchar
+    Traceprint ocrchar
 End Function

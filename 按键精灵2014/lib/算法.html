@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>按键精灵命令库帮助</title>
+<style>
+body{font-size:12px; font-family:Verdana,"宋体"}
+.ts{ background:#fff; margin:0 0 40px 0;}
+.ts th{ color:#7B797B; background:#DEDFDE; line-height:24px;}
+.ts td {padding:6px 0;}
+.name { font-size:16px; font-weight:bold; border-top:1px dashed #9C9A9C; border-bottom:1px dashed #9C9A9C; color:#006939;}
+.canshu { background:#E7E7EF;}
+.red{ color:#d60000;}
+.green{ color:#006939;}
+.fanhui{ border-bottom:1px dashed #9C9A9C;}
+.lizi{ border-bottom:1px dashed #9C9A9C;}
+</style></head><body>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="结构数组排序"></a>结构数组排序
+</td></tr><tr><th>命令功能：</th><td>
+结构数组排序
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，数组()
+参数2 整数型，返回类型
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，排序结果
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+数字="100=A|50=B|1=C|0=D|10=E|20=F|12=G|21=H"
+数组=Split(数字,"|")
+Msgbox lib.算法.结构数组排序(数组,0)
+<span class="green">//语法格式：数组() = "数字大小=值"</span>
+<span class="green">//数组：NB_PaiXu(0) = "200=A"</span>
+<span class="green">//返回类型：[0全部1最小2最大]</span>
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="提取字串符中所有数字"></a>提取字串符中所有数字
+</td></tr><tr><th>命令功能：</th><td>
+提取字串符中所有数字
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，文字内容
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，数字内容
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox lib.算法.提取字串符中所有数字("dfghhj12dsfg3.hgk54dsfg67-45678")
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="提取汉字拼音首字母"></a>提取汉字拼音首字母
+</td></tr><tr><th>命令功能：</th><td>
+提取汉字拼音首字母
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，中文汉字
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，拼音首字母
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox lib.算法.提取汉字拼音首字母("我是一只鱼！")
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="中文汉字转拼音"></a>中文汉字转拼音
+</td></tr><tr><th>命令功能：</th><td>
+中文汉字转拼音
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，中文汉字
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，汉字全拼
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox lib.算法.中文汉字转拼音("我是一只鱼！")
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="随机字符串"></a>随机字符串
+</td></tr><tr><th>命令功能：</th><td>
+随机字符串
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 整数型，位数
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，随机内容
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Msgbox lib.算法.随机字符串(16)
+</td></tr></table>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="随机数字串"></a>随机数字串
+</td></tr><tr><th>命令功能：</th><td>
+随机数字串
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 整数型，位数
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+整数型，随机内容
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Msgbox lib.算法.随机数字串(16)
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="随机取姓名"></a>随机取姓名
+</td></tr><tr><th>命令功能：</th><td>
+随机取姓名
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，随机内容
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Msgbox lib.算法.随机取姓名()
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="得到字符串中字母的数量"></a>得到字符串中字母的数量
+</td></tr><tr><th>命令功能：</th><td>
+得到字符串中字母的数量
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，文字内容
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+整数型，字符数量
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox lib.算法.得到字符串中字母的数量("[email=abc@#$%de]abc@#$%de[/email]")
+</td></tr></table>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="十六进制转十进制"></a>十六进制转十进制
+</td></tr><tr><th>命令功能：</th><td>
+十六进制转十进制
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，十六进制字符串
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+整数型，十进制数字
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Msgbox lib.算法.十六进制转十进制("FFFFFF")
+</td></tr></table>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="乘法表生成器"></a>乘法表生成器
+</td></tr><tr><th>命令功能：</th><td>
+乘法表生成器
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Call lib.算法.乘法表生成器()
+</td></tr></table>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="洗牌"></a>洗牌
+</td></tr><tr><th>命令功能：</th><td>
+洗牌
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，文字内容
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，文字内容
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+<span class="green">//说明：可以打乱一句内容顺序</span>
+MsgBox lib.算法.洗牌("123啊456")
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="判断是否在一条直线上"></a>判断是否在一条直线上
+</td></tr><tr><th>命令功能：</th><td>
+判断是否在一条直线上
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 整数型，起点x坐标
+参数2 整数型，起点y坐标
+参数3 整数型，终点x坐标
+参数4 整数型，终点y坐标
+参数5 整数型，判断点x坐标
+参数6 整数型，判断点y坐标
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+布尔型，True(是)；False(否)
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox CBool(lib.算法.判断是否在一条直线上(0,3,2,5,4,7))
+</td></tr></table>
+
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="角度计算"></a>角度计算
+</td></tr><tr><th>命令功能：</th><td>
+角度计算
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 整数型，中心点x坐标
+参数2 整数型，中心点y坐标
+参数3 整数型，移动点x坐标
+参数4 整数型，移动点y坐标
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+整数型，角度
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox lib.算法.角度计算(0,0,10,10)
+<span class="green">//上为0°，右为90°，下为180°，左为270°</span>
+</td></tr></table>
+
+
+</body>
+</html>

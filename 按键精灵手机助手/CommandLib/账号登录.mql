@@ -2,6 +2,7 @@
 //客户端: 1 = 360 com.game.sgz.a360 , 2 = 遥点, 3 = 海马玩 com.shouyou.sgzerq.hm
 
 Import "场景相关操作.mql"
+Import "类型转换.mql"
 
 //以下是若快打码的内容
 '####################################以下井号内的内容需要设为全局（放在代码最顶端）
@@ -29,62 +30,62 @@ Function 当前所在登录步骤界面(渠道编号,有无验证码)
     Case 0
         TracePrint "当前运行360客户端"	
         If 有无验证码 = 1 Then 
-            ocrchar=Ocr(562,553,607,732,"333333-111111",0.9)
+            ocrchar = 类型转换.SuperOcr(562,553,607,732,"333333-111111",0.9)
             Traceprint ocrchar
             If ocrchar = "手机号登录" Then 
                 当前所在登录步骤界面 = 1
                 Exit Function
             End If
-            ocrchar=Ocr(586,536,622,740,"333333-111111",0.95)
+            ocrchar = 类型转换.SuperOcr(586,536,622,740,"333333-111111",0.95)
             Traceprint ocrchar
             If ocrchar = "360帐号登录" Then 
                 当前所在登录步骤界面 = 2
                 Exit Function
             End If
-            ocrchar=Ocr(494,556,539,720,"333333-111111",0.95)
+            ocrchar = 类型转换.SuperOcr(494,556,539,720,"333333-111111",0.95)
             Traceprint ocrchar
             If ocrchar = "登录成功" Then 
                 当前所在登录步骤界面 = 3
                 Exit Function
             End If
-            ocrchar=Ocr(574,468,610,819,"333333-111111",0.95)
+            ocrchar = 类型转换.SuperOcr(574,468,610,819,"333333-111111",0.95)
             Traceprint ocrchar
             If ocrchar = "360手机游戏实名认证" Then 
                 当前所在登录步骤界面 = 4
                 Exit Function
             End If
-            ocrchar=Ocr(380,396,430,565,"000000-111111",0.95)
+            ocrchar = 类型转换.SuperOcr(380,396,430,565,"000000-111111",0.95)
             Traceprint ocrchar
             If ocrchar = "您尚未同意" Then 
                 当前所在登录步骤界面 = 5
                 Exit Function
             End If
         Else 
-            ocrchar=Ocr(562,553,607,732,"333333-111111",0.9)
+            ocrchar = 类型转换.SuperOcr(562,553,607,732,"333333-111111",0.9)
             Traceprint ocrchar
             If ocrchar = "手机号登录" Then 
                 当前所在登录步骤界面 = 1
                 Exit Function
             End If
-            ocrchar=Ocr(541,540,585,740,"333333-111111",0.95)
+            ocrchar = 类型转换.SuperOcr(541,540,585,740,"333333-111111",0.95)
             Traceprint ocrchar
             If ocrchar = "360帐号登录" Then 
                 当前所在登录步骤界面 = 2
                 Exit Function
             End If
-            ocrchar=Ocr(494,556,539,720,"333333-111111",0.95)
+            ocrchar = 类型转换.SuperOcr(494,556,539,720,"333333-111111",0.95)
             Traceprint ocrchar
             If ocrchar = "登录成功" Then 
                 当前所在登录步骤界面 = 3
                 Exit Function
             End If
-            ocrchar=Ocr(574,468,610,819,"333333-111111",0.95)
+            ocrchar = 类型转换.SuperOcr(574,468,610,819,"333333-111111",0.95)
             Traceprint ocrchar
             If ocrchar = "360手机游戏实名认证" Then 
                 当前所在登录步骤界面 = 4
                 Exit Function
             End If
-            ocrchar=Ocr(380,396,430,565,"000000-111111",0.95)
+            ocrchar = 类型转换.SuperOcr(380,396,430,565,"000000-111111",0.95)
             Traceprint ocrchar
             If ocrchar = "您尚未同意" Then 
                 当前所在登录步骤界面 = 5
@@ -100,13 +101,13 @@ Function 当前所在登录步骤界面(渠道编号,有无验证码)
         End If
 	Case 2
         TracePrint "当前运行海马玩客户端"
-        ocrchar=Ocr(602,281,661,401,"666666-111111",0.95)
+        ocrchar = 类型转换.SuperOcr(602,281,661,401,"666666-111111",0.95)
         Traceprint ocrchar
         If ocrchar = "登录" Then 
             当前所在登录步骤界面 = 1
             Exit Function
         End If
-        ocrchar=Ocr(524,326,634,456,"FFFFFF-111111",0.95)
+        ocrchar = 类型转换.SuperOcr(524,326,634,456,"FFFFFF-111111",0.95)
         Traceprint ocrchar
         If ocrchar = "账号" Then 
             当前所在登录步骤界面 = 2
@@ -114,7 +115,7 @@ Function 当前所在登录步骤界面(渠道编号,有无验证码)
         End If
     Case 3
         TracePrint "当前运行游戏工厂客户端"
-        ocrchar=Ocr(619,559,662,710,"000000-111111",0.9)
+        ocrchar = 类型转换.SuperOcr(619,559,662,710,"000000-111111",0.9)
         Traceprint ocrchar
         If ocrchar = "账号登录" Then 
             当前所在登录步骤界面 = 1
@@ -137,7 +138,7 @@ Sub 登录360(账号信息, 账号密码)
     End If
     //判断有没有验证码
     Dim ocrchar
-    ocrchar=Ocr(348,447,384,647,"CCCCCC-111111",0.95)
+    ocrchar = 类型转换.SuperOcr(348,447,384,647,"CCCCCC-111111",0.95)
     Traceprint ocrchar
     If ocrchar = "请输入右侧的验" Then 
         有没有验证码 = 1

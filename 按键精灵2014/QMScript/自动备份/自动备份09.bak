@@ -1,0 +1,48 @@
+[General]
+SyntaxVersion=2
+BeginHotkey=121
+BeginHotkeyMod=0
+PauseHotkey=0
+PauseHotkeyMod=0
+StopHotkey=123
+StopHotkeyMod=0
+RunOnce=1
+EnableWindow=
+MacroID=dccddf90-2413-4c0e-8969-d50d91e58ee8
+Description=我的脚本2
+Enable=1
+AutoRun=0
+[Repeat]
+Type=0
+Number=1
+[SetupUI]
+Type=2
+QUI=
+[Relative]
+SetupOCXFile=
+[Comment]
+
+[Script]
+Hwnd = 69874
+Delay 250
+import "e:\obj.vbs"
+set dm = new dmsoft   '创建对象
+
+set dm = createobject("dm.dmsoft")
+base_path = dm.GetBasePath()
+TracePrint base_path
+TracePrint "绑定"
+dm_ret = dm.BindWindow(Hwnd, "normal", "normal", "normal", 2)
+Delay 500
+TracePrint "移动鼠标"
+dm.MoveTo 1100, 220
+Delay 500
+TracePrint "点击"
+dm.LeftClick
+dm_ret = dm.SetPath(base_path)
+dm_ret = dm.SetDict(0,"dm_soft.txt")
+s = dm.Ocr(768, 148, 849, 335, "edeeee-101010|f2f2f1-101010", 1)
+dm_ret = dm.UnBindWindow()
+TracePrint s
+
+set dm = nothing  '释放对象

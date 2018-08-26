@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>按键精灵命令库帮助</title>
+<style>
+body{font-size:12px; font-family:Verdana,"宋体"}
+.ts{ background:#fff; margin:0 0 40px 0;}
+.ts th{ color:#7B797B; background:#DEDFDE; line-height:24px;}
+.ts td {padding:6px 0;}
+.name { font-size:16px; font-weight:bold; border-top:1px dashed #9C9A9C; border-bottom:1px dashed #9C9A9C; color:#006939;}
+.canshu { background:#E7E7EF;}
+.red{ color:#d60000;}
+.green{ color:#006939;}
+.fanhui{ border-bottom:1px dashed #9C9A9C;}
+.lizi{ border-bottom:1px dashed #9C9A9C;}
+</style></head><body>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="得到鼠标在窗口上位置"></a>得到鼠标在窗口上位置
+</td></tr><tr><th>命令功能：</th><td>
+得到鼠标在窗口上位置
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+无
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+字符串型，窗口相对坐标（x|y）
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox lib.窗口.得到鼠标在窗口上位置()
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="弹出对话框"></a>弹出对话框
+</td></tr><tr><th>命令功能：</th><td>
+弹出对话框
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，提示内容
+参数2 整数型，等待时间
+参数3 字符串型，提示标题
+参数4 整数型，显示样式
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox "你选择的是：" & lib.窗口.弹出对话框("提示内容",0,"提示标题",68)
+<span class="green">//详细使用参考这里：http://bbs.vrbrothers.com/viewthread.php?tid=7662</span>
+</td></tr></table>
+
+
+
+</body>
+</html>

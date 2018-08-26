@@ -5,33 +5,33 @@ Import "类型转换.mql"
 Dim 容错参数 = 0
 
 Dim  顶部中间文字描述1, 顶部中间文字相似度1, ocrchar
-    顶部中间文字描述1 = "A4BCD8-111111|94A7BC-111111|D0E4F2-111111|A6B0B3-111111|C5D2D7-111111|B9D0E6-111111|E2F3F9-111111|8A96A1-111111"
-    顶部中间文字相似度1 = 1
+顶部中间文字描述1 = "A4BCD8-111111|94A7BC-111111|D0E4F2-111111|A6B0B3-111111|C5D2D7-111111|B9D0E6-111111|E2F3F9-111111|8A96A1-111111"
+顶部中间文字相似度1 = 0.95
 	
-    Dim 顶部左上文字描述, 顶部左上文字相似度
-    顶部左上文字描述 = "849DB6-111111|C6EDF6-111111|B4D7E5-111111|A6C7D8-111111|9DBBCB-111111"
-    顶部左上文字相似度 = 1
+Dim 顶部左上文字描述, 顶部左上文字相似度
+顶部左上文字描述 = "849DB6-111111|C6EDF6-111111|B4D7E5-111111|A6C7D8-111111|9DBBCB-111111"
+顶部左上文字相似度 = 1
 	
-    Dim 顶部中间文字描述2, 顶部中间文字相似度2
-    顶部中间文字描述2 = "708396-101010|798EA0-101010|8299AA-101010|A4C2CF-101010|B3D5E0-101010|C2E7F0-101010|97B3C1-101010"
-    顶部中间文字相似度2 = 1
+Dim 顶部中间文字描述2, 顶部中间文字相似度2
+顶部中间文字描述2 = "708396-101010|798EA0-101010|8299AA-101010|A4C2CF-101010|B3D5E0-101010|C2E7F0-101010|97B3C1-101010"
+顶部中间文字相似度2 = 1
     
-    Dim 启动画面框体数组, 启动画面框体文字描述, 启动画面框体相似度
-    启动画面框体文字描述 = "E2E0DE-111111|D0CCC7-111111|BCAE9C-111111|A8A19A-111111|BEBAB5-111111|F1F1F1-111111"
-    启动画面框体相似度 = 1
+Dim 启动画面框体数组, 启动画面框体文字描述, 启动画面框体相似度
+启动画面框体文字描述 = "E2E0DE-111111|D0CCC7-111111|BCAE9C-111111|A8A19A-111111|BEBAB5-111111|F1F1F1-111111"
+启动画面框体相似度 = 1
 	
-	Dim 判定范围2, 判定范围3, 判定范围4, intX, intY
+Dim 判定范围2, 判定范围3, 判定范围4, intX, intY
 
-    判定范围2 = Array(0,1100,150,1280) '切换主城和大地图按钮
-    判定范围3 = Array(580,0,720,140) '副本图标
-    判定范围4 = Array(580,0,720,220) '左上角标题
+判定范围2 = Array(0,1100,150,1280) '切换主城和大地图按钮
+判定范围3 = Array(580,0,720,140) '副本图标
+判定范围4 = Array(580,0,720,220) '左上角标题
 
 Function 所在场景()
     //界面枚举 
     //1 = 主城, 2 = 大地图, 3 = 副本, 4 = 商城, 5 = 日常活动, 6 = 任务, 7 = 建筑, 8 = 出征, 9 = 兵事 , 10 = 签到, 11 = 七日狂欢, 12 = 月卡, 
     //13 = 皇榜任务, 14 = 武将, 15 = 布阵, 16 = 背包, 17 = 军团, 18 = 战斗中, 19 = 邮件, 20 = 资源, 21 = 公告, 22 = 登录界面, 23 = 酒肆, 24 = 官职, 25 = 祭坛, 
     //26 = 成就, 27 = 技法所, 28 = 计略府, 29 = 军械所, 30 = 城墙, 31 = 派遣 , 32 = VIP, 33 = 主公 , 34 = 开服基金 , 35 = 市场, 36 = 断线重连, 37 = 副本预览, 38 = 精英副本
-    //39 = 名将副本, 40 = 选择队伍, 41 = 扫荡预览, 44 = 国家, 45 = 兵力, 46 = 附近界面, 47 = 筛选界面, 48 = 寻访界面, 49 = 错误, 50 = 仓库, 51 = 建筑升级, 52 = 军团帮助
+    //39 = 名将副本, 40 = 选择队伍, 41 = 扫荡预览, 44 = 国家, 45 = 兵力, 46 = 附近界面, 47 = 筛选界面, 48 = 寻访界面, 50 = 仓库, 51 = 建筑升级, 52 = 军团帮助
     //53 = 军团俸禄, 54 = 活动详情, 55 = 补领确认, 56 = 宴请结果, 57 = 繁荣度, 58 = 排行榜, 59 = 帮助界面, 60 = 设置, 61 = 读条等待, 62 = 获得武将, 63 = 白云, 64 = 充值提示, 65 = 武将详情页, 66 = 铸币所
     //68 = 引导手势, 69 = 出处, 70 = 升阶详情, 71 = 升阶, 72 = 沙场论剑, 73 = 沙场论剑选择对手, 74 = 选择区服, 75 = 军团捐献, 76 = 收藏, 77 = 限时签到, 78 = 军团商店
 
@@ -93,18 +93,6 @@ Function 所在场景()
         End If
         Exit Function
     End If
-	
-    FindPic 370,224,439,384,"Attachment:副本奖励.png","000000",0,0.9,intX,intY
-    If intX > -1 And intY > -1 Then
-        所在场景 = 37
-        Exit Function
-    End If
-    
-    FindPic 131, 861, 207, 1030, "Attachment:重置.png", "000000", 0, 0.9, intX, intY
-    If intX > -1 And intY > -1 Then
-        所在场景 = 37
-        Exit Function
-    End If
     
     FindPic 524,22,580,105,"Attachment:精英副本.png","000000",0,0.9,intX,intY
     If intX > -1 And intY > -1 Then
@@ -127,12 +115,6 @@ Function 所在场景()
     FindPic 584, 208, 630, 498, "Attachment:附近.png", "000000", 0, 0.98, intX, intY
     If intX > -1 And intY > -1 Then 
         所在场景 = 46
-        Exit Function
-    End If
-	
-    FindPic 462,590,526,701,"Attachment:错误.png","000000",0,0.95,intX,intY
-    If intX > -1 And intY > -1 Then
-        所在场景 = 49
         Exit Function
     End If
 
@@ -226,13 +208,19 @@ Function 所在场景()
         Exit Function
     End If
 	
-
-	ocrchar=类型转换.SuperOcr(120, 565, 156, 713, 启动画面框体文字描述, 启动画面框体相似度)
-	Traceprint "ocrchar0",ocrchar
-	If ocrchar = "开始征战" Then
-		所在场景 = 22
-		Exit Function	
-	End If
+    ocrchar=类型转换.SuperOcr(364,293,435,399,"5CA3E5-111111|3F678A-111111|5391CA-111111|3A5E7D-111111|4A7FAF-111111|345775-111111",0.95)
+    Traceprint "ocrchar0",ocrchar
+    If ocrchar = "奖励" Then
+        所在场景 = 37
+        Exit Function
+    End If
+	
+    ocrchar=类型转换.SuperOcr(120, 565, 156, 713, 启动画面框体文字描述, 启动画面框体相似度)
+    Traceprint "ocrchar0",ocrchar
+    If ocrchar = "开始征战" Then
+        所在场景 = 22
+        Exit Function	
+    End If
     
     ocrchar=类型转换.SuperOcr(630,569,684,712, 顶部中间文字描述2, 顶部中间文字相似度2)
     Traceprint "ocrchar1",ocrchar
@@ -322,10 +310,10 @@ Function 所在场景()
     ElseIf ocrchar = "军团帮助" Then
         所在场景 = 52
         Exit Function
-	ElseIf ocrchar = "出处" Then
+    ElseIf ocrchar = "出处" Then
         所在场景 = 69
         Exit Function
-	ElseIf ocrchar = "城池建设" Then
+    ElseIf ocrchar = "城池建设" Then
         所在场景 = 7
         Exit Function
     ElseIf ocrchar = "技法所" Then
@@ -337,10 +325,10 @@ Function 所在场景()
     ElseIf ocrchar = "军械所" Then
         所在场景 = 29
         Exit Function
-	ElseIf ocrchar = "VIP" Then
+    ElseIf ocrchar = "VIP" Then
         所在场景 = 32
         Exit Function
-	ElseIf ocrchar = "军团俸禄" Then
+    ElseIf ocrchar = "军团俸禄" Then
         所在场景 = 53
         Exit Function
     ElseIf ocrchar = "祭坛" Then
@@ -378,126 +366,123 @@ Function 所在场景()
         Exit Function
     End If
 	
-	ocrchar = 类型转换.SuperOcr(467,571,559,719, 顶部中间文字描述1, 顶部中间文字相似度1)
-	TracePrint "ocrchar4",ocrchar
-	If ocrchar = "提示" Then
+    ocrchar = 类型转换.SuperOcr(467,571,559,719, 顶部中间文字描述1, 顶部中间文字相似度1)
+    TracePrint "ocrchar4",ocrchar
+    If ocrchar = "提示" Then
         所在场景 = 36
         Exit Function
-	ElseIf ocrchar = "扫荡" Then
+    ElseIf ocrchar = "扫荡" Then
         所在场景 = 41
         Exit Function
-	ElseIf ocrchar = "设置" Then
+    ElseIf ocrchar = "设置" Then
         所在场景 = 60
         Exit Function
-	ElseIf ocrchar = "城池寻访" Then
+    ElseIf ocrchar = "城池寻访" Then
         所在场景 = 48
         Exit Function
-	End If
+    End If
 	
 	
-	//Dim intX,intY
+    //Dim intX,intY
     //    FindColor 208,614,338,865,"96DAEB",0,0.98,intX,intY
     //    If intX > -1 And intY > -1 Then
     //        所在场景 = 68
     //        Exit Function
     //    End If
-    
-End Function
-
-Function 关闭界面()	
-    Dim intX, intY, 重启参数, 当前场景
-    重启参数 = 0
-	当前场景 = 所在场景()
-    Select Case 当前场景
-    Case 12
-        Tap 525, 1110
-    Case 22
-		Call 选择区服()
-        Touch 140, 640, 100
-    Case 1
-        TracePrint "这个主界面要怎么关"
-    Case 2
-        Touch 70, 1205, 100
-    Case 36
-        FindPic 209,390,304,899,"Attachment:重新登录.png","000000",0,0.99,intX,intY
-        If intX > -1 And intY > -1 Then
-            Touch 250, 640, 100
-        Else 
-            Touch 248, 520, 100
-        End If
-    Case 18
-        TracePrint "战斗场景,暂时不支持关闭,请等待战斗结束"
-        //showmessage "战斗场景,暂时不支持关闭,请等待战斗结束", 2000, 390, 640
-    Case 49 
-        Touch 250, 640, 100
-    Case 55
-        Touch 250, 750, 100
-    Case 56
-        Touch 55, 480, 100
-    Case 61
-        //showmessage "等待加载", 1000, 50, 620
-    Case 62
-        Touch 100, 640, 100
-    Case 63
-		Rem 等待白云
-		Dim 包名
-		包名 = Sys.GetFront()
-        If 当前场景 = 63 Then
-            TracePrint "白云吗???"
-            If 重启参数 > 15 Then 
-                KillApp 包名
-                Delay 5000
-                RunApp 包名
-                Delay 30000
-                重启参数 = 0
-            End If
-            重启参数 = 重启参数 + 1
-            Delay 2000
-            当前场景 = 所在场景()
-            Goto 等待白云
-        End If
-    Case 64
-        Touch 250, 520, 100
-    Case 68
-        Touch 320, 720, 100
-    Case Else
-        Dim temp
-		temp = sys.GetFront()
-		Rem 关闭未知界面
-		If 当前场景 = Null Then
-            Call 通用界面关闭()
-            Touch 1 + 重启参数 ,GetScreenY() - 1 - 重启参数, 100
-            //showmessage "无法关闭,请手动关闭,并告诉我", 1500, 50, 620
-            TracePrint "不知道的场景"
-            If 重启参数 > 30 Then 
-                KillApp temp 
-                Delay 5000
-                RunApp temp
-                Delay 30000
-                重启参数 = 0
-            End If
-            重启参数 = 重启参数 + 1
-            Delay 1000
-            当前场景 = 所在场景()
-            Goto 关闭未知界面
-		Else
-			Call 通用界面关闭()
-        End If
-    End Select
 End Function
 
 Sub 通用界面关闭()
+    Rem 关闭界面
     Dim intX,intY
     FindPic 0,0,GetScreenX(),GetScreenY(),"Attachment:关闭.png","000000",2,0.7,intX,intY
     If intX > -1 And intY > -1 Then
+        TracePrint "通用关闭界面1"
         Touch intX,intY,100
-	Else
-		FindPic 0,0,GetScreenX(),GetScreenY(),"Attachment:关闭1.png","000000",0,0.7,intX,intY
-		If intX > -1 And intY > -1 Then
-			Touch intX,intY,100
-		Else
-			Call 关闭界面()
-		End If
+    Else
+        FindPic 0,0,GetScreenX(),GetScreenY(),"Attachment:关闭1.png","000000",0,0.7,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "通用关闭界面1"
+            Touch intX,intY,100
+        Else
+            TracePrint "通用关闭界面2"
+            Dim 重启参数, 当前场景
+            重启参数 = 0
+            当前场景 = 所在场景()
+            Select Case 当前场景
+            Case 12
+                Tap 525, 1110
+            Case 22
+                Call 选择区服()
+                Touch 140, 640, 100
+            Case 1
+                TracePrint "这个主界面要怎么关"
+            Case 2
+                Touch 70, 1205, 100
+            Case 36
+                FindPic 209,390,304,899,"Attachment:重新登录.png","000000",0,0.99,intX,intY
+                If intX > -1 And intY > -1 Then
+                    Touch 250, 640, 100
+                Else 
+                    Touch 248, 520, 100
+                End If
+            Case 18
+                TracePrint "战斗场景,暂时不支持关闭,请等待战斗结束"
+                //showmessage "战斗场景,暂时不支持关闭,请等待战斗结束", 2000, 390, 640
+            Case 49 
+                Touch 250, 640, 100
+            Case 55
+                Touch 250, 750, 100
+            Case 56
+                Touch 55, 480, 100
+            Case 61
+                //showmessage "等待加载", 1000, 50, 620
+            Case 62
+                Touch 100, 640, 100
+            Case 63
+                Rem 等待白云
+                Dim 包名
+                包名 = Sys.GetFront()
+                If 当前场景 = 63 Then
+                    TracePrint "白云吗???"
+                    If 重启参数 > 15 Then 
+                        KillApp 包名
+                        Delay 5000
+                        RunApp 包名
+                        Delay 30000
+                        重启参数 = 0
+                    End If
+                    重启参数 = 重启参数 + 1
+                    Delay 2000
+                    当前场景 = 所在场景()
+                    Goto 等待白云
+                End If
+            Case 64
+                Touch 250, 520, 100
+            Case 68
+                Touch 320, 720, 100
+            Case Else
+                Dim temp
+                temp = sys.GetFront()
+                Rem 关闭未知界面
+                If 当前场景 = Null Then
+                    Touch 1 + 重启参数 ,GetScreenY() - 1 - 重启参数, 100
+                    //showmessage "无法关闭,请手动关闭,并告诉我", 1500, 50, 620
+                    TracePrint "不知道的场景"
+                    If 重启参数 > 30 Then 
+                        KillApp temp 
+                        Delay 5000
+                        RunApp temp
+                        Delay 30000
+                        重启参数 = 0
+                        Goto 关闭界面
+                    End If
+                    重启参数 = 重启参数 + 1
+                    Delay 1000
+                    当前场景 = 所在场景()
+                    Goto 关闭未知界面
+                End If
+            End Select
+        End If
     End If
 End Sub
 
@@ -518,16 +503,16 @@ Function 主城底部是否收起()
         If intX > -1 And intY > -1 Then 
             主城底部是否收起 = False
         Else 
-			FindPic 4,1075,95,1144,"Attachment:底部展开.png","000000",0,0.9,intX,intY
-			If intX > -1 And intY > -1 Then
-				主城底部是否收起 = True
-			Else
-				TracePrint "右边的图标也没找到,可能左边被挡住,尝试设置为False"
-				主城底部是否收起 = False
-			End If
+            FindPic 4,1075,95,1144,"Attachment:底部展开.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                主城底部是否收起 = True
+            Else
+                TracePrint "右边的图标也没找到,可能左边被挡住,尝试设置为False"
+                主城底部是否收起 = False
+            End If
         End If
     Else 
-		Delay 2000
+        Delay 2000
     End If
 End Function
 
@@ -542,130 +527,130 @@ Function 野外顶部是否收起()
         End If
     Else 
         TracePrint "当前不在野外,无法判断"
-		Delay 2000
+        Delay 2000
     End If
 End Function
 
 Function 选择区服()
-	Dim intX, intY, ocrchar, 容错参数, 区服, 容错次数
-	区服 = ReadConfig("区服")
-	容错次数 = ReadConfig("选服重试次数")
-	//先判断当前默认区服是否和填写的区服一致
-	//这里的字库待完善
-	ocrchar=类型转换.SuperOcr(229,588,270,681,"BDBDBC-111111|DBDBDB-111111|A6A9A9-111111",0.9)
-	If ocrchar = 区服 Then 
-		TracePrint "选择一致,完成"
-		Exit Function
-	End If
-	//进选服界面
-	容错参数 = 0
-	Rem 进子界面1
-	Touch 245, 850, 100
-	Delay 3000
-	If 进入场景是否正确(74) Then
-		TracePrint "已经进入目标界面"
-	ElseIf 容错参数 < 5 Then
-		TracePrint "进入失败重试"
-		容错参数 = 容错参数 + 1
-		Delay 2000
-		Goto 进子界面1
-	ElseIf 容错参数 >= 5 Then
-		//showmessage "无法进入目标界面", 2000, 50, 620
-		Exit Function
-	End If
-	TracePrint "成功进入选服界面"
+    Dim intX, intY, ocrchar, 容错参数, 区服, 容错次数
+    区服 = ReadConfig("区服")
+    容错次数 = ReadConfig("选服重试次数")
+    //先判断当前默认区服是否和填写的区服一致
+    //这里的字库待完善
+    ocrchar=类型转换.SuperOcr(229,588,270,681,"BDBDBC-111111|DBDBDB-111111|A6A9A9-111111",0.9)
+    If ocrchar = 区服 Then 
+        TracePrint "选择一致,完成"
+        Exit Function
+    End If
+    //进选服界面
+    容错参数 = 0
+    Rem 进子界面1
+    Touch 245, 850, 100
+    Delay 3000
+    If 进入场景是否正确(74) Then
+        TracePrint "已经进入目标界面"
+    ElseIf 容错参数 < 5 Then
+        TracePrint "进入失败重试"
+        容错参数 = 容错参数 + 1
+        Delay 2000
+        Goto 进子界面1
+    ElseIf 容错参数 >= 5 Then
+        //showmessage "无法进入目标界面", 2000, 50, 620
+        Exit Function
+    End If
+    TracePrint "成功进入选服界面"
 	
-	//先判断最近区服有没有
-	//这里的字库待完善
-	ocrchar=类型转换.SuperOcr(505,321,538,391,"BDBDBC-111111|DBDBDB-111111|A6A9A9-111111",0.9)
-	If ocrchar = 区服 Then 
-		TracePrint "成功找到区服"
-		容错参数 = 0
-		Rem 点击区服1
-		Touch (505 + 538) / 2, (321 + 391) / 2, 100
-		Delay 1000
-		Touch 105, 1090, 100
-		Delay 1500
-		If 所在场景() = 22 Then 
-			TracePrint "跳转成功,完成"
-			Exit Function
-		ElseIf 容错参数 < 5 Then
-			TracePrint "跳转失败,重试"
-			容错参数 = 容错参数 + 1
-			Goto 点击区服1
-		ElseIf 容错参数 >= 5 Then
-			TracePrint "错误次数过多放弃"
-			Exit Function
-		End If
-	End If
-	ocrchar=类型转换.SuperOcr(505,748,539,821,"BDBDBC-111111|DBDBDB-111111|A6A9A9-111111",0.9)
-	If ocrchar = 区服 Then 
-		TracePrint "成功找到区服"
-		容错参数 = 0
-		Rem 点击区服2
-		Touch (505 + 539) / 2, (748 + 821) / 2, 100
-		Delay 1000
-		Touch 105, 1090, 100
-		Delay 1500
-		If 所在场景() = 22 Then 
-			TracePrint "跳转成功,完成"
-			Exit Function
-		ElseIf 容错参数 < 5 Then
-			TracePrint "跳转失败,重试"
-			容错参数 = 容错参数 + 1
-			Goto 点击区服2
-		ElseIf 容错参数 >= 5 Then
-			TracePrint "错误次数过多放弃"
-			Exit Function
-		End If
-	End If
-	容错参数 = 0
-	Dim 初始X1, 初始Y1, 初始X2, 初始Y2, X偏移, Y偏移, 起始X1, 起始Y1, 起始X2, 起始Y2
-	初始X1 = 330 : 初始Y1 = 303 : 初始X2 = 430 : 初始Y2 = 380 : X偏移 = 90 : Y偏移 = 443
-	Rem 寻找区服
-	TracePrint "寻找区服"&区服&"第"&容错参数&"次"
-	For i = 0 To 7
-		起始Y1 = 初始Y1 + (i Mod 2) * Y偏移
-		起始X1 = 初始X1 - Int(i / 2) * X偏移
-		起始Y2 = 初始Y2 + (i Mod 2) * Y偏移
-		起始X2 = 初始X2 - Int(i / 2) * X偏移
-		ocrchar=类型转换.SuperOcr(起始X1, 起始Y1, 起始X2, 起始Y2,"BDBDBC-111111|DBDBDB-111111|A6A9A9-111111",0.9)
-		TracePrint ocrchar
-		If ocrchar = 区服 Then
-			TracePrint "成功找到区服"
-			容错参数 = 0
-			Rem 点击区服3
-			Touch (起始X1 + 起始X2) / 2, (起始Y1 + 起始Y2) / 2, 100
-			Delay 1000
-			Touch 105, 1090, 100
-			Delay 1500
-			If 所在场景() <> Null Then 
-				TracePrint "跳转成功,完成"
-				Exit Function
-			ElseIf 容错参数 < 5 Then
-				TracePrint "跳转失败,重试"
-				Goto 点击区服3
-				容错参数 = 容错参数 + 1
-			ElseIf 容错参数 >= 5 Then
-				TracePrint "错误次数过多放弃"
-				Exit Function
-			End If
-		End If
-		TracePrint "位置"&i&"完成"
-	Next
-	If 容错参数 < 容错次数 Then
-		TracePrint "滑动继续"
-		Delay 500
-		zm.Swipe 70, 495, 460, 495, 500
-		Delay 2000
-		容错参数 = 容错参数 + 1
-		Goto 寻找区服
-	ElseIf 容错参数 >= 容错次数 Then
-		TracePrint "错误次数太多,放弃"
-		通用界面关闭
-		Delay 2000
-		Exit Function
-	End If
+    //先判断最近区服有没有
+    //这里的字库待完善
+    ocrchar=类型转换.SuperOcr(505,321,538,391,"BDBDBC-111111|DBDBDB-111111|A6A9A9-111111",0.9)
+    If ocrchar = 区服 Then 
+        TracePrint "成功找到区服"
+        容错参数 = 0
+        Rem 点击区服1
+        Touch (505 + 538) / 2, (321 + 391) / 2, 100
+        Delay 1000
+        Touch 105, 1090, 100
+        Delay 1500
+        If 所在场景() = 22 Then 
+            TracePrint "跳转成功,完成"
+            Exit Function
+        ElseIf 容错参数 < 5 Then
+            TracePrint "跳转失败,重试"
+            容错参数 = 容错参数 + 1
+            Goto 点击区服1
+        ElseIf 容错参数 >= 5 Then
+            TracePrint "错误次数过多放弃"
+            Exit Function
+        End If
+    End If
+    ocrchar=类型转换.SuperOcr(505,748,539,821,"BDBDBC-111111|DBDBDB-111111|A6A9A9-111111",0.9)
+    If ocrchar = 区服 Then 
+        TracePrint "成功找到区服"
+        容错参数 = 0
+        Rem 点击区服2
+        Touch (505 + 539) / 2, (748 + 821) / 2, 100
+        Delay 1000
+        Touch 105, 1090, 100
+        Delay 1500
+        If 所在场景() = 22 Then 
+            TracePrint "跳转成功,完成"
+            Exit Function
+        ElseIf 容错参数 < 5 Then
+            TracePrint "跳转失败,重试"
+            容错参数 = 容错参数 + 1
+            Goto 点击区服2
+        ElseIf 容错参数 >= 5 Then
+            TracePrint "错误次数过多放弃"
+            Exit Function
+        End If
+    End If
+    容错参数 = 0
+    Dim 初始X1, 初始Y1, 初始X2, 初始Y2, X偏移, Y偏移, 起始X1, 起始Y1, 起始X2, 起始Y2
+    初始X1 = 330 : 初始Y1 = 303 : 初始X2 = 430 : 初始Y2 = 380 : X偏移 = 90 : Y偏移 = 443
+    Rem 寻找区服
+    TracePrint "寻找区服"&区服&"第"&容错参数&"次"
+    For i = 0 To 7
+        起始Y1 = 初始Y1 + (i Mod 2) * Y偏移
+        起始X1 = 初始X1 - Int(i / 2) * X偏移
+        起始Y2 = 初始Y2 + (i Mod 2) * Y偏移
+        起始X2 = 初始X2 - Int(i / 2) * X偏移
+        ocrchar=类型转换.SuperOcr(起始X1, 起始Y1, 起始X2, 起始Y2,"BDBDBC-111111|DBDBDB-111111|A6A9A9-111111",0.9)
+        TracePrint ocrchar
+        If ocrchar = 区服 Then
+            TracePrint "成功找到区服"
+            容错参数 = 0
+            Rem 点击区服3
+            Touch (起始X1 + 起始X2) / 2, (起始Y1 + 起始Y2) / 2, 100
+            Delay 1000
+            Touch 105, 1090, 100
+            Delay 1500
+            If 所在场景() <> Null Then 
+                TracePrint "跳转成功,完成"
+                Exit Function
+            ElseIf 容错参数 < 5 Then
+                TracePrint "跳转失败,重试"
+                Goto 点击区服3
+                容错参数 = 容错参数 + 1
+            ElseIf 容错参数 >= 5 Then
+                TracePrint "错误次数过多放弃"
+                Exit Function
+            End If
+        End If
+        TracePrint "位置"&i&"完成"
+    Next
+    If 容错参数 < 容错次数 Then
+        TracePrint "滑动继续"
+        Delay 500
+        zm.Swipe 70, 495, 460, 495, 500
+        Delay 2000
+        容错参数 = 容错参数 + 1
+        Goto 寻找区服
+    ElseIf 容错参数 >= 容错次数 Then
+        TracePrint "错误次数太多,放弃"
+        通用界面关闭
+        Delay 2000
+        Exit Function
+    End If
 End Function
 
 Function 进入场景是否正确(目标场景)
@@ -673,11 +658,9 @@ Function 进入场景是否正确(目标场景)
     //1 = 主城, 2 = 大地图, 3 = 副本, 4 = 商城, 5 = 日常活动, 6 = 任务, 7 = 建筑, 8 = 出征, 9 = 兵事 , 10 = 签到, 11 = 七日狂欢, 12 = 月卡, 
     //13 = 皇榜任务, 14 = 武将, 15 = 布阵, 16 = 背包, 17 = 军团, 18 = 战斗中, 19 = 邮件, 20 = 资源, 21 = 公告, 22 = 登录界面, 23 = 酒肆, 24 = 官职, 25 = 祭坛, 
     //26 = 成就, 27 = 技法所, 28 = 计略府, 29 = 军械所, 30 = 城墙, 31 = 派遣 , 32 = VIP, 33 = 主公 , 34 = 开服基金 , 35 = 市场, 36 = 断线重连, 37 = 副本预览, 38 = 精英副本
-    //39 = 名将副本, 40 = 选择队伍, 41 = 扫荡预览, 44 = 国家, 45 = 兵力, 46 = 附近界面, 47 = 筛选界面, 48 = 寻访界面, 49 = 错误, 50 = 仓库, 51 = 建筑升级, 52 = 军团帮助
+    //39 = 名将副本, 40 = 选择队伍, 41 = 扫荡预览, 44 = 国家, 45 = 兵力, 46 = 附近界面, 47 = 筛选界面, 48 = 寻访界面, 50 = 仓库, 51 = 建筑升级, 52 = 军团帮助
     //53 = 军团俸禄, 54 = 活动详情, 55 = 补领确认, 56 = 宴请结果, 57 = 繁荣度, 58 = 排行榜, 59 = 帮助界面, 60 = 设置, 61 = 读条等待, 62 = 获得武将, 63 = 白云, 64 = 充值提示, 65 = 武将详情页, 66 = 铸币所
     //68 = 引导手势, 69 = 出处, 70 = 升阶详情, 71 = 升阶, 72 = 沙场论剑, 73 = 沙场论剑选择对手, 74 = 选择区服, 75 = 军团捐献, 76 = 坐标收藏, 77 = 限时签到
-	
-    TracePrint time()
 	
     Dim 判定范围2, 判定范围3, 判定范围4, intX, intY
 
@@ -733,7 +716,7 @@ Function 进入场景是否正确(目标场景)
         End If
     
     Case 18
-        FindPic 580,1020,720,1280,"Attachment:暂停.png","000000",0,0.9,intX,intY
+        FindPic 580,1020,720,1280,"Attachment:暂停.png","000000",0,0.8,intX,intY
         If intX > -1 And intY > -1 Then
             进入场景是否正确 = True
             Exit Function
@@ -751,14 +734,9 @@ Function 进入场景是否正确(目标场景)
         End If
 	
     Case 37
-        FindPic 370,224,439,384,"Attachment:副本奖励.png","000000",0,0.9,intX,intY
-        If intX > -1 And intY > -1 Then
-            进入场景是否正确 = True
-            Exit Function
-        End If
-    
-        FindPic 131, 861, 207, 1030, "Attachment:重置.png", "000000", 0, 0.9, intX, intY
-        If intX > -1 And intY > -1 Then
+        ocrchar=类型转换.SuperOcr(364,293,435,399,"5CA3E5-111111|3F678A-111111|5391CA-111111|3A5E7D-111111|4A7FAF-111111|345775-111111",0.95)
+        Traceprint "ocrchar0",ocrchar
+        If ocrchar = "奖励" Then
             进入场景是否正确 = True
             Exit Function
         End If
@@ -787,13 +765,6 @@ Function 进入场景是否正确(目标场景)
     Case 46
         FindPic 584, 208, 630, 498, "Attachment:附近.png", "000000", 0, 0.98, intX, intY
         If intX > -1 And intY > -1 Then 
-            进入场景是否正确 = True
-            Exit Function
-        End If
-    
-    Case 49
-        FindPic 462,590,526,701,"Attachment:错误.png","000000",0,0.95,intX,intY
-        If intX > -1 And intY > -1 Then
             进入场景是否正确 = True
             Exit Function
         End If
@@ -1183,8 +1154,8 @@ Function 进入场景是否正确(目标场景)
             进入场景是否正确 = True
             Exit Function
         End If
-	Case 69
-		ocrchar = 类型转换.SuperOcr(586,618,619,691, 顶部中间文字描述1, 顶部中间文字相似度1)
+    Case 69
+        ocrchar = 类型转换.SuperOcr(586,618,619,691, 顶部中间文字描述1, 顶部中间文字相似度1)
         TracePrint "ocrchar4",ocrchar
         If ocrchar = "出处" Then
             进入场景是否正确 = True
@@ -1197,12 +1168,12 @@ Function 进入场景是否正确(目标场景)
             进入场景是否正确 = True
             Exit Function
         End If
-	Case 48
-		ocrchar = 类型转换.SuperOcr(525,571,559,719, 顶部中间文字描述1, 顶部中间文字相似度1)
+    Case 48
+        ocrchar = 类型转换.SuperOcr(525,571,559,719, 顶部中间文字描述1, 顶部中间文字相似度1)
         TracePrint "ocrchar4",ocrchar
         If ocrchar = "城池寻访" Then
             进入场景是否正确 = True
             Exit Function
         End If
-	End Select
-    End Function
+    End Select
+End Function

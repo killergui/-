@@ -1,0 +1,47 @@
+[General]
+SyntaxVersion=2
+BeginHotkey=121
+BeginHotkeyMod=0
+PauseHotkey=0
+PauseHotkeyMod=0
+StopHotkey=123
+StopHotkeyMod=0
+RunOnce=1
+EnableWindow=
+MacroID=0a926d17-3119-46ae-a237-346e8bf2a8c0
+Description=我的脚本1
+Enable=1
+AutoRun=0
+[Repeat]
+Type=0
+Number=1
+[SetupUI]
+Type=1
+QUI=Form1
+[Relative]
+SetupOCXFile=
+[Comment]
+
+[Script]
+Hwnd = 135700
+Import "e:\obj.vbs"
+set dm = createobject("dm.dmsoft")
+base_path = dm.GetBasePath()
+TracePrint base_path
+dm_ret = dm.Reg("killergui2147a5bb90ae5085c0ea30d6968e7657","")
+TracePrint dm_ret
+dm_ret = dm.SetPath(base_path)
+dm_ret = dm.SetDict(0, "dm_soft.txt")
+dm_ret = dm.BindWindow(Hwnd, "dx2", "normal", "normal", 0)
+TracePrint dm_ret
+Delay 1500
+
+//dm_ret = dm.Capture(0, 0, 2000, 2000, "123.bmp")
+s = dm.Ocr(205,926,356,967,"ffffff-101010",0.95)
+    TracePrint s
+dm.Moveto 356,967
+Sub OnScriptExit()
+    TracePrint "解除绑定"
+    dm_ret = dm.UnBindWindow()
+    Set dm = nothing'释放对象
+End Sub

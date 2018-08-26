@@ -105,4 +105,5 @@ Function 脚本是否启动了()
         End If
     End If
 End Function
+
  

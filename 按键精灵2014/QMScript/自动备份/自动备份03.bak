@@ -1,0 +1,45 @@
+[General]
+SyntaxVersion=2
+BeginHotkey=121
+BeginHotkeyMod=0
+PauseHotkey=0
+PauseHotkeyMod=0
+StopHotkey=123
+StopHotkeyMod=0
+RunOnce=1
+EnableWindow=
+MacroID=0a926d17-3119-46ae-a237-346e8bf2a8c0
+Description=我的脚本1
+Enable=1
+AutoRun=0
+[Repeat]
+Type=0
+Number=1
+[SetupUI]
+Type=1
+QUI=Form1
+[Relative]
+SetupOCXFile=
+[Comment]
+
+[Script]
+//遍历符合窗口标题("海马玩模拟器")的句柄保存到数组(HwndEx)里
+HwndEx = Plugin.Window.Search("海马玩模拟器")
+//下面这句用于分割字符串,将获得的句柄组分割   
+dim MyArray   
+MyArray = Split(HwndEx, "|")   
+If UBound(MyArray)>=0 Then  
+    i=0   
+    For UBound(MyArray)   
+        //下面这句将字符串转换成数值   
+        Hwnd = MyArray(i)
+        //向后台窗口句柄(变量：Hwnd)发送一个键盘(扫描码：A)按键
+        Call Plugin.Bkgnd.KeyPress(Hwnd, 65)
+        Delay 1000
+        
+        Plugin.Bkgnd.FindPic 参数1,参数2,参数3,参数4,参数5,参数6,参数7,参数8
+        //显示窗口
+        Call Plugin.Window.Show(Hwnd)
+        i=i+1   
+    Next  
+End If  

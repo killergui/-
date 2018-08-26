@@ -31,7 +31,7 @@ Function 读取当前体力()
         读取当前体力 = temp(0)
     End If
     If temp(0) = Null Then
-        ocrchar = 类型转换.SuperOcr(665,865,705,956,"586D6B-111111|97BFBE-111111|86A9A8-111111|6D8786-111111",0.95)
+        ocrchar = 类型转换.SuperOcr(665,865,705,956,"586D6B-111111|97BFBE-111111|86A9A8-111111|6D8786-111111",0.9)
         temp = 类型转换.字符串解析带符号(ocrchar, "/", 7, 5)
         读取当前体力 = temp(0)
     End If

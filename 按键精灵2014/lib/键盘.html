@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>按键精灵命令库帮助</title>
+<style>
+body{font-size:12px; font-family:Verdana,"宋体"}
+.ts{ background:#fff; margin:0 0 40px 0;}
+.ts th{ color:#7B797B; background:#DEDFDE; line-height:24px;}
+.ts td {padding:6px 0;}
+.name { font-size:16px; font-weight:bold; border-top:1px dashed #9C9A9C; border-bottom:1px dashed #9C9A9C; color:#006939;}
+.canshu { background:#E7E7EF;}
+.red{ color:#d60000;}
+.green{ color:#006939;}
+.fanhui{ border-bottom:1px dashed #9C9A9C;}
+.lizi{ border-bottom:1px dashed #9C9A9C;}
+</style></head><body>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="键盘组合键"></a>键盘组合键
+</td></tr><tr><th>命令功能：</th><td>
+键盘组合键
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，键盘码
+参数2 整数型，模拟方式
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Call lib.键盘.键盘组合键("Ctrl + Alt + A",0)
+<span class="green">//模拟方式：【0普通模拟，1硬件模拟，2超级模拟】</span>
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="键盘按键组"></a>键盘按键组
+</td></tr><tr><th>命令功能：</th><td>
+键盘按键组
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，键码组
+参数2 整数型，模拟方式
+参数3 整数型，毫秒延时
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Call lib.键盘.键盘按键组("A,B,C,SPACE,D,E,F,G",0,50)
+<span class="green">//模拟方式：【0普通模拟，1硬件模拟，2超级模拟】</span>
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="KeyList"></a>KeyList
+</td></tr><tr><th>命令功能：</th><td>
+输入一串按键内容
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，键码组
+参数2 整数型，模拟方式
+参数3 整数型，毫秒延时
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Call lib.键盘.KeyList("aA@2?"">.',/|\=-+_)(*&^QAsD",0,50)
+<span class="green">//需要注意的是：当输入一个引号时（"）必须输入一对（""）</span>
+<span class="green">//模拟方式：【0普通模拟，1硬件模拟，2超级模拟】</span>
+</td></tr></table>
+
+
+</body>
+</html>

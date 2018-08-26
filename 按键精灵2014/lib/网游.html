@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>按键精灵命令库帮助</title>
+<style>
+body{font-size:12px; font-family:Verdana,"宋体"}
+.ts{ background:#fff; margin:0 0 40px 0;}
+.ts th{ color:#7B797B; background:#DEDFDE; line-height:24px;}
+.ts td {padding:6px 0;}
+.name { font-size:16px; font-weight:bold; border-top:1px dashed #9C9A9C; border-bottom:1px dashed #9C9A9C; color:#006939;}
+.canshu { background:#E7E7EF;}
+.red{ color:#d60000;}
+.green{ color:#006939;}
+.fanhui{ border-bottom:1px dashed #9C9A9C;}
+.lizi{ border-bottom:1px dashed #9C9A9C;}
+</style></head><body>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="前台喊话"></a>前台喊话
+</td></tr><tr><th>命令功能：</th><td>
+前台喊话
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 字符串型，数组内容()
+参数2 整数型，每句间隔秒
+参数3 整数型，循环时间秒
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+文字="既然你诚心诚意的发问了|那我就大发慈悲的告诉你|为了防止世界被破坏" &  _
+"|为了守护世界的和平|贯彻爱与真实的邪恶|可爱又迷人的反派角色|武藏|小次郎" &  _
+"|我们是穿梭在银河中的火箭队.白洞..喵"
+数组内容=Split(文字,"|")
+Call lib.网游.前台喊话(数组内容,1,5)
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="方形渐开线"></a>方形渐开线
+</td></tr><tr><th>命令功能：</th><td>
+方形渐开线
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 整数型，中心点x坐标
+参数2 整数型，中心点y坐标
+参数3 整数型，两点间距离
+参数4 整数型，圈数
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Call lib.网游.方形渐开线(400,300,20,20)
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="圆形渐开线"></a>圆形渐开线
+</td></tr><tr><th>命令功能：</th><td>
+圆形渐开线
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 整数型，中心点x坐标
+参数2 整数型，中心点y坐标
+参数3 整数型，两点间距离
+参数4 整数型，递增半径
+参数5 整数型，圈数
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Call lib.网游.圆形渐开线(400,300,20,20,20)
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="椭圆渐开线"></a>椭圆渐开线
+</td></tr><tr><th>命令功能：</th><td>
+椭圆渐开线
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 整数型，中心点x坐标
+参数2 整数型，中心点y坐标
+参数3 整数型，两点间距离
+参数4 整数型，横坐标范围
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Call lib.网游.椭圆渐开线(400,300,20,300)
+</td></tr></table>
+
+
+
+</body>
+</html>

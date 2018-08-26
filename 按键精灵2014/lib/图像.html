@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>按键精灵命令库帮助</title>
+<style>
+body{font-size:12px; font-family:Verdana,"宋体"}
+.ts{ background:#fff; margin:0 0 40px 0;}
+.ts th{ color:#7B797B; background:#DEDFDE; line-height:24px;}
+.ts td {padding:6px 0;}
+.name { font-size:16px; font-weight:bold; border-top:1px dashed #9C9A9C; border-bottom:1px dashed #9C9A9C; color:#006939;}
+.canshu { background:#E7E7EF;}
+.red{ color:#d60000;}
+.green{ color:#006939;}
+.fanhui{ border-bottom:1px dashed #9C9A9C;}
+.lizi{ border-bottom:1px dashed #9C9A9C;}
+</style></head><body>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="查找屏幕图片数量"></a>查找屏幕图片数量
+</td></tr><tr><th>命令功能：</th><td>
+查找屏幕图片数量
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 整数型，左坐标
+参数2 整数型，上坐标
+参数3 整数型，右坐标
+参数4 整数型，下坐标
+参数5 字符串型，图片路径
+参数6 整数型，相似度
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+整数型，图片数量
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+MsgBox lib.图像.查找屏幕图片数量(0,0,800,300,"C:\图标.bmp",0.9)
+</td></tr></table>
+
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" class="ts">
+<tr><th width="100px">命令名称：</th><td class="name">
+<a name="无限屏幕截图"></a>无限屏幕截图
+</td></tr><tr><th>命令功能：</th><td>
+无限屏幕截图
+</td></tr><tr><th>命令参数：</th><td class="canshu"><pre>
+参数1 整数型，左坐标
+参数2 整数型，上坐标
+参数3 整数型，右坐标
+参数4 整数型，下坐标
+参数5 字符串型，保存图片路径
+参数6 字符串型，文件格式
+</td></tr><tr><th>返回值：</th><td class="fanhui">
+无
+</td></tr><tr><th>脚本例子：<br /><span class="red">按键精灵8及<br />以上语法</span>
+</th><td class="lizi"><pre>
+Call lib.图像.无限屏幕截图(0,0,100,100,"C:\","bmp")
+</td></tr></table>
+
+
+</body>
+</html>
