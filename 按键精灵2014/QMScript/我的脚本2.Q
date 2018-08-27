@@ -23,7 +23,7 @@ SetupOCXFile=
 [Comment]
 
 [UIPackage]
-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
+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
 
 
 [Script]
@@ -34,9 +34,10 @@ base_path = dm.GetBasePath()
 TracePrint base_path
 dm_ret = dm.Reg("killergui2147a5bb90ae5085c0ea30d6968e7657","")
 TracePrint dm_ret
+dm.SetAero 0
 dm_ret = dm.SetPath(base_path)
 dm_ret = dm.SetDict(0, "dm_soft.txt")
-Dim 开发宽度, 开发高度, 缩放比例, 是否横屏,启动时间
+Dim 开发宽度, 开发高度, 缩放比例,启动时间
 开发宽度 = 1110 : 开发高度 = 722
 Dim 容错参数, 安卓小精灵初始坐标,安卓小精灵初始启动坐标
 容错参数 = 0
@@ -53,11 +54,8 @@ Do
             //下面这句将字符串转换成数值   
             Hwnd = MyArray(i)
             TracePrint "开始执行"&i&"号窗口"&"句柄"&Hwnd
-            //获取游戏窗口的宽高
-            dm_ret = dm.GetClientSize(Hwnd,w,h) 
-            TracePrint "宽度:"& w &",高度:"& h
             //先判断是横屏还是竖屏 
-            If w > h Then 
+            If 是否横屏 Then 
                 TracePrint "横屏"
                 If w <> 开发宽度 Or h <> 开发高度 Then 
                     dm_ret = dm.SetWindowSize(Hwnd, 1110, 722)
@@ -90,6 +88,19 @@ Do
     Delay 300000
 Loop
 Set dm = nothing'释放对象
+Function 是否横屏()
+    //获取游戏窗口的宽高
+    dm_ret = dm.GetClientSize(Hwnd,w,h) 
+    TracePrint "宽度:" & w & ",高度:" & h
+    //先判断是横屏还是竖屏 
+    If w > h Then 
+        TracePrint "横屏"
+        是否横屏 = True
+    Else 
+        TracePrint "竖屏"
+        是否横屏 = False
+    End If
+End Function
 Sub 检测
     TracePrint("开始检测")
     Rem 检测状态
@@ -133,30 +144,35 @@ Sub 启动脚本
         dm.MoveTo 118, 1020
         Delay 500
         dm.LeftClick 
-        Delay 1500
     Else 
         TracePrint "竖屏点击Home"
         dm.MoveTo 33, 951
         Delay 500
         dm.LeftClick 
+    End If
+    Delay 2000
+    If Not 是否横屏  Then 
+        dm_ret = dm.FindStr(0, 0, 628, 1041, "叼", "111111-111111|050505-111111|363636-111111",0.8, intX, intY)
+        TracePrint intX&","&intY
+        dm.MoveTo intX, intY
+        Delay 500
+        dm.LeftClick 
         Delay 1500
     End If
-    dm_ret = dm.FindStr(0, 0, 628, 1041, "叼", "111111-111111|050505-111111|363636-111111",0.8, intX, intY)
-    TracePrint intX&","&intY
-    dm.MoveTo intX, intY
-    Delay 500
-    dm.LeftClick 
-    Delay 1500
 End Sub
 Function 脚本是否准备好了()
-    s = dm.Ocr(266,962,421,1009,"ffffff-101010",1.0)
-    TracePrint s
-    If s = "启动功能" Then
-        TracePrint "脚本已经准备好了"
-        脚本是否准备好了 = True
-    Else
-        TracePrint "脚本还没有完全启动好"
-        脚本是否准备好了 = False
+    If Not 是否横屏 Then 
+        s = dm.Ocr(266,962,421,1009,"ffffff-101010",1.0)
+        TracePrint s
+        If s = "启动功能" Then
+            TracePrint "脚本已经准备好了"
+            脚本是否准备好了 = True
+        Else
+            TracePrint "脚本还没有完全启动好"
+            脚本是否准备好了 = False
+        End If
+    Else 
+        Call 启动脚本
     End If
 End Function
 Function 脚本是否启动了()
@@ -185,6 +201,13 @@ Function 脚本是否启动了()
                 dm.MoveTo 安卓小精灵初始坐标(0), 安卓小精灵初始坐标(1)
                 Delay 100
                 dm.LeftClick 
+                s = dm.Ocr(444, 109, 676, 193, "111111-111111", 1.0)
+                If s = "功能设置" Or s = "使用说明" Then 
+                    TracePrint "冲突了"
+                    dm.MoveTo 1101,370
+                    Delay 100
+                    dm.LeftClick 
+                End If
             Else 
                 TracePrint "检测脚本是否启动异常,建议重试"
             End If
@@ -227,6 +250,13 @@ Function 脚本是否启动了()
                 dm.MoveTo 安卓小精灵初始坐标(0), 安卓小精灵初始坐标(1)
                 Delay 100
                 dm.LeftClick 
+                s = dm.Ocr(444, 109, 676, 193, "111111-111111", 1.0)
+                If s = "功能设置" Or s = "使用说明" Then 
+                    TracePrint "冲突了"
+                    dm.MoveTo 1101,370
+                    Delay 100
+                    dm.LeftClick 
+                End If
             Else 
                 TracePrint "检测脚本是否启动异常,建议重试"
             End If
