@@ -115,8 +115,9 @@ Function 坐标转换(区域坐标数组)
 End Function
 
 Function SuperOcr(坐标0, 坐标1, 坐标2, 坐标3, 颜色描述, 相似度)
-	Dim temp
+	Dim temp,temp1
 	temp = 坐标转换(Array(坐标0, 坐标1, 坐标2, 坐标3))
+	temp1 = Ocr(temp(0), temp(1), temp(2), temp(3), 颜色描述, 相似度)
 	SuperOcr=Ocr(temp(0), temp(1), temp(2), temp(3), 颜色描述, 相似度)
 End Function
 

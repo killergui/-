@@ -461,6 +461,17 @@ Sub 通用界面关闭()
             Case 68
                 Touch 320, 720, 100
             Case Else
+                FindPic 584,1047,701,1258,"Attachment:跳过1.png","000000",0,0.9,intX,intY
+                If intX > -1 And intY > -1 Then
+                    Touch 635, 1120, 100
+                    Delay 1500
+                Else
+                    FindPic 0,0,720,1280,"Attachment:手指甲.png","000000",0,0.96,intX,intY
+                    If intX > -1 And intY > -1 Then
+                        TracePrint "引导手势坐标",intX,intY
+                        Touch intX + 10, intY, 100
+                    End If
+                End If
                 Dim temp
                 temp = sys.GetFront()
                 Rem 关闭未知界面

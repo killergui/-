@@ -41,7 +41,7 @@ Dim 顶部中间文字描述2, 顶部中间文字相似度2
 顶部中间文字描述2 = "708396-101010|798EA0-101010|8299AA-101010|A4C2CF-101010|B3D5E0-101010|C2E7F0-101010|97B3C1-101010"
 顶部中间文字相似度2 = 1
     
-Dim 启动画面框体数组, 启动画面框体文字描述, 启动画面框体相似度
+Dim 启动画面框体文字描述, 启动画面框体相似度
 启动画面框体文字描述 = "E2E0DE-111111|D0CCC7-111111|BCAE9C-111111|A8A19A-111111|BEBAB5-111111|F1F1F1-111111"
 启动画面框体相似度 = 1
 	
@@ -67,7 +67,10 @@ ShowMessage "开始准备登陆", 2000, 50, 620
 Dim intX,intY,目前界面
 Call 账号信息处理(登录成功次数)
 目前界面 = 所在场景()
-If 目前界面 = Null And 容错参数 < 5 Then 
+If 寻找引导手势() Then 
+    TracePrint "已在游戏中"
+ElseIf 目前界面 = Null And 容错参数 < 5 Then
+
     If Not 来路是否是切换账号 Then
         Call 启动游戏()
     End If
@@ -100,16 +103,20 @@ Delay 1000
 //Call 定位主城坐标()
 Rem 循环
 
-Delay 50
+Delay 500
 
-Call 寻找引导手势()
+If 寻找引导手势() Then 
+	Goto 循环
+End If
+
+
 Call 创建角色()
 
 Sys.ClearMemory()
 TracePrint "等待下次执行"
 If Time() - 启动时间 > 600 Then 
-	Call 回登录界面()
-	Goto login
+    Call 回登录界面()
+    Goto login
 End If
 Goto 循环
 
@@ -232,7 +239,7 @@ Sub 回登录界面()
 End Sub
 
 Function 寻找引导手势()
-    Dim intX,intY
+    Dim intX,intY,intX1,intY1
     
     FindPic 584,1047,701,1258,"Attachment:跳过1.png","000000",0,0.9,intX,intY
     If intX > -1 And intY > -1 Then
@@ -241,10 +248,16 @@ Function 寻找引导手势()
         是否已登录 = True
         寻找引导手势 = True
     Else
-        FindPic 0,0,720,1280,"Attachment:手指甲.png","000000",0,0.96,intX,intY
+        FindPic 0,0,720,1280,"Attachment:手指甲.png","000000",0,0.95,intX,intY
+        
         If intX > -1 And intY > -1 Then
             TracePrint "引导手势坐标",intX,intY
-            Touch intX + 10, intY, 100
+            Touch intX, intY, 100
+            FindPic 0, 0, 720, 1280, "Attachment:手护腕.png", "000000", 0, 0.9, intX1, intY1
+            If intX1 > -1 And intY1 > -1 Then 
+                Touch intX1 + 30, intY1 - 15, 100
+                TracePrint "护腕位置",intX1,intY1
+            End If
             是否已登录 = True
             寻找引导手势 = True
         Else
@@ -380,9 +393,10 @@ Function 所在场景()
         所在场景 = 61
         Exit Function
     End If
-
-	
-    ocrchar=类型转换.SuperOcr(120, 565, 156, 713, 启动画面框体文字描述, 启动画面框体相似度)
+    //不知道什么原因导致第一次识别的文字总是失败,所以前边加个没用的识别
+    ocrchar=Ocr(0,0,1,1,"E2E0DE-111111|D0CCC7-111111|BCAE9C-111111|A8A19A-111111|BEBAB5-111111|F1F1F1-111111",1)
+    Traceprint ocrchar
+    ocrchar=类型转换.SuperOcr(117,566,164,722, 启动画面框体文字描述, 启动画面框体相似度)
     Traceprint "ocrchar0",ocrchar
     If ocrchar = "开始征战" Then
         所在场景 = 22
@@ -496,6 +510,9 @@ Sub 通用界面关闭()
                 If 当前场景 = Null Then
                     //showmessage "无法关闭,请手动关闭,并告诉我", 1500, 50, 620
                     TracePrint "不知道的场景"
+                    If 寻找引导手势() Then 
+                        Exit Function
+                    End If
                     Touch 1 + 重启参数, GetScreenY() - 1 - 重启参数, 100
                     If 重启参数 > 50 Then 
                         KillApp temp 
@@ -1486,6 +1503,10 @@ Sub 注册海马玩()
     End If
     If 容错参数 < 95 Then 
         容错参数 = 容错参数 + 1
+        If 寻找引导手势() Then 
+            TracePrint "已经在游戏中"
+            Exit Function
+        End If
         Delay 3000
         Goto 进账号登录界面2
     End If

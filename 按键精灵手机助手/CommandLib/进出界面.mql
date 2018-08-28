@@ -35,11 +35,11 @@ Function 城内进固定界面(目标界面, 点击坐标X, 点击坐标Y, 展开操作类型, 是否关心初
 		End If
         Touch 点击坐标X, 点击坐标Y, 100
 		TracePrint "点击了"
-        Delay 3000
+        Delay 5000
         Goto 进界面
     ElseIf 容错判定() Then
         Call 场景相关操作.通用界面关闭()
-        Delay 3000
+        Delay 2000
         Goto 进界面
     ElseIf Not 容错判定() Then
         TracePrint "无法进入目标界面"&目标界面
