@@ -1,5 +1,7 @@
 Import "场景相关操作.mql"
 Import "类型转换.mql"
+Import "进出界面.mql"
+Import "相关数据解析.mql"
 
 SetRowsNumber(0)
 TracePrint SetDictEx(0, "Attachment:三国志2017字库.txt")
@@ -12,12 +14,7 @@ ElseIf GetScreenX() = 720 Then
     TracePrint UseDict(0)
 End If
 
-Dim test
-If Not test Then 
-	TracePrint "补星"
-End If
-
-
+Dim 容错参数
 Do
     Dim temp, ocrchar, ocrchar1, ocrchar2
     //	temp = 场景相关操作.所在场景()
@@ -41,14 +38,65 @@ Do
     //    ocrchar2 = 类型转换.SuperOcr(678, 712, 706, 765, "BFF3FB-111111|AFDCE2-111111|8FB0B3-111111|7F9A9C-111111|9FC6CB-111111", 0.9)
     //    TracePrint ocrchar2
     
+    ocrchar=类型转换.SuperOcr(587,573,625,720, "A4BCD8-111111|94A7BC-111111|D0E4F2-111111|A6B0B3-111111|C5D2D7-111111|B9D0E6-111111|E2F3F9-111111|8A96A1-111111", 1)
+        Traceprint ocrchar
     
-    
-	Traceprint ocrchar
     Delay 2000
 Loop
 
-Function 武将兵力数组(区域数组)
-    Dim ocrchar, 当前士兵数量, 最大士兵数量, 临时数组
-    ocrchar = 类型转换.SuperOcr(区域数组(0),区域数组(1),区域数组(2),区域数组(3),"9EB0BB-111111|BBD1DE-111111|7B8991-111111|68747A-111111|8D9EA7-111111",0.9)
-    Traceprint ocrchar
-End Function
+Sub 领取体力()
+
+    // 进活动界面
+    进出界面.城内外通用进界面(5, 相关数据解析.日常活动坐标X, 相关数据解析.日常活动坐标Y, 0)
+
+    Dim intX,intY
+    Do
+        FindPic 0,0,720,1280,"Attachment:小红点.png","000000",0,0.99,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "有新活动"
+            Touch intX, intY, 100
+            Delay 1000
+        Else
+            FindPic 0,0,720,1080,"Attachment:小红点1.png","000000",0,0.99,intX,intY
+            If intX > -1 And intY > -1 Then 
+            	TracePrint intX, intY
+                TracePrint "有新活动"
+                Touch intX, intY, 100
+                Delay 1000
+            Else 
+                //寻找犒赏三军
+                FindPic 0,0,720,1280,"Attachment:犒赏三军.png","000000",0,0.8,intX,intY
+                If intX > -1 And intY > -1 Then
+                    TracePrint "找到犒赏三军,准备退出"
+                    Exit Do
+                Else 
+                    TouchDown 340, 440
+                    TouchMove 340, 240
+                    TouchUp
+                    Delay 2000
+                End If
+            End If
+        End If
+        FindColor 574,1015,670,1151,"4069B3",0,0.99,intX,intY
+        If intX > -1 And intY > -1 Then 
+            TracePrint "找到活动详情面板"
+            FindPic 133,888,442,1041,"Attachment:限时签到.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "找到限时签到"
+                Touch intX, intY, 100
+            End If
+            场景相关操作.通用界面关闭
+            Delay 2000
+        End If
+        FindPic 454,573,526,711,"Attachment:提示.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then 
+            TracePrint "发现提示界面"
+            Touch 250, 760, 100
+            Delay 1000
+        End If
+    Loop
+    
+    TracePrint "活动小红点处理完毕"
+    场景相关操作.通用界面关闭()
+    Delay 2000
+End Sub

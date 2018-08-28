@@ -12,6 +12,7 @@ Log.Open
 //初始化全局信息
 Rem 开始
 
+
 //SetDictEx(1, "Attachment:皇榜奖励数字.txt")
 //UseDict(1)
 
@@ -48,9 +49,9 @@ ShowMessage "开始准备登陆", 2000, 50, 620
 
 
 If 场景相关操作.所在场景() = Null Then 
-	If Not 来路是否是切换账号 Then
-		Call 启动游戏()
-	End If
+    If Not 来路是否是切换账号 Then
+        Call 启动游戏()
+    End If
     Call 账号信息处理(登录成功次数)
     账号登录.登录(平台, 账号信息, 账号密码)
     Goto login
@@ -74,7 +75,7 @@ Dim 每日皇榜任务次数, 当前体力, VIP等级, 祭祀切换, 主公等�
 Dim 上次推关结果, 体力消耗方式, 上次战斗星数
 
 Dim 队伍状态数组, 现有士兵数量, 兵营上限, 现有伤兵数量, 伤兵上限, 野外主城坐标X, 野外主城坐标Y, 派遣出征次数, 采集次数, 实际出征次数, 寻访次数, 派遣出征数组, 采集次数数组, 寻访次数数组
-Dim 启动时间, 累计运行时长, 循环计时1, 循环计时2, 单次循环计时1, 单次循环计时2, 派遣循环时长, 循环时长1, 循环时长2, 切换时间间隔
+Dim 启动时间, 累计运行时长, 循环计时1, 循环计时2, 单次循环计时1, 单次循环计时2, 派遣循环时长, 循环时长1, 循环时长2, 切换时间间隔, 部队驻防时间
 派遣出征数组 = ReadConfig("派遣出征数组"&账号信息) : 采集次数数组 = ReadConfig("采集次数数组"&账号信息) : 寻访次数数组 = ReadConfig("寻访次数数组"&账号信息)
 If 派遣出征数组 = Null Then
     派遣出征次数 = 0
@@ -121,9 +122,9 @@ WriteConfig "上次运行日期", Date(), True
 启动时间 = Time()
 Delay 1000
 
-Call 定位主城坐标()
-
+//Call 定位主城坐标()
 Call 进VIP界面()
+Call 判断入侵()
 Rem 每日
 
 ShowMessage "开始执行每日必做", 1000, 50, 620
@@ -169,7 +170,7 @@ Call 铸币()
 单次循环计时1 = 0
 单次循环计时2 = 0
 Rem 循环
-
+Call 判断入侵()
 If ReadUIConfig("是否自动切换账号") Then 
     切换时间间隔 = ReadUIConfig("切换时间间隔", 15) * 60
     If Time() - 启动时间 >= 切换时间间隔 Then 
@@ -233,7 +234,8 @@ If 累计运行时长 > 60 Then
 End If
 Sys.ClearMemory()
 TracePrint "等待下次执行"
-Delay 派遣循环时长
+//Delay 派遣循环时长
+Delay 15000
 Goto 循环
 
 Sub 到脚本主界面()
@@ -380,7 +382,7 @@ Sub 回登录界面()
         Delay 5000
         If 场景相关操作.进入场景是否正确(21) Then 
             TracePrint "成功退出游戏"
-			来路是否是切换账号 = True
+            来路是否是切换账号 = True
             场景相关操作.通用界面关闭
             Delay 1500
             Touch 110, 140, 100
@@ -491,15 +493,232 @@ Sub 进主公界面()
     TracePrint "主公等级"&主公等级
 End Sub
 
-
-Sub 新手引导找手势
-    Dim intX,intY
-    FindColor 0,0,720,1280,"07E0FF",0,0.99,intX,intY
+Sub 判断入侵()
+    Dim 放弃抵抗,自动撤矿,回防主城
+    放弃抵抗 = ReadUIConfig("防守策略",False) : 自动撤矿 = ReadUIConfig("自动撤矿", True) : 回防主城 = ReadUIConfig("回防主城", False)
+    If 放弃抵抗 = True Then 
+    	TracePrint "放弃抵抗"
+    	Exit Sub
+    End If
+    Rem 识别敌情
+    TracePrint "开始判断敌人情况"
+    Call 进出界面.回主城(1)
+    Dim intX,intY,被攻击目标,ocrchar
+    FindPic 359,546,676,1119,"Attachment:兵临城下.png","000000",0,0.9,intX,intY
     If intX > -1 And intY > -1 Then
-        TracePrint intX
-        TracePrint intY
+        TracePrint "有敌情"
+        Touch intX, intY, 100
+        Delay 1500
+        //第一个信息
+        ocrchar = 类型转换.SuperOcr(530, 330, 565, 385, "4B4BF0-111111|4444D7-111111|3B3CB9-111111|2D2D87-111111|272B63-111111", 0.7)
+        Traceprint ocrchar
+        被攻击目标 = 被攻击目标判断(ocrchar)
+        If 被攻击目标 = 2 And 自动撤矿 Then 
+            ocrchar=类型转换.SuperOcr(530,561,559,637,"4B4BF0-111111|4444D7-111111|3B3CB9-111111|2D2D87-111111|272B63-111111",0.7)
+            Traceprint ocrchar
+            
+            FindStr(530,561,559,637,",","4B4BF0-111111|4444D7-111111|3B3CB9-111111|2D2D87-111111|272B63-111111",0.8,intX,intY)
+            If intX > -1 And intY > -1 Then
+                Touch intX, intY, 100
+                Delay 5000
+                Call 撤矿()
+                Goto 识别敌情
+            End If
+            Call 队伍撤防()
+        ElseIf 被攻击目标 = 1 Then
+            Call 主城防守(回防主城)
+            
+        End If
+        //第二个信息
+        ocrchar=类型转换.SuperOcr(317,332,353,386,"4B4BF0-111111|4444D7-111111|3B3CB9-111111|2D2D87-111111|272B63-111111",0.7)
+        Traceprint ocrchar
+        被攻击目标 = 被攻击目标判断(ocrchar)
+        If 被攻击目标 = 2 Then 
+            ocrchar = 类型转换.SuperOcr(321, 561, 351, 637, "4B4BF0-111111|4444D7-111111|3B3CB9-111111|2D2D87-111111|272B63-111111", 0.7)
+            Traceprint ocrchar
+            FindStr(321,561,351,637,",","4B4BF0-111111|4444D7-111111|3B3CB9-111111|2D2D87-111111|272B63-111111",0.8,intX,intY)
+            If intX > -1 And intY > -1 Then
+                Touch intX, intY, 100
+                Delay 1000
+                Call 撤矿()
+                Goto 识别敌情
+            End If
+            Call 队伍撤防()
+        ElseIf 被攻击目标 = 1 Then
+            Call 主城防守(回防主城)
+        End If
+    Else 
+        TracePrint "没有敌情"
+        Call 队伍撤防()
+    End If
+End Sub
+
+Function 判断队伍子状态()
+    Rem 确认状态
+    Dim ocrchar1, ocrchar2, ocrchar3
+    ocrchar1=类型转换.SuperOcr(122,1047,140,1091,"E4E4E4-111111|CBCBCA-111111|A1A1A0-111111",0.9)
+    Traceprint ocrchar1
+    ocrchar2=类型转换.SuperOcr(250,1046,268,1091,"E4E4E4-111111|CBCBCA-111111|A1A1A0-111111",0.9)
+    Traceprint ocrchar2
+    ocrchar3=类型转换.SuperOcr(290,1046,313,1091,"E4E4E4-111111|CBCBCA-111111|A1A1A0-111111",0.9)
+    Traceprint ocrchar3
+    If ocrchar1 = "驻防" Then 
+        TracePrint "部队空闲中"
+        判断队伍子状态 = 1
+    ElseIf ocrchar2 = "撤防" Then
+        TracePrint "部队驻防中"
+        判断队伍子状态 = 2
+    ElseIf ocrchar2 = "撤回" Then
+        TracePrint "部队在外驻扎中"
+        判断队伍子状态 = 3
+    ElseIf ocrchar2 = "加速" Then
+        TracePrint "部队返回中"
+        判断队伍子状态 = 4
+    ElseIf ocrchar3 = "撤回" Then
+        TracePrint "部队出发中"
+        判断队伍子状态 = 5
+    End If
+End Function
+
+Function 被攻击目标判断(ocrchar)
+    //目标枚举: 1 = 主城, 2 = 矿
+    If ocrchar = "正在" Then 
+        TracePrint "矿被打了"
+        被攻击目标判断 = 2
+    ElseIf ocrchar = "主城"
+        TracePrint "主城被打"
+        被攻击目标判断 = 1
+    Else 
+        TracePrint "还未知的类型"
+        SnapShot "/sdcard/test.png",0,0,720,1280
     End If
 	
+End Function
+
+Sub 撤矿()
+    //选中地图正中的矿
+    Touch 375, 655, 100
+    Delay 1000
+    //点击召回图标
+    Touch 355, 755, 100
+    Delay 1000
+    //点击撤回按钮
+    Touch 105, 985, 100
+    Delay 1000
+    //点击确定
+    Touch 250, 760, 100
+    Delay 1000
+End Sub
+
+Sub 主城防守(回防主城)
+    容错参数 = 0
+    Dim 队伍子状态,驻防容错次数,是否已加速
+    驻防容错次数 = 8
+    Rem 防守
+    进出界面.城内外通用进界面(8, 相关数据解析.出征坐标X, 相关数据解析.出征坐标Y, 0)
+    队伍子状态 = 判断队伍子状态() 
+    If 队伍子状态 = 2 Then 
+        TracePrint "等待敌人来犯"
+        部队驻防时间 = Time()
+    ElseIf 队伍子状态 = 1 And 容错参数 < 驻防容错次数 Then
+        If 场景相关操作.进入场景是否正确(8) Then 
+            TracePrint "补兵"
+            Touch 500, 1065, 100
+            Delay 2000
+            切换自动补兵 (2)
+            Touch 85, 600, 100
+            Delay 1000
+            场景相关操作.通用界面关闭 
+            Delay 1000 
+            TracePrint "点击驻防"
+            Touch 155, 1065, 100
+            Delay 1000
+            容错参数 = 容错参数 + 1
+            Goto 防守
+        ElseIf 容错参数 < 5 Then
+            进出界面.城内外通用进界面 8, 相关数据解析.出征坐标X, 相关数据解析.出征坐标Y, 0
+            容错参数 = 容错参数 + 1
+            Goto 防守
+        Else 
+            TracePrint "进队伍界面错误次数太多,放弃"
+        End If
+    ElseIf 队伍子状态 = 3 And 回防主城 And 容错参数 < 驻防容错次数 Then
+        TracePrint "撤回部队"
+        Touch 500, 1065, 100
+        Delay 1000
+        Touch 245, 760, 100
+        Delay 1000
+        是否已加速 = True
+        If Not 是否已加速 Then 
+            Dim 加速次数
+            If VIP等级 = Null Then 
+                TracePrint "VIP等级未识别,跳过加速"
+            Else 
+                If VIP等级 = 0 Then 
+                    加速次数 = 1
+                ElseIf VIP等级 <= 3 Then
+                    加速次数 = 2
+                ElseIf VIP等级 <= 6 Then
+                    加速次数 = 3
+                ElseIf VIP等级 <= 9 Then
+                    加速次数 = 4
+                ElseIf VIP等级 <= 15 Then
+                    加速次数 = 5
+                End If
+                TracePrint "点击加速"
+                Touch 290, 1065, 100
+                Delay 1000
+                For 加速次数
+                    Touch 225, 635, 100
+                    Delay 500
+                Next
+                是否已加速 = True
+                Do Until 场景相关操作.进入场景是否正确(8) Or 容错参数 > 5
+                    场景相关操作.通用界面关闭 
+                    Delay 1500
+                Loop
+            End If
+        End If
+        Goto 防守
+    ElseIf 队伍子状态 = 4 Then
+        TracePrint "等待部队返回"
+        Delay 2000
+        Goto 防守
+    ElseIf 队伍子状态 = 5 And 回防主城 And 容错参数 < 驻防容错次数 Then
+        TracePrint "阻止部队行进"
+        Touch 330, 1065, 100
+        Delay 1000
+        Touch 225, 635, 100
+        Delay 1000
+        Do Until 场景相关操作.进入场景是否正确(8) Or 容错参数 > 5
+            场景相关操作.通用界面关闭 
+            Delay 1500
+        Loop
+        Goto 防守
+    ElseIf 容错参数 >= 驻防容错次数 Then
+        TracePrint "确认驻防错误次数太多,放弃"
+    End If
+End Sub
+
+Sub 队伍撤防()
+    容错参数 = 0
+    If 部队驻防时间 = Null Or (Time() - 部队驻防时间 > 300) Then 
+        Dim 队伍子状态
+        Rem 撤防
+        进出界面.城内外通用进界面(8, 相关数据解析.出征坐标X, 相关数据解析.出征坐标Y, 0)
+        队伍子状态 = 判断队伍子状态()
+        If 队伍子状态 = 2 And 容错参数 < 5 Then 
+            TracePrint "撤防"
+            Touch 285, 1065, 100
+            Delay 1000
+            Goto 撤防
+        ElseIf 容错参数 < 5 Then
+            TracePrint "队伍没有在驻防中"
+        ElseIf 容错参数 >= 5 Then
+            TracePrint "撤防失败"
+        End If
+    End If
+    TracePrint "撤防结束"
 End Sub
 
 Function 识别矿坑等级()
@@ -1210,7 +1429,7 @@ Sub 市场刷新()
     TracePrint "开始处理市场刷新"
     //进市场界面
     If ReadUIConfig("免费刷市场") = False And ReadUIConfig("刷新令刷市场") = False Then 
-    	TracePrint "设置不刷市场"
+        TracePrint "设置不刷市场"
     End If
     进出界面.回主城(2)
     进出界面.城内进固定界面(35, 相关数据解析.市场坐标X, 相关数据解析.市场坐标Y, 0, True)
@@ -1493,7 +1712,7 @@ Function 判断队伍兵量(队伍编号)
     Dim 队伍兵量, intX, intY
     // 进出征界面
     
-    进出界面.城内外通用进界面(15, 相关数据解析.阵容坐标X, 相关数据解析.阵容坐标Y, 5)
+    进出界面.城内外通用进界面(8, 相关数据解析.出征坐标X, 相关数据解析.出征坐标Y, 0)
     If 队伍编号 = 0 Then 
         //先尝试补兵
         Call 切换自动补兵(1)
@@ -1652,7 +1871,8 @@ Function 武将兵力数组(区域数组)
     最大士兵数量 = CLng(临时数组(1))
     武将兵力数组 = Array(当前士兵数量, 最大士兵数量)
     If 最大士兵数量 < 1000 And 容错参数 < 3 And 最大士兵数量 > 0 Then 
-        ShowMessage "武将兵力识别错误",1000, 50, 620
+        ShowMessage "武将兵力识别错误", 1000, 50, 620
+        SnapShot "/sdcard/test2.png",0,0,720,1280
         Delay 1000
         容错参数 = 容错参数 + 1
         Call 错误记录("错误最大士兵数量"&最大士兵数量)
@@ -1729,14 +1949,14 @@ Sub 派遣队伍()
                             TracePrint "出城寻找怪物"
                             Call 搜索目标(1, 打怪种类, 打怪等级)
                             Call 前往目标(1, i)
-							队伍状态(i) = 0
+                            队伍状态(i) = 0
                         End If
                     End If
                 End If
             End If	
         End If
     Next
-	If ReadUIConfig("自动识别矿等级") Then 
+    If ReadUIConfig("自动识别矿等级") Then 
         TracePrint "开启了自动识别等级"
         矿坑等级 = Array()
         矿坑等级(识别矿坑等级() - 1) = True
@@ -1756,7 +1976,7 @@ Sub 派遣队伍()
                     TracePrint "出城寻找资源"
                     Call 搜索目标(2, 采集类型, 矿坑等级)
                     Call 前往目标(2, i)
-					队伍状态(i) = 0
+                    队伍状态(i) = 0
                 End If
             End If	
         End If
@@ -1800,11 +2020,12 @@ Sub 派遣队伍()
                                     WriteConfig "今日寻访剩余次数"&账号信息, 0, True
                                 Else 
                                     Call 前往目标(3, i)
-									队伍状态(i) = 0
+                                    队伍状态(i) = 0
                                 End If
                             ElseIf 容错参数 < 5 Then
                                 容错参数 = 容错参数 + 1
                                 TracePrint "识别错误,重试"
+                                SnapShot "/sdcard/test1.png",0,0,720,1280
                                 Goto 识别剩余次数
                             End If
                         ElseIf 容错参数 < 5 Then
@@ -2759,7 +2980,7 @@ End Sub
 Sub 祭祀()
     //祭祀类型枚举: 1 = 农业, 2 = 木业, 3 = 石业, 4 = 矿业
     ShowMessage "进行祭祀", 1000, 50, 620
-    If ReadConfig("是否已经祭祀"&账号信息) = 1 Then 
+    If ReadConfig("是否已经祭祀"&账号信息) = 1 Or Not ReadUIConfig("是否祭祀", True) Then 
         ShowMessage "今天已经祭祀过了", 1000, 50, 620
         Exit Sub
     End If
@@ -5110,31 +5331,35 @@ Sub 升级军械()
     End If
     TracePrint "开始升级军械"
     容错参数 = 0
-    Dim 升级军械1, 升级军械2, 升级军械3
+    Dim 升级军械1, 升级军械2, 升级军械3, temp
     Call 进出界面.回主城(2)
-    进出界面.城内选中建筑(相关数据解析.军械所坐标X, 相关数据解析.军械所坐标Y, "Attachment:军械.png", True, 29, 0)
-
-    If 军械是否研发中() Then 
-        Exit Sub
+    temp = 进出界面.城内选中建筑(相关数据解析.军械所坐标X, 相关数据解析.军械所坐标Y, "Attachment:军械.png", True, 29, 0)
+    If temp(1) Then 
+        If 军械是否研发中() Then 
+            Exit Sub
+        End If
+        TracePrint "准备升级军械1"
+        升级军械1 = ReadUIConfig("升级军械1")
+        Call 进行研发(升级军械1)
+        If 军械是否研发中() Then 
+            Exit Function
+        End If
+        TracePrint "准备升级军械2"
+        升级军械2 = ReadUIConfig("升级军械2")
+        Call 进行研发(升级军械2)
+        If 军械是否研发中() Then 
+            Exit Function
+        End If
+        TracePrint "准备升级军械3"
+        升级军械3 = ReadUIConfig("升级军械3")
+        Call 进行研发(升级军械3)
+        TracePrint "军械升级完成"
+        场景相关操作.通用界面关闭 
+        Delay 2000
+    Else 
+        TracePrint "进入军械所界面失败,放弃"
     End If
-    TracePrint "准备升级军械1"
-    升级军械1 = ReadUIConfig("升级军械1")
-    Call 进行研发(升级军械1)
-    If 军械是否研发中() Then 
-        Exit Function
-    End If
-    TracePrint "准备升级军械2"
-    升级军械2 = ReadUIConfig("升级军械2")
-    Call 进行研发(升级军械2)
-    If 军械是否研发中() Then 
-        Exit Function
-    End If
-    TracePrint "准备升级军械3"
-    升级军械3 = ReadUIConfig("升级军械3")
-    Call 进行研发(升级军械3)
-    TracePrint "军械升级完成"
-    场景相关操作.通用界面关闭 
-    Delay 2000
+    
 End Sub
 
 Sub 进行研发(类型)
@@ -5532,8 +5757,6 @@ Sub 升级计略(类型)
     //判断升级条件是否满足
     If 计略升级条件是否满足() = False Or 计略是否升级中() Then 
         TracePrint "升级计略结束"
-        场景相关操作.通用界面关闭 
-        Delay 2000
         Exit Sub
     End If
     容错参数 = 0
@@ -5545,8 +5768,6 @@ Sub 升级计略(类型)
         Goto 点击升级
     End If
     TracePrint "升级计略结束"
-    场景相关操作.通用界面关闭 
-    Delay 2000
 End Sub
 
 //自动铸币

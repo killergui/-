@@ -122,7 +122,9 @@ WriteConfig "上次运行日期", Date(), True
 启动时间 = Time()
 Delay 1000
 
-//Call 定位主城坐标()
+Call 定位主城坐标()
+
+Call 派遣队伍()
 Call 进VIP界面()
 Call 判断入侵()
 Rem 每日
@@ -157,7 +159,7 @@ Call 推关()
 Call 消耗体力()
 Call 完成皇榜任务()
 Call 派遣队伍()
-If ReadConfig("今日是否已执行沙场论剑") <> 1 Then 
+If ReadConfig("今日是否已执行沙场论剑")&账号信息 <> 1 Then 
     Call 沙场论剑排名奖励()
     Call 进行沙场论剑()
 End If
@@ -246,7 +248,6 @@ Sub 启动游戏()
     If 平台 = 0 Then 
         If Sys.AppIsFront("com.game.sgz.a360") Then 
             TracePrint "当前游戏已经启动"
-            场景相关操作.通用界面关闭
         Else 
             TracePrint "准备启动游戏"
             RunApp "com.game.sgz.a360"
@@ -255,7 +256,6 @@ Sub 启动游戏()
     ElseIf 平台 = 1 Then
         If Sys.AppIsFront("com.game.sgz.a360.yod") Then 
             TracePrint "当前游戏已经启动"
-            场景相关操作.通用界面关闭
         Else 
             TracePrint "准备启动游戏"
             RunApp "com.game.sgz.a360.yod"
@@ -264,7 +264,6 @@ Sub 启动游戏()
     ElseIf 平台 = 2 Then
         If Sys.AppIsFront("com.shouyou.sgzerq.hm") Then 
             TracePrint "当前游戏已经启动"
-            场景相关操作.通用界面关闭
         Else 
             TracePrint "准备启动游戏"
             RunApp "com.shouyou.sgzerq.hm"
@@ -273,7 +272,6 @@ Sub 启动游戏()
     ElseIf 平台 = 3 Then
         If Sys.AppIsFront("com.kkl.xsg2018.tf") Then 
             TracePrint "当前游戏已经启动"
-            场景相关操作.通用界面关闭
         Else 
             TracePrint "准备启动游戏"
             RunApp "com.kkl.xsg2018.tf"
@@ -497,8 +495,8 @@ Sub 判断入侵()
     Dim 放弃抵抗,自动撤矿,回防主城
     放弃抵抗 = ReadUIConfig("防守策略",False) : 自动撤矿 = ReadUIConfig("自动撤矿", True) : 回防主城 = ReadUIConfig("回防主城", False)
     If 放弃抵抗 = True Then 
-    	TracePrint "放弃抵抗"
-    	Exit Sub
+        TracePrint "放弃抵抗"
+        Exit Sub
     End If
     Rem 识别敌情
     TracePrint "开始判断敌人情况"
@@ -611,6 +609,46 @@ Sub 撤矿()
 End Sub
 
 Sub 主城防守(回防主城)
+    If ReadUIConfig("自动免战", True) Then 
+        TracePrint "设置了自动挂免战"
+        //自动挂免流程
+        容错参数 = 0
+        Dim 无元宝
+        Rem 挂免战
+        Call 进出界面.回主城(1)
+        If 进出界面.进无坐标子界面(79, 1, 400, 560, 670, 1100, "Attachment:加buff1.png", 0.9) And 容错参数 < 5 And Not 无元宝 Then 
+            Dim ocrchar, 时,分,秒,总剩余秒数
+            ocrchar=类型转换.SuperOcr(460,427,490,538,"59A678-111111|4C8D66-111111",0.9)
+            Traceprint ocrchar
+            If ocrchar <> Null Then 
+                TracePrint "当前在免战中"
+                时 = Int(Left(ocrchar, 2))
+                分 = Int(Mid(ocrchar, 3, 2))
+                秒 = Int(Right(ocrchar, 2))
+                总剩余秒数 = 时 * 3600 + 分 * 60 + 秒
+                If 总剩余秒数 > 1800 Then 
+                    TracePrint "剩余时间还多,暂时不重新挂免战"
+                    Exit Function
+                End If  
+            End If
+            Touch 430, 560, 100
+            Delay 1500
+            ocrchar = 类型转换.SuperOcr(231,727,269,796,"B3B6B4-111111|CCCDCC-111111|DCDCDC-111111|E9E9E9-111111|7D837F-111111",1)
+            TracePrint ocrchar
+            If ocrchar = "确定" Then 
+                TracePrint "没用免战牌了,用元宝买"
+                Touch 250, 760, 100
+                Delay 3500
+            ElseIf ocrchar = "充值" Then
+                TracePrint "元宝也不够了,无法免战了"
+                场景相关操作.通用界面关闭 
+                Delay 2000
+                无元宝 = True
+            End If
+            容错参数 = 容错参数 + 1
+            Goto 挂免战
+        End If
+    End If
     容错参数 = 0
     Dim 队伍子状态,驻防容错次数,是否已加速
     驻防容错次数 = 8
@@ -1052,7 +1090,7 @@ Sub 领取体力()
             Touch intX, intY, 100
             Delay 1000
         Else
-            FindPic 0,0,720,1080,"Attachment:小红点1.png","000000",0,0.9,intX,intY
+            FindPic 0,0,720,1080,"Attachment:小红点1.png","000000",0,0.99,intX,intY
             If intX > -1 And intY > -1 Then
                 TracePrint "有新活动"
                 Touch intX, intY, 100
@@ -1703,98 +1741,49 @@ Function 判断队伍状态()
     ShowMessage tempStr, 1000, 50, 620
     判断队伍状态 = 队伍状态数组
     TracePrint "队伍状态判断完毕"
-    场景相关操作.通用界面关闭 
-    Delay 2000
 End Function
 
 Function 判断队伍兵量(队伍编号)
     TracePrint "开始判断队伍兵量"
     Dim 队伍兵量, intX, intY
+    Dim 判断区间X1, 判断区间Y1, 判断区间X2, 判断区间Y2, 变化差值
+    判断区间X1 = 455 : 判断区间Y1 = 170 : 判断区间X2 = 565 : 判断区间Y2 = 465 : 变化差值 = 120
+    判断区间X1 = 判断区间X1 - 队伍编号 * 变化差值 : 判断区间X2 = 判断区间X2 - 队伍编号 * 变化差值
     // 进出征界面
+    进出界面.城内外通用进界面 8, 相关数据解析.出征坐标X, 相关数据解析.出征坐标Y, 0
     
-    进出界面.城内外通用进界面(15, 相关数据解析.阵容坐标X, 相关数据解析.阵容坐标Y, 5)
-    If 队伍编号 = 0 Then 
-        //先尝试补兵
-        Call 切换自动补兵(1)
-        Call 切换自动补兵(2)
-        //队伍1兵量
-        队伍兵量 = 单个队伍兵量(0)
-        Delay 1000
-    ElseIf 队伍编号 = 1 Then
-        If 是否有队伍(Array(398, 5, 493, 146)) Then 
-            容错参数 = 0
-            Rem 切换到队伍2
-            Touch 450, 70, 100
+    If 是否有队伍(Array(判断区间X1, 判断区间Y1, 判断区间X2, 判断区间Y2)) Then 
+        容错参数 = 0
+        Rem 切换队伍
+        Touch (判断区间X1 + 判断区间X2) / 2, (判断区间Y1 + 判断区间Y2) / 2, 100
+        Delay 1500
+        FindColor 判断区间X1, 判断区间Y1, 判断区间X2, 判断区间Y2,"A2F1FF",0,0.98,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "切换队伍成功"
+            //先尝试补兵
+            Touch 240, 1065, 100
             Delay 1500
-            FindColor 394,3,496,150,"7DC14E",0,0.98,intX,intY
-            If intX > -1 And intY > -1 Then
-                TracePrint "进入队伍2"
-                Call 切换自动补兵(1)
-                Call 切换自动补兵(2)
-                队伍兵量 = 单个队伍兵量(1)
-            ElseIf 容错参数 < 5 Then
-                容错参数 = 容错参数 + 1
-                TracePrint "切换队伍失败,重试"
-                Goto 切换到队伍2
-            End If
-        End If
-    ElseIf 队伍编号 = 2 Then
-        If 是否有队伍(Array(291,3,389,152)) Then 
-            容错参数 = 0
-            Rem 切换到队伍3
-            Touch 340, 70, 100
-            Delay 1500
-        
-            FindColor 291,3,389,152,"7DC14E",0,0.98,intX,intY
-            If intX > -1 And intY > -1 Then
-                TracePrint "进入队伍3"
-                Call 切换自动补兵(1)
-                Call 切换自动补兵(2)
-                队伍兵量 = 单个队伍兵量(2)
-            ElseIf 容错参数 = 0 < 5 Then
-                容错参数 = 容错参数 + 1
-                TracePrint "切换队伍失败,重试" 
-                Goto 切换到队伍3
-            End If
-        End If
-    ElseIf 队伍编号 = 3 Then
-        If 是否有队伍(Array(187,0,288,153)) Then 
-            容错参数 = 0
-            Rem 切换到队伍4
-            Touch 230, 70, 100
-            Delay 1500
-        
-            FindColor 187,0,288,153,"7DC14E",0,0.98,intX,intY
-            If intX > -1 And intY > -1 Then
-                TracePrint "进入队伍4"
-                Call 切换自动补兵(1)
-                Call 切换自动补兵(2)
-                队伍兵量 = 单个队伍兵量(3)
-            ElseIf 容错参数 = 0 < 5 Then
-                容错参数 = 容错参数 + 1
-                TracePrint "切换队伍失败,重试"
-                Goto 切换到队伍4
-            End If
+            队伍兵量 = 单个队伍满员率()
+        ElseIf 容错参数 = 0 < 3 Then
+            容错参数 = 容错参数 + 1
+            TracePrint "切换队伍失败,重试" 
+            Goto 切换队伍
         End If
     End If
     判断队伍兵量 = 队伍兵量
-    TracePrint "判断队伍兵量完毕"
+    TracePrint "判断队伍"&队伍编号&"兵量完毕"
     场景相关操作.通用界面关闭 
     Delay 2000
 End Function
 
 Function 是否有队伍(区域数组)
     Dim intX,intY
-    FindPic 区域数组(0), 区域数组(1), 区域数组(2), 区域数组(3), "Attachment:队伍+号.png", "000000", 0, 0.98, intX, intY
+    FindColor 区域数组(0), 区域数组(1), 区域数组(2), 区域数组(3),"BECFCF",0,0.98,intX,intY
     If intX > -1 And intY > -1 Then
-        TracePrint "当前队伍为空"
+        TracePrint "当前位置有队伍"
+        是否有队伍 = True
     Else 
-        FindPic 区域数组(0), 区域数组(1), 区域数组(2), 区域数组(3), "Attachment:队伍锁.png", "000000", 0, 0.98, intX, intY
-        If intX > -1 And intY > -1 Then
-            TracePrint "当前队伍未解锁"
-        Else 
-            是否有队伍 = True
-        End If
+        TracePrint "当前位置队伍为空"
     End If
 End Function
 
@@ -1802,7 +1791,7 @@ Sub 切换自动补兵(类型)
     //类型说明:1 = 自动补,2 = 取消自动补
     Dim intX,intY
     容错参数 = 0
-    Do Until 容错参数 >= 5
+    Do Until 容错参数 >= 3
         Select Case 类型
         Case 1            
             FindPic 65,1221,112,1267,"Attachment:兵力勾.png","000000",0,0.9,intX,intY
@@ -1829,57 +1818,69 @@ Sub 切换自动补兵(类型)
 	
 End Sub
 
-Function 单个队伍兵量(队伍编号)
-    TracePrint "开始判断单个队伍兵量"
-    容错参数 = 0
-    //进入兵力界面
-    进出界面.进入子界面(15, 45, 相关数据解析.兵力坐标X, 相关数据解析.兵力坐标Y)
-    Dim 武将1, 武将2, 武将3, 武将4, 武将5, 武将6,队伍当前兵力,队伍最大兵力,满员率
-    //第一个武将
-    武将1 = 武将兵力数组(Array(485,430,515,635))
-    //第二个武将
-    武将2 = 武将兵力数组(Array(485,880,515,1085))
-    //第三个武将
-    武将3 = 武将兵力数组(Array(350,430,380,635))
-    //第四个武将
-    武将4 = 武将兵力数组(Array(350,880,380,1085))
-    //第五个武将
-    武将5 = 武将兵力数组(Array(215,430,245,635))
-    //第六个武将
-    武将6 = 武将兵力数组(Array(215,880,245,1085))
-    //汇总计算
-    队伍当前兵力 = 武将1(0) + 武将2(0) + 武将3(0) + 武将4(0) + 武将5(0) + 武将6(0)
-    队伍最大兵力 = 武将1(1) + 武将2(1) + 武将3(1) + 武将4(1) + 武将5(1) + 武将6(1)
-    TracePrint "队伍当前兵力"&","&武将1(0)&","& 武将2(0)&","& 武将3(0)&","&武将4(0)&","&武将5(0)&","&武将6(0)
-    TracePrint "队伍最大兵力"&","&武将1(1)&","& 武将2(1)&","&武将3(1)&","& 武将4(1)&","& 武将5(1)&","& 武将6(1)
-    满员率 = Int(队伍当前兵力 / 队伍最大兵力 * 100)
-    TracePrint "队伍当前兵力"&","&队伍当前兵力&"队伍最大兵力"&队伍最大兵力&"满员率"&满员率
-    单个队伍兵量 = Array(队伍编号, 队伍当前兵力, 队伍最大兵力, 满员率)
-    ShowMessage "当前队伍"&队伍编号&"队伍当前兵力"&队伍当前兵力&"队伍最大兵力"&队伍最大兵力&"满员率"&满员率
-    TracePrint "判断单个队伍兵量完毕"
-    场景相关操作.通用界面关闭()
-    Delay 2000
+Function 单个队伍满员率()
+    Dim 判断区间起X1, 判断区间起Y1, 判断区间止X2, 判断区间止Y2, 变化差值X, 变化差值Y, 判断区间X1, 判断区间X2, 判断区间Y1, 判断区间Y2, 满员率
+    Dim temp1, temp2, temp3, ocrchar, intX,intY
+    判断区间起X1 = 410 : 判断区间起Y1 = 746 : 判断区间止X2 = 430 : 判断区间止Y2 = 832 : 变化差值X = 159 : 变化差值Y = 151 : 满员率 = 0 : temp3 = 6
+    For i = 0 To 5
+        判断区间X1 = 判断区间起X1 - Int(i / 2) * 变化差值X
+        判断区间X2 = 判断区间止X2 - Int(i / 2) * 变化差值X
+        判断区间Y1 = 判断区间起Y1 + (i Mod 2) * 变化差值Y
+        判断区间Y2 = 判断区间止Y2 + (i Mod 2) * 变化差值Y
+        
+        TracePrint 判断区间X1, 判断区间X2, 判断区间Y1, 判断区间Y2
+        ocrchar=Ocr(判断区间X1,判断区间Y1,判断区间X2,判断区间Y2,"C2B243-111111|636466-111111|9B9FA5-111111|7B7F82-111111|BFC4CB-111111",0.7)
+        Traceprint ocrchar
+        If UTF8.InStr(1, ocrchar, "空") > 0 Then 
+            TracePrint i&"号位为空"
+            temp3 = temp3 - 1
+        Else 
+            FindColor 判断区间X1,判断区间Y1,判断区间X2,判断区间Y2,"C2B243",2,1,intX,intY
+            If intX > -1 And intY > -1 Then
+                temp1 = intY - 750
+                If temp1 >= 150 Then 
+                    temp1 = intY - 899
+                End If
+                temp2 = 20 + temp1
+                If temp2 > 100 Then 
+                    temp2 = 100
+                End If
+                满员率 = 满员率 + temp2
+                TracePrint i&"号位满员率"&temp2
+            Else 
+                FindColor 判断区间X1, 判断区间Y1, 判断区间X2, 判断区间Y2, "C1B143", 2, 1, intX, intY
+                If intX > -1 And intY > -1 Then
+                    temp1 = intY - 750
+                    If temp1 >= 150 Then 
+                        temp1 = intY - 899
+                    End If
+                    temp2 = 20 + temp1
+                    If temp2 > 100 Then 
+                        temp2 = 100
+                    End If
+                    满员率 = 满员率 + temp2
+                    TracePrint i&"号位满员率"&temp2
+                Else 
+                    FindColor 判断区间X1, 判断区间Y1, 判断区间X2, 判断区间Y2, "C1B042", 2, 1, intX, intY
+                    If intX > -1 And intY > -1 Then
+                        temp1 = intY - 750
+                        If temp1 >= 150 Then 
+                            temp1 = intY - 899
+                        End If
+                        temp2 = 20 + temp1
+                        If temp2 > 100 Then 
+                            temp2 = 100
+                        End If
+                        满员率 = 满员率 + temp2
+                        TracePrint i&"号位满员率"&temp2
+                    End If
+                End If
+            End If
+        End If  
+    Next
+    单个队伍满员率 = 满员率 / temp3
+    TracePrint "整体满员率"&满员率
 End Function
-
-Function 武将兵力数组(区域数组)
-    Dim ocrchar, 当前士兵数量, 最大士兵数量, 临时数组
-    容错参数 = 0
-    Rem 兵力识别
-    ocrchar = 类型转换.SuperOcr(区域数组(0),区域数组(1),区域数组(2),区域数组(3),"9EB0BB-111111|BBD1DE-111111|7B8991-111111|68747A-111111|8D9EA7-111111",0.9)
-    临时数组 = 类型转换.字符串解析带符号(ocrchar, "/", 17, 6)
-    当前士兵数量 = CLng(临时数组(0))
-    最大士兵数量 = CLng(临时数组(1))
-    武将兵力数组 = Array(当前士兵数量, 最大士兵数量)
-    If 最大士兵数量 < 1000 And 容错参数 < 3 And 最大士兵数量 > 0 Then 
-        ShowMessage "武将兵力识别错误", 1000, 50, 620
-        SnapShot "/sdcard/test2.png",0,0,720,1280
-        Delay 1000
-        容错参数 = 容错参数 + 1
-        Call 错误记录("错误最大士兵数量"&最大士兵数量)
-        Goto 兵力识别
-    End If
-End Function
-
 //加载队伍出征设置
 Function 队伍设置()
     Dim 打怪队伍, 采集队伍, 寻访队伍, 打怪种类, 打怪等级, 采集类型, 矿坑等级
@@ -1938,13 +1939,13 @@ Sub 派遣队伍()
     矿坑等级 = 用户设置(6)
     打怪次数 = Int(ReadUIConfig("打怪次数", 0))
     是否使用行军令 = ReadUIConfig("是否使用行军令", False)
-    满员率设置 = Int(ReadUIConfig("满员率", 100)) 
+    满员率设置 = Int(ReadUIConfig("满员率", 100))
     For i = 0 To 3
         If 打怪队伍(i) Then 
             If 队伍状态(i) = 1 Then 
                 If (伤兵信息(0) / 伤兵信息(1) * 100) < Int(ReadUIConfig("伤兵比例")) Then 
                     队伍兵量信息 = 判断队伍兵量(i)
-                    If 队伍兵量信息(3) > 满员率设置 Then 
+                    If 队伍兵量信息 > 满员率设置 Then 
                         If 打怪次数 > 派遣出征次数 Then 
                             TracePrint "出城寻找怪物"
                             Call 搜索目标(1, 打怪种类, 打怪等级)
@@ -1965,7 +1966,7 @@ Sub 派遣队伍()
         If 采集队伍(i) Then 
             If 队伍状态(i) = 1 Then 
                 队伍兵量信息 = 判断队伍兵量(i)
-                If 队伍兵量信息(3) > 满员率设置 Then 
+                If 队伍兵量信息 > 满员率设置 Then 
                     If ReadUIConfig("智能采集", True) Then 
                         采集类型 = Array()
                         采集类型(最少资源类型()) = True
@@ -2509,14 +2510,13 @@ Sub 搜索目标(寻找类型, 目标种类, 目标等级)
     
     If 确认目标(寻找类型, 目标种类, 目标等级) Then 
         目标坐标信息 = Array(野外主城坐标X, 野外主城坐标Y, 1, 1, 1, 1, 1, Time())
-        WriteConfig "目标坐标信息"&账号信息&寻找类型, 目标坐标信息, True
         Exit Sub
     End If
     
     //考虑到搜索资源时不需要,但是目前已经耦合到一起了,所以在最开始的时候加一个判断
     If 目标坐标信息 = Null Then 
         目标坐标信息 = Array(野外主城坐标X, 野外主城坐标Y, 1, 1, 1, 1, 1, Time())
-    ElseIf (Time() - 目标坐标信息(7)) >= 7200 Or 寻找类型 = 2 Then
+    ElseIf (Time() - 目标坐标信息(7)) >= 3600 Or 寻找类型 = 2 Then
         TracePrint "目标坐标信息",目标坐标信息(0),目标坐标信息(1),目标坐标信息(7)
         目标坐标信息 = Array(野外主城坐标X, 野外主城坐标Y, 1, 1, 1, 1, 1, Time())
     End If
@@ -2875,7 +2875,7 @@ Sub 前往目标(出征类型, 队伍)
             If ocrchar = "确定" Then 
                 TracePrint "不是自己军团的城"
                 Touch 250, 760, 100
-                Delay 2500
+                Delay 3500
             End If
         End If
         容错参数 = 容错参数 + 1
@@ -3066,6 +3066,7 @@ Sub 祭祀等待(类型)
             Exit Function
         End If
     End Select
+    祭祀切换 = False
 End Sub
 
 Function 祭祀次数()	
@@ -3183,7 +3184,10 @@ End Sub
 
 Sub 接皇榜任务()
     TracePrint "开始接皇榜任务"
-    If ReadUIConfig("是否自动执行皇榜") = False Then 
+    TracePrint "接皇榜任务" & "登录成功数" & 登录成功次数 & "配置"
+    TracePrint  ReadUIConfig("是否自动执行皇榜" & 登录成功次数)
+    Delay 2000
+    If ReadUIConfig("是否自动执行皇榜"&登录成功次数) = False Then 
         TracePrint "设置不执行皇榜"
         Exit Sub	
     End If
@@ -3244,33 +3248,36 @@ Sub 接皇榜任务()
                     TracePrint ocrchar1
                     //showmessage ocrchar1, 1000, 50, 620
                     Delay 1000
-                    ocrchar2= Ocr(起始区域X1 - 20,477,起始区域X1,700,"595753-111111|73736F-111111|6E6D6B-111111|8E8E8C-111111|9D9C9A-111111",0.9)
-                    TracePrint ocrchar2
+                    If ocrchar1 = Null Then 
+                        SnapShot "/sdcard/hb" & i & ".png", 0, 0, 720, 1280
+                        TracePrint "未识别的皇榜任务"
+                    End If
                     If ocrchar1 = "攻城掠地" Then 
                         TracePrint "攻城掠地任务不接"
-                    ElseIf UTF8.InStr(1, ocrchar1, "寇") > 0 Then
+                    ElseIf ocrchar1 = "扫荡匪寇" Then
+                        ocrchar2= Ocr(起始区域X1 - 20,477,起始区域X1,700,"595753-111111|73736F-111111|6E6D6B-111111|8E8E8C-111111|9D9C9A-111111",0.9)
+                        TracePrint ocrchar2
                         temp1 = UTF8.InStr(1, ocrchar2, "级")
-                        temp2 = UTF8.Len(ocrchar2)
                         For i = 0 To 9
-                            If ReadUIConfig("普通" & i) And i >= Int(UTF8.Mid(ocrchar2, 3, temp1 - 3)) - 1 Then
+                            If ReadUIConfig("普通" & i) And i >= Int(UTF8.Mid(ocrchar2, 1, temp1 - 1)) - 1 Then
                                 Touch 相关数据解析.城池最终捐献坐标X , 相关数据解析.城池最终捐献坐标Y, 100
                                 TracePrint "点击揭榜图标"
                                 Delay 1500
                             End If
                         Next
-                    ElseIf UTF8.InStr(1, ocrchar1, "采集") > 0 Then
+                    ElseIf ocrchar1 = "采集资源" Then
                         Touch 相关数据解析.城池最终捐献坐标X , 相关数据解析.城池最终捐献坐标Y, 100
                         TracePrint "点击揭榜图标"
                         Delay 1500
-                    ElseIf UTF8.InStr(1, ocrchar1, "寻访") > 0 Then
-                        // Touch 相关数据解析.城池最终捐献坐标X , 相关数据解析.城池最终捐献坐标Y, 100
-                        TracePrint "暂时不接寻访"
-                        Delay 1500
-                    ElseIf UTF8.InStr(1, ocrchar1, "精打") > 0 Then
+                    ElseIf ocrchar1 = "城池寻访" Then
                         Touch 相关数据解析.城池最终捐献坐标X , 相关数据解析.城池最终捐献坐标Y, 100
                         TracePrint "点击揭榜图标"
                         Delay 1500
-                    ElseIf UTF8.InStr(1, ocrchar1, "北战")> 0 Then
+                    ElseIf ocrchar1 = "精打细算" Then
+                        Touch 相关数据解析.城池最终捐献坐标X , 相关数据解析.城池最终捐献坐标Y, 100
+                        TracePrint "点击揭榜图标"
+                        Delay 1500
+                    ElseIf ocrchar1 = "南征北战" Then
                         Touch 相关数据解析.城池最终捐献坐标X , 相关数据解析.城池最终捐献坐标Y, 100
                         TracePrint "点击揭榜图标"
                         Delay 1500
@@ -3278,7 +3285,7 @@ Sub 接皇榜任务()
                         Touch 相关数据解析.城池最终捐献坐标X , 相关数据解析.城池最终捐献坐标Y, 100
                         TracePrint "点击揭榜图标"
                         Delay 1500
-                    ElseIf UTF8.InStr(1, ocrchar1, "收取") > 0 Then
+                    ElseIf ocrchar1 = "收取资源" Then
                         Touch 相关数据解析.城池最终捐献坐标X , 相关数据解析.城池最终捐献坐标Y, 100
                         TracePrint "点击揭榜图标"
                         Delay 1500
@@ -3376,7 +3383,7 @@ Sub 完成皇榜任务()
                         If 队伍状态(i) = 1 Then
                             If (伤兵信息(0) / 伤兵信息(1) * 100) < Int(ReadUIConfig("伤兵比例")) Then 
                                 队伍兵量信息 = 判断队伍兵量(i)
-                                If 队伍兵量信息(3) > Int(ReadUIConfig("满员率")) Then 
+                                If 队伍兵量信息 > Int(ReadUIConfig("满员率")) Then 
                                     TracePrint "出城寻找怪物"
                                     Call 搜索目标(1, 目标种类, 目标等级)
                                     Call 前往目标(1, i)
@@ -3394,7 +3401,7 @@ Sub 完成皇榜任务()
                         If 队伍状态(i) = 1 Then
                             If (伤兵信息(0) / 伤兵信息(1) * 100) < Int(ReadUIConfig("伤兵比例")) Then 
                                 队伍兵量信息 = 判断队伍兵量(i)
-                                If 队伍兵量信息(3) > Int(ReadUIConfig("满员率")) Then 
+                                If 队伍兵量信息 > Int(ReadUIConfig("满员率")) Then 
                                     TracePrint "出城寻找怪物"
                                     Touch 380, 640, 100
                                     Delay 1000
@@ -3429,7 +3436,7 @@ Sub 完成皇榜任务()
                 If 用户设置(1, i) Then 
                     If 队伍状态(i) = 1 Then 
                         队伍兵量信息 = 判断队伍兵量(i)
-                        If 队伍兵量信息(3) > Int(ReadUIConfig("满员率")) Then 
+                        If 队伍兵量信息 > Int(ReadUIConfig("满员率")) Then 
                             TracePrint "出城寻找资源"
                             If ReadUIConfig("自动识别矿等级") Then 
                                 TracePrint "开启了自动识别等级"
@@ -4264,19 +4271,10 @@ Sub 正常打副本前准备()
     Dim intX,intY
     TracePrint "即将进入副本选择队伍界面"
     If 进出界面.进入子界面(37, 40, 相关数据解析.挑战坐标X, 相关数据解析.挑战坐标Y) Then 
-        //勾选自动配兵
-        TracePrint "勾选自动配兵"
-        Do Until 容错参数 > 5      
-            FindPic 171,337,234,509,"Attachment:兵力勾2.png","000000",0,0.9,intX,intY
-            If intX > -1 And intY > -1 Then
-                TracePrint "选中了自动补兵"
-                Exit Do
-            Else 
-                容错参数 = 容错参数 + 1
-                Touch 200, 360, 100
-                Delay 1000
-            End If
-        Loop
+        //自动配兵
+        TracePrint "一键补兵"
+        Touch 210, 980, 100
+        Delay 1000
         Call 打副本(1, 1)
     Else 
         TracePrint "进副本队伍选择界面失败,放弃打副本"
@@ -4290,16 +4288,10 @@ Sub 扫荡前装备(最终打副本次数)
     Touch 相关数据解析.进入扫荡坐标X, 相关数据解析.进入扫荡坐标Y, 250
     Delay 1000
     If 场景相关操作.进入场景是否正确(40) Then 
-        //勾选自动配兵
-        Do        
-            FindPic 171,337,234,509,"Attachment:兵力勾2.png","000000",0,0.9,intX,intY
-            If intX > -1 And intY > -1 Then
-                Exit Do
-            Else 
-                Touch 200, 360, 100
-                Delay 1000
-            End If
-        Loop
+        //自动配兵
+        TracePrint "一键补兵"
+        Touch 210, 980, 100
+        Delay 1000
         Call 打副本(2, 最终打副本次数)
     ElseIf 场景相关操作.进入场景是否正确(41) Then
         Call 打副本(2, 最终打副本次数)
@@ -5757,8 +5749,6 @@ Sub 升级计略(类型)
     //判断升级条件是否满足
     If 计略升级条件是否满足() = False Or 计略是否升级中() Then 
         TracePrint "升级计略结束"
-        场景相关操作.通用界面关闭 
-        Delay 2000
         Exit Sub
     End If
     容错参数 = 0
@@ -5770,8 +5760,6 @@ Sub 升级计略(类型)
         Goto 点击升级
     End If
     TracePrint "升级计略结束"
-    场景相关操作.通用界面关闭 
-    Delay 2000
 End Sub
 
 //自动铸币
