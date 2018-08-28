@@ -12,7 +12,6 @@ Rem 开始
 
 //SetDictEx(1, "Attachment:皇榜奖励数字.txt")
 //UseDict(1)
-
 If (GetScreenX() = 1080 And GetScreenY() = 1920) Or (GetScreenX() = 900 And GetScreenY() = 1440) Or (GetScreenX() = 720 And GetScreenY() = 1280 )  Then
     TracePrint GetScreenX(), GetScreenY()
 Else
@@ -54,9 +53,8 @@ Dim 判定范围2, 判定范围3, 判定范围4
 
 
 //登录部分
-Dim 账号信息, 账号密码, 登录成功次数, 区服, 选服重试次数, 容错参数, 体力阀值, 平台, 来路是否是切换账号,是否已登录,当前步骤
-平台 = ReadUIConfig("平台") : 登录成功次数 = ReadConfig("登录成功次数") : 体力阀值 = 55
-
+Dim 账号信息, 账号密码, 登录成功次数, 区服, 选服重试次数, 容错参数, 平台, 来路是否是切换账号,是否已登录,当前步骤,启动时间
+平台 = ReadUIConfig("平台") : 登录成功次数 = ReadConfig("登录成功次数")
 If 登录成功次数 = Null Then 
     登录成功次数 = 1
 End If
@@ -66,19 +64,20 @@ Rem login
 ShowMessage "开始准备登陆", 2000, 50, 620
 
 //showmessage "所在场景"&所在场景, 2000, 50, 620
-Dim intX,intY
+Dim intX,intY,目前界面
 Call 账号信息处理(登录成功次数)
-
-If 所在场景() = Null And 容错参数 < 5 Then 
+目前界面 = 所在场景()
+If 目前界面 = Null And 容错参数 < 5 Then 
     If Not 来路是否是切换账号 Then
         Call 启动游戏()
     End If
-    If Not 是否已登录 Then 
-        登录(平台, 账号信息, 账号密码)
+    当前步骤 = 当前所在登录步骤界面(平台, 0)
+    TracePrint 平台
+    If 当前步骤 <> 0 Then
+        Call 注册(平台)
     End If
-    容错参数 = 容错参数 + 1
     Goto login
-ElseIf Not 进入场景是否正确(1) And 容错参数 < 8 Then
+ElseIf 目前界面 <> 1 And 容错参数 < 8 Then
     通用界面关闭 
     容错参数 = 容错参数 + 1
     Delay 1500
@@ -90,13 +89,10 @@ WriteConfig "登录成功次数", 登录成功次数 , True
 来路是否是切换账号 = False
 
 Call 处理渠道图标()
-
+启动时间 = Time()
 //正常游戏逻辑部分
 
-Dim 主公等级,上次推关结果,是否创建角色
-
-Dim 野外主城坐标X, 野外主城坐标Y,
-
+Dim 主公等级,上次推关结果,是否创建角色, 是否选择阵营
 
 WriteConfig "上次运行日期", Date(), True
 Delay 1000
@@ -104,20 +100,23 @@ Delay 1000
 //Call 定位主城坐标()
 Rem 循环
 
-//Delay 1000
+Delay 50
 
 Call 寻找引导手势()
 Call 创建角色()
 
 Sys.ClearMemory()
 TracePrint "等待下次执行"
+If Time() - 启动时间 > 600 Then 
+	Call 回登录界面()
+	Goto login
+End If
 Goto 循环
 
 Sub 启动游戏()
     If 平台 = 0 Then 
         If Sys.AppIsFront("com.game.sgz.a360") Then 
             TracePrint "当前游戏已经启动"
-            通用界面关闭
         Else 
             TracePrint "准备启动游戏"
             RunApp "com.game.sgz.a360"
@@ -126,7 +125,6 @@ Sub 启动游戏()
     ElseIf 平台 = 1 Then
         If Sys.AppIsFront("com.game.sgz.a360.yod") Then 
             TracePrint "当前游戏已经启动"
-            通用界面关闭
         Else 
             TracePrint "准备启动游戏"
             RunApp "com.game.sgz.a360.yod"
@@ -135,7 +133,6 @@ Sub 启动游戏()
     ElseIf 平台 = 2 Then
         If Sys.AppIsFront("com.shouyou.sgzerq.hm") Then 
             TracePrint "当前游戏已经启动"
-            通用界面关闭
         Else 
             TracePrint "准备启动游戏"
             RunApp "com.shouyou.sgzerq.hm"
@@ -144,7 +141,6 @@ Sub 启动游戏()
     ElseIf 平台 = 3 Then
         If Sys.AppIsFront("com.kkl.xsg2018.tf") Then 
             TracePrint "当前游戏已经启动"
-            通用界面关闭
         Else 
             TracePrint "准备启动游戏"
             RunApp "com.kkl.xsg2018.tf"
@@ -185,7 +181,8 @@ Sub 账号信息处理(编号)
         EndScript
     End If
 	
-    账号信息 = "killergui"& 编号)
+    账号信息 = "killergui" & 编号
+    TracePrint 账号信息
     WriteConfig "账号信息", 账号信息, True
     账号密码 = "198323"
     WriteConfig "账号密码", 账号密码, True
@@ -212,6 +209,8 @@ Sub 回登录界面()
         If 进入场景是否正确(21) Then 
             TracePrint "成功退出游戏"
             来路是否是切换账号 = True
+            是否创建角色 = False
+            是否选择阵营 = False
             通用界面关闭
             Delay 1500
             Touch 110, 140, 100
@@ -258,35 +257,62 @@ End Function
 Sub 创建角色()
     If 是否创建角色 Then 
         TracePrint "已经创建角色了"
+        Call 选择国家()
     Else 
         ocrchar = 类型转换.SuperOcr(659, 38, 718, 243, 顶部左上文字描述, 顶部左上文字相似度)
         Traceprint "ocrchar2",ocrchar
         If ocrchar = "创建" Then 
             Touch 70, 640, 100
             是否创建角色 = True
-            Delay 1500
+            Delay 20000
             Call 选择国家()
         End If
     End If
 End Sub
 
 Sub 选择国家()
-    ocrchar = 类型转换.SuperOcr(660,22,711,146, 顶部左上文字描述, 顶部左上文字相似度)
-    Traceprint "ocrchar2",ocrchar
-    If ocrchar = "阵营" Then 
-        Dim 国家
-        国家 = ReadUIConfig("国家")
-        If 国家 = 1 Then 
-            Touch 545, 970, 100
-            Delay 500
-        ElseIf 国家 = 2 Then
-            Touch 340, 800, 100
-            Delay 500
-        ElseIf 国家 = 3 Then
-            Touch 310, 1010, 100
-            Delay 500
+    If 是否选择阵营 Then 
+        TracePrint "已经选择阵营"
+    Else
+        ocrchar = 类型转换.SuperOcr(660,22,711,146, 顶部左上文字描述, 顶部左上文字相似度)
+        Traceprint "ocrchar2",ocrchar
+        If ocrchar = "阵营" Then 
+            Dim 国家
+            国家 = ReadUIConfig("国家")
+            If 国家 = 1 Then 
+                Touch 545, 970, 100
+                Delay 500
+            ElseIf 国家 = 2 Then
+                Touch 340, 800, 100
+                Delay 500
+            ElseIf 国家 = 3 Then
+                Touch 310, 1010, 100
+                Delay 500
+            End If
+            Touch 70, 910, 100
+            TracePrint "选择阵营了"
+            是否选择阵营 = True
         End If
-        Touch 70,910,100
+    End If
+End Sub
+
+Sub 账号记录(记录内容)
+    Dim 写入行数, 文件判断结果
+    Dim 文件路径="/sdcard/localDataDir"
+    If Dir.Exist(文件路径) = 1 Then 
+        TracePrint "文件路径已存在"
+    Else 
+        Call Dir.Create(文件路径) 
+    End If
+    文件判断结果 = Dir.Exist(文件路径&"/log.txt")
+    TracePrint 文件判断结果
+    If 文件判断结果 = 1 Then 
+        写入行数 = File.LinesNumber(文件路径&"/log.txt") + 1
+        Call File.WriteLine(文件路径&"/log.txt", 写入行数, 记录内容)
+        TracePrint "追加记录"
+    ElseIf 文件判断结果 Then
+        Call File.Write(文件路径&"/log.txt", 记录内容)
+        TracePrint "新建记录"
     End If
 End Sub
 
@@ -389,9 +415,12 @@ End Function
 
 Sub 通用界面关闭()
     Rem 关闭界面
-    If 寻找引导手势() Then 
-        Exit Function
+    If 目前界面 <> 22 Then 
+        If 寻找引导手势() Then 
+            Exit Function
+        End If
     End If
+    
     Dim intX,intY
     FindPic 0,0,GetScreenX(),GetScreenY(),"Attachment:关闭.png","000000",2,0.7,intX,intY
     If intX > -1 And intY > -1 Then
@@ -1089,16 +1118,24 @@ Dim RKHOST="103.45.7.212:81"  //必须声明
 
 
 Sub 登录(渠道编号, 账号信息, 账号密码)
-
     If 渠道编号 = 0 Then 
         Call 登录360(账号信息, 账号密码)
     ElseIf 渠道编号 = 2 Then
         Call 登录海马玩(账号信息, 账号密码)
-	ElseIf 渠道编号 = 3 Then
+    ElseIf 渠道编号 = 3 Then
         Call 登录游戏工厂(账号信息, 账号密码)
     End If
 End Sub
 
+Sub 注册(渠道编号)
+    If 渠道编号 = 0 Then 
+        //            Call 注册360(账号信息, 账号密码)
+    ElseIf 渠道编号 = 2 Then
+        Call 注册海马玩()
+    ElseIf 渠道编号 = 3 Then
+        //            Call 注册游戏工厂(账号信息, 账号密码)
+    End If
+End Sub
 Function 当前所在登录步骤界面(渠道编号,有无验证码)
     Dim intX, intY, ocrchar
     Select Case 渠道编号
@@ -1174,7 +1211,7 @@ Function 当前所在登录步骤界面(渠道编号,有无验证码)
             当前所在登录步骤界面 = 1
             Exit Function
         End If
-	Case 2
+    Case 2
         TracePrint "当前运行海马玩客户端"
         ocrchar = 类型转换.SuperOcr(602,281,661,401,"666666-111111",0.95)
         Traceprint ocrchar
@@ -1186,6 +1223,18 @@ Function 当前所在登录步骤界面(渠道编号,有无验证码)
         Traceprint ocrchar
         If ocrchar = "账号" Then 
             当前所在登录步骤界面 = 2
+            Exit Function
+        End If
+        ocrchar=Ocr(577,550,625,715,"666666-111111",1)
+        Traceprint ocrchar
+        If ocrchar = "欢迎注册" Then 
+            当前所在登录步骤界面 = 3
+            Exit Function
+        End If
+        ocrchar=Ocr(233,577,278,711,"FFFFFF-111111",1)
+        Traceprint ocrchar
+        If ocrchar = "邮箱绑定" Then 
+            当前所在登录步骤界面 = 4
             Exit Function
         End If
     Case 3
@@ -1376,21 +1425,29 @@ Sub 登录海马玩(账号信息, 账号密码)
     TracePrint "登录完毕"
 End Sub
 
-Sub 注册海马玩(账号信息, 账号密码)
-    Dim 当前场景
+Sub 注册海马玩()
+    Dim 当前场景, 是否已经填写账号信息
+    是否已经填写账号信息 = False
     容错参数 = 0
     Rem 进账号登录界面2
-    当前场景 = 所在场景()
-    If 当前场景 <> Null Then
-        TracePrint "登录成功"
-        Exit Sub
-    End If
+
     当前步骤 = 当前所在登录步骤界面(2, 0)
     If 当前步骤 = 1 Then  
+        //点击注册
+        Touch 145, 360, 100
+    ElseIf 当前步骤 = 2 Then
+        TracePrint "应该要关闭啊"
+        Touch 660, 920, 100
+    ElseIf 当前步骤 = 3 Then
+        If 是否已经填写账号信息 Then 
+            登录成功次数 = 登录成功次数 + 1
+            TracePrint 登录成功次数
+            Call 账号信息处理(登录成功次数)
+        End If
         //输入账号
         ShowMessage "要点击账号栏了",1000, 50, 620
         TracePrint "要点击账号栏了"
-        Touch 523, 880, 100
+        Touch 491, 945, 100
         Delay 500
         //删除旧账号
         For 30
@@ -1403,7 +1460,7 @@ Sub 注册海马玩(账号信息, 账号密码)
         Delay 1000
         ShowMessage "要点击密码栏了",1000, 50, 620
         //输入密码
-        Touch 449, 950, 100
+        Touch 391, 945, 100
         Delay 500
         //删除旧密码
         For 30
@@ -1413,19 +1470,27 @@ Sub 注册海马玩(账号信息, 账号密码)
         TracePrint 账号密码
         InputText 账号密码
         Delay 1000
-        ShowMessage "要点登录了",1000, 50, 620	
+        ShowMessage "要点注册了",1000, 50, 620	
         //点击登录
-        Touch 340, 625, 100
-    ElseIf 当前步骤 = 2 Then
-        TracePrint "应该要关闭啊"
-        Touch 660, 920, 100
+        Touch 230, 625, 100
+        是否已经填写账号信息 = True
+    ElseIf 当前步骤 = 4 Then
+        Touch 510, 988, 100
+        Call 账号记录(账号信息 & "|" & 账号密码)
+    Else 
+        当前场景 = 所在场景()
+        If 当前场景 <> Null Then
+            TracePrint "登录成功"
+            Exit Sub
+        End If
     End If
-    If 容错参数 < 3 Then 
+    If 容错参数 < 95 Then 
         容错参数 = 容错参数 + 1
         Delay 3000
         Goto 进账号登录界面2
     End If
-    TracePrint "登录完毕"
+    TracePrint "注册完毕"
+    
 End Sub
 
 Sub 登录游戏工厂(账号信息, 账号密码)
