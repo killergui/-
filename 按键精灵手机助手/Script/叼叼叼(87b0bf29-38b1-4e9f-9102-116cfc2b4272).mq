@@ -11,7 +11,6 @@ Import "相关数据解析.mql"
 Log.Open
 //初始化全局信息
 Rem 开始
-332
 
 //SetDictEx(1, "Attachment:皇榜奖励数字.txt")
 //UseDict(1)
@@ -1940,23 +1939,26 @@ Sub 派遣队伍()
     打怪次数 = Int(ReadUIConfig("打怪次数", 0))
     是否使用行军令 = ReadUIConfig("是否使用行军令", False)
     满员率设置 = Int(ReadUIConfig("满员率", 100))
-    For i = 0 To 3
-        If 打怪队伍(i) Then 
-            If 队伍状态(i) = 1 Then 
-                If (伤兵信息(0) / 伤兵信息(1) * 100) < Int(ReadUIConfig("伤兵比例")) Then 
-                    队伍兵量信息 = 判断队伍兵量(i)
-                    If 队伍兵量信息 > 满员率设置 Then 
-                        If 打怪次数 > 派遣出征次数 Then 
-                            TracePrint "出城寻找怪物"
-                            Call 搜索目标(1, 打怪种类, 打怪等级)
-                            Call 前往目标(1, i)
-                            队伍状态(i) = 0
+    If 打怪次数 > 0 Then 
+        For i = 0 To 3
+            If 打怪队伍(i) Then 
+                If 队伍状态(i) = 1 Then 
+                    If (伤兵信息(0) / 伤兵信息(1) * 100) < Int(ReadUIConfig("伤兵比例")) Then 
+                        队伍兵量信息 = 判断队伍兵量(i)
+                        If 队伍兵量信息 > 满员率设置 Then 
+                            If 打怪次数 > 派遣出征次数 Then 
+                                TracePrint "出城寻找怪物"
+                                Call 搜索目标(1, 打怪种类, 打怪等级)
+                                Call 前往目标(1, i)
+                                队伍状态(i) = 0
+                            End If
                         End If
                     End If
-                End If
-            End If	
-        End If
-    Next
+                End If	
+            End If
+        Next
+    End If
+    
     If ReadUIConfig("自动识别矿等级") Then 
         TracePrint "开启了自动识别等级"
         矿坑等级 = Array()
@@ -2197,124 +2199,102 @@ Sub 勾选怪物(打怪等级)
     Dim intX,intY
     Call 清除勾选()
     If 打怪等级(0) Then 
-        Rem 勾选1级怪
         FindPic 400,330,450,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了1级怪"
         Else 
             Touch 425, 355, 100
             Delay 500
-            Goto 勾选1级怪
         End If
     End If
     If 打怪等级(1) Then 
-        Rem 勾选2级怪
         FindPic 350,330,400,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了2级怪"
         Else 
             Touch 375, 355, 100
             Delay 500
-            Goto 勾选2级怪
         End If
     End If
     If 打怪等级(2) Then 
-        Rem 勾选3级怪
         FindPic 300,330,350,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了3级怪"
         Else 
             Touch 325, 355, 100
             Delay 500
-            Goto 勾选3级怪
         End If
     End If
     If 打怪等级(3) Then 
-        Rem 勾选4级怪
         FindPic 250,330,300,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了4级怪"
         Else 
             Touch 275, 355, 100
             Delay 500
-            Goto 勾选4级怪
         End If
     End If
     If 打怪等级(4) Then 
-        Rem 勾选5级怪
         FindPic 200,330,250,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了5级怪"
         Else 
             Touch 225, 355, 100
             Delay 500
-            Goto 勾选5级怪
         End If
     End If
     If 打怪等级(5) Then 
-        Rem 勾选6级怪
         FindPic 150,330,200,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了6级怪"
         Else 
             Touch 175, 355, 100
             Delay 500
-            Goto 勾选6级怪
         End If
     End If
     If 打怪等级(10) Then 
-        Rem 勾选11级怪
         FindPic 400,615,450,665,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了精英1级怪"
         Else 
             Touch 425, 640, 100
             Delay 500
-            Goto 勾选11级怪
         End If
     End If
     If 打怪等级(11) Then 
-        Rem 勾选12级怪
         FindPic 350,615,400,665,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了精英2级怪"
         Else 
             Touch 375, 640, 100
             Delay 500
-            Goto 勾选12级怪
         End If
     End If
     If 打怪等级(12) Then 
-        Rem 勾选13级怪
         FindPic 300,615,350,665,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了精英3级怪"
         Else 
             Touch 325, 640, 100
             Delay 500
-            Goto 勾选13级怪
         End If
     End If
     If 打怪等级(13) Then 
-        Rem 勾选14级怪
         FindPic 250,615,300,665,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了精英4级怪"
         Else 
             Touch 275, 640, 100
             Delay 500
-            Goto 勾选14级怪
         End If
     End If
     If 打怪等级(14) Then 
-        Rem 勾选15级怪
         FindPic 200,615,250,665,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了精英5级怪"
         Else 
             Touch 225, 640, 100
             Delay 500
-            Goto 勾选15级怪
         End If
     End If
     //以下部分在屏幕之外,所以需要先拖动
@@ -2324,51 +2304,43 @@ Sub 勾选怪物(打怪等级)
     TouchUp 0
     Delay 1000            
     If 打怪等级(6) Then 
-        Rem 勾选7级怪
         FindPic 285,330,335,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了7级怪"
         Else 
             Touch 315, 355, 100
             Delay 500
-            Goto 勾选7级怪
         End If
     End If
 
     If 打怪等级(7) Then 
-        Rem 勾选8级怪
         FindPic 235,330,285,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了8级怪"
         Else 
             Touch 265, 355, 100
             Delay 500
-            Goto 勾选8级怪
         End If
     End If
 
     If 打怪等级(8) Then 
         Delay 300
-        Rem 勾选9级怪
         FindPic 185,330,235,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了9级怪"
         Else 
             Touch 215, 355, 100
             Delay 500
-            Goto 勾选9级怪
         End If
     End If
 
     If 打怪等级(9) Then 
-        Rem 勾选10级怪
         FindPic 135,330,185,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了10级怪"
         Else 
             Touch 175, 355, 100
             Delay 500
-            Goto 勾选10级怪
         End If
     End If
     
@@ -2379,113 +2351,93 @@ Sub 勾选怪物2(打怪等级)
     Dim intX,intY
     Call 清除勾选()
     If 打怪等级(0) Then 
-        Rem 勾选1级怪
         FindPic 400,330,450,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了1级怪"
         Else 
             Touch 425, 355, 100
             Delay 500
-            Goto 勾选1级怪
         End If
     End If
     If 打怪等级(2) Then 
-        Rem 勾选3级怪
         FindPic 350,330,400,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了3级怪"
         Else 
             Touch 375, 355, 100
             Delay 500
-            Goto 勾选3级怪
         End If
     End If
     If 打怪等级(4) Then 
-        Rem 勾选5级怪
         FindPic 300,330,350,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了5级怪"
         Else 
             Touch 325, 355, 100
             Delay 500
-            Goto 勾选5级怪
         End If
     End If
     If 打怪等级(6) Then 
-        Rem 勾选7级怪
         FindPic 250,330,300,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了7级怪"
         Else 
             Touch 275, 355, 100
             Delay 500
-            Goto 勾选7级怪
         End If
     End If
     If 打怪等级(8) Then 
-        Rem 勾选9级怪
         FindPic 200,330,250,380,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了9级怪"
         Else 
             Touch 225, 355, 100
             Delay 500
-            Goto 勾选9级怪
         End If
     End If
     If 打怪等级(1) Then 
-        Rem 勾选2级怪
         FindPic 400,615,450,665,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了2级怪"
         Else 
             Touch 425, 640, 100
             Delay 500
-            Goto 勾选2级怪
         End If
     End If
     If 打怪等级(3) Then 
-        Rem 勾选4级怪
         FindPic 350,615,400,665,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了4级怪"
         Else 
             Touch 375, 640, 100
             Delay 500
-            Goto 勾选4级怪
         End If
     End If
     If 打怪等级(5) Then 
-        Rem 勾选6级怪
         FindPic 300,615,350,665,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了6级怪"
         Else 
             Touch 325, 640, 100
             Delay 500
-            Goto 勾选6级怪
         End If
     End If
     If 打怪等级(7) Then 
-        Rem 勾选8级怪
         FindPic 250,615,300,665,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了8级怪"
         Else 
             Touch 275, 640, 100
             Delay 500
-            Goto 勾选8级怪
         End If
     End If
     If 打怪等级(9) Then 
-        Rem 勾选10级怪
         FindPic 200,615,250,665,"Attachment:筛选勾.png","000000",0,0.96,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了10级怪"
         Else 
             Touch 225, 640, 100
             Delay 500
-            Goto 勾选10级怪
         End If
     End If
 End Sub
@@ -5292,7 +5244,7 @@ Sub 寻找目标材料副本()
                             TracePrint "后边的途径都没达成条件,退出"
                             场景相关操作.通用界面关闭 
                             Delay 2000
-                            Exit For
+                            Exit Do
                         End If
                     End If
                 Next
