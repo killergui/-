@@ -23,8 +23,10 @@ SetupOCXFile=
 [Comment]
 
 [Script]
-Hwnd = 22226204
-//Hwnd = 4790990
+
+
+//Hwnd1 = 463852
+Hwnd = 1052728
 Import "e:\obj.vbs"
 set dm = createobject("dm.dmsoft")
 base_path = dm.GetBasePath()
@@ -35,19 +37,25 @@ dm_ret = dm.SetPath(base_path)
 TracePrint dm_ret
 dm_ret = dm.SetDict(0, "dm_soft.txt")
 TracePrint dm_ret
-dm_ret = dm.BindWindow(Hwnd, "dx2", "dx", "normal", 0)
+//dm_ret = dm.BindWindow(Hwnd, "dx2", "dx", "normal", 0)
 TracePrint dm_ret
 
-RestartScript
+dm_ret = dm.SetWindowState(Hwnd, 0)
+TracePrint dm_ret
+title = dm.GetWindowTitle(Hwnd1)
+test = Left(title,8)
+TracePrint test
+dm_ret = dm.FindStrFast(3, 55, 130, 450, test, "ffffff-111111|e8c0ff-111111|ede0e0-111111|f3ffc0-111111|f9e09e-111111|ede0ff-111111|f3ffe0-111111|e29ee0-111111", 1, intX, intY)
+TracePrint intX
+//276,89,326,365
+s = dm.Ocr(276, intY - 20, 326, intY + 20, "ffffff-111111|e8c0ff-111111|ede0e0-111111|f3ffc0-111111|f9e09e-111111|ede0ff-111111|f3ffe0-111111|e29ee0-111111", 1)
 TracePrint s
-Delay 1500
-
+//Delay 1500
 //dm_ret = dm.Capture(0, 0, 2000, 2000, "123.bmp")
-dm_ret = dm.FindStr(0, 0, 628, 1041, "叼", "111111-111111|050505-111111|363636-111111",0.8, intX, intY)
-    TracePrint intX&","&intY
+//dm_ret = dm.FindStr(0, 0, 628, 1041, "叼", "111111-111111|050505-111111|363636-111111",0.8, intX, intY)
+TracePrint intX&","&intY
 Sub OnScriptExit()
     TracePrint "解除绑定"
     dm_ret = dm.UnBindWindow()
     Set dm = nothing'释放对象
 End Sub
-

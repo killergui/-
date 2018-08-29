@@ -8,41 +8,46 @@ StopHotkey=123
 StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
-MacroID=dccddf90-2413-4c0e-8969-d50d91e58ee8
-Description=我的脚本2
+MacroID=0a926d17-3119-46ae-a237-346e8bf2a8c0
+Description=我的脚本1
 Enable=1
 AutoRun=0
 [Repeat]
 Type=0
 Number=1
 [SetupUI]
-Type=2
-QUI=
+Type=1
+QUI=Form1
 [Relative]
 SetupOCXFile=
 [Comment]
 
 [Script]
-Hwnd = 69874
-Delay 250
-import "e:\obj.vbs"
-set dm = new dmsoft   '创建对象
-
+Hwnd = 22226204
+//Hwnd = 4790990
+Import "e:\obj.vbs"
 set dm = createobject("dm.dmsoft")
 base_path = dm.GetBasePath()
 TracePrint base_path
-TracePrint "绑定"
-dm_ret = dm.BindWindow(Hwnd, "normal", "normal", "normal", 0)
-Delay 500
-TracePrint "移动鼠标"
-dm.MoveTo 1100, 220
-Delay 500
-TracePrint "点击"
-dm.LeftClick
+dm_ret = dm.Reg("killergui2147a5bb90ae5085c0ea30d6968e7657","")
+TracePrint dm_ret
 dm_ret = dm.SetPath(base_path)
-dm_ret = dm.SetDict(0,"dm_soft.txt")
-s = dm.Ocr(768, 148, 849, 335, "edeeee-101010|f2f2f1-101010", 1)
-dm_ret = dm.UnBindWindow()
-TracePrint s
+TracePrint dm_ret
+dm_ret = dm.SetDict(0, "dm_soft.txt")
+TracePrint dm_ret
+dm_ret = dm.BindWindow(Hwnd, "dx2", "dx", "normal", 0)
+TracePrint dm_ret
 
-set dm = nothing  '释放对象
+RestartScript
+TracePrint s
+Delay 1500
+
+//dm_ret = dm.Capture(0, 0, 2000, 2000, "123.bmp")
+dm_ret = dm.FindStr(0, 0, 628, 1041, "叼", "111111-111111|050505-111111|363636-111111",0.8, intX, intY)
+    TracePrint intX&","&intY
+Sub OnScriptExit()
+    TracePrint "解除绑定"
+    dm_ret = dm.UnBindWindow()
+    Set dm = nothing'释放对象
+End Sub
+
