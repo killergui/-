@@ -424,7 +424,8 @@ Sub 通用界面关闭()
             Case 36
                 FindPic 209,390,304,899,"Attachment:重新登录.png","000000",0,0.99,intX,intY
                 If intX > -1 And intY > -1 Then
-                    Touch 250, 640, 100
+                    TracePrint "发现重新登录"
+					Touch 250, 640, 100
                 Else 
                     Touch 248, 520, 100
                 End If

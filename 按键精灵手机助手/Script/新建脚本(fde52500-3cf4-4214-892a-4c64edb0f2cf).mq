@@ -2,6 +2,11 @@ Import "场景相关操作.mql"
 Import "类型转换.mql"
 Import "进出界面.mql"
 Import "相关数据解析.mql"
+Import "zm.luae"
+
+
+zm.Swipe 635,505,0,505,500
+Delay 20000
 
 SetRowsNumber(0)
 TracePrint SetDictEx(0, "Attachment:三国志2017字库.txt")
@@ -13,6 +18,8 @@ ElseIf GetScreenX() = 900 Then
 ElseIf GetScreenX() = 720 Then
     TracePrint UseDict(0)
 End If
+
+
 
 Dim 容错参数
 Do
@@ -38,65 +45,97 @@ Do
     //    ocrchar2 = 类型转换.SuperOcr(678, 712, 706, 765, "BFF3FB-111111|AFDCE2-111111|8FB0B3-111111|7F9A9C-111111|9FC6CB-111111", 0.9)
     //    TracePrint ocrchar2
     
-    ocrchar=类型转换.SuperOcr(587,573,625,720, "A4BCD8-111111|94A7BC-111111|D0E4F2-111111|A6B0B3-111111|C5D2D7-111111|B9D0E6-111111|E2F3F9-111111|8A96A1-111111", 1)
-        Traceprint ocrchar
-    
-    Delay 2000
+    //    ocrchar=Ocr(18,683,64,765,"CCCCCC-111111|8C8C8E-111111|858585-111111|9E9E9E-111111",0.95)
+    ocrchar = 类型转换.SuperOcr(384,883,415,1013,"B7CBD7-111111|8F9EA7-111111|606A6F-111111|B0C3CE-111111|7B888F-111111|9FB0BA-111111",0.8)
+    Traceprint ocrchar
 Loop
 
 Sub 领取体力()
-
     // 进活动界面
     进出界面.城内外通用进界面(5, 相关数据解析.日常活动坐标X, 相关数据解析.日常活动坐标Y, 0)
 
     Dim intX,intY
     Do
-        FindPic 0,0,720,1280,"Attachment:小红点.png","000000",0,0.99,intX,intY
-        If intX > -1 And intY > -1 Then
-            TracePrint "有新活动"
-            Touch intX, intY, 100
-            Delay 1000
-        Else
-            FindPic 0,0,720,1080,"Attachment:小红点1.png","000000",0,0.99,intX,intY
-            If intX > -1 And intY > -1 Then 
-            	TracePrint intX, intY
-                TracePrint "有新活动"
-                Touch intX, intY, 100
-                Delay 1000
-            Else 
-                //寻找犒赏三军
-                FindPic 0,0,720,1280,"Attachment:犒赏三军.png","000000",0,0.8,intX,intY
-                If intX > -1 And intY > -1 Then
-                    TracePrint "找到犒赏三军,准备退出"
-                    Exit Do
-                Else 
-                    TouchDown 340, 440
-                    TouchMove 340, 240
-                    TouchUp
-                    Delay 2000
-                End If
-            End If
-        End If
-        FindColor 574,1015,670,1151,"4069B3",0,0.99,intX,intY
-        If intX > -1 And intY > -1 Then 
-            TracePrint "找到活动详情面板"
-            FindPic 133,888,442,1041,"Attachment:限时签到.png","000000",0,0.9,intX,intY
+        If Not 活动界面找小红点() Then 
+            FindPic 0,0,720,1280,"Attachment:犒赏三军.png","000000",0,0.8,intX,intY
             If intX > -1 And intY > -1 Then
-                TracePrint "找到限时签到"
-                Touch intX, intY, 100
-            End If
-            场景相关操作.通用界面关闭
-            Delay 2000
+                TracePrint "找到犒赏三军"
+                If Not 活动界面找小红点() Then 
+                    Exit Do
+                End If
+            Else 
+                TouchDown 340, 440
+                TouchMove 340, 240
+                TouchUp
+                Delay 2500
+            End If 
         End If
-        FindPic 454,573,526,711,"Attachment:提示.png","000000",0,0.9,intX,intY
-        If intX > -1 And intY > -1 Then 
-            TracePrint "发现提示界面"
-            Touch 250, 760, 100
-            Delay 1000
-        End If
+        //寻找犒赏三军
+         
     Loop
-    
     TracePrint "活动小红点处理完毕"
     场景相关操作.通用界面关闭()
     Delay 2000
 End Sub
+
+Function 活动界面找小红点()
+    Dim intX,intY
+    FindPic 0,0,720,1280,"Attachment:小红点.png","000000",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then
+        TracePrint "小红点"
+        Touch intX, intY, 100
+        Delay 1000
+        活动界面找小红点 = True
+    Else
+        FindPic 0,0,720,1080,"Attachment:小红点1.png","000000",0,0.99,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "小红点1"
+            Touch intX, intY, 100
+            Delay 1000
+            活动界面找小红点 = True
+        Else 
+            FindPic 0,0,720,1280,"Attachment:小红点2.png","000000",0,0.99,intX,intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "小红点2"
+                Touch intX, intY, 100
+                Delay 1000
+                活动界面找小红点 = True
+            End If
+        End If
+    End If
+    FindColor 574,1015,670,1151,"4069B3",0,0.99,intX,intY
+    If intX > -1 And intY > -1 Then 
+        TracePrint "找到活动详情面板"
+        Dim 拖动次数 = 0
+        Do Until 拖动次数 >= 5
+            FindPic 66,888,456,1048,"Attachment:限时签到.png","000000",0,0.9,intX,intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "找到限时签到"
+                Touch intX, intY, 100
+                Exit Do
+            Else 
+                FindPic 66,889,456,1048,"Attachment:限时签到未完成.png","000000",4,0.8,intX,intY
+                If intX > -1 And intY > -1 Then 
+                    TracePrint "找到未完成"
+                    Exit Do
+                End If
+                FindPic 66,888,456,1048,"Attachment:限时签到已达成.png","000000",3,0.8,intX,intY
+                If intX > -1 And intY > -1 Then
+                    TracePrint "找到已达成"
+                    zm.Swipe 75, 870, 440, 870, 500
+                    Delay 1500
+                    拖动次数 = 拖动次数 + 1
+                Else
+                End If
+            End If
+        Loop
+        场景相关操作.通用界面关闭
+        Delay 2000
+    End If
+    FindPic 454,573,526,711,"Attachment:提示.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then 
+        TracePrint "发现提示界面"
+        Touch 250, 760, 100
+        Delay 1000
+    End If
+End Function

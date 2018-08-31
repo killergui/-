@@ -1,0 +1,39 @@
+
+{
+	"Description" : null,
+	"主城底部是否收起" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"主城顶部是否收起" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"所在场景" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"进入场景是否正确" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"选择区服" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"通用界面关闭" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	},
+	"野外顶部是否收起" : 
+	{
+		"Description" : null,
+		"TranslateTemplate" : null
+	}
+}
