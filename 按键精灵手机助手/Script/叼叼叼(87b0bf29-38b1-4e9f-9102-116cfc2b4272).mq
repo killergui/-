@@ -118,11 +118,12 @@ TracePrint "派遣出征总次数"&派遣出征数组(0), "本轮派遣出征次数"&派遣出征数组(2),
 Dim localDataDir
 //showmessage "初始化部分数据", 1000, 50, 620
 Call 初始化杂项配置()
-WriteConfig "上次运行日期", Date(), True
+WriteConfig "上次运行日期"&账号信息, Date(), True
 启动时间 = Time()
 Delay 1000
+ShowMessage "派遣出征次数" & 派遣出征次数, 2000, 50, 620
+Delay 2000
 
-Call 小红点处理()
 Call 判断入侵()
 
 Call 进主公界面()
@@ -137,6 +138,7 @@ Call 祭祀()
 Call 收取()
 Call 检查成就()
 Call 小红点处理()
+Call 军团捐献()
 Call 建筑()
 Call 宴请()
 Call 商城购买()
@@ -160,7 +162,8 @@ Call 推关()
 Call 消耗体力()
 Call 完成皇榜任务()
 Call 派遣队伍()
-If ReadConfig("今日是否已执行沙场论剑")&账号信息 <> 1 Then 
+//问题,添加界面里的沙场论剑选项
+If ReadConfig("今日是否已执行沙场论剑")&账号信息 <> 1 And ReadUIConfig("沙场论剑") = True Then 
     Call 沙场论剑排名奖励()
     Call 进行沙场论剑()
 End If
@@ -298,7 +301,7 @@ Sub 初始化杂项配置
     //读取上次运行时间,决定数据是否要更新
     Dim 上次运行日期, 时间差, 本次运行日期, temp1, temp2
     
-    上次运行日期 = ReadConfig("上次运行日期", 0)
+    上次运行日期 = ReadConfig("上次运行日期"&账号信息, 0)
     TracePrint "上次运行日期"&上次运行日期
     ShowMessage "上次运行日期"&上次运行日期, 1000, 50, 620
     本次运行日期 = Date()
@@ -330,7 +333,9 @@ Sub 初始化杂项配置
         //重置商城购买状态
         WriteConfig "今日商城已购买" & 账号信息, False, True
         //重置VIP等级
-        WriteConfig "VIP等级"&账号信息, 99, True
+        WriteConfig "VIP等级" & 账号信息, 99, True
+        //重置军团捐献
+        WriteConfig "今日已军团捐献"&账号信息, False, True
     End If
 End Sub
 
@@ -483,12 +488,17 @@ End Sub
 
 Sub 进主公界面()
     TracePrint "开始进主公界面"
+    Rem 识别主公等级
     进出界面.回主城(1)
     //进主公界面
     进出界面.城内进固定界面(33, 相关数据解析.主公坐标X, 相关数据解析.主公坐标Y, 0, False)
     主公等级 = 相关数据解析.读取主公等级()
     场景相关操作.通用界面关闭 
     Delay 2000
+    If 主公等级 = Null Then 
+    	TracePrint "识别主公等级有误"
+    	Goto
+    End If
     TracePrint "主公等级"&主公等级
 End Sub
 
@@ -834,18 +844,18 @@ Function 识别负重(队伍编号)
             Touch 240, 1065, 100
             Delay 2000
             ocrchar=Ocr(446,557,473,672,"B3B6B4-111111|CCCDCC-111111|DCDCDC-111111|E9E9E9-111111|7D837F-111111|A8A8A6-111111|939391-111111",0.9)
-			Traceprint ocrchar
-			负重  = Clng(ocrchar)
+            Traceprint ocrchar
+            负重  = Clng(ocrchar)
         ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "切换队伍失败,重试" 
             Goto 切换队伍
         End If
     End If
-	If 负重 = Null Then
-		负重 = 15000
-	End If
-	识别负重 = 负重
+    If 负重 = Null Then
+        负重 = 15000
+    End If
+    识别负重 = 负重
 End Function
 
 Sub 小红点处理()
@@ -1028,7 +1038,7 @@ Sub 领任务奖励()
     //主线
     Rem 确认主线奖励
     Dim intX,intY
-    FindPic 74,686,473,804,"Attachment:可领取.png","000000",0,0.8,intX,intY
+    FindPic 74,686,614,804,"Attachment:可领取.png","000000",0,0.8,intX,intY
     If intX > -1 And intY > -1 Then
         Touch intX, intY, 100
         Delay 500
@@ -3307,6 +3317,86 @@ End Function
 
 //军团相关
 
+Sub 军团捐献
+    If ReadConfig("今日已军团捐献"&账号信息) = 1 Then
+        TracePrint "今日已捐献,退出"
+    End If
+    Dim 铜币捐献, 元宝捐献, 资源捐献,捐献次数
+    捐献次数 = 5
+    铜币捐献 = ReadUIConfig("军团铜币捐献", False)
+    元宝捐献 = ReadUIConfig("军团元宝捐献", False)
+    资源捐献 = ReadUIConfig("军团资源捐献", False)
+    If Not 铜币捐献 And Not 元宝捐献 And Not 资源捐献 Then 
+        TracePrint "没设置任何捐献"
+        Exit Sub
+    End If
+
+    If 进出界面.城内外通用进界面(17, 相关数据解析.军团坐标X, 相关数据解析.军团坐标Y, 5) Then 
+        Touch 相关数据解析.军团捐献坐标X, 相关数据解析.军团捐献坐标Y, 100
+        Delay 2000
+        If 铜币捐献 Then 
+            TracePrint "铜币捐献"
+            Touch 相关数据解析.铜币捐献坐标X, 相关数据解析.铜币捐献坐标Y, 100
+            Delay 2000
+            If 场景相关操作.进入场景是否正确(75) Then 
+            	TracePrint "捐献成功"
+           	Else 
+           		TracePrint "捐献失败"
+           		场景相关操作.通用界面关闭
+            End If
+        End If
+        If 元宝捐献 Then 
+            TracePrint "元宝捐献"
+            Touch 相关数据解析.元宝捐献坐标X, 相关数据解析.元宝捐献坐标Y, 100
+            Delay 2000
+            If 场景相关操作.进入场景是否正确(75) Then 
+            	TracePrint "捐献成功"
+           	Else 
+           		TracePrint "捐献失败"
+           		场景相关操作.通用界面关闭
+            End If
+        End If
+        If 资源捐献 Then 
+            //进城池界面
+            进出界面.进无编号子界面(265,82,638,254,"Attachment:占领.png",0.9,相关数据解析.城池坐标X, 相关数据解析.城池坐标Y)
+            Touch 相关数据解析.城池捐献坐标X, 相关数据解析.城池捐献坐标Y, 100
+            //木材捐献
+            Touch 230, 660, 100
+            Delay 1500
+            Touch 相关数据解析.城池最终捐献坐标X, 相关数据解析.城池最终捐献坐标Y, 100
+            Delay 1500
+            Call 捐献(捐献次数)
+            //石料捐献
+            Touch 170, 660, 100
+            Delay 1500
+            Touch 相关数据解析.城池最终捐献坐标X, 相关数据解析.城池最终捐献坐标Y, 100
+            Delay 1500
+            Call 捐献(捐献次数)
+            //滚屏找铁矿
+            TouchDown 145, 660, 0
+            TouchMove 300, 660, 0, 1000
+            TouchUp 0
+            Delay 2000
+            //铁矿捐献
+            Touch 360, 660, 100
+            Delay 1500
+            Touch 相关数据解析.城池最终捐献坐标X, 相关数据解析.城池最终捐献坐标Y, 100
+            Delay 1500
+            Call 捐献(捐献次数)
+        End If
+        WriteConfig "今日已军团捐献"&账号信息, True, True
+    End If
+End Sub
+
+Sub 捐献(次数)
+	For 次数 - 1
+		Touch 245, 785, 100
+		Delay 1000
+	Next
+	Touch 145, 640, 100
+	Delay 1500
+End Sub
+
 Sub 军团小红点处理()
     TracePrint "开始处理军团小红点"
     Dim 军团事件信息
@@ -5435,6 +5525,7 @@ Sub 寻找目标材料副本()
                     If intX > -1 And intY > -1 Then
                         TracePrint "找到前往图标"
                         //进副本预览
+                        //这里总出问题
                         If 进出界面.进入子界面(69, 37, intX, intY) Then 
                             //确认剩余体力,因为这里的拥有体力比较在"/"右边,所以特殊处理了
                             Dim ocrchar, temp
@@ -6225,7 +6316,7 @@ Sub 进行沙场论剑()
         场景相关操作.通用界面关闭 
         Delay 2000
     Else 
-    	TracePrint "无法进入沙场论剑"
+        TracePrint "无法进入沙场论剑"
         Exit Sub
     End If
 End Sub
