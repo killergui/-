@@ -8,7 +8,7 @@ StopHotkey=123
 StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
-MacroID=17693783-82db-4edd-8687-572a78ff5d78
+MacroID=37cb15a7-07c0-4e2b-a0b5-cb3a9ac98466
 Description=我的脚本2
 Enable=0
 AutoRun=0
@@ -23,7 +23,7 @@ SetupOCXFile=
 [Comment]
 
 [UIPackage]
-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
+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
 
 
 [Script]
@@ -92,7 +92,7 @@ Do
     TracePrint "WINDOWS_NUMS" & UBound(MyArray)
     
     TracePrint Form1.模拟器数量.Text
-    If UBound(MyArray) < Form1.模拟器数量.Text Then 
+    If UBound(MyArray) < CInt(Form1.模拟器数量.Text) Then 
         TracePrint "当前模拟器启动个数" & (UBound(MyArray) + 1)
         Call 重启模拟器(1)
         Delay 30000
@@ -103,7 +103,7 @@ Do
         RestartScript
     End If
     TracePrint "完成一次循环，等待下一次循环"
-    Delay 600000
+    Delay 900000
 Loop
 Set dm = nothing'释放对象
 Function 是否横屏()
@@ -155,7 +155,7 @@ Function 检测()
 End Function
 Function 小精灵启动流程()
     Call 启动脚本()
-    Delay 1500
+    Delay 5000
     容错参数 = 0
     While Not 脚本是否准备好了() And 容错参数 < 20
         TracePrint "等待启动好"
@@ -205,30 +205,20 @@ Sub 启动脚本()
 End Sub
 Function 脚本是否准备好了()
     If Not 是否横屏 Then 
-        s = dm.Ocr(266,962,421,1009,"ffffff-101010",0.8)
-        TracePrint s
-        If s = "启动功能" Then
+        Delay 35000
+        //s = dm.Ocr(266,962,421,1009,"ffffff-101010",0.8)
+        //TracePrint s
+        s = dm.FindMultiColor(263,953,423,1012,"3c7ac5-0","96|-6|3c7ac5-0,97|-44|3c7ac5-0,-16|-38|3c7ac5-0",0.9, 1,intX,intY)
+        If s = 1 Then
             TracePrint "脚本已经准备好了"
             脚本是否准备好了 = True
         Else
             TracePrint "脚本还没有完全启动好"
-            s = dm.Ocr(269, 92, 422, 135, "ffffff-111111", 0.8)
-            If s = "软件设置" Then 
-                dm.Moveto 113,117
-                Delay 100
-                dm.LeftClick 
-                Delay 500
-                dm.Moveto 575, 126
-                Delay 100
-                dm.LeftClick
-                
-                脚本是否准备好了 = True
-            Else 
-                dm.Moveto 575, 126
-                Delay 100
-                dm.LeftClick
-            End If
             脚本是否准备好了 = False
+            dm.MoveTo 521, 300
+        	Delay 500
+        	dm.LeftClick 
+        	Delay 500
             Call 启动脚本()
         End If
     Else 

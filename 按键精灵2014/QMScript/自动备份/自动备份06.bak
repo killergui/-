@@ -8,54 +8,50 @@ StopHotkey=123
 StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
-MacroID=0a926d17-3119-46ae-a237-346e8bf2a8c0
+MacroID=031c3249-a7e0-49ea-a36c-198ad393ba69
 Description=我的脚本1
-Enable=0
+Enable=1
 AutoRun=0
 [Repeat]
 Type=0
 Number=1
 [SetupUI]
-Type=1
-QUI=Form1
+Type=2
+QUI=
 [Relative]
 SetupOCXFile=
 [Comment]
 
 [Script]
-
-
-//Hwnd1 = 463852
-Hwnd = 1052728
-Import "e:\obj.vbs"
-set dm = createobject("dm.dmsoft")
-base_path = dm.GetBasePath()
-TracePrint base_path
-dm_ret = dm.Reg("killergui2147a5bb90ae5085c0ea30d6968e7657","")
-TracePrint dm_ret
-dm_ret = dm.SetPath(base_path)
-TracePrint dm_ret
-dm_ret = dm.SetDict(0, "dm_soft.txt")
-TracePrint dm_ret
-//dm_ret = dm.BindWindow(Hwnd, "dx2", "dx", "normal", 0)
-TracePrint dm_ret
-
-dm_ret = dm.SetWindowState(Hwnd, 0)
-TracePrint dm_ret
-title = dm.GetWindowTitle(Hwnd1)
-test = Left(title,8)
+Plugin.ofcmd.BindAdb "D:\Program Files (x86)\Droid4X\adb.exe"
+test = Plugin.ofcmd.AdbVersion
 TracePrint test
-dm_ret = dm.FindStrFast(3, 55, 130, 450, test, "ffffff-111111|e8c0ff-111111|ede0e0-111111|f3ffc0-111111|f9e09e-111111|ede0ff-111111|f3ffe0-111111|e29ee0-111111", 1, intX, intY)
-TracePrint intX
-//276,89,326,365
-s = dm.Ocr(276, intY - 20, 326, intY + 20, "ffffff-111111|e8c0ff-111111|ede0e0-111111|f3ffc0-111111|f9e09e-111111|ede0ff-111111|f3ffe0-111111|e29ee0-111111", 1)
-TracePrint s
-//Delay 1500
-//dm_ret = dm.Capture(0, 0, 2000, 2000, "123.bmp")
-//dm_ret = dm.FindStr(0, 0, 628, 1041, "叼", "111111-111111|050505-111111|363636-111111",0.8, intX, intY)
-TracePrint intX&","&intY
-Sub OnScriptExit()
-    TracePrint "解除绑定"
-    dm_ret = dm.UnBindWindow()
-    Set dm = nothing'释放对象
-End Sub
+Dim MyString, packages, Devices
+Devices = Plugin.ofcmd.GetDevices
+MyString = Split(Devices, "127.0.0.1:", -1, 1)
+TracePrint Devices
+For i = 0 To UBound(MyString)
+    If MyString(i) <> "" Then 
+        MyString(i) = "127.0.0.1:" & MyString(i)
+    End If
+Next
+For Each a In MyString
+    TracePrint a
+Next
+packages = Plugin.ofcmd.Adb("-s 127.0.0.1:26944 shell pm list packages")
+TracePrint packages
+MyString = Split(packages, "package:", -1, 1)
+For Each a In MyString
+    //TracePrint a
+Next
+//启动辅助
+TracePrint Plugin.ofcmd.Adb("-s 127.0.0.1:26944 shell am start -n com.mbmpmcmcmlnimnnlmp.dddfree/com.cyjh.elfin.activity.SplashActivity")
+For 60
+    test = "-s 127.0.0.1:26944 shell dumpsys window windows|findstr Current"
+    TracePrint Plugin.ofcmd.Adb(test)
+    Delay 1000
+Next
+//运行海马玩客户端
+TracePrint Plugin.ofcmd.Adb("-s 127.0.0.1:26944 shell am start -n com.shouyou.sgzerq.hm/com.youkia.gamecenter.GameCenterActivity")
+//运行360客户端
+TracePrint Plugin.ofcmd.Adb("-s 127.0.0.1:34674 shell am start -n com.game.sgz.a360/com.youkia.gamecenter.GameCenterActivity")

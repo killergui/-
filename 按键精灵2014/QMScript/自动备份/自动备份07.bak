@@ -2,13 +2,13 @@
 SyntaxVersion=2
 BeginHotkey=121
 BeginHotkeyMod=0
-PauseHotkey=0
+PauseHotkey=19
 PauseHotkeyMod=0
 StopHotkey=123
 StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
-MacroID=17693783-82db-4edd-8687-572a78ff5d78
+MacroID=37cb15a7-07c0-4e2b-a0b5-cb3a9ac98466
 Description=我的脚本2
 Enable=0
 AutoRun=0
@@ -16,18 +16,19 @@ AutoRun=0
 Type=0
 Number=1
 [SetupUI]
-Type=2
-QUI=
+Type=1
+QUI=Form1
 [Relative]
 SetupOCXFile=
 [Comment]
 
 [UIPackage]
-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
+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
 
 
 [Script]
 Import "e:\obj.vbs"
+LogStart "c:\a.log"
 set dm = new dmsoft   '创建对象
 set dm = createobject("dm.dmsoft")
 base_path = dm.GetBasePath()
@@ -36,7 +37,9 @@ dm_ret = dm.Reg("killergui2147a5bb90ae5085c0ea30d6968e7657","")
 TracePrint dm_ret
 dm.SetAero 0
 dm_ret = dm.SetPath(base_path)
+TracePrint dm_ret
 dm_ret = dm.SetDict(0, "dm_soft.txt")
+TracePrint dm_ret
 Dim 开发宽度, 开发高度, 缩放比例,启动时间
 开发宽度 = 1110 : 开发高度 = 722
 Dim 容错参数, 安卓小精灵初始坐标,安卓小精灵初始启动坐标
@@ -86,8 +89,10 @@ Do
             i=i+1  
         Next
     End If
-    TracePrint "WINDOWS_NUMS"&UBound(MyArray)
-    If UBound(MyArray) < 3 Then
+    TracePrint "WINDOWS_NUMS" & UBound(MyArray)
+    
+    TracePrint Form1.模拟器数量.Text
+    If UBound(MyArray) < CInt(Form1.模拟器数量.Text) Then 
         TracePrint "当前模拟器启动个数" & (UBound(MyArray) + 1)
         Call 重启模拟器(1)
         Delay 30000
@@ -98,7 +103,7 @@ Do
         RestartScript
     End If
     TracePrint "完成一次循环，等待下一次循环"
-    Delay 300000
+    Delay 900000
 Loop
 Set dm = nothing'释放对象
 Function 是否横屏()
@@ -150,7 +155,7 @@ Function 检测()
 End Function
 Function 小精灵启动流程()
     Call 启动脚本()
-    Delay 1500
+    Delay 5000
     容错参数 = 0
     While Not 脚本是否准备好了() And 容错参数 < 20
         TracePrint "等待启动好"
@@ -187,8 +192,11 @@ Sub 启动脚本()
     End If
     Delay 2000
     If Not 是否横屏  Then 
-        dm_ret = dm.FindStr(0, 0, 628, 1041, "叼", "111111-111111|050505-111111|363636-111111",0.8, intX, intY)
-        TracePrint intX&","&intY
+        dm_ret = dm.FindStr(0, 0, 628, 1041, "叼", "111111-111111|050505-111111|363636-111111",0.7, intX, intY)
+        TracePrint intX & "," & intY
+        If intX = - 1  Or intY = - 1  Then 
+        	intX = 285 : intY = 342
+        End If
         dm.MoveTo intX, intY
         Delay 500
         dm.LeftClick 
@@ -197,25 +205,20 @@ Sub 启动脚本()
 End Sub
 Function 脚本是否准备好了()
     If Not 是否横屏 Then 
-        s = dm.Ocr(266,962,421,1009,"ffffff-101010",1.0)
-        TracePrint s
-        If s = "启动功能" Then
+        Delay 35000
+        //s = dm.Ocr(266,962,421,1009,"ffffff-101010",0.8)
+        //TracePrint s
+        s = dm.FindMultiColor(263,953,423,1012,"3c7ac5-0","96|-6|3c7ac5-0,97|-44|3c7ac5-0,-16|-38|3c7ac5-0",0.9, 1,intX,intY)
+        If s = 1 Then
             TracePrint "脚本已经准备好了"
             脚本是否准备好了 = True
         Else
             TracePrint "脚本还没有完全启动好"
-            s = dm.Ocr(269, 92, 422, 135, "ffffff-111111", 1)
-            If s = "软件设置" Then 
-                dm.Moveto 113,117
-                Delay 100
-                dm.LeftClick
-                脚本是否准备好了 = True
-            Else 
-                dm.Moveto 575, 126
-                Delay 100
-                dm.LeftClick
-            End If
             脚本是否准备好了 = False
+            dm.MoveTo 521, 300
+        	Delay 500
+        	dm.LeftClick 
+        	Delay 500
             Call 启动脚本()
         End If
     Else 
