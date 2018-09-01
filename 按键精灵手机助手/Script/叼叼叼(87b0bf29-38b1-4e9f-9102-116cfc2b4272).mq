@@ -41,24 +41,25 @@ If 登录成功次数 = Null Then
 End If
 
 容错参数 = 0
-Rem login
 ShowMessage "开始准备登陆", 2000, 50, 620
-
+Rem login
 //showmessage "所在场景"&所在场景, 2000, 50, 620
 
 
-If 场景相关操作.所在场景() = Null Then 
-    If Not 来路是否是切换账号 Then
+If 场景相关操作.进入场景是否正确(1) Then
+    TracePrint "当前在主城,已经顺利进游戏"
+Else 
+    If 来路是否是切换账号 Then
+        Call 账号信息处理(登录成功次数)
+        账号登录.登录 平台, 账号信息, 账号密码
+    Else 
         Call 启动游戏()
     End If
-    Call 账号信息处理(登录成功次数)
-    账号登录.登录(平台, 账号信息, 账号密码)
-    Goto login
-ElseIf Not 场景相关操作.进入场景是否正确(1) Then
-    场景相关操作.通用界面关闭
-    Delay 1500
+    场景相关操作.通用界面关闭 
+    Delay 2000
     Goto login
 End If
+
 Call 账号信息处理(登录成功次数)
 TracePrint 登录成功次数
 WriteConfig "登录成功次数", 登录成功次数 , True
@@ -138,16 +139,10 @@ Delay 1000
 If ReadConfig("是否今日首次登陆" & 账号信息, 0) = 1 Then 
     Call 接皇榜任务()
     Call 祭祀()
-    Call 收取()
     Call 检查成就()
-    Call 小红点处理()
     Call 军团捐献()
-    Call 建筑()
-    Call 宴请()
     Call 商城购买()
-    Call 市场刷新()
-    Call 升级军械()
-    Call 检查计略()
+    Call 领取季节奖励()
     Call 强化前几个人(1)
     If ReadUIConfig("普通副本自动补星") Then 
         Call 副本准备(1, 1, 7)
@@ -171,7 +166,13 @@ End If
 Call 完成皇榜任务()
 Call 派遣队伍()
 Call 消耗体力()
-Call 领取季节奖励()
+Call 小红点处理()
+Call 升级军械()
+Call 检查计略()
+Call 建筑()
+Call 收取()
+Call 宴请()
+Call 市场刷新()
 Call 铸币()
 
 循环计时1 = Time()
@@ -819,7 +820,7 @@ Function 识别怪等级()
         怪等级 = 6
     ElseIf 战斗力 >= 23000 Then
         怪等级 = 5
-    ElseIf 战斗力 >= 11000 Then
+    ElseIf 战斗力 >= 10400 Then
         怪等级 = 4
     ElseIf 战斗力 >= 3700 Then
         怪等级 = 3
@@ -4579,14 +4580,32 @@ Sub 正常打副本前准备()
     容错参数 = 0
     Dim intX,intY
     TracePrint "即将进入副本选择队伍界面"
-    If 进出界面.进入子界面(37, 40, 相关数据解析.挑战坐标X, 相关数据解析.挑战坐标Y) Then 
+    
+    Rem 正常打副本
+    Touch 相关数据解析.挑战坐标X, 相关数据解析.挑战坐标Y, 100
+    Delay 1000
+    If 场景相关操作.进入场景是否正确(40) Then 
         //自动配兵
         TracePrint "一键补兵"
         Touch 210, 980, 100
         Delay 1000
         Call 打副本(1, 1)
-    Else 
-        TracePrint "进副本队伍选择界面失败,放弃打副本"
+    ElseIf 容错参数 < 5 Then
+        FindPic 171,545,277,756,"Attachment:使用.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then 
+            TracePrint "体力不足,使用包子补充"
+            If ReadUIConfig("是否自动使用包子") Then 
+                Touch 210, 645, 100
+                Delay 1000
+            Else 
+                TracePrint "体力不足退出"
+                场景相关操作.通用界面关闭 
+                Delay 2000
+                Exit Sub
+            End If
+        End If
+        TracePrint "进入扫荡失败,重试"
+        Goto 正常打副本   
     End If
 End Sub
 
@@ -4605,6 +4624,19 @@ Sub 扫荡前装备(最终打副本次数)
     ElseIf 场景相关操作.进入场景是否正确(41) Then
         Call 打副本(2, 最终打副本次数)
     ElseIf 容错参数 < 5 Then
+        FindPic 171,545,277,756,"Attachment:使用.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then 
+            TracePrint "体力不足,使用包子补充"
+            If ReadUIConfig("是否自动使用包子") Then 
+                Touch 210, 645, 100
+                Delay 1000
+            Else 
+                TracePrint "体力不足退出"
+                场景相关操作.通用界面关闭 
+                Delay 2000
+                Exit Sub
+            End If
+        End If
         TracePrint "进入扫荡失败,重试"
         Goto 进入扫荡   
     End If
@@ -4624,19 +4656,6 @@ Sub 打副本(类型, 次数)
         If 场景相关操作.进入场景是否正确(61) Then 
             TracePrint "在等待加载"
         ElseIf 容错参数 < 5 Then
-            FindPic 171,545,277,756,"Attachment:使用.png","000000",0,0.9,intX,intY
-            If intX > -1 And intY > -1 Then 
-                TracePrint "体力不足,使用包子补充"
-                If ReadUIConfig("是否自动使用包子") Then 
-                    Touch 210, 645, 100
-                    Delay 1000
-                Else 
-                    TracePrint "体力不足退出"
-                    场景相关操作.通用界面关闭 
-                    Delay 2000
-                    Exit Sub
-                End If
-            End If
             If 场景相关操作.进入场景是否正确(36) Then
                 场景相关操作.通用界面关闭 
             End If
