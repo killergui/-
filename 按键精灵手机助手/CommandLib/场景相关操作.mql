@@ -750,7 +750,7 @@ Function 进入场景是否正确(目标场景)
         End If
 	
     Case 37
-        ocrchar=类型转换.SuperOcr(364,293,435,399,"5CA3E5-111111|3F678A-111111|5391CA-111111|3A5E7D-111111|4A7FAF-111111|345775-111111",0.95)
+        ocrchar=类型转换.SuperOcr(364,293,435,399,"5CA3E5-111111|3F678A-111111|5391CA-111111|3A5E7D-111111|4A7FAF-111111|345775-111111",0.9)
         Traceprint "ocrchar0",ocrchar
         If ocrchar = "奖励" Then
             进入场景是否正确 = True

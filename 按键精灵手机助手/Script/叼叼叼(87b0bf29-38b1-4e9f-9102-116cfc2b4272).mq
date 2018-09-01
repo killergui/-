@@ -112,62 +112,65 @@ End If
 TracePrint "派遣出征总次数"&派遣出征数组(0), "本轮派遣出征次数"&派遣出征数组(2), "采集总次数"&采集次数数组(0), "本轮采集次数"&采集次数数组(2), "寻访总次数"&寻访次数数组(0), "本轮寻访次数"&寻访次数数组(2)
 
 循环时长1 = 3 * 60
-循环时长2 = 10 * 60
+循环时长2 = 5 * 60
 派遣循环时长 = ReadUIConfig("派遣循环时间") * 60 * 1000
 
 Dim localDataDir
 //showmessage "初始化部分数据", 1000, 50, 620
 Call 初始化杂项配置()
-WriteConfig "上次运行日期"&账号信息, Date(), True
+WriteConfig "上次运行日期" & 账号信息, Date(), True
 启动时间 = Time()
 Delay 1000
 ShowMessage "派遣出征次数" & 派遣出征次数, 2000, 50, 620
 Delay 2000
-
+Call 活动界面找小红点()
 Call 判断入侵()
 
 Call 进主公界面()
 Call 进VIP界面()
 Call 定位主城坐标()
 Call 派遣队伍()
+
 Rem 每日
 ShowMessage "开始执行每日必做", 1000, 50, 620
 Delay 1000
-Call 接皇榜任务()
-Call 祭祀()
-Call 收取()
-Call 检查成就()
-Call 小红点处理()
-Call 军团捐献()
-Call 建筑()
-Call 宴请()
-Call 商城购买()
-Call 市场刷新()
-Call 升级军械()
-Call 检查计略()
-Call 强化前几个人(1)
-If ReadUIConfig("普通副本自动补星") Then 
-    Call 副本准备(1, 1, 7)
+
+If ReadConfig("是否今日首次登陆" & 账号信息, 0) = 1 Then 
+    Call 接皇榜任务()
+    Call 祭祀()
+    Call 收取()
+    Call 检查成就()
+    Call 小红点处理()
+    Call 军团捐献()
+    Call 建筑()
+    Call 宴请()
+    Call 商城购买()
+    Call 市场刷新()
+    Call 升级军械()
+    Call 检查计略()
+    Call 强化前几个人(1)
+    If ReadUIConfig("普通副本自动补星") Then 
+        Call 副本准备(1, 1, 7)
+    End If
+
+    If ReadUIConfig("精英副本自动补星") Then 
+        Call 副本准备(2, 1, 7)
+    End If
+
+    If ReadUIConfig("是否打名将副本") Then 
+        Call 副本准备(3, 1, 6)
+    End If
+
+    Call 推关()
+    If ReadConfig("今日是否已执行沙场论剑")&账号信息 <> 1 And ReadUIConfig("沙场论剑") = True Then 
+        Call 沙场论剑排名奖励()
+        Call 进行沙场论剑()
+    End If
 End If
 
-If ReadUIConfig("精英副本自动补星") Then 
-    Call 副本准备(2, 1, 7)
-End If
-
-If ReadUIConfig("是否打名将副本") Then 
-    Call 副本准备(3, 1, 6)
-End If
-
-Call 推关()
-Call 消耗体力()
 Call 完成皇榜任务()
 Call 派遣队伍()
-//问题,添加界面里的沙场论剑选项
-If ReadConfig("今日是否已执行沙场论剑")&账号信息 <> 1 And ReadUIConfig("沙场论剑") = True Then 
-    Call 沙场论剑排名奖励()
-    Call 进行沙场论剑()
-End If
-
+Call 消耗体力()
 Call 领取季节奖励()
 Call 铸币()
 
@@ -175,6 +178,7 @@ Call 铸币()
 循环计时2 = Time()
 单次循环计时1 = 0
 单次循环计时2 = 0
+WriteConfig "是否今日首次登陆" & 账号信息, False, True
 Rem 循环
 Call 判断入侵()
 If ReadUIConfig("是否自动切换账号") Then 
@@ -193,7 +197,7 @@ Else
     TracePrint "没有开启切换功能"
 End If
 
-If Date() <> ReadConfig("上次运行日期") Then 
+If (Date() <> ReadConfig("上次运行日期" & 账号信息)) And ReadUIConfig("隔天重启游戏", True) Then 
     关闭游戏()   
     Delay 5000
     启动游戏()
@@ -335,7 +339,9 @@ Sub 初始化杂项配置
         //重置VIP等级
         WriteConfig "VIP等级" & 账号信息, 99, True
         //重置军团捐献
-        WriteConfig "今日已军团捐献"&账号信息, False, True
+        WriteConfig "今日已军团捐献" & 账号信息, False, True
+        //重置今日首次登陆状态
+        WriteConfig "是否今日首次登陆" & 账号信息, True, True
     End If
 End Sub
 
@@ -496,8 +502,8 @@ Sub 进主公界面()
     场景相关操作.通用界面关闭 
     Delay 2000
     If 主公等级 = Null Then 
-    	TracePrint "识别主公等级有误"
-    	Goto
+        TracePrint "识别主公等级有误"
+        Goto 识别主公等级
     End If
     TracePrint "主公等级"&主公等级
 End Sub
@@ -842,7 +848,7 @@ Function 识别负重(队伍编号)
             TracePrint "切换队伍成功"
             //先尝试补兵
             Touch 240, 1065, 100
-            Delay 2000
+            Delay 3500
             ocrchar=Ocr(446,557,473,672,"B3B6B4-111111|CCCDCC-111111|DCDCDC-111111|E9E9E9-111111|7D837F-111111|A8A8A6-111111|939391-111111",0.9)
             Traceprint ocrchar
             负重  = Clng(ocrchar)
@@ -1173,6 +1179,7 @@ Sub 领取体力()
             FindPic 0,0,720,1280,"Attachment:犒赏三军.png","000000",0,0.8,intX,intY
             If intX > -1 And intY > -1 Then
                 TracePrint "找到犒赏三军"
+                Delay 2000
                 If Not 活动界面找小红点() Then 
                     Exit Do
                 End If
@@ -1221,7 +1228,7 @@ Function 活动界面找小红点()
         TracePrint "找到活动详情面板"
         Dim 拖动次数 = 0
         Do Until 拖动次数 >= 5
-            FindPic 66,888,456,1048,"Attachment:限时签到.png","000000",0,0.9,intX,intY
+            FindPic 66,888,456,1048,"Attachment:限时签到.png","000000",0,0.8,intX,intY
             If intX > -1 And intY > -1 Then
                 TracePrint "找到限时签到"
                 Touch intX, intY, 100
@@ -1236,7 +1243,7 @@ Function 活动界面找小红点()
                 If intX > -1 And intY > -1 Then
                     TracePrint "找到已达成"
                     zm.Swipe 75, 870, 440, 870, 500
-                    Delay 2500
+                    Delay 3000
                     拖动次数 = 拖动次数 + 1
                 Else 
                     TracePrint "什么都没找到"
@@ -1611,13 +1618,13 @@ Sub 宴请()
             Dim ocrchar
             If VIP等级 >= 8 Then 
                 Touch 400, 980, 100
-                Delay 1500
+                Delay 2500
             End If
     
-            ocrchar = 类型转换.SuperOcr(26, 682, 57, 763, "BEBEBE-111111|C3C3C3-111111|949494-111111|AAAAAA-111111|DADADA-111111", 1)
+            ocrchar = 类型转换.SuperOcr(26, 682, 57, 763, "BEBEBE-111111|C3C3C3-111111|949494-111111|AAAAAA-111111|DADADA-111111", 0.8)
             铜币宴请点击位置 = 1
             If ocrchar = "" Then 
-                ocrchar = Ocr(19, 396, 60, 482, "BEBEBE-111111|C3C3C3-111111|949494-111111|AAAAAA-111111|444446", 0.9)
+                ocrchar = 类型转换.SuperOcr(19, 396, 60, 482, "BEBEBE-111111|C3C3C3-111111|949494-111111|AAAAAA-111111|DADADA-111111", 0.9)
                 铜币宴请点击位置 = 2
             End If
         
@@ -2005,7 +2012,7 @@ Function 判断队伍兵量(队伍编号)
             TracePrint "切换队伍成功"
             //先尝试补兵
             Touch 240, 1065, 100
-            Delay 1500
+            Delay 3000
             队伍兵量 = 单个队伍满员率()
         ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
@@ -3071,19 +3078,6 @@ Sub 前往目标(出征类型, 队伍)
         ElseIf 容错参数 < 5 Then
             容错参数 = 容错参数 + 1
             TracePrint "派遣失败,重试"
-            FindPic 171,545,273,745,"Attachment:使用.png","000000",0,0.9,intX,intY
-            If intX > -1 And intY > -1 Then 
-                ShowMessage "军令不足,使用行军令补充", 1000, 50, 620
-                If ReadUIConfig("是否使用行军令") Then 
-                    Touch 210, 645, 100
-                    Delay 1500
-                Else 
-                    TracePrint "行军令不足,退出"
-                    场景相关操作.通用界面关闭()
-                    Delay 2000 
-                    Exit Sub
-                End If
-            End If
             Goto 出发
         End If
     ElseIf 容错参数 < 5 Then
@@ -3093,7 +3087,21 @@ Sub 前往目标(出征类型, 队伍)
         Case 3
             Touch 215, 810, 100
         End Select
-        Delay 1500
+        Delay 2000
+        FindPic 171,545,273,745,"Attachment:使用.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then 
+            ShowMessage "军令不足,使用行军令补充", 1000, 50, 620
+            If ReadUIConfig("是否使用行军令") Then 
+                Touch 210, 645, 100
+                Delay 1500
+            Else 
+                TracePrint "行军令不足,退出"
+                场景相关操作.通用界面关闭()
+                Delay 2000 
+                Exit Sub
+            End If
+        End If
+        
         If 出征类型 = 3 Then 
             Dim ocrchar
             ocrchar = 类型转换.SuperOcr(231,727,269,796,"B3B6B4-111111|CCCDCC-111111|DCDCDC-111111|E9E9E9-111111|7D837F-111111",1)
@@ -3339,10 +3347,10 @@ Sub 军团捐献
             Touch 相关数据解析.铜币捐献坐标X, 相关数据解析.铜币捐献坐标Y, 100
             Delay 2000
             If 场景相关操作.进入场景是否正确(75) Then 
-            	TracePrint "捐献成功"
-           	Else 
-           		TracePrint "捐献失败"
-           		场景相关操作.通用界面关闭
+                TracePrint "捐献成功"
+            Else 
+                TracePrint "捐献失败"
+                场景相关操作.通用界面关闭
             End If
         End If
         If 元宝捐献 Then 
@@ -3350,51 +3358,52 @@ Sub 军团捐献
             Touch 相关数据解析.元宝捐献坐标X, 相关数据解析.元宝捐献坐标Y, 100
             Delay 2000
             If 场景相关操作.进入场景是否正确(75) Then 
-            	TracePrint "捐献成功"
-           	Else 
-           		TracePrint "捐献失败"
-           		场景相关操作.通用界面关闭
+                TracePrint "捐献成功"
+            Else 
+                TracePrint "捐献失败"
+                场景相关操作.通用界面关闭
             End If
         End If
-        If 资源捐献 Then 
-            //进城池界面
-            进出界面.进无编号子界面(265,82,638,254,"Attachment:占领.png",0.9,相关数据解析.城池坐标X, 相关数据解析.城池坐标Y)
-            Touch 相关数据解析.城池捐献坐标X, 相关数据解析.城池捐献坐标Y, 100
-            //木材捐献
-            Touch 230, 660, 100
-            Delay 1500
-            Touch 相关数据解析.城池最终捐献坐标X, 相关数据解析.城池最终捐献坐标Y, 100
-            Delay 1500
-            Call 捐献(捐献次数)
-            //石料捐献
-            Touch 170, 660, 100
-            Delay 1500
-            Touch 相关数据解析.城池最终捐献坐标X, 相关数据解析.城池最终捐献坐标Y, 100
-            Delay 1500
-            Call 捐献(捐献次数)
-            //滚屏找铁矿
-            TouchDown 145, 660, 0
-            TouchMove 300, 660, 0, 1000
-            TouchUp 0
-            Delay 2000
-            //铁矿捐献
-            Touch 360, 660, 100
-            Delay 1500
-            Touch 相关数据解析.城池最终捐献坐标X, 相关数据解析.城池最终捐献坐标Y, 100
-            Delay 1500
-            Call 捐献(捐献次数)
-        End If
-        WriteConfig "今日已军团捐献"&账号信息, True, True
+        
     End If
+    If 资源捐献 Then 
+        //进城池界面
+        进出界面.进无编号子界面(265,82,638,254,"Attachment:占领.png",0.9,相关数据解析.城池坐标X, 相关数据解析.城池坐标Y)
+        Touch 相关数据解析.城池捐献坐标X, 相关数据解析.城池捐献坐标Y, 100
+        //木材捐献
+        Touch 230, 660, 100
+        Delay 1500
+        Touch 相关数据解析.城池最终捐献坐标X, 相关数据解析.城池最终捐献坐标Y, 100
+        Delay 1500
+        Call 捐献(捐献次数)
+        //石料捐献
+        Touch 170, 660, 100
+        Delay 1500
+        Touch 相关数据解析.城池最终捐献坐标X, 相关数据解析.城池最终捐献坐标Y, 100
+        Delay 1500
+        Call 捐献(捐献次数)
+        //滚屏找铁矿
+        TouchDown 145, 660, 0
+        TouchMove 300, 660, 0, 1000
+        TouchUp 0
+        Delay 2000
+        //铁矿捐献
+        Touch 360, 660, 100
+        Delay 1500
+        Touch 相关数据解析.城池最终捐献坐标X, 相关数据解析.城池最终捐献坐标Y, 100
+        Delay 1500
+        Call 捐献(捐献次数)
+    End If
+    WriteConfig "今日已军团捐献"&账号信息, True, True
 End Sub
 
 Sub 捐献(次数)
-	For 次数 - 1
-		Touch 245, 785, 100
-		Delay 1000
-	Next
-	Touch 145, 640, 100
-	Delay 1500
+    For 次数 - 1
+        Touch 245, 785, 100
+        Delay 1000
+    Next
+    Touch 145, 640, 100
+    Delay 1500
 End Sub
 
 Sub 军团小红点处理()
@@ -3562,7 +3571,7 @@ Sub 接皇榜任务()
                             TracePrint "攻城掠地任务不接"
                         Else 
                             If ocrchar1 = "扫荡匪寇" Then
-                                ocrchar2 = Ocr(起始区域X1 - 20, 477, 起始区域X1, 700, "818180-111111|BABABA-111111|969696-111111|CECECE-111111|6C6C6B-111111", 0.9)
+                                ocrchar2 = Ocr(起始区域X1 - 20, 477, 起始区域X1, 700, "818180-111111|BABABA-111111|969696-111111|CECECE-111111|6C6C6B-111111", 0.8)
                                 TracePrint ocrchar2
                                 SnapShot "/sdcard/hbGWDJ" & Time() & ".png", 0, 0, 720, 1280
                                 TracePrint "皇榜任务级别"
@@ -3673,6 +3682,7 @@ Sub 完成皇榜任务()
                 Else 
                     目标等级(任务列表(1) - 1) = True
                 End If
+                
                 For i = 0 To 4
                     If 用户设置(0, i) Then 
                         If 队伍状态(i) = 1 Then
@@ -3680,7 +3690,14 @@ Sub 完成皇榜任务()
                                 队伍兵量信息 = 判断队伍兵量(i)
                                 If 队伍兵量信息 > Int(ReadUIConfig("满员率")) Then 
                                     TracePrint "出城寻找怪物"
-                                    Call 搜索目标(1, 目标种类, 目标等级)
+                                    If 目标种类(0) And 目标种类(1) And 目标种类(2) And 目标种类(3) Then 
+                                        TracePrint "皇榜任务怪物数据类型合法"
+                                        Call 搜索目标(1, 目标种类, 目标等级)
+                                    Else 
+                                        TracePrint "皇榜任务怪物数据解释失败，怪物类型读取用户配置"
+                                        Call 搜索目标(1, 用户设置(3), 目标等级)
+                                    End If
+                                    
                                     Call 前往目标(1, i)
                                 End If
                             End If
@@ -3763,7 +3780,7 @@ Function 获取任务列表()
     //FindPic 皇榜任务坐标起X, 皇榜任务坐标初始起Y, 皇榜任务坐标止X, 皇榜任务坐标初始止Y, "Attachment:皇榜任务前往.png", "000000", 0, 0.7, intX, intY
     FindPic 440,880,550,1000,"Attachment:皇榜任务前往.png","000000",0,0.7,intX,intY
     If intX > -1 And intY > -1 Then 
-        ocrchar= 类型转换.SuperOcr(438,369,506,632,"818180-111111|BABABA-111111|969696-111111|CECECE-111111|6C6C6B-111111",0.9)
+        ocrchar= 类型转换.SuperOcr(438,369,506,632,"818180-111111|BABABA-111111|969696-111111|CECECE-111111|6C6C6B-111111",0.8)
         TracePrint ocrchar
 			
         //判断任务类型并解析条件
