@@ -8,9 +8,9 @@ StopHotkey=123
 StopHotkeyMod=0
 RunOnce=1
 EnableWindow=
-MacroID=dccddf90-2413-4c0e-8969-d50d91e58ee8
+MacroID=17693783-82db-4edd-8687-572a78ff5d78
 Description=我的脚本2
-Enable=1
+Enable=0
 AutoRun=0
 [Repeat]
 Type=0
@@ -23,7 +23,7 @@ SetupOCXFile=
 [Comment]
 
 [UIPackage]
-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
+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
 
 
 [Script]
@@ -43,45 +43,58 @@ Dim 容错参数, 安卓小精灵初始坐标,安卓小精灵初始启动坐标
 容错参数 = 0
 启动时间 = Plugin.Sys.GetTime
 Do
+    Rem 开始循环
     //遍历符合窗口标题("海马玩模拟器")的句柄保存到数组(HwndEx)里
     HwndEx = Plugin.Window.Search("海马玩模拟器")
     //下面这句用于分割字符串,将获得的句柄组分割   
     dim MyArray   
-    MyArray = Split(HwndEx, "|")   
+    MyArray = Split(HwndEx, "|")
     If UBound(MyArray)>=0 Then  
         i=0   
         For UBound(MyArray)   
             //下面这句将字符串转换成数值   
             Hwnd = MyArray(i)
-            TracePrint "开始执行"&i&"号窗口"&"句柄"&Hwnd
+            If dm.GetWindowState(Hwnd, 0) = 0 Then 
+                TracePrint "该模拟器已经被关闭了"
+                Call 重启模拟器(1)
+                Delay 30000
+                Goto 开始循环
+            End If
+            title = dm.GetWindowTitle(Hwnd)
+            TracePrint "开始执行"&i&"号窗口"&"名字"&title
             //先判断是横屏还是竖屏 
             If 是否横屏 Then 
-                TracePrint "横屏"
                 If w <> 开发宽度 Or h <> 开发高度 Then 
                     dm_ret = dm.SetWindowSize(Hwnd, 1110, 722)
                     Delay 2000
                 End If
-                //小精灵驻留位置坐标
-                安卓小精灵初始坐标 = Array(1100, 220)
-                安卓小精灵初始启动坐标 = Array(805, 225)
-                是否横屏 = True
             Else 
-                TracePrint "竖屏"
                 If w <> 628 Or h <> 1041 Then 
                     dm_ret = dm.SetWindowSize(Hwnd, 628, 1041)
                     Delay 2000
                 End If
-                安卓小精灵初始坐标 = Array(620, 313)
                 安卓小精灵初始启动坐标 = Array(350, 316)
-                是否横屏 = False
             End If
             Delay 2000
-            Call 检测()
+            If 检测() Then 
+                TracePrint "准备下一个窗口"
+            Else 
+                TracePrint "检测失败,从头开始"
+                Goto 开始循环
+            End If
             Delay 10000
             i=i+1  
-        Next  
+        Next
+    End If
+    TracePrint "WINDOWS_NUMS"&UBound(MyArray)
+    If UBound(MyArray) < 3 Then
+        TracePrint "当前模拟器启动个数" & (UBound(MyArray) + 1)
+        Call 重启模拟器(1)
+        Delay 30000
+        Goto 开始循环
     End If
     If Plugin.Sys.GetTime - 启动时间 >= 3600 * 1000 Then 
+        TracePrint "到达一小时重启脚本"
         RestartScript
     End If
     TracePrint "完成一次循环，等待下一次循环"
@@ -90,27 +103,30 @@ Loop
 Set dm = nothing'释放对象
 Function 是否横屏()
     //获取游戏窗口的宽高
-    dm_ret = dm.GetClientSize(Hwnd,w,h) 
-    TracePrint "宽度:" & w & ",高度:" & h
+    dm_ret = dm.GetClientSize(Hwnd,w,h)
     //先判断是横屏还是竖屏 
     If w > h Then 
-        TracePrint "横屏"
         是否横屏 = True
     Else 
-        TracePrint "竖屏"
         是否横屏 = False
     End If
 End Function
-Sub 检测
+Function 检测()
     TracePrint("开始检测")
+    dm_ret = dm.BindWindowEx(Hwnd, "dx2", "dx", "normal", "", 0)
+    Delay 1500
+    容错参数1 = 0
     Rem 检测状态
     容错参数 = 0 
     //运行脚本
     //绑定大窗口
-    dm_ret = dm.BindWindowEx(Hwnd, "dx2", "dx", "normal", "", 0)
-    Delay 1500
     While Not 脚本是否启动了() And 容错参数 < 4
         TracePrint "展开脚本"
+        If 是否横屏 Then 
+            安卓小精灵初始坐标 = Array(1100, 220)
+        Else 
+            安卓小精灵初始坐标 = Array(620, 313)
+        End If
         dm.MoveTo 安卓小精灵初始坐标(0), 安卓小精灵初始坐标(1)
         Delay 500
         dm.LeftClick 
@@ -118,32 +134,51 @@ Sub 检测
         容错参数 = 容错参数 + 1
     Wend
     If 容错参数 >= 4 Then 
-        Call 小精灵启动流程()
-        Goto 检测状态
+        If 小精灵启动流程() And 容错参数1 < 3 Then 
+            容错参数1 = 容错参数1 + 1
+            Goto 检测状态
+        Else 
+            检测 = False
+            Call 重启模拟器(3)
+            Delay 30000
+            Exit Function
+        End If
     End If
     dm_ret = dm.UnBindWindow()
+    检测 = True
     TracePrint "检测完毕"
-End Sub
-Sub 小精灵启动流程
+End Function
+Function 小精灵启动流程()
     Call 启动脚本()
     Delay 1500
-    While Not 脚本是否准备好了()
+    容错参数 = 0
+    While Not 脚本是否准备好了() And 容错参数 < 20
         TracePrint "等待启动好"
-        Delay 2000
+        Delay 5000
+        容错参数 = 容错参数 + 1
     Wend
+    If 容错参数 >= 20 Then 
+        TracePrint "小精灵启动失败"
+        小精灵启动流程 = False
+        Call 重启模拟器(3)
+        Delay 30000
+        Exit Function
+    End If
     TracePrint "准备运行脚本"
     Delay 1500
     dm.MoveTo 345, 975
     Delay 500
     dm.LeftClick 
     Delay 2000
-End Sub
-Sub 启动脚本
+    TracePrint "小精灵启动完毕"
+    小精灵启动流程 = True
+End Function
+Sub 启动脚本()
     If 是否横屏 Then 
         TracePrint "横屏点击Home"
         dm.MoveTo 118, 1020
         Delay 500
-        dm.LeftClick 
+        dm.LeftClick
     Else 
         TracePrint "竖屏点击Home"
         dm.MoveTo 33, 951
@@ -169,14 +204,28 @@ Function 脚本是否准备好了()
             脚本是否准备好了 = True
         Else
             TracePrint "脚本还没有完全启动好"
+            s = dm.Ocr(269, 92, 422, 135, "ffffff-111111", 1)
+            If s = "软件设置" Then 
+                dm.Moveto 113,117
+                Delay 100
+                dm.LeftClick
+                脚本是否准备好了 = True
+            Else 
+                dm.Moveto 575, 126
+                Delay 100
+                dm.LeftClick
+            End If
             脚本是否准备好了 = False
+            Call 启动脚本()
         End If
     Else 
-        Call 启动脚本
+        Call 启动脚本()
     End If
 End Function
 Function 脚本是否启动了()
     If 是否横屏 Then 
+        安卓小精灵初始启动坐标 = Array(805, 225)
+        安卓小精灵初始坐标 = Array(1100, 220)
         temp1 = dm.CmpColor(798,211, "FFFFFF-111111", 0.9)
         temp2 = dm.CmpColor(797,238, "FFFFFF-111111", 0.9)
         temp3 = dm.CmpColor(819,225, "FFFFFF-111111", 0.9)
@@ -213,12 +262,14 @@ Function 脚本是否启动了()
             End If
         End If
     Else
+        安卓小精灵初始启动坐标 = Array(350, 316)
+        安卓小精灵初始坐标 = Array(620, 313)
         temp1 = dm.CmpColor(344, 304, "FFFFFF-111111", 0.9)
         temp2 = dm.CmpColor(344, 328, "FFFFFF-111111", 0.9)
         temp3 = dm.CmpColor(364, 316, "FFFFFF-111111", 0.9)
         temp4 = dm.CmpColor(353, 309, "FFFFFF-111111", 0.9)
         temp5 = dm.CmpColor(353, 323, "FFFFFF-111111", 0.9)
-        temp6 = dm.CmpColor(582,334, "7f7f7f-111111", 0.9)
+        temp6 = dm.CmpColor(444, 317, "7f7f7f-111111", 0.9)
         TracePrint temp1
         TracePrint temp2
         TracePrint temp3
@@ -267,9 +318,103 @@ Sub OnScriptExit()
     TracePrint "解除绑定"
     dm_ret = dm.UnBindWindow()
 End Sub
-Event Form1.Button2.Click
-    EndScript
-End Event
-Event Form1.Button1.Click
-    KeyPress 121,1
-End Event
+Function 重启模拟器(操作类型)
+    //1 = 开, 2 = 关, 3 = 先关后开
+    dm_ret = dm.UnBindWindow()
+    Rem 确认多开管理器
+    Hwnd1 = dm.FindWindow("", "海马玩多开管理器")
+    If Hwnd1 = 0 Then 
+        TracePrint "多开管理器没有运行"
+        dm.RunApp "E:\Program Files (x86)\Droid4X\MultiMgr.exe", 0
+        Delay 1500
+        Goto 确认多开管理器
+    End If
+    dm_ret = dm.BindWindow(Hwnd1, "dx2", "dx", "normal", 0)
+    Delay 1500
+    Select Case 操作类型
+    Case 1
+        For i = 0 To 2
+            name = "海马玩模拟器_" & i
+            Rem 确定对应模拟器坐标1
+            dm_ret = dm.FindStrFast(3, 55, 130, 450, name, "ffffff-111111|e8c0ff-111111|ede0e0-111111|f3ffc0-111111|f9e09e-111111|ede0ff-111111|f3ffe0-111111|e29ee0-111111", 1, intX, intY)
+            TracePrint "模拟器名字的Y坐标" & intY
+            If intX >= 0 and intY >= 0 Then 
+                Rem 确认模拟器状态
+                s = dm.Ocr(276, intY - 20, 326, intY + 20, "ffffff-111111|e8c0ff-111111|ede0e0-111111|f3ffc0-111111|f9e09e-111111|ede0ff-111111|f3ffe0-111111|e29ee0-111111", 1)
+                If s = "关闭" Then 
+                    TracePrint "模拟器运行中"
+                ElseIf s = "启动" Then
+                    TracePrint "模拟器停止中"
+                    dm.MoveTo 300, intY
+                    Delay 100
+                    dm.LeftClick 
+                    Delay 10000
+                    Goto 确认模拟器状态
+                End If
+            Else 
+                TracePrint "没有找到对应的模拟器"
+                //移动鼠标到窗体内,然后滚动
+                dm.MoveTo 300, 100
+                Delay 100
+                If name = "海马玩模拟器_0" Then 
+                    dm.WheelUp
+                End If
+                Goto 确定对应模拟器坐标1
+            End If
+        Next
+    Case 2, 3
+        title = dm.GetWindowTitle(Hwnd)
+        TracePrint Hwnd
+        If dm.GetWindowState(Hwnd, 0) = 0 Then 
+            TracePrint "该模拟器已经被关闭了"
+            Exit Function
+        End If
+        name = Left(title, 8)
+        TracePrint name
+        容错参数 = 0
+        Rem 确定对应模拟器坐标2
+        dm_ret = dm.FindStrFast(3, 55, 130, 450, name, "ffffff-111111|e8c0ff-111111|ede0e0-111111|f3ffc0-111111|f9e09e-111111|ede0ff-111111|f3ffe0-111111|e29ee0-111111", 1, intX, intY)
+        TracePrint "找到模拟器名字的Y坐标" & intY
+        If intX >= 0 and intY >= 0 Then 
+            //确认模拟器状态
+            Rem 确认模拟器状态1
+            s = dm.Ocr(276, intY - 20, 326, intY + 20, "ffffff-111111|e8c0ff-111111|ede0e0-111111|f3ffc0-111111|f9e09e-111111|ede0ff-111111|f3ffe0-111111|e29ee0-111111", 1)
+            If s = "关闭" and dm.GetWindowState(Hwnd, 0) = 1 Then 
+                TracePrint "模拟器运行中"
+                Rem 结束模拟器进程
+                dm_ret = dm.SetWindowState(Hwnd, 0)
+                Delay 3000
+                If dm_ret = 0 Then 
+                    TracePrint "关闭失败重试"
+                    Goto 结束模拟器进程
+                End If
+                Goto 确认模拟器状态1
+            ElseIf s = "启动" And 操作类型 = 3 Then
+                TracePrint "模拟器停止中"
+                dm.MoveTo 300, intY
+                Delay 100
+                dm.LeftClick 
+                Delay 2000
+                Goto 确认模拟器状态1
+            ElseIf s = "启动" And 操作类型 = 2 Then
+                TracePrint "已经完成停止操作,退出"
+            ElseIf s = "关闭" And 操作类型 = 3 Then
+                TracePrint "启动完成,退出"
+            End If
+        ElseIf 容错参数 < 5 Then
+            TracePrint "没有找到对应的模拟器"
+            //移动鼠标到窗体内,然后滚动
+            dm.MoveTo 300, 100
+            Delay 100
+            If name = "海马玩模拟器_3" Then 
+                dm.WheelDown 
+            ElseIf name = "海马玩模拟器_0" Then 
+                dm.WheelUp
+            End If
+            容错参数 = 容错参数 + 1
+            Delay 1000
+            Goto 确定对应模拟器坐标2
+        End If
+    End Select
+    dm_ret = dm.UnBindWindow()
+End Function
