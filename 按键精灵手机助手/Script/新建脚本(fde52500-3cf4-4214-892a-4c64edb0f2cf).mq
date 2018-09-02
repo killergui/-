@@ -5,9 +5,6 @@ Import "相关数据解析.mql"
 Import "zm.luae"
 
 
-zm.Swipe 635,505,0,505,500
-Delay 20000
-
 SetRowsNumber(0)
 TracePrint SetDictEx(0, "Attachment:三国志2017字库.txt")
 TracePrint SetDictEx(1, "Attachment:三国志2017字库1080.txt")
@@ -21,7 +18,8 @@ End If
 
 
 
-Dim 容错参数
+Dim 容错参数,主公等级
+主公等级 = 16
 Do
     Dim temp, ocrchar, ocrchar1, ocrchar2
     //	temp = 场景相关操作.所在场景()
@@ -46,96 +44,236 @@ Do
     //    TracePrint ocrchar2
     
     //    ocrchar=Ocr(18,683,64,765,"CCCCCC-111111|8C8C8E-111111|858585-111111|9E9E9E-111111",0.95)
-    ocrchar = 类型转换.SuperOcr(384,883,415,1013,"B7CBD7-111111|8F9EA7-111111|606A6F-111111|B0C3CE-111111|7B888F-111111|9FB0BA-111111",0.8)
-    Traceprint ocrchar
+    //    ocrchar = 类型转换.SuperOcr(384,883,415,1013,"B7CBD7-111111|8F9EA7-111111|606A6F-111111|B0C3CE-111111|7B888F-111111|9FB0BA-111111",0.8)
+    Call 强化前几个人(4)
+    //    Traceprint ocrchar
 Loop
 
-Sub 领取体力()
-    // 进活动界面
-    进出界面.城内外通用进界面(5, 相关数据解析.日常活动坐标X, 相关数据解析.日常活动坐标Y, 0)
-
-    Dim intX,intY
-    Do
-        If Not 活动界面找小红点() Then 
-            FindPic 0,0,720,1280,"Attachment:犒赏三军.png","000000",0,0.8,intX,intY
-            If intX > -1 And intY > -1 Then
-                TracePrint "找到犒赏三军"
-                If Not 活动界面找小红点() Then 
-                    Exit Do
-                End If
-            Else 
-                TouchDown 340, 440
-                TouchMove 340, 240
-                TouchUp
-                Delay 2500
-            End If 
+Sub 强化前几个人( 类型)
+    //类型枚举 : 1 = 装备 2 = 升星 3 = 升阶 4 = 升级
+    TracePrint "开始强化武将,类型为"&类型
+    Dim 人数 = Int(ReadUIConfig("强化人数", 24))
+    Select Case 类型
+    Case 1
+        If ReadUIConfig("强化装备") = False Then 
+            TracePrint "设置不自动强化装备"
+            Exit Sub
         End If
-        //寻找犒赏三军
-         
-    Loop
-    TracePrint "活动小红点处理完毕"
-    场景相关操作.通用界面关闭()
+    End Select
+    Dim 武将目标等级
+    If 类型 = 4 Then 
+        If 主公等级 = Null Then 
+            //            Call 进主公界面()
+        Else 
+            If 主公等级 >= 40 Then 
+                武将目标等级 = 30
+            ElseIf 主公等级 >= 35 Then
+                武将目标等级 = 24
+            ElseIf 主公等级 >= 30 Then
+                武将目标等级 = 20
+            ElseIf 主公等级 >= 25 Then
+                武将目标等级 = 18
+            ElseIf 主公等级 >= 20 Then
+                武将目标等级 = 14
+            ElseIf 主公等级 >= 15 Then
+                武将目标等级 = 12
+            ElseIf 主公等级 >= 10 Then
+                武将目标等级 = 10
+            ElseIf 主公等级 >= 1 Then
+                武将目标等级 = 6
+            End If
+        End If
+    End If
+    
+    //进武将界面
+    进出界面.城内进固定界面(14, 相关数据解析.武将坐标X, 相关数据解析.武将坐标Y, 5, False)
+    Dim 武将起始坐标X, 武将起始坐标Y, X偏移量, Y偏移量, 当前武将坐标X, 当前武将坐标Y
+    武将起始坐标X = 530 : 武将起始坐标Y = 240 : X偏移量 = 150 : Y偏移量 = 340
+    Dim 滚动次数 = Int((人数 - 1) / 9)
+    Dim a, 上次滚动数, 上次武将数, i
+    a = 0 : 上次滚动数 = 0 : 上次武将数 = 0 : i = 0
+    Rem 循环强化武将
+    For a = 上次滚动数 To 滚动次数
+        TracePrint "第"& a + 1 &"次循环强化"
+        If a > 0 Then 
+            zm.Swipe 125, 435, 615, 435, 500
+            Delay 2500
+        End If
+        Dim 找武将循环次数
+        找武将循环次数 = 人数 - a * 9
+        If 找武将循环次数 > 9 Then 
+            找武将循环次数 = 9
+        End If
+        For i = 上次武将数 To (找武将循环次数 - 1)
+            当前武将坐标X = 武将起始坐标X - Int(i / 3) * X偏移量
+            当前武将坐标Y = 武将起始坐标Y + (i Mod 3) * Y偏移量
+            Dim ocrchar, 当前武将等级, intX, intY
+            If 类型 = 4 Then 
+                //在预览面板先识别武将等级
+                ocrchar=Ocr(当前武将坐标X - 60,当前武将坐标Y, 当前武将坐标X,当前武将坐标Y + 30,"BAD0DC-111111|A7BAC5-111111|86949C-111111",0.8)
+                Traceprint ocrchar
+                当前武将等级 = Int(ocrchar)
+            End If
+  
+            FindColor 当前武将坐标X + 29, 当前武将坐标Y + 127, 当前武将坐标X + 49, 当前武将坐标Y + 164,"3A342A",0,1,intX,intY
+            TracePrint 当前武将坐标X + 29, 当前武将坐标Y + 127, 当前武将坐标X + 49, 当前武将坐标Y + 164
+            TracePrint intX, intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "找到未上阵武将,本次强化完成"
+                场景相关操作.通用界面关闭 
+                Delay 2000
+                Exit Sub
+            End If
+            
+            Select Case 类型
+            Case 1
+                Touch 当前武将坐标X, 当前武将坐标Y, 100
+                Delay 1500
+                If Not 强化单个武将装备()
+                    TracePrint "本次武将强化装备不正常退出"
+                    TracePrint "强化武将完毕"
+                    场景相关操作.通用界面关闭 
+                    Delay 2000
+                    Exit Sub
+                End If
+                Delay 1500
+            Case 2
+            Case 3
+                Touch 当前武将坐标X, 当前武将坐标Y, 100
+                Delay 1500
+                If Not 单个武将升阶() Then 
+                    TracePrint "本次武将升阶不正常退出"
+                    TracePrint "强化武将完毕"
+                    场景相关操作.通用界面关闭 
+                    Delay 2000
+                    Exit Sub
+                End If
+            Case 4
+                //识别武将等级
+                Dim 上次升级结果
+                If 当前武将等级 = Null Then 
+                    TracePrint "武将等级识别异常,退出"
+                Else 
+                    If 当前武将等级 < 武将目标等级 Then 
+                        Touch 当前武将坐标X, 当前武将坐标Y, 100
+                        Delay 1500
+                        上次升级结果 = 单个武将升级()
+                        If 上次升级结果 Then 
+                            TracePrint "升级完成,回到滚动处"
+                            
+                            If i = 8 Then 
+                                上次滚动数 = a + 1
+                                上次武将数 = 0
+                            Else 
+                                上次滚动数 = a
+                                上次武将数 = i + 1
+                            End If
+                            
+                            
+                            TracePrint 上次滚动数
+                            TracePrint 上次武将数
+                            Delay 1500
+                            Goto 循环强化武将
+                        Else 
+                            TracePrint "本次武将升级不正常退出"
+                            TracePrint "强化武将完毕"
+                            场景相关操作.通用界面关闭 
+                            Delay 2000
+                            Exit Sub
+                        End If
+                    Else 
+                        TracePrint "当前武将等级已经达标"
+                    End If 
+                End If 
+            End Select   
+        Next
+    Next
+    TracePrint "强化武将完毕"
+    场景相关操作.通用界面关闭 
     Delay 2000
 End Sub
 
-Function 活动界面找小红点()
-    Dim intX,intY
-    FindPic 0,0,720,1280,"Attachment:小红点.png","000000",0,0.99,intX,intY
-    If intX > -1 And intY > -1 Then
-        TracePrint "小红点"
-        Touch intX, intY, 100
-        Delay 1000
-        活动界面找小红点 = True
-    Else
-        FindPic 0,0,720,1080,"Attachment:小红点1.png","000000",0,0.99,intX,intY
+Function 强化单个武将装备()
+    Dim 装备坐标X, 装备坐标Y, 偏移量, intX, intY
+    容错参数 = 0
+    Rem 进强化界面
+    TracePrint "选择装备"
+    Touch 125, 660, 100
+    Delay 500
+    TracePrint "进强化界面"
+    Touch 125 + 140, 660 + 55, 100
+    Delay 1000
+    FindPic 80,911,159,1143,"Attachment:一键强化.png","000000",0,0.9,intX,intY
+    If intX > -1 And intY > -1 Then 
+        TracePrint "进入强化界面"
+    Else 
+        FindPic 80,911,159,1143,"Attachment:不可一键强化.png","000000",0,0.9,intX,intY
         If intX > -1 And intY > -1 Then
-            TracePrint "小红点1"
-            Touch intX, intY, 100
-            Delay 1000
-            活动界面找小红点 = True
+            TracePrint "等级或者铜币不足不能强化"
         Else 
-            FindPic 0,0,720,1280,"Attachment:小红点2.png","000000",0,0.99,intX,intY
+            FindPic 137,785,214,981,"Attachment:满级.png","000000",4,0.9,intX,intY
             If intX > -1 And intY > -1 Then
-                TracePrint "小红点2"
-                Touch intX, intY, 100
-                Delay 1000
-                活动界面找小红点 = True
+                TracePrint "满级不能强化"
+            ElseIf 容错参数 < 2 Then
+                TracePrint "进强化界面出错,重试"
+                容错参数 = 容错参数 + 1
+                Goto 进强化界面
+            ElseIf 容错参数 >= 2 Then
+                TracePrint "错误次数太多,放弃"
+                强化单个武将装备 = False
+                Exit Sub
             End If
         End If
     End If
-    FindColor 574,1015,670,1151,"4069B3",0,0.99,intX,intY
-    If intX > -1 And intY > -1 Then 
-        TracePrint "找到活动详情面板"
-        Dim 拖动次数 = 0
-        Do Until 拖动次数 >= 5
-            FindPic 66,888,456,1048,"Attachment:限时签到.png","000000",0,0.9,intX,intY
+    装备坐标X = 660 : 装备坐标Y = 200 : 偏移量 = 125
+    For 4
+        装备坐标X = 装备坐标X - 偏移量
+        //选择装备
+        Touch 装备坐标X, 装备坐标Y, 100
+        Delay 1000
+        容错参数 = 0
+        Rem 点击一键强化
+        Touch 120, 1025, 100
+        Delay 1000
+        FindPic 80,911,159,1143,"Attachment:一键强化.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 And 容错参数 < 2 Then 
+            容错参数 = 容错参数 + 1
+            TracePrint "点击一键强化失败,重试"
+            Goto 点击一键强化
+        Else 
+            FindPic 80,911,159,1143,"Attachment:不可一键强化.png","000000",0,0.9,intX,intY
             If intX > -1 And intY > -1 Then
-                TracePrint "找到限时签到"
-                Touch intX, intY, 100
-                Exit Do
+                TracePrint "等级或者铜币不足不能强化"
             Else 
-                FindPic 66,889,456,1048,"Attachment:限时签到未完成.png","000000",4,0.8,intX,intY
-                If intX > -1 And intY > -1 Then 
-                    TracePrint "找到未完成"
-                    Exit Do
-                End If
-                FindPic 66,888,456,1048,"Attachment:限时签到已达成.png","000000",3,0.8,intX,intY
+                FindPic 137,785,214,981,"Attachment:满级.png","000000",4,0.9,intX,intY
                 If intX > -1 And intY > -1 Then
-                    TracePrint "找到已达成"
-                    zm.Swipe 75, 870, 440, 870, 500
-                    Delay 1500
-                    拖动次数 = 拖动次数 + 1
-                Else
+                    TracePrint "满级不能强化"
+                ElseIf 容错参数 < 3 Then 
+                    TracePrint "异常状况"
+                    容错参数 = 容错参数 + 1
+                    场景相关操作.通用界面关闭
+                    Goto 点击一键强化
+                ElseIf 容错参数 >= 3 Then
+                    TracePrint "错误次数过多,放弃"
+                    Exit For
                 End If
             End If
-        Loop
-        场景相关操作.通用界面关闭
-        Delay 2000
-    End If
-    FindPic 454,573,526,711,"Attachment:提示.png","000000",0,0.9,intX,intY
-    If intX > -1 And intY > -1 Then 
-        TracePrint "发现提示界面"
-        Touch 250, 760, 100
-        Delay 1000
-    End If
+        End If
+    Next
+    TracePrint "强化单个武将装备完成"
+    强化单个武将装备 = True
+    //关闭强化界面
+    场景相关操作.通用界面关闭
+    Delay 1500
+    //关闭武将详情界面
+    场景相关操作.通用界面关闭 
+    Delay 1500
+End Function
+
+
+
+Function 单个武将升级()
+    TracePrint "还没完成"
+    场景相关操作.通用界面关闭
+    单个武将升级 = True
 End Function

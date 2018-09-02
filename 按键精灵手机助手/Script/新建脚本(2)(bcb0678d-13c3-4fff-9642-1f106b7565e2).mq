@@ -1,4 +1,0 @@
-Dim temp
-temp = sys.GetFront()
-TracePrint temp
-SetAppSpeed temp,0.5

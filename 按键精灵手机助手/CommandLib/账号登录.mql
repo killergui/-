@@ -19,7 +19,7 @@ Sub 登录(渠道编号, 账号信息, 账号密码)
         Call 登录360(账号信息, 账号密码)
     ElseIf 渠道编号 = 2 Then
         Call 登录海马玩(账号信息, 账号密码)
-	ElseIf 渠道编号 = 3 Then
+    ElseIf 渠道编号 = 3 Then
         Call 登录游戏工厂(账号信息, 账号密码)
     End If
 End Sub
@@ -99,7 +99,7 @@ Function 当前所在登录步骤界面(渠道编号,有无验证码)
             当前所在登录步骤界面 = 1
             Exit Function
         End If
-	Case 2
+    Case 2
         TracePrint "当前运行海马玩客户端"
         ocrchar = 类型转换.SuperOcr(602,281,661,401,"666666-111111",0.95)
         Traceprint ocrchar
@@ -131,11 +131,7 @@ Sub 登录360(账号信息, 账号密码)
     Dim 有没有验证码
     容错参数 = 0
     Rem 进账号登录界面1
-    所在场景 = 场景相关操作.所在场景()
-    If 所在场景 <> Null Then
-        TracePrint "登录成功"
-        Exit Sub
-    End If
+    
     //判断有没有验证码
     Dim ocrchar
     ocrchar = 类型转换.SuperOcr(348,447,384,647,"CCCCCC-111111",0.95)
@@ -241,6 +237,12 @@ Sub 登录360(账号信息, 账号密码)
     ElseIf 当前步骤 = 5 Then
         //点击确定
         Touch 260, 780, 100
+    Else 
+        所在场景 = 场景相关操作.所在场景()
+        If 所在场景 <> Null Then
+            TracePrint "登录成功"
+            Exit Sub
+        End If
     End If
     If 容错参数 < 5 Then 
         容错参数 = 容错参数 + 1
@@ -252,11 +254,6 @@ End sub
 Sub 登录海马玩(账号信息, 账号密码)
     容错参数 = 0
     Rem 进账号登录界面2
-    所在场景 = 场景相关操作.所在场景()
-    If 所在场景 <> Null Then
-        TracePrint "登录成功"
-        Exit Sub
-    End If
     当前步骤 = 当前所在登录步骤界面(2, 0)
     If 当前步骤 = 1 Then  
         //输入账号
@@ -291,8 +288,14 @@ Sub 登录海马玩(账号信息, 账号密码)
     ElseIf 当前步骤 = 2 Then
         TracePrint "应该要关闭啊"
         Touch 660, 920, 100
+    Else 
+        所在场景 = 场景相关操作.所在场景()
+        If 所在场景 <> Null Then
+            TracePrint "登录成功"
+            Exit Sub
+        End If
     End If
-    If 容错参数 < 3 Then 
+    If 容错参数 < 4 Then 
         容错参数 = 容错参数 + 1
         Delay 3000
         Goto 进账号登录界面2
@@ -303,11 +306,7 @@ End Sub
 Sub 登录游戏工厂(账号信息, 账号密码)
     容错参数 = 0
     Rem 进账号登录界面
-    所在场景 = 场景相关操作.所在场景()
-    If 所在场景 <> Null Then
-        TracePrint "登录成功"
-        Exit Sub
-    End If
+    
     当前步骤 = 当前所在登录步骤界面(3, 0)
     If 当前步骤 = 1 Then  
         //输入账号
@@ -334,6 +333,12 @@ Sub 登录游戏工厂(账号信息, 账号密码)
         ShowMessage "要点登录了",1000, 50, 620	
         //点击登录
         Touch 270, 640, 100
+    Else 
+        所在场景 = 场景相关操作.所在场景()
+        If 所在场景 <> Null Then
+            TracePrint "登录成功"
+            Exit Sub
+        End If
     End If
     If 容错参数 < 3 Then 
         容错参数 = 容错参数 + 1

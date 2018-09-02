@@ -48,14 +48,25 @@ Rem login
 
 If 场景相关操作.进入场景是否正确(1) Then
     TracePrint "当前在主城,已经顺利进游戏"
-Else 
+ElseIf 场景相关操作.进入场景是否正确(22) Then
+    场景相关操作.通用界面关闭 
+    Delay 2000
+    Rem 读条等待
+    If 场景相关操作.进入场景是否正确(61) Then 
+        TracePrint "正在进入游戏中"
+        Delay 1000
+        Goto 读条等待
+    End If
+    Delay 3000
+    Goto login
+Else
     If 来路是否是切换账号 Then
         Call 账号信息处理(登录成功次数)
         账号登录.登录 平台, 账号信息, 账号密码
     Else 
         Call 启动游戏()
     End If
-    场景相关操作.通用界面关闭 
+    场景相关操作.通用界面关闭
     Delay 2000
     Goto login
 End If
@@ -124,7 +135,6 @@ WriteConfig "上次运行日期" & 账号信息, Date(), True
 Delay 1000
 ShowMessage "派遣出征次数" & 派遣出征次数, 2000, 50, 620
 Delay 2000
-Call 活动界面找小红点()
 Call 判断入侵()
 
 Call 进主公界面()
@@ -398,17 +408,17 @@ Sub 回登录界面()
             Delay 1500
             Touch 110, 140, 100
             Delay 1500
-        ElseIf 容错参数 >= 5 Then
+        ElseIf 容错参数 >= 3 Then
             ShowMessage "无法正常退出", 5000, 50, 620
             Delay 5000
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             Goto 退出游戏
         End If
-    ElseIf 容错参数 < 5 Then
+    ElseIf 容错参数 < 3 Then
         容错参数 = 容错参数 + 1
         Delay 2000
         Goto 进设置界面
-    ElseIf 容错参数 >= 5 Then
+    ElseIf 容错参数 >= 3 Then
         ShowMessage "无法正常退出,请确认设置按钮是否被遮挡了", 5000, 50, 620
         Delay 5000
     End If
@@ -464,7 +474,7 @@ Sub 定位主城坐标()
         TracePrint ocrchar1, ocrchar2
         tempStr = "主城坐标" & 野外主城坐标X & "," & 野外主城坐标Y
         TracePrint tempStr
-        If (野外主城坐标X = 0 Or 野外主城坐标Y = 0 Or 野外主城坐标X = Null Or 野外主城坐标Y = Null ) And 容错参数 < 5 Then 
+        If (野外主城坐标X = 0 Or 野外主城坐标Y = 0 Or 野外主城坐标X = Null Or 野外主城坐标Y = Null ) And 容错参数 < 3 Then 
             容错参数 = 容错参数 + 1
             TracePrint "坐标定位有问题,重试"
             Goto 定位坐标
@@ -634,7 +644,7 @@ Sub 主城防守(回防主城)
         Dim 无元宝
         Rem 挂免战
         Call 进出界面.回主城(1)
-        If 进出界面.进无坐标子界面(79, 1, 400, 560, 670, 1100, "Attachment:加buff1.png", 0.9) And 容错参数 < 5 And Not 无元宝 Then 
+        If 进出界面.进无坐标子界面(79, 1, 400, 560, 670, 1100, "Attachment:加buff1.png", 0.9) And 容错参数 < 3 And Not 无元宝 Then 
             Dim ocrchar, 时,分,秒,总剩余秒数
             ocrchar=类型转换.SuperOcr(460,427,490,538,"59A678-111111|4C8D66-111111",0.9)
             Traceprint ocrchar
@@ -691,7 +701,7 @@ Sub 主城防守(回防主城)
             Delay 1000
             容错参数 = 容错参数 + 1
             Goto 防守
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             进出界面.城内外通用进界面 8, 相关数据解析.出征坐标X, 相关数据解析.出征坐标Y, 0
             容错参数 = 容错参数 + 1
             Goto 防守
@@ -763,14 +773,14 @@ Sub 队伍撤防()
         Rem 撤防
         进出界面.城内外通用进界面(8, 相关数据解析.出征坐标X, 相关数据解析.出征坐标Y, 0)
         队伍子状态 = 判断队伍子状态()
-        If 队伍子状态 = 2 And 容错参数 < 5 Then 
+        If 队伍子状态 = 2 And 容错参数 < 3 Then 
             TracePrint "撤防"
             Touch 285, 1065, 100
             Delay 1000
             Goto 撤防
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             TracePrint "队伍没有在驻防中"
-        ElseIf 容错参数 >= 5 Then
+        ElseIf 容错参数 >= 3 Then
             TracePrint "撤防失败"
         End If
     End If
@@ -778,7 +788,9 @@ Sub 队伍撤防()
 End Sub
 
 Function 识别矿坑等级()
-    Call 进主公界面()
+    If 主公等级 = Null Then 
+        Call 进主公界面()
+    End If
     Dim 矿坑等级
     If 主公等级 >= 65 Then 
         矿坑等级 = 10
@@ -1009,7 +1021,7 @@ Sub 收邮件()
     容错参数 = 0
     Rem 处理军团邮件
     FindColor 349,1183,393,1237,"2626AD",0,0.99,intX,intY
-    If intX > -1 And intY > -1 And 容错参数 < 5 Then 
+    If intX > -1 And intY > -1 And 容错参数 < 3 Then 
         容错参数 = 容错参数 + 1
         Touch 340, 1180, 100
         Delay 1000
@@ -1428,7 +1440,7 @@ Sub 商城购买()
                 Else
                     场景相关操作.通用界面关闭()
                 End If
-            ElseIf 容错参数 < 5 Then
+            ElseIf 容错参数 < 3 Then
                 容错参数 = 容错参数 + 1
                 TracePrint "点击购买1失败,重试"
                 Goto 点击购买1
@@ -1473,7 +1485,7 @@ Sub 商城购买()
                 Else
                     场景相关操作.通用界面关闭()
                 End If
-            ElseIf 容错参数 < 5 Then
+            ElseIf 容错参数 < 3 Then
                 容错参数 = 容错参数 + 1
                 TracePrint "点击购买1失败,重试"
                 Goto 点击购买2
@@ -1741,7 +1753,7 @@ Sub 市场刷新()
         剩余免费次数 = Int(Left(ocrchar, 1))
     ElseIf temp = 5 Then
         剩余免费次数 = Int(Left(ocrchar, 2))
-    ElseIf 容错参数 < 5 Then
+    ElseIf 容错参数 < 3 Then
         容错参数 = 容错参数 + 1
         TracePrint "识别错误,重试"
         Goto 读取剩余免费刷新次数
@@ -1767,7 +1779,7 @@ Sub 市场刷新()
         容错参数 = 0
         Rem 判断是否因为有整卡没购买而弹出的提示框
         FindPic 459, 552, 528, 724, "Attachment:提示.png", "000000", 0, 0.98, intX, intY
-        If intX > -1 And intY > -1 And 容错参数 < 5 Then 
+        If intX > -1 And intY > -1 And 容错参数 < 3 Then 
             容错参数 = 容错参数 + 1
             //勾选不再提示
             Touch 330, 765, 100
@@ -1826,18 +1838,18 @@ Function 市场购买()
                     Delay 1500
                     //确认结果
                     FindPic 185, 551, 251, 733, "Attachment:赠予.png", "000000", 0, 0.8, intX, intY
-                    If intX > -1 And intY > -1 And 容错参数 < 5 Then 
+                    If intX > -1 And intY > -1 And 容错参数 < 3 Then 
                         TracePrint "购买失败"
                         容错参数 = 容错参数 + 1
                         Goto 点击赠予
                     End If
                     If 碎片是否已购买(起始X1,起始Y1,起始X2,起始Y2) Then
                         TracePrint "购买成功"
-                    ElseIf 容错参数 < 5 Then
+                    ElseIf 容错参数 < 3 Then
                         容错参数 = 容错参数 + 1
                         Goto 点击赠予
                     End If
-                ElseIf 容错参数 < 5 Then
+                ElseIf 容错参数 < 3 Then
                     FindPic 185,551,251,733,"Attachment:赠予1.png","000000",0,0.8,intX,intY
                     If intX > -1 And intY > -1 Then
                         TracePrint "货币不足,退出"
@@ -1907,7 +1919,7 @@ Function 兵事处理()
             If intX > -1 And intY > -1 Then
                 TracePrint "招募成功"
             Else 
-                If 容错参数 < 5 Then
+                If 容错参数 < 3 Then
                     容错参数 =  容错参数 + 1
                     Touch 150, 955, 100
                     TracePrint "点击招募啦"
@@ -1918,7 +1930,7 @@ Function 兵事处理()
         Else 
             TracePrint "兵营满了不招募了"
         End If
-    ElseIf 容错参数 < 5 Then
+    ElseIf 容错参数 < 3 Then
         TracePrint "切换兵营失败,重试"
         容错参数 = 容错参数 + 1
         Goto 切换到兵营
@@ -1946,7 +1958,7 @@ Function 兵事处理()
             If intX > -1 And intY > -1 Then
                 TracePrint "治疗中"
             Else 
-                If 容错参数 < 5 Then 
+                If 容错参数 < 3 Then 
                     容错参数 = 容错参数 + 1
                     Touch 150, 955, 100
                     Delay 1000
@@ -1958,7 +1970,7 @@ Function 兵事处理()
         Else 
             TracePrint "没伤兵啦"
         End If
-    ElseIf 容错参数 < 5 Then
+    ElseIf 容错参数 < 3 Then
         容错参数 = 容错参数 + 1
         TracePrint "切换伤兵营失败,重试"
         Goto 切换到伤兵营
@@ -2161,8 +2173,8 @@ Function 队伍设置()
         寻访队伍(i) = ReadUIConfig("寻访队伍" & i)
     Next
 
-    //怪物种类枚举: 0 = 黄巾军, 1 = 流寇, 2 = 山贼, 4 = 马贼
-    For i = 0 To 3
+    //怪物种类枚举: 0 = 黄巾军, 1 = 流寇, 2 = 山贼
+    For i = 0 To 2
         打怪种类(i) = ReadUIConfig("怪物类型" & i)
         //        TracePrint "打怪种类" & i, 打怪种类(i)
     Next
@@ -2187,7 +2199,7 @@ End Function
 Sub 派遣队伍()
     //类型一: 1 = 普通刷怪, 2 = 皇榜任务
     ShowMessage "派遣队伍", 1000, 50, 620
-    Dim 用户设置, 打怪队伍, 队伍状态, 伤兵信息, 是否使用行军令, 打怪种类, 打怪等级, 打怪次数, 满员率设置, 队伍兵量信息, 采集队伍, 采集类型, 矿坑等级, 寻访队伍,负重设置
+    Dim 用户设置, 打怪队伍, 队伍状态, 伤兵信息, 是否使用行军令, 打怪种类, 打怪等级, 打怪次数, 满员率设置, 队伍兵量信息, 采集队伍, 采集类型, 矿坑等级, 寻访队伍,负重设置,是否打马贼
 
     TracePrint "准备开始派遣队伍"
     用户设置 = 队伍设置()
@@ -2203,7 +2215,11 @@ Sub 派遣队伍()
     打怪次数 = Int(ReadUIConfig("打怪次数", 0))
     是否使用行军令 = ReadUIConfig("是否使用行军令", False)
     满员率设置 = Int(ReadUIConfig("满员率", 100))
-    负重设置 = Clng(ReadUIConfig("负重设置", 15000))
+    负重设置 = CLng(ReadUIConfig("负重设置", 15000))
+    是否打马贼 = (ReadUIConfig("怪物类型3", False))
+    If 是否打马贼 Then 
+        打怪种类(3) = True
+    End If
     TracePrint 打怪次数
     If 打怪次数 > 0 Then 
         For i = 0 To 3
@@ -2307,18 +2323,18 @@ Sub 派遣队伍()
                                     Call 前往目标(3, i)
                                     队伍状态(i) = 0
                                 End If
-                            ElseIf 容错参数 < 5 Then
+                            ElseIf 容错参数 < 3 Then
                                 容错参数 = 容错参数 + 1
                                 TracePrint "识别错误,重试"
                                 SnapShot "/sdcard/test1.png",0,0,720,1280
                                 Goto 识别剩余次数
                             End If
-                        ElseIf 容错参数 < 5 Then
+                        ElseIf 容错参数 < 3 Then
                             TracePrint "进入寻访界面失败,重试"
                             容错参数 = 容错参数 + 1
                             Goto 点击寻访图标
                         End If
-                    ElseIf 容错参数 < 5 Then
+                    ElseIf 容错参数 < 3 Then
                         容错参数 = 容错参数 + 1
                         TracePrint "点击城池失败,重试"
                         Goto 点击城池
@@ -2350,7 +2366,7 @@ Sub 进附近界面(筛选类型)
             If intX > -1 And intY > -1 Then
                 TracePrint "切换标签成功"
             Else 
-                If 容错参数 < 5 Then 
+                If 容错参数 < 3 Then 
                     容错参数 = 容错参数 + 1
                     TracePrint "切换失败,重试"
                     Goto 切换标签2
@@ -2368,7 +2384,7 @@ Sub 进附近界面(筛选类型)
         If intX > -1 And intY > -1 Then
             TracePrint "切换标签成功"
         Else 
-            If 容错参数 < 5 Then 
+            If 容错参数 < 3 Then 
                 容错参数 = 容错参数 + 1
                 TracePrint "切换失败,重试"
                 Goto 切换标签1
@@ -2416,7 +2432,9 @@ Sub 筛选设置(筛选类型, 目标种类, 目标等级)
         Touch 120, 890, 100
         Delay 1000
         If 目标种类(3) Then 
-            
+            For i = 0 To 9
+                目标等级(i) = ReadUIConfig("马贼" & i)
+            Next
             //上次拖动过,所以要恢复原位置
 
             TouchDown 460, 560, 0
@@ -2992,7 +3010,7 @@ Function 确认目标(寻找类型, 目标种类, 目标等级)
                 Else 
                     If 场景相关操作.进入场景是否正确(2) Then 
                         TracePrint "跳转成功"
-                    ElseIf 容错参数 < 5 Then
+                    ElseIf 容错参数 < 3 Then
                         容错参数 = 容错参数 + 1
                         TracePrint "跳转失败,重试"
                         Goto 点击前往目标
@@ -3076,12 +3094,12 @@ Sub 前往目标(出征类型, 队伍)
                 temp = Array(1 + temp1(0), Time(), 寻访次数)
                 WriteConfig "寻访次数数组"&账号信息 , temp, True
             End If
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "派遣失败,重试"
             Goto 出发
         End If
-    ElseIf 容错参数 < 5 Then
+    ElseIf 容错参数 < 3 Then
         Select Case 出征类型
         Case 1, 2
             Touch 350, 760, 100
@@ -3490,7 +3508,7 @@ Sub 进皇榜界面()
     ElseIf 场景相关操作.进入场景是否正确(13)
         TracePrint "已经在皇榜任务界面"
     Else
-        If 容错参数 < 5 Then 
+        If 容错参数 < 3 Then 
             场景相关操作.通用界面关闭
             容错参数 = 容错参数 + 1
             Goto 进皇榜	
@@ -3534,7 +3552,7 @@ Sub 接皇榜任务()
             Rem 识别排序
             ocrchar = 类型转换.SuperOcr(404,281,435,339,"6D6D6A-111111|B9B9B8-111111|A8A8A6-111111|939391-111111|81807E",0.9)
             TracePrint ocrchar
-            If ocrchar = "城池" And 容错参数 < 5 Then 
+            If ocrchar = "城池" And 容错参数 < 3 Then 
                 Touch 420, 335, 100
                 Delay 1000
                 Touch 380, 335, 100
@@ -3543,7 +3561,7 @@ Sub 接皇榜任务()
                 Goto 识别排序
             ElseIf ocrchar = "名望" Then
                 TracePrint "名望排序完成"
-            ElseIf 容错参数 >= 5 Then
+            ElseIf 容错参数 >= 3 Then
                 TracePrint "排序没有正常完成"
             End If
         	
@@ -3609,7 +3627,7 @@ Sub 接皇榜任务()
                     End If
                 End If
             Next
-            If 容错参数 < 5 Then 
+            If 容错参数 < 3 Then 
                 容错参数 = 容错参数 + 1
                 TracePrint "一页循环完毕"
                 ocrchar = Ocr(402,586,439,652,"93979C-111111|C7CCD4-111111|EDF4FD-111111|E6EDF5-111111|C9CFD7-111111|B2B7BD-111111|7E8287-111111|AAA6A6-111111|E1E1E1-111111|837F7F-111111",0.9)
@@ -3631,7 +3649,7 @@ Sub 接皇榜任务()
         End If
     Else 
         TracePrint "没有进入接皇榜任务界面,重试"
-        If 容错参数 < 5 Then 
+        If 容错参数 < 3 Then 
             容错参数 = 容错参数 + 1
             Goto 进军团皇榜界面
         End If
@@ -4159,7 +4177,7 @@ Sub 获取单个副本数据(副本数据)
             副本数据(3) = Int(UTF8.Left(ocrchar, 1))
         ElseIf 字符长度 = 4 Then
             副本数据(3) = Int(UTF8.Left(ocrchar, 2))
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "获取剩余次数异常,重试"
             ShowMessage "获取剩余次数异常,重试",1000,0,0
@@ -4190,7 +4208,7 @@ Sub 获取单个副本数据(副本数据)
     If intX > -1 And intY > -1 Then
         副本数据(4) = 3
     End If
-    If 副本数据(4) = Null And 容错参数 < 5 Then 
+    If 副本数据(4) = Null And 容错参数 < 3 Then 
         容错参数 = 容错参数 + 1
         TracePrint "星数识别异常,重试"
         Goto 星数识别
@@ -4213,7 +4231,7 @@ Sub 进副本预览(坐标X, 坐标Y )
     点击偏移X = 0 : 点击偏移Y = 0
     容错参数 = 0
     Rem 进副本预览
-    If 场景相关操作.进入场景是否正确(38) Or 场景相关操作.进入场景是否正确(39) Or 场景相关操作.进入场景是否正确(3) And 容错参数 < 5 Then 
+    If 场景相关操作.进入场景是否正确(38) Or 场景相关操作.进入场景是否正确(39) Or 场景相关操作.进入场景是否正确(3) And 容错参数 < 3 Then 
         点击坐标X = 坐标X - 点击偏移X : 点击坐标Y = 坐标Y + 点击偏移Y
         Touch 点击坐标X, 点击坐标Y, 100
         Delay 1500
@@ -4463,7 +4481,7 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
                 容错参数 = 0
                 Rem 收起章节列表
                 FindPic 154,54,182,547,"Attachment:章节选择1.png","000000",0,0.9,intX,intY
-                If intX > -1 And intY > -1 And 容错参数 < 5 Then 
+                If intX > -1 And intY > -1 And 容错参数 < 3 Then 
                     TracePrint "章节列表打开中"
                     容错参数 = 容错参数 + 1
                     Touch 相关数据解析.章节选择坐标X, 相关数据解析.章节选择坐标Y, 100
@@ -4590,7 +4608,7 @@ Sub 正常打副本前准备()
         Touch 210, 980, 100
         Delay 1000
         Call 打副本(1, 1)
-    ElseIf 容错参数 < 5 Then
+    ElseIf 容错参数 < 3 Then
         FindPic 171,545,277,756,"Attachment:使用.png","000000",0,0.9,intX,intY
         If intX > -1 And intY > -1 Then 
             TracePrint "体力不足,使用包子补充"
@@ -4605,6 +4623,7 @@ Sub 正常打副本前准备()
             End If
         End If
         TracePrint "进入扫荡失败,重试"
+        容错参数 = 容错参数 + 1
         Goto 正常打副本   
     End If
 End Sub
@@ -4623,7 +4642,7 @@ Sub 扫荡前装备(最终打副本次数)
         Call 打副本(2, 最终打副本次数)
     ElseIf 场景相关操作.进入场景是否正确(41) Then
         Call 打副本(2, 最终打副本次数)
-    ElseIf 容错参数 < 5 Then
+    ElseIf 容错参数 < 3 Then
         FindPic 171,545,277,756,"Attachment:使用.png","000000",0,0.9,intX,intY
         If intX > -1 And intY > -1 Then 
             TracePrint "体力不足,使用包子补充"
@@ -4637,6 +4656,7 @@ Sub 扫荡前装备(最终打副本次数)
                 Exit Sub
             End If
         End If
+        容错参数 = 容错参数 + 1
         TracePrint "进入扫荡失败,重试"
         Goto 进入扫荡   
     End If
@@ -4655,13 +4675,13 @@ Sub 打副本(类型, 次数)
         
         If 场景相关操作.进入场景是否正确(61) Then 
             TracePrint "在等待加载"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             If 场景相关操作.进入场景是否正确(36) Then
                 场景相关操作.通用界面关闭 
             End If
             TracePrint "似乎没点到,再试一次"
             Goto 进战斗界面
-        ElseIf 容错参数 >= 5 Then
+        ElseIf 容错参数 >= 3 Then
             TracePrint "一直没进到战斗放弃"
             Exit Sub
         End If
@@ -4827,7 +4847,7 @@ Sub 打副本(类型, 次数)
             End If
             If 场景相关操作.进入场景是否正确(37) Or 场景相关操作.进入场景是否正确(69) Then 
                 TracePrint "扫荡结束"
-            ElseIf 容错参数 < 5 Then
+            ElseIf 容错参数 < 3 Then
                 容错参数 = 容错参数 + 1
                 TracePrint "没有点到扫荡,从头来"
                 Goto 点击开始扫荡
@@ -4941,11 +4961,11 @@ Sub 升级大殿()
                 Touch 685, 1230, 100
                 Delay 500
             Else 
-                If Not 场景相关操作.进入场景是否正确(51) And 容错参数 < 5 Then 
+                If Not 场景相关操作.进入场景是否正确(51) And 容错参数 < 3 Then 
                     容错参数 = 容错参数 + 1
                     TracePrint "点击升级失败,重试"
                     Goto 点击升级按钮
-                ElseIf 容错参数 < 5 Then
+                ElseIf 容错参数 < 3 Then
                     Call 升级建筑(1)
                 End If
             End If
@@ -4968,7 +4988,7 @@ Sub 升级建筑(类型)
             TracePrint "升级前置条件不满足"
             FindPic 418,1029,489,1131,"Attachment:建筑前置条件.png","000000",0,0.95,intX,intY
             If intX > -1 And intY > -1 Then
-                If 容错参数 < 5 Then 
+                If 容错参数 < 3 Then 
                     容错参数 = 容错参数 + 1
                     Touch 450, 1075, 100
                     Delay 2000
@@ -4990,7 +5010,7 @@ Sub 升级建筑(类型)
                 Else 
                     Touch 70, 1040, 100
                     Delay 1500
-                    If 场景相关操作.进入场景是否正确(51) And 容错参数 < 5 Then 
+                    If 场景相关操作.进入场景是否正确(51) And 容错参数 < 3 Then 
                         容错参数 = 容错参数 + 1
                         TracePrint "点击升级失败,重试"
                         Goto 确认前置条件
@@ -5020,7 +5040,7 @@ Sub 升级建筑(类型)
                 TracePrint "切换成功"
                 容错参数 = 0
                 Rem 点击升级按钮2
-                If 是否可升级() = 1 And 容错参数 < 5 Then 
+                If 是否可升级() = 1 And 容错参数 < 3 Then 
                     容错参数 = 容错参数 + 1
                     Touch 110, 905, 100
                     Delay 1000
@@ -5029,7 +5049,7 @@ Sub 升级建筑(类型)
                     Goto 结束
                 End If
             Else 
-                If 容错参数 < 5 Then
+                If 容错参数 < 3 Then
                     容错参数 = 容错参数 + 1
                     TracePrint "切换失败,重试"
                     Goto 切换到第二个建筑
@@ -5045,7 +5065,7 @@ Sub 升级建筑(类型)
                 TracePrint "切换成功"
                 容错参数 = 0
                 Rem 点击升级按钮3
-                If 是否可升级() = 1 And 容错参数 < 5 Then
+                If 是否可升级() = 1 And 容错参数 < 3 Then
                     容错参数 = 容错参数 + 1
                     Touch 110, 905, 100
                     Delay 1000
@@ -5054,7 +5074,7 @@ Sub 升级建筑(类型)
                     Goto 结束
                 End If
             Else 
-                If 容错参数 < 5 Then
+                If 容错参数 < 3 Then
                     容错参数 = 容错参数 + 1
                     TracePrint "切换失败,重试"
                     Goto 切换到第三个建筑
@@ -5070,7 +5090,7 @@ Sub 升级建筑(类型)
                 TracePrint "切换成功"
                 容错参数 = 0
                 Rem 点击升级按钮4
-                If 是否可升级() = 1 And 容错参数 < 5 Then 
+                If 是否可升级() = 1 And 容错参数 < 3 Then 
                     容错参数 = 容错参数 + 1
                     Touch 110, 905, 100
                     Delay 1000
@@ -5079,7 +5099,7 @@ Sub 升级建筑(类型)
                     Goto 结束
                 End If
             Else 
-                If 容错参数 < 5 Then
+                If 容错参数 < 3 Then
                     容错参数 = 容错参数 + 1
                     TracePrint "切换失败,重试"
                     Goto 切换到第四个建筑
@@ -5149,7 +5169,7 @@ Sub 武将小红点处理()
                 Delay 2500
                 If 场景相关操作.进入场景是否正确(62) Then 
                     场景相关操作.通用界面关闭
-                ElseIf 容错参数 < 5 Then
+                ElseIf 容错参数 < 3 Then
                     容错参数 = 容错参数 + 1
                     Goto 关闭获得武将界面
                 End If
@@ -5212,7 +5232,7 @@ Sub 武将界面内部处理()
                 Touch 220, 1070, 100
                 Delay 1500
                 有装备需要强化 = True
-                If 容错参数 < 5 Then 
+                If 容错参数 < 3 Then 
                     容错参数 = 容错参数 + 1
                     Goto 找装备小红点
                 End If
@@ -5310,10 +5330,9 @@ End Sub
 
 
 Sub 强化前几个人( 类型)
-    //暂时最多支持9人
     //类型枚举 : 1 = 装备 2 = 升星 3 = 升阶 4 = 升级
     TracePrint "开始强化武将,类型为"&类型
-    Dim 人数 = ReadUIConfig("强化人数", 6)
+    Dim 人数 = Int(ReadUIConfig("强化人数", 24))
     Select Case 类型
     Case 1
         If ReadUIConfig("强化装备") = False Then 
@@ -5321,30 +5340,150 @@ Sub 强化前几个人( 类型)
             Exit Sub
         End If
     End Select
+    Dim 武将目标等级
+    If 类型 = 4 Then 
+        If 主公等级 = Null Then 
+            //            Call 进主公界面()
+        Else 
+            If 主公等级 >= 40 Then 
+                武将目标等级 = 30
+            ElseIf 主公等级 >= 35 Then
+                武将目标等级 = 24
+            ElseIf 主公等级 >= 30 Then
+                武将目标等级 = 20
+            ElseIf 主公等级 >= 25 Then
+                武将目标等级 = 18
+            ElseIf 主公等级 >= 20 Then
+                武将目标等级 = 14
+            ElseIf 主公等级 >= 15 Then
+                武将目标等级 = 12
+            ElseIf 主公等级 >= 10 Then
+                武将目标等级 = 10
+            ElseIf 主公等级 >= 1 Then
+                武将目标等级 = 6
+            End If
+        End If
+    End If
     
     //进武将界面
     进出界面.城内进固定界面(14, 相关数据解析.武将坐标X, 相关数据解析.武将坐标Y, 5, False)
     Dim 武将起始坐标X, 武将起始坐标Y, X偏移量, Y偏移量, 当前武将坐标X, 当前武将坐标Y
-    武将起始坐标X = 485 : 武将起始坐标Y = 300 : X偏移量 = 150 : Y偏移量 = 340
-    For i = 0 To (人数 - 1)
-        当前武将坐标X = 武将起始坐标X - Int(i / 3) * X偏移量
-        当前武将坐标Y = 武将起始坐标Y + (i Mod 3) * Y偏移量
-        Touch 当前武将坐标X, 当前武将坐标Y, 100
-        Delay 1500
-        Select Case 类型
-        Case 1
-            If Not 强化单个武将装备()
-                Exit For
+    武将起始坐标X = 530 : 武将起始坐标Y = 240 : X偏移量 = 150 : Y偏移量 = 340
+    Dim 滚动次数 = Int((人数 - 1) / 9)
+    Dim a, 上次滚动数, 上次武将数, i
+    a = 0 : 上次滚动数 = 0 : 上次武将数 = 0 : i = 0
+    Rem 循环强化武将
+    For a = 上次滚动数 To 滚动次数
+        TracePrint "第"& a + 1 &"次循环强化"
+        If a > 0 Then 
+            zm.Swipe 125, 435, 615, 435, 500
+            Delay 2500
+        End If
+        Dim 找武将循环次数
+        找武将循环次数 = 人数 - a * 9
+        If 找武将循环次数 > 9 Then 
+            找武将循环次数 = 9
+        End If
+        For i = 上次武将数 To (找武将循环次数 - 1)
+            当前武将坐标X = 武将起始坐标X - Int(i / 3) * X偏移量
+            当前武将坐标Y = 武将起始坐标Y + (i Mod 3) * Y偏移量
+            Dim ocrchar, 当前武将等级, intX, intY
+            If 类型 = 4 Then 
+                //在预览面板先识别武将等级
+                ocrchar=Ocr(当前武将坐标X - 60,当前武将坐标Y, 当前武将坐标X,当前武将坐标Y + 30,"BAD0DC-111111|A7BAC5-111111|86949C-111111",0.8)
+                Traceprint ocrchar
+                当前武将等级 = Int(ocrchar)
             End If
-            Delay 1500
-        Case 2
-        Case 3
-            Call 单个武将升阶()
-            If Not 体力判断() Then 
+  
+            FindColor 当前武将坐标X + 29, 当前武将坐标Y + 127, 当前武将坐标X + 49, 当前武将坐标Y + 164,"3A342A",0,1,intX,intY
+            TracePrint 当前武将坐标X + 29, 当前武将坐标Y + 127, 当前武将坐标X + 49, 当前武将坐标Y + 164
+            TracePrint intX, intY
+            If intX > -1 And intY > -1 Then
+                TracePrint "找到未上阵武将,本次强化完成"
+                场景相关操作.通用界面关闭 
+                Delay 2000
                 Exit Sub
             End If
-        Case 4
-        End Select   
+            Dim 上次结果
+            Select Case 类型
+            Case 1
+                Touch 当前武将坐标X, 当前武将坐标Y, 100
+                Delay 1500
+                上次结果 = 强化单个武将装备()
+                If 上次结果 Then 
+                    TracePrint "升级完成,回到滚动处"
+                    If i = 8 Then 
+                        上次滚动数 = a + 1
+                        上次武将数 = 0
+                    Else 
+                        上次滚动数 = a
+                        上次武将数 = i + 1
+                    End If
+                    Delay 1500
+                    Goto 循环强化武将
+                Else 
+                    TracePrint "本次武将强化装备不正常退出"
+                    TracePrint "强化武将完毕"
+                    场景相关操作.通用界面关闭 
+                    Delay 2000
+                    Exit Sub
+                End If
+            Case 2
+            Case 3
+                Touch 当前武将坐标X, 当前武将坐标Y, 100
+                Delay 1500
+                上次结果 = 单个武将升阶()
+                If 上次结果 Then 
+                    TracePrint "升级完成,回到滚动处"
+                    If i = 8 Then 
+                        上次滚动数 = a + 1
+                        上次武将数 = 0
+                    Else 
+                        上次滚动数 = a
+                        上次武将数 = i + 1
+                    End If
+                    Delay 1500
+                    Goto 循环强化武将
+                Else 
+                    TracePrint "本次武将升阶不正常退出"
+                    TracePrint "强化武将完毕"
+                    场景相关操作.通用界面关闭 
+                    Delay 2000
+                    Exit Sub
+                End If
+            Case 4
+                //识别武将等级
+                If 当前武将等级 = Null Then 
+                    TracePrint "武将等级识别异常,退出"
+                Else 
+                    If 当前武将等级 < 武将目标等级 Then 
+                        Touch 当前武将坐标X, 当前武将坐标Y, 100
+                        Delay 1500
+                        上次结果 = 单个武将升级()
+                        If 上次结果 Then 
+                            TracePrint "升级完成,回到滚动处"
+                            If i = 8 Then 
+                                上次滚动数 = a + 1
+                                上次武将数 = 0
+                            Else 
+                                上次滚动数 = a
+                                上次武将数 = i + 1
+                            End If
+                            Delay 1500
+                            Goto 循环强化武将
+                        Else 
+                            TracePrint "本次武将升级不正常退出"
+                            TracePrint "强化武将完毕"
+                            场景相关操作.通用界面关闭 
+                            Delay 2000
+                            Exit Sub
+                        End If
+                    Else 
+                        TracePrint "当前武将等级已经达标"
+                    End If 
+                End If 
+            End Select   
+        Next
     Next
     TracePrint "强化武将完毕"
     场景相关操作.通用界面关闭 
@@ -5428,7 +5567,7 @@ Function 强化单个武将装备()
     Delay 1500
 End Function
 
-Sub 单个武将升阶()
+Function 单个武将升阶()
     If 进出界面.进入子界面(65, 71, 490, 1205) Then 
         Dim intX,intY
         //判断位置右1是否为空
@@ -5437,14 +5576,17 @@ Sub 单个武将升阶()
             TracePrint "该位置已经激活"
         Else 
             If 进出界面.进入子界面(71, 70, 440, 1025) Then 
-                Call 寻找目标材料副本()
+                If Not 寻找目标材料副本() Then 
+                    TracePrint "上次寻找材料出现问题,先放弃"
+                    单个武将升阶 = False
+                    Exit Function
+                End If
             Else 
                 TracePrint "进入界面失败,放弃"
+                单个武将升阶 = False
+                Exit Function
                 ShowMessage "进入界面失败,放弃", 2000, 50, 620
                 Delay 2000
-            End If
-            If Not 体力判断() Then 
-                Exit Sub
             End If
         End If
         //判断位置右2是否为空
@@ -5454,14 +5596,17 @@ Sub 单个武将升阶()
         Else 
             //进升阶详情页
             If 进出界面.进入子界面(71, 70, 275, 1025) Then 
-                Call 寻找目标材料副本()
+                If Not 寻找目标材料副本() Then 
+                    TracePrint "上次寻找材料出现问题,先放弃"
+                    单个武将升阶 = False
+                    Exit Function
+                End If
             Else 
                 TracePrint "进入界面失败,放弃"
+                单个武将升阶 = False
+                Exit Function
                 ShowMessage "进入界面失败,放弃", 2000, 50, 620
                 Delay 2000
-            End If
-            If Not 体力判断() Then 
-                Exit Sub
             End If
         End If
         //判断位置下1是否为空
@@ -5470,14 +5615,17 @@ Sub 单个武将升阶()
             TracePrint "该位置已经激活"
         Else 
             If 进出界面.进入子界面(71, 70, 200, 865) Then 
-                Call 寻找目标材料副本()
+                If Not 寻找目标材料副本() Then 
+                    TracePrint "上次寻找材料出现问题,先放弃"
+                    单个武将升阶 = False
+                    Exit Function
+                End If
             Else 
                 TracePrint "进入界面失败,放弃"
+                单个武将升阶 = False
+                Exit Function
                 ShowMessage "进入界面失败,放弃", 2000, 50, 620
                 Delay 2000
-            End If
-            If Not 体力判断() Then 
-                Exit Sub
             End If
         End If
         //判断位置左1是否为空
@@ -5486,14 +5634,17 @@ Sub 单个武将升阶()
             TracePrint "该位置已经激活"
         Else 
             If 进出界面.进入子界面(71, 70, 275, 710) Then 
-                Call 寻找目标材料副本()
+                If Not 寻找目标材料副本() Then 
+                    TracePrint "上次寻找材料出现问题,先放弃"
+                    单个武将升阶 = False
+                    Exit Function
+                End If
             Else 
                 TracePrint "进入界面失败,放弃"
+                单个武将升阶 = False
+                Exit Function
                 ShowMessage "进入界面失败,放弃", 2000, 50, 620
                 Delay 2000
-            End If
-            If Not 体力判断() Then 
-                Exit Sub
             End If
         End If
         //判断位置左2是否为空
@@ -5502,14 +5653,17 @@ Sub 单个武将升阶()
             TracePrint "该位置已经激活"
         Else 
             If 进出界面.进入子界面(71, 70, 440, 710) Then 
-                Call 寻找目标材料副本()
+                If Not 寻找目标材料副本() Then 
+                    TracePrint "上次寻找材料出现问题,先放弃"
+                    单个武将升阶 = False
+                    Exit Function
+                End If
             Else 
                 TracePrint "进入界面失败,放弃"
+                单个武将升阶 = False
+                Exit Function
                 ShowMessage "进入界面失败,放弃", 2000, 50, 620
                 Delay 2000
-            End If
-            If Not 体力判断() Then 
-                Exit Sub
             End If
         End If
         //判断位置上1是否为空
@@ -5518,35 +5672,40 @@ Sub 单个武将升阶()
             TracePrint "该位置已经激活"
         Else 
             If 进出界面.进入子界面(71, 70, 520, 865) Then 
-                Call 寻找目标材料副本()
+                If Not 寻找目标材料副本() Then 
+                    TracePrint "上次寻找材料出现问题,先放弃"
+                    单个武将升阶 = False
+                    Exit Function
+                End If
             Else 
                 TracePrint "进入界面失败,放弃"
+                单个武将升阶 = False
+                Exit Function
                 ShowMessage "进入界面失败,放弃", 2000, 50, 620
                 Delay 2000
-            End If
-            If Not 体力判断() Then 
-                Exit Sub
             End If
         End If
     Else 
         TracePrint "进入界面失败,放弃"
+        单个武将升阶 = False
+        Exit Function
         ShowMessage "进入界面失败,放弃", 2000, 50, 620
         Delay 2000
     End If
-
+    单个武将升阶 = True
     //关闭武将详情界面
     场景相关操作.通用界面关闭
     Delay 1500
     TracePrint "单个武将检查完毕"
-End Sub
+End Function
 
-Sub 寻找目标材料副本()
+Function 单个武将升级()
+    
+End Function
+
+
+Function 寻找目标材料副本()
     Do
-        If Not 体力判断() Then 
-            场景相关操作.通用界面关闭 
-            Delay 2000
-            Exit Do
-        End If
         FindColor 242,371,409,901,"0000EC",0,0.9,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "找到缺失材料"
@@ -5562,64 +5721,72 @@ Sub 寻找目标材料副本()
                         TracePrint "找到前往图标"
                         //进副本预览
                         //这里总出问题
-                        If 进出界面.进入子界面(69, 37, intX, intY) Then 
-                            //确认剩余体力,因为这里的拥有体力比较在"/"右边,所以特殊处理了
-                            Dim ocrchar, temp
-                            ocrchar = 类型转换.SuperOcr(151,368,184,486,"64DEF7-111111|59C4DA-111111|458F9D-111111|438996-111111|4B9FAF-111111",1)
-                            TracePrint ocrchar
-                            temp = InStr(1, ocrchar, "/")
-                            当前体力 = Int(Right(ocrchar, Len(ocrchar) - temp))
-                            If Not 体力判断() Then 
-                                Delay 1500
-                                Exit Sub
+                        Touch intX, intY, 100
+                        Delay 2000
+                        FindPic 171,545,277,756,"Attachment:使用.png","000000",0,0.9,intX,intY
+                        If intX > -1 And intY > -1 Then 
+                            TracePrint "体力不足,使用包子补充"
+                            If ReadUIConfig("是否自动使用包子") Then 
+                                Touch 210, 645, 100
+                                Delay 1000
+                            Else 
+                                TracePrint "体力不足退出"
+                                场景相关操作.通用界面关闭
+                                Delay 2000
+                                寻找目标材料副本 = False
+                                Exit Function
                             End If
-                            Call 获取单个副本数据(空副本数据)
-                            //副本数组数据结构为,0:X坐标,1:Y坐标,2:副本编号,3:剩余次数,4:副本星数
-                            If 空副本数据(3) > 0 Then 
-                                If 空副本数据(4) <= 2 Then 
-                                    TracePrint "副本不能扫荡,不利于后边效率循环,放弃"
-                                    //关闭界面
+                        End If
+                        //确认剩余体力,因为这里的拥有体力比较在"/"右边,所以特殊处理了
+                            
+                        //暂时不管体力的判断,统一到点击扫荡时判断
+                        //                            Dim ocrchar, temp
+                        //                            ocrchar = 类型转换.SuperOcr(151,368,184,486,"64DEF7-111111|59C4DA-111111|458F9D-111111|438996-111111|4B9FAF-111111",1)
+                        //                            TracePrint ocrchar
+                        //                            temp = InStr(1, ocrchar, "/")
+                        //                            当前体力 = Int(Right(ocrchar, Len(ocrchar) - temp))
+                        Call 获取单个副本数据(空副本数据)
+                        //副本数组数据结构为,0:X坐标,1:Y坐标,2:副本编号,3:剩余次数,4:副本星数
+                        If 空副本数据(3) > 0 Then 
+                            If 空副本数据(4) <= 2 Then 
+                                TracePrint "副本不能扫荡,不利于后边效率循环,放弃"
+                                //关闭界面
+                                容错参数 = 0
+                                Rem 关闭副本界面
+                                Touch 640, 1060, 100
+                                Delay 1000
+                                If 场景相关操作.进入场景是否正确(69) Then 
+                                    TracePrint "成功关闭副本界面"
+                                ElseIf 容错参数 < 3 Then
+                                    TracePrint "没有正常关闭,重试"
+                                    容错参数 = 容错参数 + 1
+                                    Goto 关闭副本界面
+                                End If
+                            ElseIf 空副本数据(4) = 3 Then
+                                //进扫荡预览
+                                If 进出界面.进入子界面(37, 41, 160, 950) Then 
+                                    Call 打副本(2, 空副本数据(3))
+                                    //关闭界面,检查是否足够
                                     容错参数 = 0
-                                    Rem 关闭副本界面
-                                    Touch 640, 1060, 100
-                                    Delay 1000
-                                    If 场景相关操作.进入场景是否正确(69) Then 
-                                        TracePrint "成功关闭副本界面"
-                                    ElseIf 容错参数 < 5 Then
+                                    Rem 关闭出处界面
+                                    场景相关操作.通用界面关闭 
+                                    Delay 2000
+                                    If 场景相关操作.进入场景是否正确(70) Then 
+                                        TracePrint "成功关闭出处界面"
+                                    ElseIf 容错参数 < 3 Then
                                         TracePrint "没有正常关闭,重试"
                                         容错参数 = 容错参数 + 1
-                                        Goto 关闭副本界面
+                                        Goto 关闭出处界面
                                     End If
-                                ElseIf 空副本数据(4) = 3 Then
-                                    //进扫荡预览
-                                    If 进出界面.进入子界面(37, 41, 160, 950) Then 
-                                        Call 打副本(2, 空副本数据(3))
-                                        //关闭界面,检查是否足够
-                                        容错参数 = 0
-                                        Rem 关闭出处界面
-                                        场景相关操作.通用界面关闭 
-                                        Delay 2000
-                                        If 场景相关操作.进入场景是否正确(70) Then 
-                                            TracePrint "成功关闭出处界面"
-                                        ElseIf 容错参数 < 5 Then
-                                            TracePrint "没有正常关闭,重试"
-                                            容错参数 = 容错参数 + 1
-                                            Goto 关闭出处界面
-                                        End If
-                                        Exit For
-                                    Else 
-                                        TracePrint "进入界面失败,放弃"
-                                        ShowMessage "进入界面失败,放弃", 2000, 50, 620
-                                        Delay 2000
-                                    End If 
-                                End If
-                            Else 
-                                TracePrint "副本剩余次数为0,重新选择"
+                                    Exit For
+                                Else 
+                                    TracePrint "进入界面失败,放弃"
+                                    ShowMessage "进入界面失败,放弃", 2000, 50, 620
+                                    Delay 2000
+                                End If 
                             End If
                         Else 
-                            TracePrint "进入界面失败,放弃"
-                            ShowMessage "进入界面失败,放弃", 2000, 50, 620
-                            Delay 2000
+                            TracePrint "副本剩余次数为0,重新选择"
                         End If
                     Else 
                         FindPic 起始X1,起始Y1,起始X2,起始Y2,"Attachment:升阶升星不可前往.png","000000",2,0.9,intX,intY
@@ -5627,28 +5794,35 @@ Sub 寻找目标材料副本()
                             TracePrint "后边的途径都没达成条件,退出"
                             场景相关操作.通用界面关闭 
                             Delay 2000
-                            Exit Do
+                            寻找目标材料副本 = True
+                            Exit Function
                         End If
                     End If
                 Next
             Else 
                 TracePrint "进入界面失败,放弃"
+                寻找目标材料副本 = False
+                场景相关操作.通用界面关闭
                 ShowMessage "进入界面失败,放弃", 2000, 50, 620
                 Delay 2000
+                Exit Do
             End If
         Else 
             TracePrint "没找到缺失材料,退出"
             FindPic 77,527,211,746,"Attachment:激活可.png","000000",0,0.9,intX,intY
             If intX > -1 And intY > -1 Then
                 Touch intX, intY, 100
+                Delay 2000
             End If
             //关闭升阶详情界面
             场景相关操作.通用界面关闭 
             Delay 2000
+            寻找目标材料副本 = True
             Exit Do
         End If
     Loop
-End Sub
+    TracePrint "寻找目标材料副本结束"
+End Function
 
 //升级军械
 Sub 升级军械()
@@ -5704,7 +5878,7 @@ Sub 进行研发(类型)
         TracePrint ocrchar
         If ocrchar = "战鼓" Then
             TracePrint "选中了战鼓"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中战鼓,重试"
             Goto 选中战鼓
@@ -5722,7 +5896,7 @@ Sub 进行研发(类型)
         TracePrint ocrchar
         If ocrchar = "木牛流马" Then
             TracePrint "选中了木牛流马"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中木牛流马,重试"
             Goto 选中木牛流马
@@ -5739,7 +5913,7 @@ Sub 进行研发(类型)
         TracePrint ocrchar
         If ocrchar = "井栏" Then
             TracePrint "选中了井栏"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中井栏,重试"
             Goto 选中井栏
@@ -5753,7 +5927,7 @@ Sub 进行研发(类型)
         TracePrint ocrchar
         If ocrchar = "投石车" Then
             TracePrint "选中了投石车"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中投石车,重试"
             Goto 选中投石车
@@ -5767,7 +5941,7 @@ Sub 进行研发(类型)
         TracePrint ocrchar
         If ocrchar = "盾车" Then
             TracePrint "选中了盾车"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中盾车,重试"
             Goto 选中盾车
@@ -5786,7 +5960,7 @@ Sub 进行研发(类型)
     Rem 点击研发
     Touch 115, 1075, 100
     Delay 1500
-    If 军械是否研发中() = False And 容错参数 < 5 Then 
+    If 军械是否研发中() = False And 容错参数 < 3 Then 
         容错参数 = 容错参数 + 1
         Goto 点击研发
     End If
@@ -5893,7 +6067,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "背水一战" Then
             TracePrint "选中了背水一战"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有背水一战,重试"
             Goto 背水一战
@@ -5906,7 +6080,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "乱石阵" Then
             TracePrint "选中了乱石阵"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中乱石阵,重试"
             Goto 乱石阵
@@ -5919,7 +6093,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "一鼓作气" Then
             TracePrint "选中了一鼓作气"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中一鼓作气,重试"
             Goto 一鼓作气
@@ -5932,7 +6106,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "水淹七军" Then
             TracePrint "选中了水淹七军"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中水淹七军,重试"
             Goto 水淹七军
@@ -5945,7 +6119,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "援军令" Then
             TracePrint "选中了援军令"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中援军令,重试"
             Goto 援军令
@@ -5958,7 +6132,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "火牛阵" Then
             TracePrint "选中了火牛阵"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中火牛阵,重试"
             Goto 火牛阵
@@ -5971,7 +6145,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "巨石轰" Then
             TracePrint "选中了巨石轰"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中巨石轰,重试"
             Goto 巨石轰
@@ -5984,7 +6158,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "草木皆兵" Then
             TracePrint "选中了草木皆兵"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中草木皆兵,重试"
             Goto 草木皆兵
@@ -5997,7 +6171,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "奋武扬威" Then
             TracePrint "选中了奋武扬威"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中奋武扬威,重试"
             Goto 奋武扬威
@@ -6014,7 +6188,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "南蛮入侵" Then
             TracePrint "选中了南蛮入侵"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中南蛮入侵,重试"
             Goto 南蛮入侵
@@ -6034,7 +6208,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "万箭齐发" Then
             TracePrint "选中了万箭齐发"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中万箭齐发,重试"
             Goto 万箭齐发
@@ -6054,7 +6228,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "八卦阵" Then
             TracePrint "选中了八卦阵"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中八卦阵,重试"
             Goto 八卦阵
@@ -6074,7 +6248,7 @@ Sub 升级计略(类型)
         ocrchar = 类型转换.SuperOcr(465,185,505,315,"8EAFC0-111111|7092A2-111111|E3EDF0-111111|B1C2D3-111111|B2CADB-111111|C8D9D9-111111|A4B4B4-101010|8D9EA5-101010",1)
         If ocrchar = "上兵伐谋" Then
             TracePrint "选中了上兵伐谋"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             TracePrint "没有选中上兵伐谋,重试"
             Goto 上兵伐谋
@@ -6098,7 +6272,7 @@ Sub 升级计略(类型)
     Rem 点击升级
     Touch 115, 505, 100
     Delay 1500
-    If 计略是否升级中() = False And 容错参数 < 5 Then 
+    If 计略是否升级中() = False And 容错参数 < 3 Then 
         容错参数 = 容错参数 + 1
         Goto 点击升级
     End If
@@ -6197,7 +6371,7 @@ Sub 铸币()
         FindPic 458,226,522,301,"Attachment:筛选勾.png","000000",0,0.7,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了木材"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             Goto 勾选木材
         End If
@@ -6210,7 +6384,7 @@ Sub 铸币()
         FindPic 398,226,463,286,"Attachment:筛选勾.png","000000",0,0.7,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了石料"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             Goto 勾选石料
         End If
@@ -6223,7 +6397,7 @@ Sub 铸币()
         FindPic 342,226,403,293,"Attachment:筛选勾.png","000000",0,0.7,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "选中了铁矿"
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             容错参数 = 容错参数 + 1
             Goto 勾选铁矿
         End If
@@ -6296,7 +6470,7 @@ Sub 领取季节奖励
                 Exit Do
             End If
         Loop
-    ElseIf 容错参数 < 5 Then
+    ElseIf 容错参数 < 3 Then
         容错参数 = 容错参数 + 1
         TracePrint "进入季节奖励界面失败,重试"
         Goto 进季节奖励界面
@@ -6327,7 +6501,7 @@ Sub 进行沙场论剑()
         If 场景相关操作.进入场景是否正确(73) Then 
             TracePrint "进入沙场论剑选择对手界面"
             Call 沙场论剑找对手()
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             TracePrint "进入沙场论剑选择对手界面失败,重试"
             容错参数 = 容错参数 + 1
             Goto 进单人模式
@@ -6342,7 +6516,7 @@ Sub 进行沙场论剑()
         If 场景相关操作.进入场景是否正确(73) Then 
             TracePrint "进入沙场论剑选择对手界面"
             Call 沙场论剑找对手()
-        ElseIf 容错参数 < 5 Then
+        ElseIf 容错参数 < 3 Then
             TracePrint "进入沙场论剑选择对手界面失败,重试"
             容错参数 = 容错参数 + 1
             Goto 进多人模式
@@ -6457,11 +6631,11 @@ Function 识别沙场论剑剩余次数()
     ocrchar = 类型转换.SuperOcr(499,621,525,676,"F4F4F4-111111|E8E9E9-111111|8B8E90-111111|ACAEB0-111111|BFC0C2-111111",0.95)
     TracePrint ocrchar
     temp = Int(Left(ocrchar, 1))
-    If temp = Null And 容错参数 < 5 Then 
+    If temp = Null And 容错参数 < 3 Then 
         TracePrint "文本识别有误"
         容错参数 = 容错参数 + 1
         Goto 识别剩余次数
-    ElseIf 容错参数 >= 5 Then
+    ElseIf 容错参数 >= 3 Then
         TracePrint "错误次数过多,放弃"
         识别沙场论剑剩余次数 = 0
         Exit Function
