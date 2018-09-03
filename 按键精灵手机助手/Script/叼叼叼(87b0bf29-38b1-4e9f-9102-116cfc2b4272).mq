@@ -44,7 +44,7 @@ End If
 ShowMessage "开始准备登陆", 2000, 50, 620
 Rem login
 //showmessage "所在场景"&所在场景, 2000, 50, 620
-
+Call 账号信息处理(登录成功次数)
 
 If 场景相关操作.进入场景是否正确(1) Then
     TracePrint "当前在主城,已经顺利进游戏"
@@ -60,13 +60,14 @@ ElseIf 场景相关操作.进入场景是否正确(22) Then
     Delay 3000
     Goto login
 Else
-    If 来路是否是切换账号 Then
-        Call 账号信息处理(登录成功次数)
-        账号登录.登录 平台, 账号信息, 账号密码
+    Call 启动游戏()
+    Dim 当前所在登录步骤
+    当前所在登录步骤 = 账号登录.当前所在登录步骤界面(平台, 0)
+    If 当前所在登录步骤 = 0 Then 
+        场景相关操作.通用界面关闭 
     Else 
-        Call 启动游戏()
+        账号登录.登录 平台, 账号信息, 账号密码
     End If
-    场景相关操作.通用界面关闭
     Delay 2000
     Goto login
 End If
@@ -135,7 +136,17 @@ WriteConfig "上次运行日期" & 账号信息, Date(), True
 Delay 1000
 ShowMessage "派遣出征次数" & 派遣出征次数, 2000, 50, 620
 Delay 2000
+If ReadUIConfig("普通副本自动补星") Then 
+    Call 副本准备(1, 1, 7)
+End If
 
+If ReadUIConfig("精英副本自动补星") Then 
+    Call 副本准备(2, 1, 7)
+End If
+
+If ReadUIConfig("是否打名将副本") Then 
+    Call 副本准备(3, 1, 6)
+End If
 Call 强化前几个人(4)
 
 Call 判断入侵()
@@ -621,7 +632,7 @@ Function 被攻击目标判断(ocrchar)
         被攻击目标判断 = 1
     Else 
         TracePrint "还未知的类型"
-        SnapShot "/sdcard/test.png",0,0,720,1280
+        SnapShot "/sdcard/敌袭" & Time()&".png",0,0,720,1280
     End If
 	
 End Function
@@ -1657,8 +1668,11 @@ Sub 宴请()
             End If
             If 已经铜币宴请次数 < 设定的铜币宴请次数 And 容错参数 < 5 Then 
                 容错参数 = 容错参数 + 1
-                Call 铜币宴请(设定的铜币宴请次数 - 已经铜币宴请次数, 铜币宴请点击位置)
-                Goto 确认铜币宴请
+                If 铜币宴请(设定的铜币宴请次数 - 已经铜币宴请次数, 铜币宴请点击位置) Then 
+                    Goto 确认铜币宴请
+                Else 
+                    TracePrint "货币不足,宴请结束"
+                End If
             End If
         End If
     End If
@@ -1707,28 +1721,54 @@ Sub 元宝宴请()
     End If
 End Sub
 
-Sub 铜币宴请(次数, 铜币宴请点击位置)
+Function 铜币宴请(次数, 铜币宴请点击位置)
     TracePrint "执行铜币宴请"
     For 次数
-        If 铜币宴请点击位置 = 1 Then 
-            Touch 100, 625, 100
+        Dim ocrchar,铜币是否足够, 铜币数量
+        ocrchar=Ocr(683,246,712,342,"8E8E8E-111111|B9B9B9-111111|A6A6A6-111111|737372-111111",0.9)
+        Traceprint ocrchar
+        If InStr(1, ocrchar, "万") > 0 Then 
+            铜币是否足够 = True
         Else 
-            Touch 100, 350, 100
+            If ocrchar = "" Then 
+                TracePrint "货币识别异常退出"
+                铜币宴请 = False
+                Exit Function
+            Else 
+                铜币数量 = Int(ocrchar)
+                If 铜币数量 >= 1000 Then 
+                    铜币是否足够 = True
+                Else 
+                    铜币是否足够 = False
+                End If
+            End If
+        	
         End If
-        Delay 2500
-        Rem 等待结果
-        If 场景相关操作.进入场景是否正确(56) Then 
-            场景相关操作.通用界面关闭
-        ElseIf 场景相关操作.进入场景是否正确(23) Then
-            TracePrint "成功返回继续"
-        Else
-            Delay 1000
-            Goto 等待结果
+        If 铜币是否足够 Then 
+            If 铜币宴请点击位置 = 1 Then 
+                Touch 100, 625, 100
+            Else 
+                Touch 100, 350, 100
+            End If
+            Delay 2500
+            Rem 等待结果
+            If 场景相关操作.进入场景是否正确(56) Then 
+                场景相关操作.通用界面关闭
+            ElseIf 场景相关操作.进入场景是否正确(23) Then
+                TracePrint "成功返回继续"
+            Else
+                Delay 1000
+                Goto 等待结果
+            End If
+        Else 
+            铜币宴请 = False
+            Exit Function
         End If
     Next
+    铜币宴请 = True
     TracePrint "铜币宴请循环结束"
     Delay 1000
-End Sub
+End Function
 
 //市场相关
 Sub 市场刷新()
@@ -2331,7 +2371,7 @@ Sub 派遣队伍()
                             ElseIf 容错参数 < 3 Then
                                 容错参数 = 容错参数 + 1
                                 TracePrint "识别错误,重试"
-                                SnapShot "/sdcard/test1.png",0,0,720,1280
+                                SnapShot "/sdcard/寻访次数" & Time() & ".png",0,0,720,1280
                                 Goto 识别剩余次数
                             End If
                         ElseIf 容错参数 < 3 Then
@@ -3578,7 +3618,7 @@ Sub 接皇榜任务()
                 点击坐标X = (起始区域X1 + 起始区域X2) / 2 : 点击坐标Y = (起始区域Y1 + 起始区域Y2) / 2
                 Touch 点击坐标X, 点击坐标Y, 100
                 
-                Delay 1000
+                Delay 2000
                 //判断任务是否已接
                 FindPic 145,940,200,1050,"Attachment:揭榜.png","000000",0,0.95,intX,intY
                 If intX > -1 And intY > -1 Then 
@@ -3597,7 +3637,9 @@ Sub 接皇榜任务()
                             If ocrchar1 = "扫荡匪寇" Then
                                 ocrchar2 = Ocr(起始区域X1 - 20, 477, 起始区域X1, 700, "818180-111111|BABABA-111111|969696-111111|CECECE-111111|6C6C6B-111111", 0.8)
                                 TracePrint ocrchar2
-                                SnapShot "/sdcard/hbGWDJ" & Time() & ".png", 0, 0, 720, 1280
+                                If Len(ocrchar2) <> 3 Then
+                                    SnapShot "/sdcard/hbGWDJ" & Time() & ".png", 0, 0, 720, 1280
+                                End If
                                 TracePrint "皇榜任务级别"
                                 temp1 = UTF8.InStr(1, ocrchar2, "级")
                                 For i = 0 To 9
@@ -4688,17 +4730,13 @@ Sub 打副本(类型, 次数)
             If intX > -1 And intY > -1 Then 
                 Touch 相关数据解析.自动坐标X, 相关数据解析.自动坐标Y, 100
             End If
-            
-            Rem 战斗循环
-				
-            //检测是否进入第三场战斗
-				
+            TracePrint "检测是否进入第三场战斗"
+            Rem 战斗循环	
             ocrchar = 类型转换.SuperOcr(606,597,638,667,"D7D7D7-111111|D4D5D5-111111|C7C9CB-111111|C0C2C7-111111|ACAFBA-111111|9FA2AE-111111",0.9)
             If ocrchar = "3/3" Or ocrchar = "33" Then 
                 FindPic 580,1020,720,1280,"Attachment:手动.png","000000",0,0.9,intX,intY
                 If intX > -1 And intY > -1 Then 
                     Touch 相关数据解析.自动坐标X, 相关数据解析.自动坐标Y, 100
-                    
                 End If
                 FindPic 588,1024,711,1270,"Attachment:跳过战斗.png","000000",0,0.9,intX,intY
                 If intX > -1 And intY > -1 Then
@@ -4718,12 +4756,14 @@ Sub 打副本(类型, 次数)
             	
                 //胜利和败北文字出现时有动画,会有一定延迟,所以要特殊处理
                 Do
-                    FindPic 378,38,685,428,"Attachment:胜利.png","000000",0,0.9,intX,intY
+                    FindColor 378,38,685,428,"22DDFF",0,1,intX,intY
+                    If intX > -1 And intY > -1 Then
+                    //FindPic 378,38,685,428,"Attachment:胜利.png","000000",0,0.9,intX,intY
                     If intX > -1 And intY > -1 Then 
                         上次推关结果 = True
                         TracePrint "战斗胜利"
                         容错参数 = 0
-                        Do Until 容错参数 > 5
+                        Do Until 容错参数 >= 5
                             FindPic 502,372,695,883,"Attachment:通关三星.png","000000",0,0.8,intX,intY
                             If intX > -1 And intY > -1 Then
                                 TracePrint "3星过关"
@@ -4752,7 +4792,7 @@ Sub 打副本(类型, 次数)
                         Touch 相关数据解析.离开2坐标X, 相关数据解析.离开2坐标Y, 100
                         Exit Do
                     End If
-                    FindPic 466,90,706,373,"Attachment:败北.png","000000",0,0.9,intX,intY
+                    FindColor 378,38,685,428,"EE3300",0,1,intX,intY
                     If intX > -1 And intY > -1 Then 
                         上次推关结果 = False
                         上次战斗星数 = 0
@@ -5750,7 +5790,7 @@ Function 单个武将升级(升级次数)
                 ocrchar=Ocr(区域X1, 区域Y1, 区域X2, 区域Y2,"E9F0F9-111111|CDD3DB-111111",0.9)
                 Traceprint ocrchar
                 If ocrchar = "" Then 
-                    SnapShot "/sdcard/经验书i" & Time() & ".png", 0, 0, 720, 1280
+                    SnapShot "/sdcard/经验书" & i & Time() & ".png", 0, 0, 720, 1280
                     TracePrint "经验书识别错误,请看截图"
                 Else
                     经验书数量(i) = Int(ocrchar)
@@ -5759,7 +5799,7 @@ Function 单个武将升级(升级次数)
         Next
         Dim 使用数量
         For i = 0 To 3
-            If (经验差 >= 经验书经验(i) Or i = 3) And 经验书数量(i) > 0 Then 
+            If ((经验差 >= 经验书经验(i) Or i = 3) And 经验书数量(i) > 0) Or 经验书数量(i + 1) = 0 Then 
                 使用数量 = Int(经验差 / 经验书经验(i))
                 If i = 3 Then 
                     使用数量 = 使用数量 + 1
@@ -5818,7 +5858,7 @@ End Function
 
 
 Function 寻找目标材料副本()
-    Do
+    Do Until 容错参数 >= 4
         FindColor 242,371,409,901,"0000EC",0,0.9,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "找到缺失材料"
@@ -5866,7 +5906,7 @@ Function 寻找目标材料副本()
                                 //关闭界面
                                 容错参数 = 0
                                 Rem 关闭副本界面
-                                Touch 640, 1060, 100
+                                场景相关操作.通用界面关闭
                                 Delay 1000
                                 If 场景相关操作.进入场景是否正确(69) Then 
                                     TracePrint "成功关闭副本界面"
@@ -5900,6 +5940,8 @@ Function 寻找目标材料副本()
                             End If
                         Else 
                             TracePrint "副本剩余次数为0,重新选择"
+                            场景相关操作.通用界面关闭 
+                            Delay 2000
                         End If
                     Else 
                         FindPic 起始X1,起始Y1,起始X2,起始Y2,"Attachment:升阶升星不可前往.png","000000",2,0.9,intX,intY
@@ -5933,6 +5975,7 @@ Function 寻找目标材料副本()
             寻找目标材料副本 = True
             Exit Do
         End If
+        容错参数 = 容错参数 + 1
     Loop
     TracePrint "寻找目标材料副本结束"
 End Function
@@ -6872,7 +6915,7 @@ End Sub
 Sub 沙场论剑胜场奖励()
     Dim intX,intY
     Do
-        FindColor 56,362,128,817,"51FFFF-111111",0,0.98,intX,intY
+        FindColor 56,362,128,817,"51FFFF111111",0,0.98,intX,intY
         If intX > -1 And intY > -1 Then 
             TracePrint "有胜场奖励"
             Touch intX, intY, 100

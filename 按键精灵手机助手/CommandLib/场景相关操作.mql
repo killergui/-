@@ -550,10 +550,10 @@ Function 选择区服()
     Dim intX, intY, ocrchar, 容错参数, 区服, 容错次数
     区服 = ReadConfig("区服")
     TracePrint "区服",区服
-    容错次数 = ReadConfig("选服重试次数")
+    容错次数 = ReadConfig("选服重试次数", 3)
+    TracePrint "容错次数",容错次数
     //先判断当前默认区服是否和填写的区服一致
-    //这里的字库待完善
-    ocrchar=类型转换.SuperOcr(229,588,270,681,"BDBDBC-111111|DBDBDB-111111|A6A9A9-111111",0.9)
+    ocrchar=类型转换.SuperOcr(233,588,260,670,"BDBDBC-111111|DBDBDB-111111|A6A9A9-111111",0.9)
     If ocrchar = 区服 Then 
         TracePrint "选择一致,完成"
         Exit Function
@@ -577,7 +577,6 @@ Function 选择区服()
     TracePrint "成功进入选服界面"
 	
     //先判断最近区服有没有
-    //这里的字库待完善
     ocrchar=类型转换.SuperOcr(505,321,538,391,"BDBDBC-111111|DBDBDB-111111|A6A9A9-111111",0.9)
     If ocrchar = 区服 Then 
         TracePrint "成功找到区服"
