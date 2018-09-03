@@ -33,14 +33,14 @@ ElseIf GetScreenX() = 720 Then
 End If
 
 //登录部分
-Dim 账号信息, 账号密码, 登录成功次数, 区服, 选服重试次数, 容错参数, 体力阀值, 平台, 来路是否是切换账号
+Dim 账号信息, 账号密码, 登录成功次数, 区服, 选服重试次数, 体力阀值, 平台, 来路是否是切换账号
 平台 = ReadUIConfig("平台") : 登录成功次数 = ReadConfig("登录成功次数") : 体力阀值 = 90
 
 If 登录成功次数 = Null Then 
     登录成功次数 = 1
 End If
 
-容错参数 = 0
+Dim 容错参数 = 0
 ShowMessage "开始准备登陆", 2000, 50, 620
 Rem login
 //showmessage "所在场景"&所在场景, 2000, 50, 620
@@ -136,21 +136,10 @@ WriteConfig "上次运行日期" & 账号信息, Date(), True
 Delay 1000
 ShowMessage "派遣出征次数" & 派遣出征次数, 2000, 50, 620
 Delay 2000
-If ReadUIConfig("普通副本自动补星") Then 
-    Call 副本准备(1, 1, 7)
-End If
-
-If ReadUIConfig("精英副本自动补星") Then 
-    Call 副本准备(2, 1, 7)
-End If
-
-If ReadUIConfig("是否打名将副本") Then 
-    Call 副本准备(3, 1, 6)
-End If
-Call 强化前几个人(4)
 
 Call 判断入侵()
 Call 进主公界面()
+Call 强化前几个人(4)
 Call 进VIP界面()
 Call 定位主城坐标()
 Call 派遣队伍()
@@ -408,7 +397,7 @@ End Sub
 
 Sub 回登录界面()
     Call 进出界面.回主城(1)
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 进设置界面
     Touch 624, 1233, 100
     Delay 1500
@@ -480,7 +469,7 @@ Sub 定位主城坐标()
     //去野外
     If 进出界面.城内进固定界面(2, 相关数据解析.去野外坐标X, 相关数据解析.去野外坐标Y, 0, False) Then 
         //        Delay 2000
-        容错参数 = 0
+        Dim 容错参数 = 0
         Rem 定位坐标
         Dim ocrchar1, ocrchar2, tempStr
         ocrchar1 = 类型转换.SuperOcr(678, 597, 706, 648, "BFF3FB-111111|AFDCE2-111111|8FB0B3-111111|7F9A9C-111111|9FC6CB-111111",0.9)
@@ -656,7 +645,7 @@ Sub 主城防守(回防主城)
     If ReadUIConfig("自动免战", True) Then 
         TracePrint "设置了自动挂免战"
         //自动挂免流程
-        容错参数 = 0
+        Dim 容错参数 = 0
         Dim 无元宝
         Rem 挂免战
         Call 进出界面.回主城(1)
@@ -783,7 +772,7 @@ Sub 主城防守(回防主城)
 End Sub
 
 Sub 队伍撤防()
-    容错参数 = 0
+    Dim 容错参数 = 0
     If 部队驻防时间 = Null Or (Time() - 部队驻防时间 > 300) Then 
         Dim 队伍子状态
         Rem 撤防
@@ -868,7 +857,7 @@ Function 识别负重(队伍编号)
     进出界面.城内外通用进界面 8, 相关数据解析.出征坐标X, 相关数据解析.出征坐标Y, 0
     
     If 是否有队伍(Array(判断区间X1, 判断区间Y1, 判断区间X2, 判断区间Y2)) Then 
-        容错参数 = 0
+        Dim 容错参数 = 0
         Rem 切换队伍
         Touch (判断区间X1 + 判断区间X2) / 2, (判断区间Y1 + 判断区间Y2) / 2, 100
         Delay 1500
@@ -1009,7 +998,6 @@ End Sub
 Sub 收邮件()
     TracePrint "开始邮件处理"
     Dim intX,intY
-    容错参数 = 0
     //进邮件界面
     进出界面.城内外通用进界面 19, 相关数据解析.邮件坐标X, 相关数据解析.邮件坐标Y, 5
     
@@ -1019,7 +1007,7 @@ Sub 收邮件()
     Touch 100, 824, 100
     Delay 1000
         
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 处理系统邮件
     FindColor 445,1187,489,1238,"2626AD",0,0.99,intX,intY
     If intX > -1 And intY > -1 And 容错参数 < 15 Then 
@@ -1080,7 +1068,7 @@ Sub 领任务奖励()
         Call 任务界面领奖()
         Goto 确认主线奖励
     End If
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 处理日常任务奖励
     FindColor 496,1178,546,1258,"2626AD",0,0.99,intX,intY
     If intX > -1 And intY > -1 And 容错参数 < 4 Then 
@@ -1414,7 +1402,7 @@ Sub 商城购买()
         Exit Sub
     End If
     If 是否进行商城购买 Then 
-        容错参数 = 0
+        Dim 容错参数 = 0
         //进商城界面
         进出界面.城内外通用进界面(4, 相关数据解析.商城坐标X, 相关数据解析.商城坐标Y, 0)
         //购买包子
@@ -1642,7 +1630,7 @@ Sub 宴请()
         End If
         If 设定的铜币宴请次数 > 0 Then 
             Delay 1500
-            容错参数 = 0
+            Dim 容错参数 = 0
             Rem 确认铜币宴请
             Dim ocrchar
             If VIP等级 >= 8 Then 
@@ -1787,7 +1775,7 @@ Sub 市场刷新()
         Delay 2000
         Exit Sub
     End If
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 读取剩余免费刷新次数
     Dim ocrchar, temp, 剩余免费次数, 刷新令数量, intX, intY
     剩余免费次数 = 0 : 刷新令数量 = 0
@@ -1871,7 +1859,7 @@ Function 市场购买()
         If intX > -1 And intY > -1 And 碎片是否已购买(起始X1,起始Y1,起始X2,起始Y2) = False Then
             TracePrint "发现上阵武将"
             If 购买货币类型(起始X1,起始Y1,起始X2,起始Y2) = 1 Or (购买货币类型(起始X1,起始Y1,起始X2,起始Y2) = 2 And ReadUIConfig("元宝购买")) Then 
-                容错参数 = 0
+                Dim 容错参数 = 0
                 Rem 点击武将
                 Touch (起始X1 + 起始X2) / 2, (起始Y1 + 起始Y2) / 2, 100
                 Delay 1500
@@ -1941,7 +1929,7 @@ Function 兵事处理()
     Dim ocrchar, intX, intY, 临时数组, 临时字符串, 字符串长度
     // 进兵事界面
     进出界面.城内外通用进界面(9, 相关数据解析.兵事坐标X, 相关数据解析.兵事坐标Y, 0)
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 切换到兵营
     Touch 510, 330, 100
     Delay 1000
@@ -2061,7 +2049,7 @@ Function 判断队伍兵量(队伍编号)
     进出界面.城内外通用进界面 8, 相关数据解析.出征坐标X, 相关数据解析.出征坐标Y, 0
     
     If 是否有队伍(Array(判断区间X1, 判断区间Y1, 判断区间X2, 判断区间Y2)) Then 
-        容错参数 = 0
+        Dim 容错参数 = 0
         Rem 切换队伍
         Touch (判断区间X1 + 判断区间X2) / 2, (判断区间Y1 + 判断区间Y2) / 2, 100
         Delay 1500
@@ -2096,7 +2084,7 @@ End Function
 Sub 切换自动补兵(类型)
     //类型说明:1 = 自动补,2 = 取消自动补
     Dim intX,intY
-    容错参数 = 0
+    Dim 容错参数 = 0
     Do Until 容错参数 >= 3
         Select Case 类型
         Case 1            
@@ -2340,7 +2328,7 @@ Sub 派遣队伍()
                     寻访坐标X = Int(ReadUIConfig("寻访城池X坐标"&登录成功次数)) : 寻访坐标Y = Int(ReadUIConfig("寻访城池Y坐标"&登录成功次数))
                     Call 移动大地图(寻访坐标X, 寻访坐标Y)
                 
-                    容错参数 = 0
+                    Dim 容错参数 = 0
                     Rem 点击城池
                     Call 进出界面.界面收起展开(3)
                     Touch 380, 640, 100
@@ -2396,10 +2384,9 @@ Sub 进附近界面(筛选类型)
     进出界面.城内进固定界面 2, 相关数据解析.去野外坐标X, 相关数据解析.去野外坐标Y, 0, False
     //进附近界面
     进出界面.进入子界面(2, 46, 相关数据解析.附近界面坐标X, 相关数据解析.附近界面坐标Y)
-    
+    Dim 容错参数 = 0
     Dim intX,intY
     If 筛选类型 = 2 Then 
-        容错参数 = 0
         Rem 切换标签2
         Touch 440, 1130, 100
         Delay 500
@@ -2420,7 +2407,6 @@ Sub 进附近界面(筛选类型)
             
         End If
     ElseIf 筛选类型 = 1 Then
-        容错参数 = 0
         Rem 切换标签1
         Touch 540, 1130, 100
         Delay 500
@@ -2898,7 +2884,7 @@ Function 确认坐标有效性(坐标X, 坐标Y)
 End Function
 
 Sub 移动大地图(坐标X, 坐标Y)
-    容错参数 = 0
+    Dim 容错参数 = 0
     Dim ocrchar1, ocrchar2, temp, temp1, 临时坐标X, 临时坐标Y
     Rem 确认X
     //输入X
@@ -3001,7 +2987,7 @@ Function 确认目标(寻找类型, 目标种类, 目标等级)
             确认目标 = False
             TracePrint "没有找到无人目标"
         Else 
-            容错参数 = 0
+            Dim 容错参数 = 0
             Rem 点击前往目标
             Touch intX1, intY1, 100
             Delay 2500
@@ -3080,7 +3066,7 @@ Sub 前往目标(出征类型, 队伍)
     TracePrint "开始前往目标"
     //出征类型: 1 = 打怪, 2 = 采集, 3 = 寻访
     Dim intX,intY
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 进队伍界面
     If 场景相关操作.进入场景是否正确(40) Then 
         TracePrint "进入队伍界面"
@@ -3369,7 +3355,7 @@ End Sub
 
 Function 祭祀次数()	
     Dim temp1, 今日已祭祀次数
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 开始识别文字
     Dim ocrchar
     TracePrint "开始识别文字"
@@ -3542,7 +3528,7 @@ End Sub
 Sub 进皇榜界面()
     Dim HBX,HBY
     //根据不同场景读取查找相应的图片
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 进皇榜
     If 场景相关操作.进入场景是否正确(1) Then
         Call 进出界面.界面收起展开(4)
@@ -3578,7 +3564,7 @@ Sub 接皇榜任务()
     进出界面.城内外通用进界面 17, 相关数据解析.军团坐标X, 相关数据解析.军团坐标Y, 5
     //进城池界面
     进出界面.进无编号子界面(265,82,638,254,"Attachment:占领.png",0.9,相关数据解析.城池坐标X, 相关数据解析.城池坐标Y)
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 进军团皇榜界面
     Touch 相关数据解析.皇榜任务坐标X, 相关数据解析.皇榜任务坐标Y, 100
     TracePrint "点击皇榜图标"
@@ -3980,7 +3966,7 @@ End Sub
 
 Sub 进副本(类型)
     //副本类型枚举:1 = 普通,2 = 精英, 3 = 名将
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 进副本界面
     TracePrint "进副本容错参数1"&容错参数
     If 容错参数 >= 3 Then 
@@ -4209,7 +4195,7 @@ Function 待挑战副本()
 End Function
 
 Sub 获取单个副本数据(副本数据)
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 数据识别
     Dim ocrchar, 字符长度, intX,intY
     副本数据(3) = 0
@@ -4276,7 +4262,7 @@ Sub 进副本预览(坐标X, 坐标Y )
     Dim 点击坐标X, 点击坐标Y, 点击偏移X, 点击偏移Y
     //因为找图获得的坐标不太稳定,所以设置一定的点击偏移
     点击偏移X = 0 : 点击偏移Y = 0
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 进副本预览
     If 场景相关操作.进入场景是否正确(38) Or 场景相关操作.进入场景是否正确(39) Or 场景相关操作.进入场景是否正确(3) And 容错参数 < 3 Then 
         点击坐标X = 坐标X - 点击偏移X : 点击坐标Y = 坐标Y + 点击偏移Y
@@ -4291,12 +4277,11 @@ End Sub
 
 Sub 副本准备(副本类型, 挑战次数, 执行类型)
     //使用体力执行类型: 1 = 皇榜任务 , 2 = 刷碎片, 3 = 推进度, 4 = 升阶, 5 = 刷最高级副本, 6打名将副本, 7补星
-    容错参数 = 0
     Rem 打副本准备
     当前体力 = 相关数据解析.读取当前体力()
     Call 进副本(副本类型)
     Dim 挑战副本数据, 副本列表, 副本剩余次数, intX,intY, 名将第几关, ocrchar, areaX1, areaY1, 体力换算次数,目标副本编号
-    容错参数 = 0
+    Dim 容错参数 = 0
     TracePrint "筛选要打的副本数据"
     Select Case 执行类型
     Case 1, 5
@@ -4442,11 +4427,11 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
                 WriteConfig "今日已打名将"&账号信息, True, True
                 Exit Sub
             End If
-            容错参数 = 0
+            目标副本编号 = ReadUIConfig("名将副本") + 1
             Rem 筛选名将副本
             //副本数组数据结构为,0:X坐标,1:Y坐标,2:副本编号,3:剩余次数,4:副本星数
             副本列表 = 找副本(副本类型)
-            目标副本编号 = ReadUIConfig("名将副本") + 1 - 容错参数
+            
             If 目标副本编号 = 0 And 容错参数 < 3 Then 
                 TracePrint "已经无法再容错了,尝试打当前能找到的"
                 挑战副本数据 = 待挑战副本()
@@ -4462,6 +4447,7 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
             Next
             If 挑战副本数据 = Null And 容错参数 < 3 Then 
                 TracePrint "没有找到目标副本,降一关打"
+                目标副本编号 = 目标副本编号 - 1
                 容错参数 = 容错参数 + 1
                 Delay 2000
                 Goto 筛选名将副本
@@ -4505,7 +4491,6 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
             星级筛选条件 = 1
         End If
         For 3
-            容错参数 = 0
             起始Y1 = 起始Y1 + 80
             起始Y2 = 起始Y2 + 80
             //选取章节
@@ -4642,7 +4627,7 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
 End Sub
 
 Sub 正常打副本前准备()
-    容错参数 = 0
+    Dim 容错参数 = 0
     Dim intX,intY
     TracePrint "即将进入副本选择队伍界面"
     
@@ -4676,7 +4661,7 @@ Sub 正常打副本前准备()
 End Sub
 
 Sub 扫荡前装备(最终打副本次数)
-    容错参数 = 0
+    Dim 容错参数 = 0
     Dim intX,intY
     Rem 进入扫荡
     Touch 相关数据解析.进入扫荡坐标X, 相关数据解析.进入扫荡坐标Y, 250
@@ -4713,13 +4698,14 @@ Sub 打副本(类型, 次数)
     //打副本类型枚举: 1 = 正常打, 2 = 扫荡
     TracePrint "即将开战"
     Dim ocrchar, intX, intY
+    Dim 容错参数 = 0
     Select Case 类型
     Case 1
         Rem 进战斗界面
         Touch 相关数据解析.开战坐标X, 相关数据解析.开战坐标Y, 100
         Delay 2000
         TracePrint "等待加载"
-        容错参数 = 0
+        
         Rem 战斗初始化
         If 场景相关操作.进入场景是否正确(18) Then 
             FindPic 580,1020,720,1280,"Attachment:速度1.png","000000",0,0.9,intX,intY
@@ -4864,7 +4850,6 @@ Sub 打副本(类型, 次数)
                     Delay 500
                 Next
             End If
-            容错参数 = 0
             Rem 点击开始扫荡
             Touch 相关数据解析.开始扫荡坐标X, 相关数据解析.开始扫荡坐标Y, 250
             Delay 2000  
@@ -4984,7 +4969,7 @@ Sub 升级大殿()
     Else 
         FindPic 178,461,381,986,"Attachment:建筑升级.png","000000",0,0.95,intX,intY
         If intX > -1 And intY > -1 Then 
-            容错参数 = 0
+            Dim 容错参数 = 0
             Rem 点击升级按钮
             Touch intX + 5, intY + 5, 100
             Delay 1500
@@ -5013,8 +4998,8 @@ End Sub
 
 Sub 升级建筑(类型)
     Dim intX,intY
-    If 类型 = 1 Then 
-        容错参数 = 0
+    Dim 容错参数 = 0
+    If 类型 = 1 Then   
         Rem 确认前置条件
         FindColor 430,668,472,961,"4E4EFF",0,0.95,intX,intY
         If intX > -1 And intY > -1 Then
@@ -5055,7 +5040,6 @@ Sub 升级建筑(类型)
         //进建筑界面
         进出界面.城内进固定界面(7, 相关数据解析.建筑坐标X, 相关数据解析.建筑坐标Y, 0, False)
         If 是否有空建筑队列() Then 
-            容错参数 = 0
             Rem 点击升级按钮1
             If 是否可升级() = 1 And 容错参数 < 3 Then 
                 容错参数 = 容错参数 + 1
@@ -5197,7 +5181,7 @@ Sub 武将小红点处理()
             FindPic 130,300,570,1110,"Attachment:招募.png","000000",0,0.9,intX,intY
             If intX > -1 And intY > -1 Then
                 Touch intX, intY, 100
-                容错参数 = 0
+                Dim 容错参数 = 0
                 Rem 关闭获得武将界面
                 Delay 2500
                 If 场景相关操作.进入场景是否正确(62) Then 
@@ -5253,7 +5237,7 @@ Sub 武将界面内部处理()
             Touch intX - 10, intY - 10, 100
             Delay 1000
             //先找装备小红点
-            容错参数 = 0
+            Dim 容错参数 = 0
             Rem 找装备小红点
             TracePrint "判断是否有新装备可穿"
             FindColor 63,588,197,1148, "2626AD", 0, 0.99, intX, intY
@@ -5383,7 +5367,7 @@ Sub 强化前几个人( 类型)
             TracePrint "今天已经强化过了" 
             Exit Sub
         End If
-        容错参数 = 0
+        Dim 容错参数 = 0
         Rem 确认主公等级
         If 主公等级 = Null And 容错参数 < 2 Then 
             Call 进主公界面()
@@ -5538,7 +5522,7 @@ End Sub
 
 Function 强化单个武将装备()
     Dim 装备坐标X1, 装备坐标Y1, 装备坐标X2, 装备坐标Y2, 偏移量, intX, intY
-    容错参数 = 0
+    Dim 容错参数 = 0
     FindColor 77,611,184,721,"292929",0,1,intX,intY
     If intX > -1 And intY > -1 Then
         TracePrint "该位置武将没有穿装备"
@@ -5858,6 +5842,7 @@ End Function
 
 
 Function 寻找目标材料副本()
+    Dim 容错参数 = 0
     Do Until 容错参数 >= 4
         FindColor 242,371,409,901,"0000EC",0,0.9,intX,intY
         If intX > -1 And intY > -1 Then
@@ -5904,7 +5889,6 @@ Function 寻找目标材料副本()
                             If 空副本数据(4) <= 2 Then 
                                 TracePrint "副本不能扫荡,不利于后边效率循环,放弃"
                                 //关闭界面
-                                容错参数 = 0
                                 Rem 关闭副本界面
                                 场景相关操作.通用界面关闭
                                 Delay 1000
@@ -5920,7 +5904,6 @@ Function 寻找目标材料副本()
                                 If 进出界面.进入子界面(37, 41, 160, 950) Then 
                                     Call 打副本(2, 空副本数据(3))
                                     //关闭界面,检查是否足够
-                                    容错参数 = 0
                                     Rem 关闭出处界面
                                     场景相关操作.通用界面关闭 
                                     Delay 2000
@@ -5987,7 +5970,7 @@ Sub 升级军械()
         Exit Sub
     End If
     TracePrint "开始升级军械"
-    容错参数 = 0
+    Dim 容错参数 = 0
     Dim 升级军械1, 升级军械2, 升级军械3, temp
     Call 进出界面.回主城(2)
     temp = 进出界面.城内选中建筑(相关数据解析.军械所坐标X, 相关数据解析.军械所坐标Y, "Attachment:军械.png", True, 29, 0)
@@ -6025,8 +6008,8 @@ End Sub
 Sub 进行研发(类型)
     //类型枚举:0 = "战鼓", 1 = "木牛流马", 2 = "井栏", 3 = "投石车", 4 = "盾车"
     Dim intX,intY, ocrchar
+    Dim 容错参数 = 0
     If 类型 = 0 Then 
-        容错参数 = 0
         Rem 选中战鼓
         Touch 145, 300, 100
         Delay 1500
@@ -6044,7 +6027,6 @@ Sub 进行研发(类型)
         TouchMove 300, 310, 0, 500
         TouchUp 0
         Delay 1500
-        容错参数 = 0
         Rem 选中木牛流马
         Touch 145, 300, 100
         Delay 1500
@@ -6061,7 +6043,6 @@ Sub 进行研发(类型)
         TouchMove 150, 310, 0, 500
         TouchUp 0
     ElseIf 类型 = 2 Then 
-        容错参数 = 0
         Rem 选中井栏
         Touch 270, 300, 100
         Delay 1500
@@ -6075,7 +6056,6 @@ Sub 进行研发(类型)
             Goto 选中井栏
         End If
     ElseIf 类型 = 3 Then 
-        容错参数 = 0
         Rem 选中投石车
         Touch 270, 300, 100
         Delay 1500
@@ -6089,7 +6069,6 @@ Sub 进行研发(类型)
             Goto 选中投石车
         End If
     ElseIf 类型 = 4 Then 
-        容错参数 = 0
         Rem 选中盾车
         Touch 270, 300, 100
         Delay 1500
@@ -6153,7 +6132,7 @@ Sub 检查计略()
         Exit Sub
     End If
     TracePrint "开始升级计略"
-    容错参数 = 0
+    Dim 容错参数 = 0
     Dim intX, intY, 升级计略1, 升级计略2, 升级计略3
     Rem 选中计略府
     Call 进出界面.回主城(2)
@@ -6216,8 +6195,8 @@ End Function
 Sub 升级计略(类型)
     //类型枚举:0 = "背水一战", 1 = "乱石阵", 2 = "一鼓作气", 3 = "水淹七军", 4 = "援军令", 5 = "火牛阵", 6 = 巨石轰, 7 = 草木皆兵, 8 = 奋武扬威, 9 = 南蛮入侵, 10 = 万箭齐发, 11 = 八卦阵, 12 = 上兵伐谋
     Dim ocrchar
-    If 类型 = 0 Then 
-        容错参数 = 0
+    Dim 容错参数 = 0
+    If 类型 = 0 Then
         Rem 背水一战
         Touch 520, 745, 100
         Delay 1000
@@ -6230,7 +6209,6 @@ Sub 升级计略(类型)
             Goto 背水一战
         End If
     ElseIf 类型 = 1 Then
-        容错参数 = 0
         Rem 乱石阵
         Touch 520, 885, 100
         Delay 1000
@@ -6243,7 +6221,6 @@ Sub 升级计略(类型)
             Goto 乱石阵
         End If
     ElseIf 类型 = 2 Then 
-        容错参数 = 0
         Rem 一鼓作气
         Touch 520, 1030, 100
         Delay 1000
@@ -6256,7 +6233,6 @@ Sub 升级计略(类型)
             Goto 一鼓作气
         End If
     ElseIf 类型 = 3 Then 
-        容错参数 = 0
         Rem 水淹七军
         Touch 360, 745, 100
         Delay 1000
@@ -6269,7 +6245,6 @@ Sub 升级计略(类型)
             Goto 水淹七军
         End If
     ElseIf 类型 = 4 Then 
-        容错参数 = 0
         Rem 援军令
         Touch 360, 885, 100
         Delay 1000
@@ -6282,7 +6257,6 @@ Sub 升级计略(类型)
             Goto 援军令
         End If
     ElseIf 类型 = 5 Then 
-        容错参数 = 0
         Rem 火牛阵
         Touch 360, 1030, 100
         Delay 1000
@@ -6295,7 +6269,6 @@ Sub 升级计略(类型)
             Goto 火牛阵
         End If
     ElseIf 类型 = 6 Then 
-        容错参数 = 0
         Rem 巨石轰
         Touch 200, 745, 100
         Delay 1000
@@ -6308,7 +6281,6 @@ Sub 升级计略(类型)
             Goto 巨石轰
         End If
     ElseIf 类型 = 7 Then 
-        容错参数 = 0
         Rem 草木皆兵
         Touch 200, 885, 100
         Delay 1000
@@ -6321,7 +6293,6 @@ Sub 升级计略(类型)
             Goto 草木皆兵
         End If
     ElseIf 类型 = 8 Then 
-        容错参数 = 0
         Rem 奋武扬威
         Touch 360, 1030, 100
         Delay 1000
@@ -6338,7 +6309,6 @@ Sub 升级计略(类型)
         TouchMove 600, 870, 0, 250
         TouchUp 0
         Delay 1500
-        容错参数 = 0
         Rem 南蛮入侵
         Touch 330, 745, 100
         Delay 1000
@@ -6358,7 +6328,6 @@ Sub 升级计略(类型)
         TouchMove 600, 870, 0, 250
         TouchUp 0
         Delay 1500
-        容错参数 = 0
         Rem 万箭齐发
         Touch 330, 885, 100
         Delay 1000
@@ -6378,7 +6347,6 @@ Sub 升级计略(类型)
         TouchMove 600, 870, 0, 250
         TouchUp 0
         Delay 1500
-        容错参数 = 0
         Rem 八卦阵
         Touch 330, 1030, 100
         Delay 1000
@@ -6398,7 +6366,6 @@ Sub 升级计略(类型)
         TouchMove 600, 870, 0, 250
         TouchUp 0
         Delay 1500
-        容错参数 = 0
         Rem 上兵伐谋
         Touch 175, 745, 100
         Delay 1000
@@ -6515,13 +6482,12 @@ Sub 铸币()
     If intX > -1 And intY > -1 Then
         TracePrint "当前可以铸币"  
     End If
-    
+    Dim 容错参数 = 0
     //选择原料
     If 铸币原料类型 = 0 Then 
         TracePrint "粮食铸币不用操作"
     ElseIf 铸币原料类型 = 1 Then
         TracePrint "木材铸币"
-        容错参数 = 0
         Rem 勾选木材
         Touch 490, 255, 100
         Delay 1000
@@ -6534,7 +6500,6 @@ Sub 铸币()
         End If
     ElseIf 铸币原料类型 = 2 Then
         TracePrint "石料铸币"
-        容错参数 = 0
         Rem 勾选石料
         Touch 430, 255, 100
         Delay 1000
@@ -6547,7 +6512,6 @@ Sub 铸币()
         End If
     ElseIf 铸币原料类型 = 3 Then
         TracePrint "铁矿铸币"
-        容错参数 = 0
         Rem 勾选铁矿
         Touch 370, 255, 100
         Delay 1000
@@ -6590,7 +6554,7 @@ Sub 领取季节奖励
     进出界面.城内进固定界面(2, 相关数据解析.去野外坐标X, 相关数据解析.去野外坐标Y, 5, False)
     Call 进出界面.界面收起展开(6)
     
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 进季节奖励界面
     Dim intX,intY
     FindPic 471,457,660,1098,"Attachment:季节冬.png","000000",0,0.9,intX,intY
@@ -6650,7 +6614,7 @@ End Sub
 Sub 进行沙场论剑()
     Call 进沙场论剑界面()
     If 场景相关操作.进入场景是否正确(72) Then 
-        容错参数 = 0
+        Dim 容错参数 = 0
         TracePrint "进行单人模式"
         Rem 进单人模式
         Touch 320, 250, 100
@@ -6764,7 +6728,7 @@ Sub 沙场论剑找对手()
         Delay 1500
         Call 沙场论剑胜场奖励()
         //刷新
-        容错参数 = 0
+        Dim 容错参数 = 0
         Rem 识别剩余刷新次数
         Dim ocrchar
         ocrchar = 类型转换.SuperOcr(535,880,558,947,"F4F4F4-111111|E8E9E9-111111|8B8E90-111111|ACAEB0-111111|BFC0C2-111111",1)
@@ -6782,7 +6746,7 @@ Sub 沙场论剑找对手()
 End Sub
 
 Function 识别沙场论剑剩余次数()
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 识别剩余次数
     Dim ocrchar, temp
     ocrchar = 类型转换.SuperOcr(499,621,525,676,"F4F4F4-111111|E8E9E9-111111|8B8E90-111111|ACAEB0-111111|BFC0C2-111111",0.95)
@@ -6802,7 +6766,7 @@ End Function
 
 Sub 沙场论剑挑战(挑战坐标X, 挑战坐标Y)
     Dim intX,intY,intX1, intY1
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 点击挑战
     Touch 挑战坐标X, 挑战坐标Y, 100
     Delay 1500
@@ -6847,7 +6811,7 @@ Sub 沙场论剑挑战(挑战坐标X, 挑战坐标Y)
 End Sub
 
 Sub 沙场论剑排名奖励()
-    容错参数 = 0
+    Dim 容错参数 = 0
     Rem 领奖前场景确认
     If 场景相关操作.进入场景是否正确(73) Then 
         TracePrint "准备领奖励"
