@@ -23,6 +23,7 @@ SetupOCXFile=
 [Comment]
 
 [Script]
+KeyUp "Win", 1
 
 
 //Hwnd1 = 463852
