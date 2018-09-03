@@ -84,7 +84,7 @@ Function 两位汉字转数字(汉字)
     End If
 End Function
 
-Function 字符串解析带符号(字符串, 特殊符号, 字符串长度最大值, 字符串长度最小值)
+Function 字符串解析带符号(字符串, 特殊符号)
 	Dim 字符串长度, 特殊符号位置, 左侧数据, 右侧数据
 	Traceprint 字符串
     字符串长度 = UTF8.Len(字符串)
