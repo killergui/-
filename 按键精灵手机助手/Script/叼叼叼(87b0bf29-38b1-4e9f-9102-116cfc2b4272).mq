@@ -5818,7 +5818,7 @@ End Function
 
 
 Function 寻找目标材料副本()
-    Do
+    Do Until 容错参数 >= 5
         FindColor 242,371,409,901,"0000EC",0,0.9,intX,intY
         If intX > -1 And intY > -1 Then
             TracePrint "找到缺失材料"
@@ -5866,7 +5866,7 @@ Function 寻找目标材料副本()
                                 //关闭界面
                                 容错参数 = 0
                                 Rem 关闭副本界面
-                                Touch 640, 1060, 100
+                                场景相关操作.通用界面关闭
                                 Delay 1000
                                 If 场景相关操作.进入场景是否正确(69) Then 
                                     TracePrint "成功关闭副本界面"
@@ -5900,6 +5900,8 @@ Function 寻找目标材料副本()
                             End If
                         Else 
                             TracePrint "副本剩余次数为0,重新选择"
+                            场景相关操作.通用界面关闭 
+                            Delay 2000
                         End If
                     Else 
                         FindPic 起始X1,起始Y1,起始X2,起始Y2,"Attachment:升阶升星不可前往.png","000000",2,0.9,intX,intY
@@ -5933,6 +5935,7 @@ Function 寻找目标材料副本()
             寻找目标材料副本 = True
             Exit Do
         End If
+    	容错参数 = 容错参数 + 1
     Loop
     TracePrint "寻找目标材料副本结束"
 End Function
