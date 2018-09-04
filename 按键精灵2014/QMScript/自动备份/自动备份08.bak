@@ -1,0 +1,8 @@
+[General]
+MacroID=a8e3450a-ce58-4f6f-adf2-310bea4922d9
+SyntaxVersion=2
+Description=LDAPI
+
+[Script]
+//请在下面写上您的子程序或函数
+//写完保存后，在任一命令库上点击右键并选择“刷新”即可

@@ -23,12 +23,9 @@ SetupOCXFile=
 [Comment]
 
 [Script]
-KeyUp "Win", 1
-
-
 //Hwnd1 = 463852
-Hwnd = 527544
-Import "e:\obj.vbs"
+Hwnd = 70988
+Import "C:\Users\hasee\Desktop\dm\Output\按键精灵\obj.vbs"
 set dm = createobject("dm.dmsoft")
 base_path = dm.GetBasePath()
 TracePrint base_path
@@ -37,21 +34,35 @@ TracePrint dm_ret
 dm_ret = dm.SetPath(base_path)
 TracePrint dm_ret
 dm_ret = dm.SetDict(0, "dm_soft.txt")
-TracePrint dm_ret
-dm_ret = dm.BindWindow(Hwnd, "dx2", "dx", "normal", 0)
+//dm_ret = dm.BindWindow(Hwnd, "dx2", "windows2", "normal", 0)
 TracePrint dm_ret
 
+
+返回值 = Lib.LDAPI.初始化数据()
+
+
+模拟器列表 = Lib.LDAPI.刷新模拟器列表()
+
+
+
+
+返回值 = Lib.LDAPI.执行ADB命令(0,"shell dumpsys window w visible | grep -e 'Window #' -e Surface:")
+dm.MoveTo 140, 640
+Delay 100
+dm.LeftClick 
+Delay 1000
+dm.MoveTo 282,699
+Delay 100
+dm.LeftClick 
+Delay 15000
+TracePrint dm_ret
 title = dm.GetWindowTitle(Hwnd)
 test = Left(title,8)
 TracePrint test
 dm_ret = dm.FindStrFast(3, 55, 130, 450, test, "ffffff-111111|e8c0ff-111111|ede0e0-111111|f3ffc0-111111|f9e09e-111111|ede0ff-111111|f3ffe0-111111|e29ee0-111111", 1, intX, intY)
-
 TracePrint intX
-
 dm_ret = dm.FindMultiColor(263,953,423,1012,"3c7ac5-0","96|-6|3c7ac5-0,97|-44|3c7ac5-0,-16|-38|3c7ac5-0",0.9, 1,intX,intY)
-
 TracePrint dm_ret
-
 //276,89,326,365
 s = dm.Ocr(276, intY - 20, 326, intY + 20, "ffffff-111111|e8c0ff-111111|ede0e0-111111|f3ffc0-111111|f9e09e-111111|ede0ff-111111|f3ffe0-111111|e29ee0-111111", 1)
 TracePrint s
