@@ -483,7 +483,7 @@ Sub 通用界面关闭()
                     Touch 1 + 重启参数 ,GetScreenY() - 1 - 重启参数, 100
                     //showmessage "无法关闭,请手动关闭,并告诉我", 1500, 50, 620
                     TracePrint "不知道的场景"
-                    If 重启参数 > 30 Then 
+                    If 重启参数 > 20 Then 
                         KillApp temp 
                         Delay 5000
                         RunApp temp
@@ -521,9 +521,6 @@ Function 主城底部是否收起()
             FindPic 4,1075,95,1144,"Attachment:底部展开.png","000000",0,0.9,intX,intY
             If intX > -1 And intY > -1 Then
                 主城底部是否收起 = True
-            Else
-                TracePrint "右边的图标也没找到,可能左边被挡住,尝试设置为False"
-                主城底部是否收起 = False
             End If
         End If
     Else 
