@@ -123,12 +123,12 @@ Function 新建(name)
 	SMWH.GetDOS(LDPath & "\dnconsole.exe add --name " & name)
 End Function
 
-Function 拷贝(name, srcPlayer)
+Function 复制(name, srcPlayer)
 	Dim dosCommand
-	dosCommand = LDPath & "\dnconsole.exe rename --name " & name & " --from " & srcPlayer
+	dosCommand = LDPath & "\dnconsole.exe copy " & name & " --from " & srcPlayer
 
-	TracePrint("拷贝模拟器 " &dosCommnad)
-	SMWH.GetDOS(dosCommnad)	
+	TracePrint("拷贝模拟器 " &dosCommand)
+	SMWH.GetDOS(dosCommand)	
 End Function
 
 Function 删除(player)
@@ -148,8 +148,8 @@ Function 重命名(player, name)
 		dosCommand = LDPath & "\dnconsole.exe rename --name " & player & " --title " & name	
 	End If
 	
-	TracePrint("重命名模拟器 " &dosCommnad)
-	SMWH.GetDOS(dosCommnad)	
+	TracePrint("重命名模拟器 " &dosCommand)
+	SMWH.GetDOS(dosCommand)	
 End Function
 
 Function 安装App(player, apkPath)
@@ -220,11 +220,11 @@ Function 退出App(player, package)
 	If (IsNumeric(player)) Then 
 		dosCommand = LDPath & "\dnconsole.exe killapp --index " & player & " --packagename " & package
 	Else 
-		dosCommnad = LDPath & "\dnconsole.exe killapp --name " & player & " --packagename " & package	
+		dosCommand = LDPath & "\dnconsole.exe killapp --name " & player & " --packagename " & package	
 	End If
 	
-	TracePrint ("退出App " &dosCommnad)
-	ret = SMWH.GetDOS(dosCommnad)	
+	TracePrint ("退出App " &dosCommand)
+	ret = SMWH.GetDOS(dosCommand)	
 End Function
 
 Function 备份(player, destFilePath)
