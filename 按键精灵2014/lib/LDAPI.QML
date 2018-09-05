@@ -429,7 +429,7 @@ Function action(player, key, value)
 	TracePrint("action ret " + ret)
 End Function
 
-Function ΩµCPU’Ï(player, rate)
+Function ΩµCPU(player, rate)
 	Dim ret, dosCommand
 	If (IsNumeric(player)) Then
 		dosCommand = LDPath & "\dnconsole.exe downcpu --index " & player
@@ -438,9 +438,9 @@ Function ΩµCPU’Ï(player, rate)
 	End If
 	
 	dosCommand = dosCommand + " --rate " & rate
-	TracePrint ("ΩµCPU’Ï " + dosCommand)
+	TracePrint ("ΩµCPU " + dosCommand)
 	ret = SMWH.GetDOS(dosCommand)
-	TracePrint("ΩµCPU’Ï ret " + ret)
+	TracePrint("ΩµCPU ret " + ret)
 End Function
 
 Function SetProp(player, key, value)
