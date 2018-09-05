@@ -27,16 +27,18 @@ SetupOCXFile=
 如果你在运行脚本前就启动了模拟器,请手动修改分辨率为20*1280
 
 [UIPackage]
-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
+UEsDBBQAAgAIAM4OJk1Liz+77wQAAAg2AAAJABEAVUlQYWNrYWdlVVQNAAfviJBb74iQW++IkFvtWstPVFcY/+4MyAzg8CgMCFrGBz7wUV9Va21TMRpJ0TYyumiiyYgopJeBzEBL+z90Y+Je49JNm7RrY2KMMTV14cqFUaMrdy7sopHp79wHcyAQ73fOgeOY+cjHGS5z7u+c73zve+Pk06N/Wp7d+KPrOS2grylOs6UkrZKuOQF71EwUC/6eLZVK4eVSlSqK3oFrgjMUZ10LrgMnwQlwPXg1uAHcCE75R09N4BbwJ+BWcBs4DW4Hd4DXgDuD+85WxfzB0hmawM8UZeg45TEW6BfiUBoaE97Lec93r/fc+u3o8cdOHJ+/SfnXztIA7SZ1SpDjhPgd78ENR/l/xyhLgxorqIcHDPFrFfCzkPckjdBpytE4Ri61Uszbf0vge6POqwnG0D4/Zq7S0nRiojCuYX4k5u/RmO+QHunO16U/f//7lc7+GSa7LPNV/U7Z/8Xm5XxRzyz0lSLq5OgiuYprSMH/NQR5SlT8mOT/ztEYFcGqK2hW2H9cwj8D1Bxdou8gB5cZe0P/3xjcMyp+jYSfBf4M4r7G+Tvc/ddK538M2YcLLiiupE0Bf5W0/zJ+P85hmH7k43v5chND/nULzn9YU/4iP08w8BPk5/AynYdRvKXKozrL+G8Xl7kXlk4NZYZy+WJmaKQwdnmZ8HtvXdCa/wM8TwH+ZwS/VUj43/bApqLqX1LS/0HYHt/q5ut/c3C/qPj1i9r/ENYxCjnwomEn7D+sgaPiN0j4R5H9T3oxoADOYw28KJTG/pPk1+VR8Rsl/BPYe17P/7Djn/BXR+b27yL6XsEahNzzKv6fjZ+ad/45yH8KaxBy6PfOIYwEZd1YmrZC/mkq972i4DdJ+P3e/X37i4K3iP45bUz8Zglf13/o5p+6NJCfnJ7qn5jRna+aw1d6/ZKF5k95ua+K9nn+h21/LZL+fQ/8GaC7yMJVKKWA37oAX+Rf09i3ShemUwFf7pf7/Sf1CrKeHEfUMzvBXUt8ZyX6T5spevwR8TIRfLZRfwp/mQw+m6g/Mxh7GPtvJ6P1p7Me4xYGfprM1p/d5Pf6o+J3kN36U6y1bs7+tOtPtv6tIbP151qMmxjy75LwH7y8//r2G50Olh7p5g/XwAPgp+BRhfm242/cMr6J/sMGjOsY+tdN5f6DgfqTbX9ryWz92RvYdFT8dWS2/uzDuI2B/ymZrT+3YtzIwO8hu/VnhuzWn+tJzj9ziP9F+jmoA7nUqoC/QcK33b+yTbr1b99fo1rzu29kre7/FCof1+t/DILz7BxU9N+FP9nBsP+Nkv6d9vR+HFbgKvc/uPq/ScI/CbyflLsvvv/bTrz+S+8C/zeMMyiuYP29WcIXUafgIbtB92v5/d8WkuOfqH/3Kuuv/P7FUm9xrET9e4Sh/yJe1s7p/8rXvyJXCN/rG8xdHHE1/Ic3X6N8qPT+2b0nD/+7e/Pui3v/Pnh35zZ/vu3+q4n+xwGMnzP0v4/M9j8OknhfNTr+djLb/xDqv4uBv4Ps9j92kv8MRJCN5++7yGz/Q0SPwwz5f0Zmn78fwriPgb+b7Na/e6T9i1jwLfgqWCXHj5Fdst0/qfT6yUT/48vApqLq314y2v/w/M9XDPx9ZLb/sR/jFwz8/WS3/yFitc3+xwGS458v9yJOIec9g+OtQeX528F55z8NvAlo3xj9qpb/s/EPSfgmiItfpSqF9D9QSwECFwsUAAIACADODiZNS4s/u+8EAAAINgAACQAJAAAAAAAAAAAAAIAAAAAAVUlQYWNrYWdlVVQFAAfviJBbUEsFBgAAAAABAAEAQAAAACcFAAAAAA==
 
 
 [Script]
 LogStart "c:\a.log"
-Dim 容错参数
+
+Dim 容错参数,循环次数
 //初始化雷电API插件需要的其他插件
 返回值 = Lib.LDAPI.初始化数据()
 Delay 1000
 容错参数 = 0
+循环次数 = 0
 Do
     容错参数 = 0
     Rem 获取设备列表
@@ -96,18 +98,24 @@ Do
         End If
     End If
     容错参数 = 0
-    启动时间 = Plugin.Sys.GetTime
+    
     小精灵包名 = "com.mbmpmcmcmlnimnnlmp.dddfree"
     //检查小精灵和游戏是否在运行中
     For Each a In 模拟器信息
         //判断小精灵是否在
+        TracePrint a(1)
         Dim 小精灵宽, 小精灵高, 小精灵坐标X, 小精灵坐标Y, 小精灵是否存在,小精灵是否运行
         小精灵是否存在 = False
         小精灵是否运行 = False
+        小精灵宽 = 0
+        小精灵高 = 0
+        小精灵坐标X = 0 
+        小精灵坐标Y = 0
         //查看在运行的窗口以及相应的界面信息
         temp = Lib.LDAPI.执行ADB命令(a(0),"shell dumpsys window w visible | grep -e 'Window #' -e Surface:")
         temp1 = Split(temp, "Window #")
         For Each b In temp1
+        	
             TracePrint b
             If Instr(1, b, 小精灵包名) > 0 Then 
                 TracePrint "包含小精灵窗口"
@@ -177,10 +185,17 @@ Do
         返回值 = Lib.LDAPI.降CPU(a(0),50)
     Next
     TracePrint "完成一次检测"
+    循环次数 = 循环次数 + 1
+    If 循环次数 >= 40 Then 
+    	返回值 = Lib.LDAPI.关闭全部()
+		EndScript
+    End If
     Delay 180000
 Loop
 Sub OnScriptExit()
     TracePrint "结束脚本"
+    Delay 5000
+    RestartScript
 End Sub
 //获取当前启动的app的Activity
 //TracePrint Plugin.ofcmd.Adb("-s 127.0.0.1:26944 shell dumpsys window windows|findstr Current")
@@ -197,3 +212,6 @@ End Sub
 //TracePrint Plugin.ofcmd.Adb("-s 127.0.0.1:26944 shell am start -n com.game.sgz.a360/com.youkia.gamecenter.GameCenterActivity")
 //返回值 = Lib.LDAPI.执行ADB命令(0, "shell dumpsys window w visible | grep -e 'Window #' -e Surface:")
 //判断运行中的模拟器
+Event Form1.Load
+
+End Event
