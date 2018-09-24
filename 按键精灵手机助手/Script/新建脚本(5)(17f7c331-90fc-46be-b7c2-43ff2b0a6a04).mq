@@ -1,0 +1,88 @@
+Import "zm.luae"
+
+Dim 当前应用包名
+当前应用包名 = sys.GetFront()
+TracePrint 当前应用包名
+
+Dim addr = "0x0"
+
+Dim tb1 = {"lv":1701323387}	'1401466760
+Dim tb2 = {"lv":1952802594,"offset":8}
+Dim tb3 = {"lv":1601332598,"offset":8}
+Dim tb = {tb1, tb2, tb3}
+Dim t = TickCount()
+Dim A = Sys.MemorySearch(当前应用包名, True,addr, tb, "i32",0,1)
+TracePrint "搜索地址为:"&A(0)&",耗时"&(TickCount()-t)
+TracePrint A(0)
+For i = 0 To 0
+    Dim 起始地址 = 地址相加(A(0), i * 120 + 56)
+    TracePrint "起始地址",起始地址
+    Dim 服务器编号 = Sys.MemoryRead(当前应用包名,起始地址, "i64")
+    TracePrint "服务器编号" & 服务器编号
+    服务器编号 = 服务器编号转换(服务器编号)
+    TracePrint 服务器编号
+Next
+
+tb1 = {"lv":2992}
+tb2 = {"lv":246495,"offset":-8}
+tb3 = {"lv":12,"offset":-4}
+tb = {tb1, tb2, tb3}
+t = TickCount()
+A = Sys.MemorySearch(当前应用包名, True,addr, tb, "i32",0,1)
+TracePrint "搜索地址为:"&A(0)&",耗时"&(TickCount()-t)
+TracePrint A(0)
+For i = 0 To 59
+    Dim 等级地址 = 地址相加(A(0), i * 40)
+    Dim 等级 = Sys.MemoryRead(当前应用包名,等级地址, "i32")
+    TracePrint "等级为:"& 等级
+//    Dim 上限地址 = 地址相加(等级地址, 16)
+//    Dim 上限 = Sys.MemoryRead(当前应用包名,上限地址, "i32")
+//    TracePrint "上限为:"&上限
+//    Dim 单次地址 = 地址相加(等级地址, 20)
+//    Dim 单次治疗量 = Sys.MemoryRead(当前应用包名,单次地址, "i32")
+//    TracePrint "单次治疗量为:" & 单次治疗量
+	Dim 元宝地址 = 地址相加(A(0), 27857416)
+	Dim 元宝 = Sys.MemoryRead(当前应用包名,元宝地址, "i32")
+	TracePrint "元宝"& 元宝
+Next
+
+
+
+
+Function 地址相加(地址, 偏移)
+    Dim A = Right(地址,Len(地址)-2)
+    Dim B = Clng("0x"&A)
+    Dim C = B+偏移
+    Dim D = Hex(C)
+    Dim E = "0x"&D
+    地址相加 = E
+End Function
+
+Function 服务器编号转换(数值)
+    Dim str, temp,long,temp1,first,secend
+	
+    str = zm.ConvBase(数值, 10, 16)
+    // str = "0" & CStr(数值)
+    TracePrint str
+    temp = Len(str) / 2
+    TracePrint temp
+    For i = 0 To temp - 1
+        
+        temp1 = Mid(str, i * 2 + 1, 2)
+        temp1 = zm.ConvBase(temp1, 16, 10)
+        TracePrint temp1
+        Dim mychar = Chr(temp1)
+        TracePrint mychar
+        long = long & mychar
+    Next
+    TracePrint long
+    first = Mid(long, 4, 1)
+    secend = Mid(long, 5, 1)
+    temp1 = secend & first
+    服务器编号转换 = Int(temp1)
+End Function
+
+
+
+
+

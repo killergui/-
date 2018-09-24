@@ -1,0 +1,120 @@
+Import "zm.luae"
+
+Dim 当前应用包名
+当前应用包名 = sys.GetFront()
+TracePrint 当前应用包名
+
+Dim addr = "0x0"
+
+//伤兵营数据获取
+//Dim tb1 = {"lv":60}
+//Dim tb2 = {"lv":1080000,"offset":16}
+//Dim tb3 = {"lv":358000,"offset":4}
+//offset	40
+//兵营数据获取
+//Dim tb1 = {"lv":60}
+//Dim tb2 = {"lv":1800000,"offset":16}
+//Dim tb3 = {"lv":179000,"offset":4}
+//offset	40
+//找建筑ID
+//Dim tb1 = {"lv":35017}
+//Dim tb2 = {"lv":35016,"offset":48}
+//offset	48
+
+
+//当前脚本第33行：搜索地址为:0x89b47728,耗时1831
+//当前脚本第44行：搜索地址为:0x8ee5cc78,耗时3989
+//5315550
+
+
+//Dim tb1 = {"lv":14}
+//Dim tb2 = {"lv":6600,"offset":16}
+//Dim tb3 = {"lv":154000,"offset":16}
+//Dim tb4 = {"lv":88000,"offset":16}
+'88987f18
+//当前脚本第47行：0x890ebb98
+
+//Dim tb = {tb1, tb2, tb3, tb4}
+Dim tb1 = {"lv":90003}
+Dim tb2 = {"lv":26250,"offset":24}
+
+Dim tb = {tb1, tb2}
+Dim t = TickCount()
+Dim A = Sys.MemorySearch(当前应用包名, True,addr, tb, "i32",0,1)
+TracePrint "搜索地址为:"&A(0)&",耗时"&(TickCount()-t)
+
+ tb1 = {"lv":90003}
+ tb2 = {"lv":10680,"offset":24}
+
+ tb = {tb1, tb2}
+ t = TickCount()
+ A = Sys.MemorySearch(当前应用包名, True,addr, tb, "i32",0,1)
+TracePrint "搜索地址为:"&A(0)&",耗时"&(TickCount()-t)
+
+ tb1 = {"lv":90003}
+ tb2 = {"lv":6720,"offset":24}
+
+ tb = {tb1, tb2}
+ t = TickCount()
+ A = Sys.MemorySearch(当前应用包名, True,addr, tb, "i32",0,1)
+TracePrint "搜索地址为:"&A(0)&",耗时"&(TickCount()-t)
+
+//tb1 = {"lv":1}
+//tb2 = {"lv":20320,"offset":16}
+//tb3 = {"lv":34290,"offset":16}
+//tb4 = {"lv":16510,"offset":16}
+//
+//tb = {tb1, tb2, tb3, tb4}
+//
+//t = TickCount()
+//A = Sys.MemorySearch(当前应用包名, True,addr, tb, "i32",0,1)
+//TracePrint "搜索地址为:"&A(0)&",耗时"&(TickCount()-t)
+
+
+
+
+//Dim 起始地址 = 地址相加(A(0))
+//TracePrint 等级地址
+For i = 0 To 59
+    Dim 等级地址 = 地址相加(A(0),  i * 40)
+    TracePrint 等级地址
+    Dim 等级 = Sys.MemoryRead(当前应用包名,等级地址, "i32")
+
+    Dim 上限地址 = 地址相加(等级地址, 16)
+    Dim 上限 = Sys.MemoryRead(当前应用包名,上限地址, "i32")
+    TracePrint "上限为:"&上限
+    Dim 单次地址 = 地址相加(等级地址, 20)
+    Dim 单次治疗量 = Sys.MemoryRead(当前应用包名,单次地址, "i32")
+    TracePrint "单次治疗量为:" & 单次治疗量
+    
+    TracePrint "写文件"
+    Dim 行数
+    行数 = File.LinesNumber("/sdcard/bingying.txt")
+    TracePrint 行数
+    If 行数 = 0 Then 
+        File.Write "/sdcard/bingying.txt", "\n" & 等级 & "," & 上限 & "," & 单次治疗量
+    Else 
+        File.Append("/sdcard/bingying.txt", "\n" & 等级 & "," & 上限 & "," & 单次治疗量)
+    End If
+Next
+Function 地址相加(地址, 偏移)
+    Dim A = Right(地址,Len(地址)-2)
+    Dim B = Clng("0x"&A)
+    Dim C = B+偏移
+    Dim D = Hex(C)
+    Dim E = "0x"&D
+    地址相加 = E
+End Function
+
+Function 服务器编号转换(数值)
+    Dim str, temp,long,temp1,first,secend
+    str = zm.ConvBase(数值, 10, 16)
+    temp = Len(str) / 2
+    For i = 0 To temp - 1
+        temp1 = Mid(str, i * 2 + 1, 2)
+        temp1 = zm.ConvBase(temp1, 16, 10)
+        Dim mychar = Chr(temp1)
+        long = long & mychar
+    Next
+    TracePrint long
+End Function

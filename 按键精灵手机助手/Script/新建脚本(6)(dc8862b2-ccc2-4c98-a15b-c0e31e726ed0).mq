@@ -1,0 +1,103 @@
+Import "zm.luae"
+
+Dim 当前应用包名
+当前应用包名 = sys.GetFront()
+TracePrint 当前应用包名
+
+Dim addr = "0x0"
+
+
+
+//Dim tb = {tb1, tb2, tb3, tb4}
+Dim tb1 = {"lv":11821}
+
+Dim tb = {tb1}
+Dim t = TickCount()
+Dim A = Sys.MemorySearch(当前应用包名, True,addr, tb, "i32",0,1000)
+TracePrint "搜索地址为:"&A(0)&",耗时"&(TickCount()-t)
+Dim temp = UBound(A)
+TracePrint temp
+For Each b In A
+	TracePrint b
+	写文件("temp", b)
+Next
+
+ tb1 = {"lv":18473}
+
+tb = {tb1}
+ t = TickCount()
+ A = Sys.MemorySearch(当前应用包名, True,addr, tb, "i32",0,1000)
+TracePrint "搜索地址为:"&A(0)&",耗时"&(TickCount()-t)
+ temp = UBound(A)
+TracePrint temp
+For Each b In A
+	TracePrint b
+	写文件("temp", b)
+Next
+
+ tb1 = {"lv":33959}
+
+tb = {tb1}
+ t = TickCount()
+ A = Sys.MemorySearch(当前应用包名, True,addr, tb, "i32",0,1000)
+TracePrint "搜索地址为:"&A(0)&",耗时"&(TickCount()-t)
+ temp = UBound(A)
+TracePrint temp
+For Each b In A
+	TracePrint b
+	写文件("temp", b)
+Next
+
+//48
+//+8
+//
+//8F1A5FB0
+//当前脚本第33行：0x8f1a5a00
+
+//当前脚本第45行：0x9b6f8d44
+//当前脚本第21行：0x6f2e290c
+
+
+
+//Dim 起始地址 = 地址相加(A(0))
+//TracePrint 等级地址
+For i = 0 To 59
+    Dim 等级地址 = 地址相加(A(0),  i * 48)
+    TracePrint 等级地址
+    Dim 等级 = Sys.MemoryRead(当前应用包名,等级地址, "i32")
+	TracePrint i,等级
+
+Next
+Function 地址相加(地址, 偏移)
+    Dim A = Right(地址,Len(地址)-2)
+    Dim B = Clng("0x"&A)
+    Dim C = B+偏移
+    Dim D = Hex(C)
+    Dim E = "0x"&D
+    地址相加 = E
+End Function
+
+Function 服务器编号转换(数值)
+    Dim str, temp,long,temp1,first,secend
+    str = zm.ConvBase(数值, 10, 16)
+    temp = Len(str) / 2
+    For i = 0 To temp - 1
+        temp1 = Mid(str, i * 2 + 1, 2)
+        temp1 = zm.ConvBase(temp1, 16, 10)
+        Dim mychar = Chr(temp1)
+        long = long & mychar
+    Next
+    TracePrint long
+End Function
+
+Function 写文件(文件名,内容)
+	TracePrint "写文件"
+    Dim 行数
+    行数 = File.LinesNumber("/sdcard/"&文件名&".txt")
+    TracePrint 行数
+    If 行数 = 0 Then 
+        File.Write "/sdcard/"&文件名&".txt", 内容
+    Else 
+        File.Append("/sdcard/"&文件名&".txt", "\n" & 内容)
+    End If
+End Function

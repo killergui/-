@@ -146,6 +146,7 @@ ShowMessage "开始执行每日必做", 1000, 50, 620
 Delay 1000
 
 If ReadConfig("是否今日首次登陆" & 账号信息, 0) = 1 Then 
+    Call 完成皇榜任务()
     Call 接皇榜任务()
     Call 祭祀()
     Call 检查成就()
@@ -3574,7 +3575,6 @@ Sub 接皇榜任务()
     //任务数组结构: 0 = 类型, 1 = 采集数量或打怪级别或寻访次数, 2 = 子类型(野怪或者采集类型), 3 = 打怪次数
     If UTF8.InStr(1, ocrchar, "/3") > 0 Then 
         If UTF8.InStr(1, ocrchar, "3/3") = 0 Then 
-            //任务排序未完成
             Rem 识别排序
             ocrchar = 类型转换.SuperOcr(404,281,435,339,"6D6D6A-111111|B9B9B8-111111|A8A8A6-111111|939391-111111|81807E",0.9)
             TracePrint ocrchar
@@ -3663,6 +3663,7 @@ Sub 接皇榜任务()
                 TracePrint ocrchar	
                 If UTF8.InStr(1, ocrchar, "0/3") > 0 Then
                     TracePrint "一个任务没接成功,也许是昨日皇榜任务未完成"
+                    Call 完成皇榜任务()
                     Exit Sub
                 End If
                 TouchDown 145, 660, 0
@@ -4350,17 +4351,19 @@ Sub 副本准备(副本类型, 挑战次数, 执行类型)
             End If
             Delay 1500
         Next
-        If 挑战副本数据 = Null And 容错参数 < 3 Then  
+        If 挑战副本数据 = Null Then  
             TracePrint "本章没有适合刷的副本"
+            If 容错参数 < 5 Then
+                Touch 相关数据解析.上一页坐标X, 相关数据解析.上一页坐标Y, 100
+                Delay 2000
+                Goto 获取副本信息
+            ElseIf 容错参数 >= 5 Then
+                TracePrint "没有找到符合条件的副本数据,退出"
+                ShowMessage "没有找到符合条件的副本数据,退出", 1000, 50, 620
+                Delay 1000
+                Exit Sub
+            End If
             容错参数 = 容错参数 + 1
-            Touch 相关数据解析.上一页坐标X, 相关数据解析.上一页坐标Y, 100
-            Delay 2000
-            Goto 获取副本信息
-        ElseIf 容错参数 >= 3 Then
-            TracePrint "没有找到符合条件的副本数据,退出"
-            ShowMessage "没有找到符合条件的副本数据,退出", 1000, 50, 620
-            Delay 1000
-            Exit Sub
         End If
         副本剩余次数 = 挑战副本数据(3)
         TracePrint "副本数据获取完毕即将挑战"&挑战副本数据(4)&"星"&"第"&挑战副本数据(2)&"关"
@@ -5607,6 +5610,13 @@ End Function
 
 Function 单个武将升阶()
     If 进出界面.进入子界面(65, 71, 490, 1205) Then 
+        FindPic 64,954,151,1162,"Attachment:一键升阶可.png","000000",0,0.9,intX,intY
+        If intX > -1 And intY > -1 Then
+            TracePrint "武将可以直接升级"
+            Touch intX + 10, intY + 10, 100
+            Delay 3000
+        End If
+        
         Dim intX,intY
         //判断位置右1是否为空
         FindColor 379,920,431,978,"FFFF5F",0,0.9,intX,intY

@@ -1,0 +1,52 @@
+Dim 当前应用包名
+当前应用包名 = sys.GetFront()
+TracePrint 当前应用包名
+'以下是以"比武招亲(武林萌主)游戏为例子，通过搜索内存返回的结果进行偏移读取人物信息面板里的等级、经验等数据"
+Dim 起始值 = 2402118496
+Dim temp = Hex(起始值)
+Dim addr = "0x" & temp
+'下面定义的表数据可通过烧饼修改器等内存搜索工具来查找对比获得
+
+For i = 起始值 To 2402119496
+    
+    Dim 等级 = Sys.MemoryRead(当前应用包名,addr, "i32")
+   
+    If InStr(1, 等级, "false") = 0 Then 
+        If Int(等级) > 0 Then 
+        	 TracePrint  等级
+        End If
+        End If
+    //    Dim 上限地址 = 地址相加(等级地址, 16)
+    //    Dim 上限 = Sys.MemoryRead(当前应用包名,上限地址, "i32")
+    //    TracePrint "上限为:"&上限
+    //    Dim 单次地址 = 地址相加(等级地址, 20)
+    //    Dim 单次治疗量 = Sys.MemoryRead(当前应用包名,单次地址, "i32")
+    //    TracePrint "单次治疗量为:" & 单次治疗量
+    
+//
+//    If InStr(1, 等级, "false") = 0 Then 
+//        If Int(等级) > 0 Then 
+//            TracePrint "写文件"
+//            Dim 行数
+//            行数 = File.LinesNumber("/sdcard/66666.txt")
+//            TracePrint 行数
+//            If 行数 = 0 Then 
+//                File.Write "/sdcard/66666.txt", "\n" & addr & "," & 等级
+//            Else 
+//                File.Append("/sdcard/66666.txt", "\n" & addr & "," & 等级)
+//            End If
+//            
+//        End If
+//        
+//    End If
+    addr = 地址相加(addr, -4)	
+//    TracePrint addr
+Next
+Function 地址相加(地址, 偏移)
+    Dim A = Right(地址,Len(地址)-2)
+    Dim B = Clng("0x"&A)
+    Dim C = B+偏移
+    Dim D = Hex(C)
+    Dim E = "0x"&D
+    地址相加 = E
+End Function 
